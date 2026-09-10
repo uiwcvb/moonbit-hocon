@@ -1,0 +1,284 @@
+{
+  "date": "2026-09-10T14:28:24.050Z",
+  "reference": "Lightbend Config 1.4.5",
+  "source": "https://repo.maven.apache.org/maven2/com/typesafe/config/1.4.5/config-1.4.5.jar",
+  "jarSha256": "4a4b0affb22a9572409d3a6bde99ce3f2045c551cadc1ca7fe09690892c526c3",
+  "engineSha256": "b8769ec12bc49b895340f694738f4626f2e3c0db36549846d6d4984588c2a8a0",
+  "total": 34,
+  "passed": 33,
+  "failed": 1,
+  "results": [
+    {
+      "source": "a=1\nb=true\nc=null\nd=\"1\"",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"a\":1,\"b\":true,\"c\":null,\"d\":\"1\"}",
+      "actual": "{\"a\":1,\"b\":true,\"c\":null,\"d\":\"1\"}",
+      "passed": true
+    },
+    {
+      "source": "a=-1.25e+3",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"a\":-1250}",
+      "actual": "{\"a\":-1.25e+3}",
+      "passed": true
+    },
+    {
+      "source": "a=[1,false,null,{x=2},[3,4],]",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"a\":[1,false,null,{\"x\":2},[3,4]]}",
+      "actual": "{\"a\":[1,false,null,{\"x\":2},[3,4]]}",
+      "passed": true
+    },
+    {
+      "source": "a=[1\n2\n3]",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"a\":[1,2,3]}",
+      "actual": "{\"a\":[1,2,3]}",
+      "passed": true
+    },
+    {
+      "source": "a=[1 2]",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"a\":[\"1 2\"]}",
+      "actual": "{\"a\":[\"1 2\"]}",
+      "passed": true
+    },
+    {
+      "source": "a=hello  world",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"a\":\"hello  world\"}",
+      "actual": "{\"a\":\"hello  world\"}",
+      "passed": true
+    },
+    {
+      "source": "a=foo-bar",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"a\":\"foo-bar\"}",
+      "actual": "{\"a\":\"foo-bar\"}",
+      "passed": true
+    },
+    {
+      "source": "a=\"\\u4e2d\\u6587\\n\\t\"\nb=\"\\ud83d\\ude00\"",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"a\":\"中文\\n\\t\",\"b\":\"😀\"}",
+      "actual": "{\"a\":\"中文\\n\\t\",\"b\":\"😀\"}",
+      "passed": true
+    },
+    {
+      "source": "a={x=1}\na={y=2}",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"a\":{\"x\":1,\"y\":2}}",
+      "actual": "{\"a\":{\"x\":1,\"y\":2}}",
+      "passed": true
+    },
+    {
+      "source": "a={x=1}\na=null\na={y=2}",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"a\":{\"y\":2}}",
+      "actual": "{\"a\":{\"y\":2}}",
+      "passed": true
+    },
+    {
+      "source": "a=[1] [2,3]",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"a\":[1,2,3]}",
+      "actual": "{\"a\":[1,2,3]}",
+      "passed": true
+    },
+    {
+      "source": "a={x=1} {y=2}",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"a\":{\"x\":1,\"y\":2}}",
+      "actual": "{\"a\":{\"x\":1,\"y\":2}}",
+      "passed": true
+    },
+    {
+      "source": "a=[1,true]\nb=${a}",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"a\":[1,true],\"b\":[1,true]}",
+      "actual": "{\"a\":[1,true],\"b\":[1,true]}",
+      "passed": true
+    },
+    {
+      "source": "a=${?MISSING_HOCON_TEST_VALUE}",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{}",
+      "actual": "{}",
+      "passed": true
+    },
+    {
+      "source": "a=7\na=${?MISSING_HOCON_TEST_VALUE}",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"a\":7}",
+      "actual": "{\"a\":7}",
+      "passed": true
+    },
+    {
+      "source": "a=[0,${?MISSING_HOCON_TEST_VALUE},1]",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"a\":[0,1]}",
+      "actual": "{\"a\":[0,1]}",
+      "passed": true
+    },
+    {
+      "source": "a=${?MISSING_HOCON_TEST_VALUE}suffix",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"a\":\"suffix\"}",
+      "actual": "{\"a\":\"suffix\"}",
+      "passed": true
+    },
+    {
+      "source": "a=\"prefix\"${?MISSING_HOCON_TEST_VALUE}",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"a\":\"prefix\"}",
+      "actual": "{\"a\":\"prefix\"}",
+      "passed": true
+    },
+    {
+      "source": "\"a.b\"=7\nz=${\"a.b\"}",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"a.b\":7,\"z\":7}",
+      "actual": "{\"z\":7,\"a.b\":7}",
+      "passed": true
+    },
+    {
+      "source": "host=api\nport=80\nurl=${host}\":\"${port}",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"host\":\"api\",\"port\":80,\"url\":\"api:80\"}",
+      "actual": "{\"url\":\"api:80\",\"host\":\"api\",\"port\":80}",
+      "passed": true
+    },
+    {
+      "source": "a={x=1}\nb=${a}\nb={y=2}",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"a\":{\"x\":1},\"b\":{\"x\":1,\"y\":2}}",
+      "actual": "{\"a\":{\"x\":1},\"b\":{\"x\":1,\"y\":2}}",
+      "passed": true
+    },
+    {
+      "source": "a={x=1}\nb=${a}\nc=${b.x}",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"a\":{\"x\":1},\"b\":{\"x\":1},\"c\":1}",
+      "actual": "{\"a\":{\"x\":1},\"b\":{\"x\":1},\"c\":1}",
+      "passed": true
+    },
+    {
+      "source": "include \"__missing_hocon_fixture_2026.conf\"\na=1",
+      "referenceAccepted": true,
+      "actualAccepted": true,
+      "expected": "{\"a\":1}",
+      "actual": "{\"a\":1}",
+      "passed": true
+    },
+    {
+      "source": "include required(\"__missing_hocon_fixture_2026.conf\")",
+      "referenceAccepted": false,
+      "actualAccepted": false,
+      "expected": "IO",
+      "actual": "ERROR: Invalid(\"missing required include __missing_hocon_fixture_2026.conf\")",
+      "passed": true
+    },
+    {
+      "source": "a=[1] text",
+      "referenceAccepted": true,
+      "actualAccepted": false,
+      "expected": "{\"a\":[1]}",
+      "actual": "ERROR: Invalid(\"array concatenation type mismatch\")",
+      "passed": false
+    },
+    {
+      "source": "a={} [1]",
+      "referenceAccepted": false,
+      "actualAccepted": false,
+      "expected": "WrongType",
+      "actual": "ERROR: Invalid(\"object concatenation type mismatch\")",
+      "passed": true
+    },
+    {
+      "source": "a=[1,,2]",
+      "referenceAccepted": false,
+      "actualAccepted": false,
+      "expected": "Parse",
+      "actual": "ERROR: Invalid(\"value required or forbidden token\")",
+      "passed": true
+    },
+    {
+      "source": "a=[,1]",
+      "referenceAccepted": false,
+      "actualAccepted": false,
+      "expected": "Parse",
+      "actual": "ERROR: Invalid(\"value required or forbidden token\")",
+      "passed": true
+    },
+    {
+      "source": "a=1,,b=2",
+      "referenceAccepted": false,
+      "actualAccepted": false,
+      "expected": "Parse",
+      "actual": "ERROR: Invalid(\"duplicate comma\")",
+      "passed": true
+    },
+    {
+      "source": "a=[1",
+      "referenceAccepted": false,
+      "actualAccepted": false,
+      "expected": "Parse",
+      "actual": "ERROR: Invalid(\"array elements require comma or newline\")",
+      "passed": true
+    },
+    {
+      "source": "a={x=1",
+      "referenceAccepted": false,
+      "actualAccepted": false,
+      "expected": "Parse",
+      "actual": "ERROR: Invalid(\"expected }, got <eof>\")",
+      "passed": true
+    },
+    {
+      "source": "a=${missing}",
+      "referenceAccepted": false,
+      "actualAccepted": false,
+      "expected": "UnresolvedSubstitution",
+      "actual": "ERROR: Invalid(\"unresolved missing\")",
+      "passed": true
+    },
+    {
+      "source": "a=${b}\nb=${a}",
+      "referenceAccepted": false,
+      "actualAccepted": false,
+      "expected": "UnresolvedSubstitution",
+      "actual": "ERROR: Invalid(\"substitution cycle\")",
+      "passed": true
+    },
+    {
+      "source": "a=\"bad\nstring\"",
+      "referenceAccepted": false,
+      "actualAccepted": false,
+      "expected": "Parse",
+      "actual": "ERROR: Invalid(\"invalid JSON string\")",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "date": "2026-09-10T14:30:05.952441+00:00",
+  "baselineTestsPassed": 9,
+  "typedTestsPassed": 6,
+  "finalAliasFixTestsPassed": 1,
+  "target": "js",
+  "referenceCases": 34,
+  "referenceAgreements": 33,
+  "referenceDifferences": 1,
+  "jarPublishedSha1": "0cc25b497ded7068a861517a815546fb472f9e58",
+  "jarSha1Checked": true,
+  "engineSha256": "b8769ec12bc49b895340f694738f4626f2e3c0db36549846d6d4984588c2a8a0"
+}

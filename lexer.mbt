@@ -7,6 +7,7 @@ pub suberror ParseError {
 priv struct Token {
   text : String
   quoted : Bool
+  gap : String
 }
 
 ///|
@@ -71,16 +72,19 @@ fn lex(source : String, newlines : Bool) -> Cursor raise ParseError {
   }
   let cs = source.to_array()
   let ts : Array[Token] = []
+  let mut gap = ""
   let mut i = 0
   while i < cs.length() {
     let c = cs[i]
     if c == ' ' || c == '\t' || c == '\r' {
+      gap += c.to_string()
       i += 1
       continue
     }
     if c == '\n' {
       if newlines {
-        ts.push({ text: ";", quoted: false, })
+        ts.push({ text: ";", quoted: false, gap, })
+        gap = ""
       }
       i += 1
       continue
@@ -91,40 +95,40 @@ fn lex(source : String, newlines : Bool) -> Cursor raise ParseError {
       }
       continue
     }
-    if c == '"' || c == '\'' {
-      let quote = c
+    if c == '"' {
+      let start = i
       i += 1
-      let mut s = ""
+      let mut escaped = false
       let mut closed = false
       while i < cs.length() {
         let ch = cs[i]
         i += 1
-        if ch == quote {
-          closed = true
-          break
+        if escaped {
+          escaped = false
+          continue
         }
         if ch == '\\' {
-          if i >= cs.length() {
-            raise Invalid("truncated escape")
-          }
-          s += match cs[i] {
-            'n' => "\n"
-            'r' => "\r"
-            't' => "\t"
-            '\\' => "\\"
-            '"' => "\""
-            '\'' => "'"
-            _ => raise Invalid("unsupported escape")
-          }
-          i += 1
-        } else {
-          s += ch.to_string()
+          escaped = true
+          continue
+        }
+        if ch == '"' {
+          closed = true
+          break
         }
       }
       if !closed {
         raise Invalid("unterminated string")
       }
-      ts.push({ text: s, quoted: true, })
+      let literal = String::from_array(cs[start:i])
+      let decoded = @json.parse(literal) catch {
+        _ => raise Invalid("invalid JSON string")
+      }
+      let text = match decoded {
+        String(text) => text
+        _ => raise Invalid("quoted string required")
+      }
+      ts.push({ text, quoted: true, gap, })
+      gap = ""
       continue
     }
     if word(c) {
@@ -133,7 +137,8 @@ fn lex(source : String, newlines : Bool) -> Cursor raise ParseError {
         s += cs[i].to_string()
         i += 1
       }
-      ts.push({ text: s, quoted: false, })
+      ts.push({ text: s, quoted: false, gap, })
+      gap = ""
       continue
     }
     let mut s = c.to_string()
@@ -153,7 +158,8 @@ fn lex(source : String, newlines : Bool) -> Cursor raise ParseError {
         i += 1
       }
     }
-    ts.push({ text: s, quoted: false, })
+    ts.push({ text: s, quoted: false, gap, })
+    gap = ""
   }
   { tokens: ts, pos: 0, }
 }

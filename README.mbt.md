@@ -28,4 +28,4 @@ test "typed configuration access reports missing and invalid values" {
 }
 ```
 
-限制：不是 Lightbend Config 全兼容；标量内部仍为文本表示，完整类型保真待做。
+0.3 已区分数字、布尔、null、数组与字符串；尚未完整兼容 Lightbend Config，差距见 FEATURES.md。
