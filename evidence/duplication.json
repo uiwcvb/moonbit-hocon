@@ -1,0 +1,42 @@
+{
+  "date": "2026-09-10",
+  "registry": {
+    "topic": "hocon",
+    "url": "https://mooncakes.io/api/v0/search?kw=hocon&limit=30",
+    "results": [
+      {
+        "name": "CAIMEOX/box",
+        "description": "Combinators for creating and manipulating two-dimensional rectangular text layouts",
+        "repository": "https://github.com/CAIMEOX/box"
+      },
+      {
+        "name": "mizchi/bitx_hq",
+        "description": "ghq-compatible repo manager (extension module for mizchi/bit)",
+        "repository": "https://github.com/mizchi/bit-vcs"
+      },
+      {
+        "name": "ZSeanYves/MoonbitHTTP",
+        "description": "Modular HTTP protocol codecs and connection utilities for MoonBit.",
+        "repository": "https://github.com/ZSeanYves/MoonbitHTTP"
+      },
+      {
+        "name": "mizchi/npm_typed",
+        "description": "Typed npm library bindings(40+) for js backend",
+        "repository": "https://github.com/mizchi/npm_typed.mbt"
+      },
+      {
+        "name": "CAIMEOX/symbit",
+        "description": "A symbolic mathematics library for Moonbit.",
+        "repository": "https://github.com/CAIMEOX/symbit.git"
+      }
+    ]
+  },
+  "github": {
+    "topic": "hocon",
+    "query": "hocon language:MoonBit",
+    "url": "https://api.github.com/search/repositories?q=hocon+language%3AMoonBit&per_page=30",
+    "total_count": 0,
+    "results": []
+  },
+  "scope": "keyword package metadata + public repository search; not full code, private repos, or contest registration list"
+}

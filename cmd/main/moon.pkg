@@ -1,0 +1,5 @@
+import {
+  "localreview/hocon" @lib,
+}
+
+pkgtype(kind: "executable")

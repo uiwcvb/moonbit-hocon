@@ -1,0 +1,27 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "localreview/hocon"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn get(Value, String) -> Value?
+
+pub fn parse(String, includes? : Map[String, String]) -> Value raise ParseError
+
+// Errors
+pub suberror ParseError {
+  Invalid(String)
+} derive(@debug.Debug)
+
+// Types and methods
+pub(all) enum Value {
+  Text(String)
+  Reference(String)
+  Object(Map[String, Value])
+} derive(Eq, @debug.Debug)
+
+// Type aliases
+
+// Traits

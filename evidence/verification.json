@@ -1,0 +1,49 @@
+{
+  "project": "hocon",
+  "checks": [
+    {
+      "command": "moon fmt",
+      "exit_code": 0,
+      "output": "Finished. moon: ran 9 tasks, now up to date\n",
+      "utc": "2026-09-10T06:01:26.962091+00:00"
+    },
+    {
+      "command": "moon info",
+      "exit_code": 0,
+      "output": "Finished. moon: ran 2 tasks, now up to date\n",
+      "utc": "2026-09-10T06:01:27.383121+00:00"
+    },
+    {
+      "command": "moon check --deny-warn",
+      "exit_code": 0,
+      "output": "Finished. moon: ran 2 tasks, now up to date\n",
+      "utc": "2026-09-10T06:01:28.386218+00:00"
+    },
+    {
+      "command": "moon test --target wasm-gc --deny-warn",
+      "exit_code": 0,
+      "output": "Total tests: 8, passed: 8, failed: 0.\n",
+      "utc": "2026-09-10T06:01:29.419879+00:00"
+    },
+    {
+      "command": "moon test --target js --deny-warn",
+      "exit_code": 0,
+      "output": "Total tests: 8, passed: 8, failed: 0.\n",
+      "utc": "2026-09-10T06:01:29.977150+00:00"
+    },
+    {
+      "command": "moon build --target js --deny-warn",
+      "exit_code": 0,
+      "output": "Finished. moon: no work to do\n",
+      "utc": "2026-09-10T06:01:30.794318+00:00"
+    },
+    {
+      "command": "moon run cmd/main",
+      "exit_code": 0,
+      "output": "Object(\n  {\n    \"service\": Object({ \"host\": Text(\"localhost\"), \"port\": Text(\"9090\") }),\n    \"endpoint\": Text(\"localhost\"),\n  },\n)\n",
+      "utc": "2026-09-10T06:01:31.511493+00:00"
+    }
+  ],
+  "demo": "Object(\n  {\n    \"service\": Object({ \"host\": Text(\"localhost\"), \"port\": Text(\"9090\") }),\n    \"endpoint\": Text(\"localhost\"),\n  },\n)",
+  "source_lines": 408
+}
