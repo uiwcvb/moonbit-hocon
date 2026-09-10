@@ -8,6 +8,12 @@ import {
 // Values
 pub fn get(Value, String) -> Value?
 
+pub fn get_bool(Value, String) -> Bool raise ParseError
+
+pub fn get_int(Value, String) -> Int raise ParseError
+
+pub fn get_string(Value, String) -> String raise ParseError
+
 pub fn parse(String, includes? : Map[String, String]) -> Value raise ParseError
 
 // Errors
