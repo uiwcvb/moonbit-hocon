@@ -58,7 +58,7 @@ test "typed concatenations and merging respect type barriers" {
   assert_eq(@hocon.get(v, "c.x"), None)
   for
     source in [
-      "a=[1] text", "a={} [1]", "a=[1,,2]", "a=[,1]", "a=1,,b=2", "a=[1", "a={x=1",
+      "a=[1] \"text\"", "a={} [1]", "a=[1,,2]", "a=[,1]", "a=1,,b=2", "a=[1", "a={x=1",
       "a=\"bad\nstring\"",
     ] {
     assert_true(

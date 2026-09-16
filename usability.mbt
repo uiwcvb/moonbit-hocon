@@ -41,7 +41,7 @@ pub fn get_list(config : Value, key : String) -> Array[Value] raise ParseError {
 ///|
 /// Stable JSON rendering of a resolved value; number spelling is retained.
 pub fn Value::to_json_string(self : Value) -> String raise ParseError {
-  render(self, 0, Work::{ remaining: 1000000, })
+  render(self, 0, Work::{ remaining: 1000000, next_id: 0, })
 }
 
 ///|
@@ -53,7 +53,15 @@ fn render(v : Value, depth : Int, work : Work) -> String raise ParseError {
     Text(s) => s.to_json().stringify()
     Number(s) => {
       let checked = @json.parse(s) catch {
-        _ => raise Invalid("invalid numeric value")
+        _ => {
+          if !numeric_text(s) {
+            raise Invalid("invalid numeric value")
+          }
+          let value = @string.parse_double(s) catch {
+            _ => raise Invalid("invalid numeric value")
+          }
+          return value.to_string()
+        }
       }
       match checked {
         Number(_) => s

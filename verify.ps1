@@ -30,6 +30,12 @@ try {
   if ($LASTEXITCODE -ne 0) {throw 'browser engine test failed'}
   node tools/test-cli.mjs
   if ($LASTEXITCODE -ne 0) {throw 'CLI test failed'}
+  node tools/test-host.mjs
+  if ($LASTEXITCODE -ne 0) {throw 'file host integration failed'}
+  node tools/test-config-reference.mjs --golden
+  if ($LASTEXITCODE -ne 0) {throw 'configuration reference replay failed'}
+  node tools/test-file-reference.mjs --golden
+  if ($LASTEXITCODE -ne 0) {throw 'file reference replay failed'}
   node tools/robustness.mjs
   if ($LASTEXITCODE -ne 0) {throw 'robustness failed'}
   node tools/benchmark.mjs

@@ -1,6 +1,7 @@
 ///|
 pub(all) enum Value {
   Text(String)
+  Bare(String)
   Number(String)
   Boolean(Bool)
   Null
@@ -10,44 +11,83 @@ pub(all) enum Value {
   Object(Map[String, Value])
   Concat(Array[(String, Value)])
   DelayedMerge(Value, Value)
+  Bound(Array[String], Int, Value)
+  Substitution(Array[Array[String]], Bool, Bool, Int)
+} derive(Debug, Eq)
+
+///|
+pub(all) struct IncludeRequest {
+  name : String
+  kind : String
+  from : String
+  required : Bool
+} derive(Debug, Eq, ToJson)
+
+///|
+pub(all) struct IncludeSource {
+  name : String
+  content : String
+  format : String
 } derive(Debug, Eq)
 
 ///|
 priv struct Work {
   mut remaining : Int
+  mut next_id : Int
 }
 
 ///|
-fn Work::spend(self : Work, amount : Int) -> Unit raise ParseError {
-  self.remaining -= amount
+fn Work::spend(self : Work, n : Int) -> Unit raise ParseError {
+  self.remaining -= n
   if self.remaining < 0 {
     raise Invalid("configuration expansion limit")
   }
 }
 
 ///|
+fn Work::id(self : Work) -> Int {
+  self.next_id += 1
+  self.next_id
+}
+
+///|
+priv struct ParseContext {
+  sources : Map[String, String]
+  loader : ((IncludeRequest) -> Result[Array[IncludeSource], String])?
+  work : Work
+}
+
+///|
 fn uncertain(v : Value) -> Bool {
   match v {
-    Reference(_) | PathReference(_, _) | Concat(_) | DelayedMerge(_, _) => true
+    Reference(_)
+    | PathReference(_, _)
+    | Substitution(_, _, _, _)
+    | Bound(_, _, _)
+    | Concat(_)
+    | DelayedMerge(_, _) => true
     _ => false
   }
 }
 
 ///|
 fn merge(a : Value, b : Value) -> Value {
+  if !uncertain(b) && !(b is Object(_)) {
+    return b
+  }
   if uncertain(a) || uncertain(b) {
     return DelayedMerge(a, b)
   }
   match (a, b) {
     (Object(x), Object(y)) => {
-      let z = x.copy()
+      let out = x.copy()
       for k, v in y {
-        z[k] = match z.get(k) {
+        out[k] = match out.get(k) {
           Some(old) => merge(old, v)
           None => v
         }
       }
-      Object(z)
+      Object(out)
     }
     _ => b
   }
@@ -58,152 +98,285 @@ fn install(
   m : Map[String, Value],
   keys : Array[String],
   index : Int,
-  value : Value,
+  v : Value,
 ) -> Unit {
   let k = keys[index]
-  if index == keys.length() - 1 {
-    m[k] = match m.get(k) {
-      Some(old) => merge(old, value)
-      None => value
-    }
+  let patch = if index == keys.length() - 1 {
+    v
   } else {
-    let child = match m.get(k) {
-      Some(Object(v)) => v.copy()
-      _ => Map([])
-    }
-    install(child, keys, index + 1, value)
-    m[k] = Object(child)
+    let child : Map[String, Value] = Map([])
+    install(child, keys, index + 1, v)
+    Object(child)
+  }
+  m[k] = match m.get(k) {
+    Some(old) => merge(old, patch)
+    None => patch
   }
 }
 
 ///|
-fn path(c : Cursor) -> Array[String] raise ParseError {
-  let out = []
-  while true {
-    let t = c.take()
-    if !t.quoted &&
-      (t.text.is_empty() || t.text.iter().any(ch => !word(ch) && ch != '-')) {
-      raise Invalid("path component required")
-    }
-    let mut part = t.text
-    while c.peek() == "-" && c.tokens[c.pos].gap.is_empty() {
-      part += c.take().text
-      if c.peek() != "." &&
-        c.peek() != "=" &&
-        c.peek() != ":" &&
-        c.peek() != "}" &&
-        c.peek() != "{" {
-        part += c.take().text
-      }
-    }
-    out.push(part)
-    if out.length() > 32 {
-      raise Invalid("path depth limit")
-    }
-    if !c.eat(".") {
-      break
-    }
+fn append_path(a : Array[String], b : Array[String]) -> Array[String] {
+  let out = a.copy()
+  for s in b {
+    out.push(s)
   }
   out
 }
 
 ///|
-fn include_name(c : Cursor) -> (String, Bool) raise ParseError {
-  let required = c.eat("required")
-  if required {
-    c.need("(")
+fn skip_lines(c : Cursor) -> Unit {
+  while c.eat("\n") {
+
   }
-  let file = c.eat("file")
-  if file {
-    c.need("(")
-  }
-  let token = c.take()
-  if !token.quoted {
-    raise Invalid("include requires quoted name or file(name)")
-  }
-  if file {
-    c.need(")")
-  }
-  if required {
-    c.need(")")
-  }
-  (token.text, required)
 }
 
 ///|
-fn skip_lines(c : Cursor) -> Unit {
-  while c.eat(";") {
-
+fn path(
+  c : Cursor,
+  substitution? : Bool = false,
+) -> Array[String] raise ParseError {
+  let parts : Array[String] = []
+  let mut current = ""
+  let mut present = false
+  let mut first = true
+  while !c.done() {
+    let token = c.tokens[c.pos]
+    if !token.quoted &&
+      ["\n", "=", ":", "+=", "{", "}", ",", "[", "]", "$", "?"].contains(
+        token.text,
+      ) {
+      break
+    }
+    c.pos += 1
+    if !first {
+      current += token.gap
+      if !token.gap.is_empty() {
+        present = true
+      }
+    }
+    first = false
+    if token.quoted {
+      current += token.text
+      present = true
+    } else {
+      for ch in token.text {
+        if ch == '.' {
+          if !present {
+            raise Located("empty path component must be quoted", token.position)
+          }
+          parts.push(current)
+          current = ""
+          present = false
+        } else {
+          current += ch.to_string()
+          present = true
+        }
+      }
+    }
   }
+  if !present {
+    raise Located("path component required", c.location())
+  }
+  parts.push(current)
+  if parts.length() > 32 {
+    raise Invalid("path depth limit")
+  }
+  if !substitution && parts[0].is_empty() {
+    ()
+  }
+  parts
+}
+
+///|
+/// Parse HOCON path expressions, including quoted periods and empty components.
+pub fn split_path(text : String) -> Array[String] raise ParseError {
+  let c = lex(text, "<path>")
+  let result = path(c, substitution=true)
+  if !c.done() {
+    raise Located("trailing path input", c.location())
+  }
+  result
+}
+
+///|
+fn include_request(c : Cursor) -> IncludeRequest raise ParseError {
+  skip_lines(c)
+  let required = c.eat("required")
+  if required {
+    skip_lines(c)
+    c.need("(")
+    skip_lines(c)
+  }
+  let kind = if ["file", "url", "classpath"].contains(c.peek()) {
+    c.take().text
+  } else {
+    "heuristic"
+  }
+  if kind != "heuristic" {
+    skip_lines(c)
+    c.need("(")
+    skip_lines(c)
+  }
+  let token = c.take()
+  if !token.quoted {
+    raise Located("include requires one quoted resource name", token.position)
+  }
+  if kind != "heuristic" {
+    skip_lines(c)
+    c.need(")")
+  }
+  if required {
+    skip_lines(c)
+    c.need(")")
+  }
+  { name: token.text, kind, from: token.position.source, required, }
+}
+
+///|
+fn parse_source(
+  source : IncludeSource,
+  context : ParseContext,
+  active : Array[String],
+  prefix : Array[String],
+  scope : Array[String],
+  depth : Int,
+) -> Value raise ParseError {
+  if source.content.length() > 100000 || !valid_unicode(source.content) {
+    raise Invalid("excessive or ill-formed source: " + source.name)
+  }
+  context.work.spend(source.content.length())
+  if source.format == "json" {
+    let mut nesting = depth
+    let mut quoted = false
+    let mut escaped = false
+    for c in source.content {
+      if quoted {
+        if escaped {
+          escaped = false
+        } else if c == '\\' {
+          escaped = true
+        } else if c == '"' {
+          quoted = false
+        }
+      } else if c == '"' {
+        quoted = true
+      } else if c == '[' || c == '{' {
+        nesting += 1
+        if nesting > 32 {
+          raise Invalid("JSON source nesting limit: " + source.name)
+        }
+      } else if c == ']' || c == '}' {
+        nesting -= 1
+      }
+    }
+    let json = @json.parse(source.content) catch {
+      _ => raise Invalid("invalid JSON source: " + source.name)
+    }
+    return from_json(json)
+  }
+  if source.format != "hocon" {
+    raise Invalid("unsupported source format: " + source.format)
+  }
+  let c = lex(source.content, source.name)
+  skip_lines(c)
+  let result = if c.peek() == "[" {
+    value(c, context, active, prefix, scope, depth)
+  } else {
+    let brace = c.eat("{")
+    object(c, context, active, prefix, scope, depth, brace)
+  }
+  skip_lines(c)
+  if !c.done() {
+    raise Located("trailing input", c.location())
+  }
+  result
 }
 
 ///|
 fn object(
   c : Cursor,
-  sources : Map[String, String],
+  context : ParseContext,
   active : Array[String],
+  prefix : Array[String],
+  scope : Array[String],
   depth : Int,
   closing : Bool,
-  work : Work,
 ) -> Value raise ParseError {
   if depth > 32 {
-    raise Invalid("nesting/include limit")
+    raise Invalid("object/include depth limit")
   }
   let out : Map[String, Value] = Map([])
   skip_lines(c)
-  while c.peek() != "<eof>" && c.peek() != "}" {
-    work.spend(1)
+  while !c.done() && c.peek() != "}" {
+    context.work.spend(1)
     if c.eat("include") {
-      let (name, required) = include_name(c)
-      if active.contains(name) {
-        raise Invalid("include cycle")
-      }
-      match sources.get(name) {
+      let req = include_request(c)
+      let sources = match context.loader {
+        Some(load) =>
+          match load(req) {
+            Ok(sources) => sources
+            Err(message) => raise Invalid(message)
+          }
         None =>
-          if required {
-            raise Invalid("missing required include " + name)
+          match context.sources.get(req.name) {
+            Some(content) => [{ name: req.name, content, format: "hocon", }]
+            None => []
           }
-        Some(source) => {
-          work.spend(source.length())
-          let next = active.copy()
-          next.push(name)
-          let nested = lex(source, true)
-          skip_lines(nested)
-          let brace = nested.eat("{")
-          let inc = object(nested, sources, next, depth + 1, brace, work)
-          skip_lines(nested)
-          if nested.peek() != "<eof>" {
-            raise Invalid("include trailing input")
-          }
-          match inc {
-            Object(m) =>
-              for k, v in m {
-                out[k] = match out.get(k) {
-                  Some(old) => merge(old, v)
-                  None => v
-                }
+      }
+      if sources.is_empty() && req.required {
+        raise Invalid("missing required include " + req.name)
+      }
+      for source in sources {
+        if active.contains(source.name) {
+          raise Invalid("include cycle: " + source.name)
+        }
+        let next = active.copy()
+        next.push(source.name)
+        let inc = parse_source(source, context, next, prefix, prefix, depth + 1)
+        match inc {
+          Object(fields) =>
+            for k, v in fields {
+              out[k] = match out.get(k) {
+                Some(old) => merge(old, v)
+                None => v
               }
-            _ => raise Invalid("include must be an object")
-          }
+            }
+          _ => raise Invalid("include must contain an object")
         }
       }
     } else {
       let keys = path(c)
-      if c.peek() != "{" && !c.eat("=") && !c.eat(":") {
-        raise Invalid("missing assignment")
+      let owner = append_path(prefix, keys)
+      let plus = c.eat("+=")
+      if !plus && c.peek() != "{" && !c.eat("=") && !c.eat(":") {
+        raise Located("missing assignment", c.location())
       }
-      let v = value(c, sources, active, depth + 1, work)
-      install(out, keys, 0, v)
+      skip_lines(c)
+      let raw = value(c, context, active, owner, scope, depth + 1)
+      let rhs = if plus {
+        Concat([
+          ("", Substitution([owner], true, false, context.work.id())),
+          ("", List([raw])),
+        ])
+      } else {
+        raw
+      }
+      let rhs = if uncertain(rhs) {
+        Bound(owner, context.work.id(), rhs)
+      } else {
+        rhs
+      }
+      install(out, keys, 0, rhs)
     }
     if c.eat(",") {
       skip_lines(c)
-    } else if c.eat(";") {
+    } else if c.eat("\n") {
       skip_lines(c)
-    } else if c.peek() != "}" && c.peek() != "<eof>" {
-      raise Invalid("entries require newline or comma")
+    } else if !c.done() && c.peek() != "}" {
+      raise Located("entries require newline or comma", c.location())
     }
     if c.peek() == "," {
-      raise Invalid("duplicate comma")
+      raise Located("duplicate comma", c.location())
     }
   }
   if closing {
@@ -214,113 +387,138 @@ fn object(
 
 ///|
 fn value_end(c : Cursor) -> Bool {
-  [";", ",", "}", "]", "<eof>"].contains(c.peek())
+  c.done() || ["\n", ",", "}", "]"].contains(c.peek())
 }
 
 ///|
 fn atom(
   c : Cursor,
-  sources : Map[String, String],
+  context : ParseContext,
   active : Array[String],
+  prefix : Array[String],
+  scope : Array[String],
   depth : Int,
-  work : Work,
 ) -> Value raise ParseError {
   if depth > 32 {
     raise Invalid("value nesting limit")
   }
-  work.spend(1)
+  context.work.spend(1)
   if c.eat("{") {
-    return object(c, sources, active, depth + 1, true, work)
+    return object(c, context, active, prefix, scope, depth + 1, true)
   }
   if c.eat("[") {
     let items = []
     skip_lines(c)
     while !c.eat("]") {
-      items.push(value(c, sources, active, depth + 1, work))
+      items.push(value(c, context, active, prefix, scope, depth + 1))
       if c.eat(",") {
         skip_lines(c)
-      } else if c.eat(";") {
+      } else if c.eat("\n") {
         skip_lines(c)
       } else if c.peek() != "]" {
-        raise Invalid("array elements require comma or newline")
+        raise Located("array elements require newline or comma", c.location())
       }
     }
     return List(items)
   }
   if c.eat("$") {
+    if c.done() || !c.tokens[c.pos].gap.is_empty() {
+      raise Located("substitution requires adjacent ${", c.location())
+    }
     c.need("{")
-    let optional = c.eat("?")
-    let keys = path(c)
+    let optional = if c.peek() == "?" {
+      if !c.tokens[c.pos].gap.is_empty() {
+        raise Located("optional marker must be adjacent", c.location())
+      }
+      c.pos += 1
+      true
+    } else {
+      false
+    }
+    let keys = path(c, substitution=true)
+    let list_env = c.eat("[")
+    if list_env {
+      c.need("]")
+    }
     c.need("}")
-    return PathReference(keys, optional)
+    let paths = if scope.is_empty() {
+      [keys]
+    } else {
+      [append_path(scope, keys), keys]
+    }
+    return Substitution(paths, optional, list_env, context.work.id())
   }
   let token = c.take()
   if token.quoted {
     return Text(token.text)
   }
-  let mut text = token.text
-  let forbidden = [
-    "=", ":", "[", "]", "{", "}", ";", ",", "?", "!", "@", "*", "&", "|", "^", "`",
-    "\\", "(", ")",
-  ]
-  if forbidden.contains(text) || text == "<eof>" {
-    raise Invalid("value required or forbidden token")
+  if ["=", ":", "+=", "[", "]", "{", "}", "\n", ",", "?"].contains(token.text) {
+    raise Located("value required", token.position)
   }
-  while c.pos < c.tokens.length() &&
-        c.tokens[c.pos].gap.is_empty() &&
-        !c.tokens[c.pos].quoted &&
-        !value_end(c) &&
-        c.peek() != "$" &&
-        c.peek() != "[" &&
-        c.peek() != "{" {
-    if forbidden.contains(c.peek()) {
-      break
-    }
-    text += c.take().text
+  if token.kind == "number" {
+    return Number(token.text)
   }
-  if text == "true" {
-    return Boolean(true)
+  if token.kind == "boolean" {
+    return Boolean(token.text == "true")
   }
-  if text == "false" {
-    return Boolean(false)
-  }
-  if text == "null" {
+  if token.kind == "null" {
     return Null
   }
-  let decoded = Some(@json.parse(text)) catch { _ => None }
-  match decoded {
-    Some(Number(_)) => Number(text)
-    _ => Text(text)
+  let mut text = token.text
+  while !c.done() &&
+        !value_end(c) &&
+        c.tokens[c.pos].gap.is_empty() &&
+        !c.tokens[c.pos].quoted &&
+        !["number", "boolean", "null"].contains(c.tokens[c.pos].kind) &&
+        !["$", "[", "{", "=", ":", "+=", "?"].contains(c.peek()) {
+    text += c.take().text
   }
+  Bare(text)
 }
 
 ///|
 fn value(
   c : Cursor,
-  sources : Map[String, String],
+  context : ParseContext,
   active : Array[String],
+  prefix : Array[String],
+  scope : Array[String],
   depth : Int,
-  work : Work,
 ) -> Value raise ParseError {
-  let parts = [("", atom(c, sources, active, depth, work))]
+  let parts = [("", atom(c, context, active, prefix, scope, depth))]
   while !value_end(c) {
     let gap = c.tokens[c.pos].gap
-    parts.push((gap, atom(c, sources, active, depth, work)))
+    parts.push((gap, atom(c, context, active, prefix, scope, depth)))
   }
-  if parts.length() == 1 {
-    parts[0].1
-  } else {
-    Concat(parts)
+  simplify_concat(parts, context.work)
+}
+
+///|
+fn from_json(j : Json) -> Value {
+  match j {
+    String(s) => Text(s)
+    Number(_, ..) => Number(j.stringify())
+    True => Boolean(true)
+    False => Boolean(false)
+    Null => Null
+    Array(xs) => List(xs.map(from_json))
+    Object(m) => {
+      let out = Map([])
+      for k, v in m {
+        out[k] = from_json(v)
+      }
+      Object(out)
+    }
   }
 }
 
 ///|
 fn lookup_parts(root : Value, keys : Array[String]) -> Value? {
   let mut current = root
-  for part in keys {
+  for key in keys {
     match current {
       Object(m) =>
-        match m.get(part) {
+        match m.get(key) {
           Some(v) => current = v
           None => return None
         }
@@ -331,191 +529,112 @@ fn lookup_parts(root : Value, keys : Array[String]) -> Value? {
 }
 
 ///|
-fn reference(
-  keys : Array[String],
-  optional : Bool,
-  root : Value,
-  chain : Array[Array[String]],
-  depth : Int,
-  work : Work,
-) -> Value? raise ParseError {
-  if chain.contains(keys) {
-    raise Invalid("substitution cycle")
-  }
-  let next = chain.copy()
-  next.push(keys)
-  let mut current = root
-  for part in keys {
-    let parent = match current {
-      Object(_) => Some(current)
-      _ => resolve(current, root, next, depth + 1, work)
-    }
-    match parent {
-      Some(Object(m)) =>
-        match m.get(part) {
-          Some(value) => current = value
-          None =>
-            if optional {
-              return None
-            } else {
-              raise Invalid("unresolved " + keys.join("."))
-            }
-        }
-      _ =>
-        if optional {
-          return None
-        } else {
-          raise Invalid("unresolved " + keys.join("."))
-        }
-    }
-  }
-  resolve(current, root, next, depth + 1, work)
+pub fn get(config : Value, key : String) -> Value? {
+  let keys = split_path(key) catch { _ => return None }
+  lookup_parts(config, keys)
 }
 
 ///|
-fn scalar_text(v : Value) -> String raise ParseError {
-  match v {
-    Text(s) | Number(s) => s
-    Boolean(b) => if b { "true" } else { "false" }
-    Null => "null"
-    _ => raise Invalid("cannot concatenate scalar with object or array")
-  }
-}
-
-///|
-fn resolve(
-  v : Value,
-  root : Value,
-  chain : Array[Array[String]],
-  depth : Int,
-  work : Work,
-) -> Value? raise ParseError {
-  if depth > 64 {
-    raise Invalid("resolution limit")
-  }
-  work.spend(1)
-  match v {
-    Text(_) | Number(_) | Boolean(_) | Null => Some(v)
-    Reference(key) =>
-      reference(
-        key.split(".").map(s => s.to_owned()).collect(),
-        false,
-        root,
-        chain,
-        depth,
-        work,
-      )
-    PathReference(keys, optional) =>
-      reference(keys, optional, root, chain, depth, work)
-    Object(m) => {
-      let out = Map([])
-      for k, x in m {
-        if resolve(x, root, chain, depth + 1, work) is Some(value) {
-          out[k] = value
-        }
-      }
-      Some(Object(out))
-    }
-    List(items) => {
-      let out = []
-      for item in items {
-        if resolve(item, root, chain, depth + 1, work) is Some(value) {
-          out.push(value)
-        }
-      }
-      Some(List(out))
-    }
-    DelayedMerge(a, b) =>
-      match resolve(b, root, chain, depth + 1, work) {
-        None => resolve(a, root, chain, depth + 1, work)
-        Some(Object(m)) =>
-          match resolve(a, root, chain, depth + 1, work) {
-            Some(old) => Some(merge(old, Object(m)))
-            None => Some(Object(m))
-          }
-        Some(other) => Some(other)
-      }
-    Concat(parts) => {
-      let resolved = []
-      for (gap, part) in parts {
-        if resolve(part, root, chain, depth + 1, work) is Some(value) {
-          resolved.push((gap, value))
-        }
-      }
-      if resolved.is_empty() {
-        return None
-      }
-      let first = resolved[0].1
-      match first {
-        Object(_) => {
-          let mut out = first
-          for i in 1..<resolved.length() {
-            match resolved[i].1 {
-              Object(_) => out = merge(out, resolved[i].1)
-              _ => raise Invalid("object concatenation type mismatch")
-            }
-          }
-          Some(out)
-        }
-        List(items) => {
-          let out = items.copy()
-          for i in 1..<resolved.length() {
-            match resolved[i].1 {
-              List(xs) =>
-                for x in xs {
-                  out.push(x)
-                }
-              _ => raise Invalid("array concatenation type mismatch")
-            }
-          }
-          work.spend(out.length())
-          Some(List(out))
-        }
-        _ => {
-          let mut out = ""
-          for (gap, value) in resolved {
-            out += gap + scalar_text(value)
-            if out.length() > 1000000 {
-              raise Invalid("concatenation limit")
-            }
-          }
-          work.spend(out.length())
-          Some(Text(out))
-        }
-      }
-    }
-  }
+pub fn get_path(config : Value, keys : Array[String]) -> Value? {
+  lookup_parts(config, keys)
 }
 
 ///|
 pub fn parse(
   source : String,
   includes? : Map[String, String] = Map([]),
+  loader? : ((IncludeRequest) -> Result[Array[IncludeSource], String])? = None,
+  source_name? : String = "<string>",
+  fallbacks? : Array[String] = [],
+  environment? : Map[String, String] = Map([]),
 ) -> Value raise ParseError {
-  let work = Work::{ remaining: 1000000, }
-  work.spend(source.length())
-  let c = lex(source, true)
-  skip_lines(c)
-  let root = if c.peek() == "[" {
-    value(c, includes, [], 0, work)
+  parse_sources(
+    { name: source_name, content: source, format: "hocon", },
+    includes~,
+    loader~,
+    fallbacks=fallbacks.mapi((i, content) => {
+      name: "<fallback " + i.to_string() + ">",
+      content,
+      format: "hocon",
+    }),
+    environment~,
+  )
+}
+
+///|
+/// Load ordered sources with explicit origins and a synchronous include host.
+pub fn parse_sources(
+  source : IncludeSource,
+  includes? : Map[String, String] = Map([]),
+  loader? : ((IncludeRequest) -> Result[Array[IncludeSource], String])? = None,
+  fallbacks? : Array[IncludeSource] = [],
+  environment? : Map[String, String] = Map([]),
+) -> Value raise ParseError {
+  let context : ParseContext = {
+    sources: includes,
+    loader,
+    work: { remaining: 1000000, next_id: 0, },
+  }
+  let layers = [parse_source(source, context, [source.name], [], [], 0)]
+  for source in fallbacks {
+    layers.push(parse_source(source, context, [source.name], [], [], 0))
+  }
+  let mut root = layers[layers.length() - 1]
+  for i = layers.length() - 2; i >= 0; i = i - 1 {
+    root = merge(root, layers[i])
+  }
+  resolve_document(root, environment)
+}
+
+///|
+fn simplify_concat(
+  parts : Array[(String, Value)],
+  work : Work,
+) -> Value raise ParseError {
+  let result : Array[Value] = []
+  let add = fn(v : Value) -> Unit raise ParseError {
+    if !result.is_empty() &&
+      !uncertain(result[result.length() - 1]) &&
+      !uncertain(v) {
+      let a = result[result.length() - 1]
+      result[result.length() - 1] = match (a, v) {
+        (Bare(space), Object(_)) | (Bare(space), List(_)) =>
+          if space.iter().all(whitespace) {
+            v
+          } else {
+            raise Invalid("incompatible value concatenation")
+          }
+        (Object(_), Bare(_)) | (List(_), Bare(_)) => a
+        (Object(_), Object(_)) => merge(a, v)
+        (List(xs), List(ys)) => {
+          let out = xs.copy()
+          for y in ys {
+            out.push(y)
+          }
+          work.spend(out.length())
+          List(out)
+        }
+        (Object(_), _) | (List(_), _) | (_, Object(_)) | (_, List(_)) =>
+          raise Invalid("incompatible value concatenation")
+        _ => {
+          let text = scalar_text(a) + scalar_text(v)
+          work.spend(text.length())
+          Text(text)
+        }
+      }
+    } else {
+      result.push(v)
+    }
+  }
+  for (gap, v) in parts {
+    if !gap.is_empty() {
+      add(Bare(gap))
+    }
+    add(v)
+  }
+  if result.length() == 1 {
+    result[0]
   } else {
-    let braced = c.eat("{")
-    object(c, includes, [], 0, braced, work)
+    Concat(result.map(v => ("", v)))
   }
-  skip_lines(c)
-  if c.peek() != "<eof>" {
-    raise Invalid("trailing input")
-  }
-  resolve(root, root, [], 0, Work::{ remaining: 200000, }).unwrap()
-}
-
-///|
-pub fn get(config : Value, key : String) -> Value? {
-  lookup_parts(config, key.split(".").map(s => s.to_owned()).collect())
-}
-
-///|
-/// Explicit components preserve quoted periods: get_path(config, ["a.b", "c"]).
-pub fn get_path(config : Value, keys : Array[String]) -> Value? {
-  lookup_parts(config, keys)
 }

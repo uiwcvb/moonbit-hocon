@@ -7,3 +7,4 @@ evidence/robustness.json
 evidence/coverage*
 evidence/current-validation.json
 evidence/validation-console.txt
+evidence/*-replay.json

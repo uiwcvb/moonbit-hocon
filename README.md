@@ -1,83 +1,102 @@
 # HOCON 配置解析器
 
-MoonBit 本地 0.3.0 版本。配置对象合并、替换、显式提供的 include 数据源，以及保留类型的数组/标量解析。
-本仓库独立保存源码、编译后的浏览器引擎、CLI、文档和验证记录。
+MoonBit 本地 0.4.0：类型化配置、历史值自引用、`+=`、include 重定位、显式回退与环境替换、单位读取，以及真实文件加载和 CLI。
+解析和求值均由 MoonBit 实现；Node 仅提供文件、properties 和命令行宿主。Java 只用于独立参考测试。
 
-## 使用
+## 命令行与文件
 
 ```powershell
 node tools/cli.mjs --input 'port=8080' --resolved-json
-# {"port":8080}
-node tools/cli.mjs --file sample.txt --resolved-json --json
+node tools/cli.mjs --file app.conf --fallback defaults.conf --env --resolved-json
+node tools/cli.mjs --file app.conf --get service.timeout --type duration
+node tools/cli.mjs --file app.conf --classpath ./resources --resolved-json --json
 ```
 
-`--resolved-json` 输出已解析的 JSON 值；`--json` 是 CLI 结果信封，包含 ok 和 output。
-不传 --resolved-json 时保留语法值调试展示。也支持 UTF-8 标准输入和独立网页 `./start-review.ps1`。
-所有入口调用真实 MoonBit 引擎；没有远程服务调用。
+`--fallback` 可重复，越早指定优先级越高；主配置优先级最高。各文件的 include 相对来源文件解析。
+`--env` 显式启用当前进程环境，默认不读取。classpath 接收目录，首个目录优先。
+`--resolved-json` 输出最终 JSON；默认输出值类型调试展示；`--json` 保留 `{ok,output}` 结果信封。
+`--get` 接受带引号路径，`--type` 支持 value/string/boolean/int/long/double/duration/bytes/memory/list/has/null。
+long、duration、bytes、memory 的 CLI 结果为精确十进制字符串；duration 单位为纳秒。
+错误退出码：配置或读取错误 2，宿主/参数错误 1，成功 0。也支持 UTF-8 stdin。
+
+```javascript
+import {load, loadFile} from './tools/config.mjs';
+const config = loadFile('app.conf', {
+  fallbackFiles: ['defaults.conf'],
+  environment: {HOST: 'localhost'},
+  classpath: ['./resources'],
+});
+const bytes = load('limit=2 KiB', {getter: 'bytes', path: 'limit'}); // "2048"
+```
+
+宿主支持本地文件、file: URL、目录 classpath；普通缺失 include 为空，required 缺失时报错。
+不带已知扩展名的 include 搜索 `.properties`、`.json`、`.conf`，依此顺序合并。
+`file(...)` 相对 cwd，`classpath(...)` 相对资源根；普通 `include "..."` 相对来源。
+properties 支持转义、续行、点路径及冲突时对象优先，所有值保持字符串。JSON 来源的键是字面键，不解释替换。
+
+兼容性细节：Lightbend 1.4.9 的普通启发式 include 在直接指定 `.json`/`.properties` 文件时会继承 HOCON 语法；本宿主复现此行为。
+需要按扩展名读取其原格式时，使用不带扩展名的搜索、显式 `file(...)`，或把该文件作为加载入口。
+文件语法/优先级的实际参考结果保存在 `evidence/file-reference-vectors.json`，不是只根据扩展名推断。
+
+## MoonBit API
 
 ```moonbit
 let config = @hocon.parse(
-  "include required(file(\"defaults\"))\nport=9090\ncopy=${port}",
-  includes={"defaults": "port=8080\nenabled=true\nitems=[1,2]"},
+  "items=[1]\nitems+=2\nname=${name}prod\ntimeout=1.25ms",
+  fallbacks=["name=base-"],
 )
-let port = @hocon.get_int(config, "copy") // 9090
-let items = @hocon.get_list(config, "items")
+let name = @hocon.get_string(config, "name") // base-prod
+let timeout = @hocon.get_duration(config, "timeout") // 1250000L
 let json = config.to_json_string()
 ```
 
-include 的名字由调用者提供的 Map 显式匹配。`file("name")` 使用相同映射；核心不自动读磁盘、URL、classpath 或环境变量。
-普通缺失 include 为空对象；required(...) 缺失时报错。嵌套 include 保留合并顺序、循环和展开限额检查。
+`parse` 接受 `includes : Map[String,String]`、`fallbacks : Array[String]`、`environment` 和 `source_name`。
+`parse_sources` 接受带 name/content/format 的主源与回退源。format 为 hocon 或 json。
+两者都可接入同步 `loader : (IncludeRequest) -> Result[Array[IncludeSource],String]`；请求包含 name/kind/from/required。
+loader 返回的源按低优先级到高优先级合并，规范化的 name 用于 include 循环检测。核心不自行访问磁盘和网络。
 
-## 数据与语义
+已解析 Value 包括 Text、Number、Boolean、Null、List、Object；Number 保留原数字拼写。
+Bare、Bound、Substitution、Reference、PathReference、Concat、DelayedMerge 是内部解析节点，正常 parse 结果不含这些节点。
+0.4 新增枚举分支，穷举匹配 Value 的调用方需调整。`get_path` 接收字面组件数组；`split_path` 与 `get` 理解引号、空组件和含点键。
 
-| 类型 | 表示 |
-| --- | --- |
-| 字符串 | Text(String) |
-| 数字 | Number(String)，保留原始数字拼写 |
-| 布尔 / 空值 | Boolean(Bool) / Null |
-| 数组 / 对象 | List(Array[Value]) / Object(Map[String, Value]) |
+| API | 行为 |
+|---|---|
+| get_string/get_int/get_bool/get_list | 原有严格类型读取；get_int 为 32 位整数 |
+| get_as_string/get_as_bool/get_as_int | 按 HOCON/Lightbend 规则转换 |
+| get_long/get_double | Java 兼容数值读取，包括浮点截断、饱和和十六进制浮点字符串 |
+| get_as_list | 数组或非负整数索引对象，忽略非数字键并按索引排序 |
+| get_duration | 纳秒 Int64；缺省单位毫秒，支持 ns/us/ms/s/m/h/d 及英文别名 |
+| get_bytes/get_memory_size | SI/IEC 内存单位；前者要求 Int64，后者返回任意精度十进制字符串 |
+| has_path/get_is_null | 区分缺失与 null；has_path 的 include_null 默认 false |
 
-Reference、PathReference、Concat、DelayedMerge 是解析过程中的节点；parse 返回已解析数据。
-`get_string`、`get_int`、`get_bool` 和 `get_list` 严格检查类型，不把数字字符串隐式变成数字。
-get_int 限 32 位整数；Number 本身保留十进制/指数文本。get_path 的组件数组支持键中包含点。
+Double API 可返回 NaN/Infinity；JSON 桥接和 CLI 用 "NaN"/"Infinity"/"-Infinity" 表示这些非 JSON 数值。
+普通 JSON 数字通过 JS 宿主会受双精度限制；需要精确长整数应使用 long getter，或直接在 MoonBit 读取 Number/Int64。
 
-支持正负 JSON 数字、布尔、null、数组及数组内嵌对象；引号字符串使用 JSON 转义（包括 Unicode）。
-对象重复键递归合并，非对象值构成覆盖屏障。`${path}` 保留被替换值的类型；`${?missing}` 缺失时删除字段或数组元素，
-同字段已有值时保留旧值。路径可穿过另一个替换得到的对象，引用路径支持带引号的点号组件。
-同一行的字符串/标量片段拼接保留间隔；数组与数组拼接，对象与对象合并；混合类型拼接报错。
-JSON 输出按对象键排序，并区分字符串、数字、布尔、null 和数组。
+## 解析与合并
 
-0.3 的迁移：数字与布尔不再是 Text；对 Value 穷举匹配的下游需增加新分支。
-原来缺失普通 include 报错的行为已修正，要求存在的资源应改用 required(...)。
+支持布尔/null/数组/对象、JSON 转义、三引号多行文本、HOCON 空白与非引号片段、引号路径、注释。
+`${path}` 保留类型；`${?missing}` 删除缺失字段或数组元素。历史值自引用和 `+=` 在合并后求值。
+对象递归合并，标量/数组/null 构成覆盖屏障；三层及以上回退仍保留这些屏障。
+include 中的引用优先查包含位置，再回退根路径。环境替换显式提供；null 阻止环境回退。
+`${NAME[]}` 在配置缺失时读取 NAME_0、NAME_1 等环境键，遇到第一个缺失索引停止。
 
-## 验证
+拼接保留标量间空白，合并对象和数组。已对齐旧版差异 `a=[1] text` 的上游宽松行为：结果为数组；引号文本仍报类型错误。
+词法与语法错误提供 source、offset、line、column；offset 为从零开始的 Unicode 标量偏移，行列从一开始。
+语义/解析预算错误目前只有消息，不保证全部携带源位置。
 
-安装 MoonBit 后运行 `./verify.ps1`，或指定 `-MoonPath`。
-本轮旧功能 9 项 JS 测试通过；新增与相关类型检查 6 组通过；最后的对象别名路径修复单独验证通过。
-独立参考工具测试：
+## 验证与限制
 
-```powershell
-$env:HOCON_REFERENCE_JAR='C:/path/to/config-1.4.5.jar'
-node tools/test-reference.mjs
-```
+执行 `./verify.ps1 -MoonPath /absolute/path/to/moon`，检查 JS/Wasm-GC、公开 API、文件/CLI、参考向量回放和有界异常输入。
+实时参考运行与证据范围见 [TESTING.md](TESTING.md)。源代码、API、编译引擎与报告 SHA256 一起保存。
+这些用例证明覆盖范围内的结果一致，不代表全部 Lightbend Config API 或生产性能已经追平。
 
-需要 Java 11+；适配器是原创测试代码，上游 JAR 不在本仓库内分发。
-本轮实际使用 Lightbend Config 1.4.5：34 个接受/拒绝和类型化结果案例中，33 个一致。
-唯一差异为 `a=[1] text`：上游返回 {"a":[1]}，本库拒绝数组与文本混合。
-[规范的字符串拼接规则](https://github.com/lightbend/config/blob/main/HOCON.md#string-value-concatenation)禁止把数组/对象用于字符串拼接，
-本库保留报错并记录上游差异。对照脚本仍以非零退出，不掩盖不一致。
-完整逐例记录见 evidence/typed-reference-validation.json；没有据此宣称全部兼容。
+资源上限：每源 100,000 UTF-16 单元；源展开预算 1,000,000；对象/数组/include 深度 32；求值深度 128、工作预算 200,000；输出深度 64、累计输出预算 1,000,000。
+Node 宿主另限制单文件 400,000 字节、读取累计 4,000,000 字节及 512 次文件读取，并拒绝无效 UTF-8。
+数值转换文本限 10,000 单元，任意精度单位指数限 ±4096。这些限制可能拒绝上游能处理的超大输入。
 
-## 仍需完善
+仍缺 HTTP(S) include、JAR/classloader、JVM application/reference/system-properties 默认加载，完整 typed-list/object/checkValid/编辑/来源注释 API、保留注释的渲染与端到端性能对照。
+更多参考版本、平台、大配置和持续负载尚未完成；详细边界见 [FEATURES.md](FEATURES.md)。
 
-- 自引用历史值及 +=，嵌套 include 的替换路径重定位/根路径回退。
-- 完整非引号字符串/路径词法、多行三引号、全部空白字符和带位置的错误。
-- 文件系统/URL/classpath include 宿主、扩展名查找及环境/默认配置合并。
-- 数值/单位访问器、完整类型转换规则和性能对标。
-
-每个源限 100,000 UTF-16 单元，包含展开累计预算 1,000,000；对象/数组/include 深度限 32，
-替换深度 64，并有展开节点与输出长度限额。
-
-按 [HOCON 官方规格](https://github.com/lightbend/config/blob/main/HOCON.md)自行实现，没有复制上游源码或测试集。
-原创代码 MIT；查重记录见 DUPLICATION.md，检索不能保证没有同类项目。
-全部保留本地，没有上传或发布；localreview 是本地命名空间。旧 ZIP/bundle 为历史快照，本轮未重打包。
+依据 [HOCON 官方规格](https://github.com/lightbend/config/blob/main/HOCON.md)独立实现；参考库采用 [Lightbend Config 1.4.9](https://github.com/lightbend/config/releases/tag/v1.4.9)。
+原创代码 MIT；Java 适配器与测试用例自行编写，上游 JAR 不在本仓库分发。没有复制上游实现或测试集。
+全部留在本地，未上传或发布；旧 ZIP/bundle 为历史快照，本轮未重打包。

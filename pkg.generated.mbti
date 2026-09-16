@@ -8,26 +8,74 @@ import {
 // Values
 pub fn get(Value, String) -> Value?
 
+pub fn get_as_bool(Value, String) -> Bool raise ParseError
+
+pub fn get_as_int(Value, String) -> Int raise ParseError
+
+pub fn get_as_list(Value, String) -> Array[Value] raise ParseError
+
+pub fn get_as_string(Value, String) -> String raise ParseError
+
 pub fn get_bool(Value, String) -> Bool raise ParseError
+
+pub fn get_bytes(Value, String) -> Int64 raise ParseError
+
+pub fn get_double(Value, String) -> Double raise ParseError
+
+pub fn get_duration(Value, String) -> Int64 raise ParseError
 
 pub fn get_int(Value, String) -> Int raise ParseError
 
+pub fn get_is_null(Value, String) -> Bool raise ParseError
+
 pub fn get_list(Value, String) -> Array[Value] raise ParseError
+
+pub fn get_long(Value, String) -> Int64 raise ParseError
+
+pub fn get_memory_size(Value, String) -> String raise ParseError
 
 pub fn get_path(Value, Array[String]) -> Value?
 
 pub fn get_string(Value, String) -> String raise ParseError
 
-pub fn parse(String, includes? : Map[String, String]) -> Value raise ParseError
+pub fn has_path(Value, String, include_null? : Bool) -> Bool
+
+pub fn parse(String, includes? : Map[String, String], loader? : ((IncludeRequest) -> Result[Array[IncludeSource], String])?, source_name? : String, fallbacks? : Array[String], environment? : Map[String, String]) -> Value raise ParseError
+
+pub fn parse_sources(IncludeSource, includes? : Map[String, String], loader? : ((IncludeRequest) -> Result[Array[IncludeSource], String])?, fallbacks? : Array[IncludeSource], environment? : Map[String, String]) -> Value raise ParseError
+
+pub fn split_path(String) -> Array[String] raise ParseError
 
 // Errors
 pub suberror ParseError {
   Invalid(String)
+  Located(String, SourcePosition)
 } derive(@debug.Debug)
 
 // Types and methods
+pub(all) struct IncludeRequest {
+  name : String
+  kind : String
+  from : String
+  required : Bool
+} derive(Eq, ToJson, @debug.Debug)
+
+pub(all) struct IncludeSource {
+  name : String
+  content : String
+  format : String
+} derive(Eq, @debug.Debug)
+
+pub(all) struct SourcePosition {
+  source : String
+  offset : Int
+  line : Int
+  column : Int
+} derive(Eq, ToJson, @debug.Debug)
+
 pub(all) enum Value {
   Text(String)
+  Bare(String)
   Number(String)
   Boolean(Bool)
   Null
@@ -37,6 +85,8 @@ pub(all) enum Value {
   Object(Map[String, Value])
   Concat(Array[(String, Value)])
   DelayedMerge(Value, Value)
+  Bound(Array[String], Int, Value)
+  Substitution(Array[Array[String]], Bool, Bool, Int)
 } derive(Eq, @debug.Debug)
 pub fn Value::to_json_string(Self) -> String raise ParseError
 

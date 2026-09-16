@@ -1,11 +1,19 @@
 # 功能与兼容性边界
 
-0.3.0 支持真正的数字/布尔/null/数组类型、字符串和容器拼接、可选替换、跨对象别名路径、
-普通/required/file include 语法及内存数据源、覆盖屏障与稳定 JSON 输出。
-严格类型访问器包含 get_string/get_int/get_bool/get_list；get_path 可读取带点的字面键。
+0.4.0 新增历史值自引用/+=、完整替换路径与 include 重定位、三引号和 Unicode 词法、来源位置、回退与显式环境、数值/单位转换和真实文件宿主。
+CLI 支持 fallback、environment、classpath 目录及带类型的单路径读取；核心 MoonBit 可注入自己的同步 include loader。
 
-仍缺自引用/+=、嵌套 include 的替换路径重定位、完整词法、多行字符串、磁盘/URL/classpath 宿主、单位访问器。
+当前值模型保留字符串/数字/布尔/null/数组/对象类型。混合拼接、自引用环、缺失引用、对象覆盖屏障、可选替换和文件优先级均有独立参考对照。
+Lightbend 特定的裸文本接数组、启发式已知扩展名继承 HOCON、Java 数值转换也有固定用例。参考版本是 1.4.9；旧 0.3 的 33/34 报告只作历史记录。
 
-本轮相关测试通过，实际 Lightbend Config 1.4.5 对照 33/34 一致；数组后多余文本的上游宽松行为与本库报错有差异。
-差异保留在证据里，对照脚本非零退出。不声称完全兼容或已追平。
-独立仓库、构建、网页、CLI、文档和 CI 配置保留，未上传；历史 ZIP/bundle 未刷新。
+尚未追平：
+
+- HTTP(S) include、URL 响应 Content-Type、重定向与超时；目前 file: URL 可用。
+- JAR/自定义 JVM classloader、默认 application/reference 配置与 Java system properties；目录 classpath、显式 fallback/environment 已实现。
+- 完整 typed-list/object/config APIs、checkValid、resolveWith、局部树修改和注释/来源保真；当前返回已解析值。
+- 全部错误的精确位置、错误种类与多错误诊断；词法/语法有位置，部分语义错误只有消息。
+- 数字索引对象与数组的所有拼接转换角落、格式/值的完整上游边界与多版本覆盖。
+- 独立大配置性能、内存/吞吐、多平台及持续负载。现有示例 benchmark 不是上游性能比较。
+
+每源/深度/求值/输出及宿主文件限额详见 README。Number 保留文本，但普通 JS JSON 对象里的数值受双精度限制；long/bytes/memory 使用字符串传输。
+编译后的引擎、CLI、API 与证据在本地提交；CI 文件已配置但没有远端运行，旧 ZIP/bundle 未更新。

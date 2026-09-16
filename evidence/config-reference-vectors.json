@@ -1,0 +1,6783 @@
+{
+  "reference": "config-1.4.9.jar",
+  "requests": [
+    {
+      "source": ""
+    },
+    {
+      "source": "{}"
+    },
+    {
+      "source": "a=1\nb=true\nc=null\nd=\"1\""
+    },
+    {
+      "source": "a=-1.25e+3"
+    },
+    {
+      "source": "a=[1,false,null,{x=2},[3,4],]"
+    },
+    {
+      "source": "a=[1\n2\n3]"
+    },
+    {
+      "source": "a=[1 2]"
+    },
+    {
+      "source": "a={x=1}\na={y=2}"
+    },
+    {
+      "source": "a={x=1}\na=null\na={y=2}"
+    },
+    {
+      "source": "a=[1] [2,3]"
+    },
+    {
+      "source": "a={x=1} {y=2}"
+    },
+    {
+      "source": "a=[1,true]\nb=${a}"
+    },
+    {
+      "source": "a=${?NONE}"
+    },
+    {
+      "source": "a=7\na=${?NONE}"
+    },
+    {
+      "source": "a=[0,${?NONE},1]"
+    },
+    {
+      "source": "a=${?NONE}suffix"
+    },
+    {
+      "source": "a=\"prefix\"${?NONE}"
+    },
+    {
+      "source": "a=${?NONE} x"
+    },
+    {
+      "source": "a=x ${?NONE} y"
+    },
+    {
+      "source": "a=${?NONE} \" x\""
+    },
+    {
+      "source": "a=${?NONE}${n}\nn=1"
+    },
+    {
+      "source": "\"a.b\"=7\nz=${\"a.b\"}"
+    },
+    {
+      "source": "host=api\nport=80\nurl=${host}\":\"${port}"
+    },
+    {
+      "source": "a={x=1}\nb=${a}\nb={y=2}"
+    },
+    {
+      "source": "a={x=1}\nb=${a}\nc=${b.x}"
+    },
+    {
+      "source": "a=1\na=${a}x"
+    },
+    {
+      "source": "a=${?a}x"
+    },
+    {
+      "source": "a={x=1}\na=${a}\nb=${a}"
+    },
+    {
+      "source": "z={x=1\nx=${z.x}y}\na=${z}"
+    },
+    {
+      "source": "a={b=${?a}}"
+    },
+    {
+      "source": "a={b=${a}}"
+    },
+    {
+      "source": "a=1\nb=2\na=${b}\nb=${a}"
+    },
+    {
+      "source": "a=[1]\na+=[2,3]"
+    },
+    {
+      "source": "a+={x=1}"
+    },
+    {
+      "source": "a+=${missing}"
+    },
+    {
+      "source": "a+=${?NONE}"
+    },
+    {
+      "source": "a={x=1,y=${a.x}}\na.x=2"
+    },
+    {
+      "source": "a=${a}\na={x=1}"
+    },
+    {
+      "source": "a=${missing}\na=3"
+    },
+    {
+      "source": "a.b=1\na.b=${a.b}z"
+    },
+    {
+      "source": "a={x={c=1}}\na=${a.x}\na={x=2}"
+    },
+    {
+      "source": "a=1\na=${a}\na=${a}"
+    },
+    {
+      "source": "a=1\na=${a}x\na=${a}y"
+    },
+    {
+      "source": "a=1\na=${b}\nb=${a}x"
+    },
+    {
+      "source": "a=${b}\nb=${c}\nc=${a}"
+    },
+    {
+      "source": "a={x=1}\na={y=${a.x}}"
+    },
+    {
+      "source": "a=[${a}]"
+    },
+    {
+      "source": "a=[${?a}]"
+    },
+    {
+      "source": "a={x=${?a.x}}"
+    },
+    {
+      "source": "a={x=3}\na.x=${a.x}0"
+    },
+    {
+      "source": "a=${obj}\na.x=2\nobj={x=1,y=3}"
+    },
+    {
+      "source": "a=${obj}\na.x=${a.x}z\nobj={x=1,y=3}"
+    },
+    {
+      "source": "a=${obj}\na.x=2\nb=${a.y}\nobj={x=1,y=3}"
+    },
+    {
+      "source": "a=[]foo"
+    },
+    {
+      "source": "a=[]\"foo\""
+    },
+    {
+      "source": "a=[]${x}\nx=foo"
+    },
+    {
+      "source": "a=[]${x}\nx=\"foo\""
+    },
+    {
+      "source": "a=[]${x}\nx=foo bar"
+    },
+    {
+      "source": "a=text [1]"
+    },
+    {
+      "source": "a=[]falsefoo"
+    },
+    {
+      "source": "a=[]5foo"
+    },
+    {
+      "source": "a=[]-foo"
+    },
+    {
+      "source": "a=[] 1efoo"
+    },
+    {
+      "source": "a=[]true"
+    },
+    {
+      "source": "a=[]5"
+    },
+    {
+      "source": "a={}false"
+    },
+    {
+      "source": "a={} foo bar"
+    },
+    {
+      "source": "a=[]\ntext"
+    },
+    {
+      "source": "a={} ${x}\nx=text"
+    },
+    {
+      "source": "a b.c\"d\"=1"
+    },
+    {
+      "source": "a . b=1"
+    },
+    {
+      "source": "\"a\" . \"b\"=1"
+    },
+    {
+      "source": "\"\"=1"
+    },
+    {
+      "source": "a.\"\".b=1"
+    },
+    {
+      "source": "a..b=1"
+    },
+    {
+      "source": ".a=1"
+    },
+    {
+      "source": "a.=1"
+    },
+    {
+      "source": "a.\"b.c\"=1"
+    },
+    {
+      "source": "1.2.3=4"
+    },
+    {
+      "source": "truefoo=1"
+    },
+    {
+      "source": "a=\"\"\"hello\nworld\"\"\""
+    },
+    {
+      "source": "a=\"\"\"a\\nb\"\"\""
+    },
+    {
+      "source": "a=\"\"\"x\"\"\"\""
+    },
+    {
+      "source": "a=\"\"\"x\"\"\"\"\""
+    },
+    {
+      "source": "a=\"\"\"unfinished"
+    },
+    {
+      "source": "a=hello|world"
+    },
+    {
+      "source": "a=foo(bar)"
+    },
+    {
+      "source": "a=foo;bar"
+    },
+    {
+      "source": "a=foo+bar"
+    },
+    {
+      "source": "a=foo@bar"
+    },
+    {
+      "source": "a={x=1"
+    },
+    {
+      "source": "a=[1"
+    },
+    {
+      "source": "a=[1,,2]"
+    },
+    {
+      "source": "a=[,1]"
+    },
+    {
+      "source": "a=1,,b=2"
+    },
+    {
+      "source": "a={} [1]"
+    },
+    {
+      "source": "a=${missing}"
+    },
+    {
+      "source": "a=${b}\nb=${a}"
+    },
+    {
+      "source": "a=\"bad\nstring\""
+    },
+    {
+      "source": "a=$ {x}"
+    },
+    {
+      "source": "a=${ ?x}"
+    },
+    {
+      "source": "a=${? x}"
+    },
+    {
+      "source": "a=${x\ny}"
+    },
+    {
+      "source": "a=${\"x.y\"}\n\"x.y\"=1"
+    },
+    {
+      "source": "include \"missing\"\na=1"
+    },
+    {
+      "source": "include required(\"missing\")"
+    },
+    {
+      "source": "include=1"
+    },
+    {
+      "source": "include \"x\" \"y\""
+    },
+    {
+      "source": "a=include"
+    },
+    {
+      "source": "foo include=1"
+    },
+    {
+      "source": "a=0"
+    },
+    {
+      "source": "a=\"prefix\"0"
+    },
+    {
+      "source": "a=[]0"
+    },
+    {
+      "source": "a=00"
+    },
+    {
+      "source": "a=\"prefix\"00"
+    },
+    {
+      "source": "a=[]00"
+    },
+    {
+      "source": "a=01"
+    },
+    {
+      "source": "a=\"prefix\"01"
+    },
+    {
+      "source": "a=[]01"
+    },
+    {
+      "source": "a=-01"
+    },
+    {
+      "source": "a=\"prefix\"-01"
+    },
+    {
+      "source": "a=[]-01"
+    },
+    {
+      "source": "a=00.5"
+    },
+    {
+      "source": "a=\"prefix\"00.5"
+    },
+    {
+      "source": "a=[]00.5"
+    },
+    {
+      "source": "a=1."
+    },
+    {
+      "source": "a=\"prefix\"1."
+    },
+    {
+      "source": "a=[]1."
+    },
+    {
+      "source": "a=-.5"
+    },
+    {
+      "source": "a=\"prefix\"-.5"
+    },
+    {
+      "source": "a=[]-.5"
+    },
+    {
+      "source": "a=.5"
+    },
+    {
+      "source": "a=\"prefix\".5"
+    },
+    {
+      "source": "a=[].5"
+    },
+    {
+      "source": "a=-"
+    },
+    {
+      "source": "a=\"prefix\"-"
+    },
+    {
+      "source": "a=[]-"
+    },
+    {
+      "source": "a=-foo"
+    },
+    {
+      "source": "a=\"prefix\"-foo"
+    },
+    {
+      "source": "a=[]-foo"
+    },
+    {
+      "source": "a=1e"
+    },
+    {
+      "source": "a=\"prefix\"1e"
+    },
+    {
+      "source": "a=[]1e"
+    },
+    {
+      "source": "a=1e+"
+    },
+    {
+      "source": "a=\"prefix\"1e+"
+    },
+    {
+      "source": "a=[]1e+"
+    },
+    {
+      "source": "a=1e-2"
+    },
+    {
+      "source": "a=\"prefix\"1e-2"
+    },
+    {
+      "source": "a=[]1e-2"
+    },
+    {
+      "source": "a=1e+2"
+    },
+    {
+      "source": "a=\"prefix\"1e+2"
+    },
+    {
+      "source": "a=[]1e+2"
+    },
+    {
+      "source": "a=1e3foo"
+    },
+    {
+      "source": "a=\"prefix\"1e3foo"
+    },
+    {
+      "source": "a=[]1e3foo"
+    },
+    {
+      "source": "a=truefoo"
+    },
+    {
+      "source": "a=\"prefix\"truefoo"
+    },
+    {
+      "source": "a=[]truefoo"
+    },
+    {
+      "source": "a=falsehood"
+    },
+    {
+      "source": "a=\"prefix\"falsehood"
+    },
+    {
+      "source": "a=[]falsehood"
+    },
+    {
+      "source": "a=nullary"
+    },
+    {
+      "source": "a=\"prefix\"nullary"
+    },
+    {
+      "source": "a=[]nullary"
+    },
+    {
+      "source": "a=1_000"
+    },
+    {
+      "source": "a=\"prefix\"1_000"
+    },
+    {
+      "source": "a=[]1_000"
+    },
+    {
+      "source": "a=NaN"
+    },
+    {
+      "source": "a=\"prefix\"NaN"
+    },
+    {
+      "source": "a=[]NaN"
+    },
+    {
+      "source": "a=Infinity"
+    },
+    {
+      "source": "a=\"prefix\"Infinity"
+    },
+    {
+      "source": "a=[]Infinity"
+    },
+    {
+      "source": "a=0x12"
+    },
+    {
+      "source": "a=\"prefix\"0x12"
+    },
+    {
+      "source": "a=[]0x12"
+    },
+    {
+      "source": "a=1.2.3"
+    },
+    {
+      "source": "a=\"prefix\"1.2.3"
+    },
+    {
+      "source": "a=[]1.2.3"
+    },
+    {
+      "source": "a=1234567890123456789"
+    },
+    {
+      "source": "a=\"prefix\"1234567890123456789"
+    },
+    {
+      "source": "a=[]1234567890123456789"
+    },
+    {
+      "source": "a=\tone\ttwo\t"
+    },
+    {
+      "source": "a\tb=1"
+    },
+    {
+      "source": "a=\rone\rtwo\r"
+    },
+    {
+      "source": "a\rb=1"
+    },
+    {
+      "source": "a=\u000bone\u000btwo\u000b"
+    },
+    {
+      "source": "a\u000bb=1"
+    },
+    {
+      "source": "a=\fone\ftwo\f"
+    },
+    {
+      "source": "a\fb=1"
+    },
+    {
+      "source": "a=\u001cone\u001ctwo\u001c"
+    },
+    {
+      "source": "a\u001cb=1"
+    },
+    {
+      "source": "a=\u001fone\u001ftwo\u001f"
+    },
+    {
+      "source": "a\u001fb=1"
+    },
+    {
+      "source": "a= one two "
+    },
+    {
+      "source": "a b=1"
+    },
+    {
+      "source": "a= one two "
+    },
+    {
+      "source": "a b=1"
+    },
+    {
+      "source": "a= one two "
+    },
+    {
+      "source": "a b=1"
+    },
+    {
+      "source": "a= one two "
+    },
+    {
+      "source": "a b=1"
+    },
+    {
+      "source": "a= one two "
+    },
+    {
+      "source": "a b=1"
+    },
+    {
+      "source": "a= one two "
+    },
+    {
+      "source": "a b=1"
+    },
+    {
+      "source": "a= one two "
+    },
+    {
+      "source": "a b=1"
+    },
+    {
+      "source": "a= one two "
+    },
+    {
+      "source": "a b=1"
+    },
+    {
+      "source": "a=　one　two　"
+    },
+    {
+      "source": "a　b=1"
+    },
+    {
+      "source": "a=﻿one﻿two﻿"
+    },
+    {
+      "source": "a﻿b=1"
+    },
+    {
+      "source": "a=1\na=${a}"
+    },
+    {
+      "source": "a=1\na=${?a}"
+    },
+    {
+      "source": "a=1\na=${a} x"
+    },
+    {
+      "source": "a=1\na=${a} [2]"
+    },
+    {
+      "source": "a=1\na=${a} {y=2}"
+    },
+    {
+      "source": "a=\"x\"\na=${a}"
+    },
+    {
+      "source": "a=\"x\"\na=${?a}"
+    },
+    {
+      "source": "a=\"x\"\na=${a} x"
+    },
+    {
+      "source": "a=\"x\"\na=${a} [2]"
+    },
+    {
+      "source": "a=\"x\"\na=${a} {y=2}"
+    },
+    {
+      "source": "a=[1]\na=${a}"
+    },
+    {
+      "source": "a=[1]\na=${?a}"
+    },
+    {
+      "source": "a=[1]\na=${a} x"
+    },
+    {
+      "source": "a=[1]\na=${a} [2]"
+    },
+    {
+      "source": "a=[1]\na=${a} {y=2}"
+    },
+    {
+      "source": "a={x=1}\na=${a}"
+    },
+    {
+      "source": "a={x=1}\na=${?a}"
+    },
+    {
+      "source": "a={x=1}\na=${a} x"
+    },
+    {
+      "source": "a={x=1}\na=${a} [2]"
+    },
+    {
+      "source": "a={x=1}\na=${a} {y=2}"
+    },
+    {
+      "source": "a=null\na=${a}"
+    },
+    {
+      "source": "a=null\na=${?a}"
+    },
+    {
+      "source": "a=null\na=${a} x"
+    },
+    {
+      "source": "a=null\na=${a} [2]"
+    },
+    {
+      "source": "a=null\na=${a} {y=2}"
+    },
+    {
+      "source": "a=${?NONE}\na=${a}"
+    },
+    {
+      "source": "a=${?NONE}\na=${?a}"
+    },
+    {
+      "source": "a=${?NONE}\na=${a} x"
+    },
+    {
+      "source": "a=${?NONE}\na=${a} [2]"
+    },
+    {
+      "source": "a=${?NONE}\na=${a} {y=2}"
+    },
+    {
+      "source": "include \"part\"\noutside=3",
+      "includes": {
+        "part": "x=1\ny=${x}",
+        "inner": "y=${x}"
+      }
+    },
+    {
+      "source": "nested {include \"part\"}\nnested.x=2\nx=10\noutside=3",
+      "includes": {
+        "part": "x=1\ny=${x}",
+        "inner": "y=${x}"
+      }
+    },
+    {
+      "source": "include \"part\"\noutside=3",
+      "includes": {
+        "part": "x=1\ny=${outside}",
+        "inner": "y=${x}"
+      }
+    },
+    {
+      "source": "nested {include \"part\"}\nnested.x=2\nx=10\noutside=3",
+      "includes": {
+        "part": "x=1\ny=${outside}",
+        "inner": "y=${x}"
+      }
+    },
+    {
+      "source": "include \"part\"\noutside=3",
+      "includes": {
+        "part": "x=1\ny=${?NONE}",
+        "inner": "y=${x}"
+      }
+    },
+    {
+      "source": "nested {include \"part\"}\nnested.x=2\nx=10\noutside=3",
+      "includes": {
+        "part": "x=1\ny=${?NONE}",
+        "inner": "y=${x}"
+      }
+    },
+    {
+      "source": "include \"part\"\noutside=3",
+      "includes": {
+        "part": "a=[1]\na+=2",
+        "inner": "y=${x}"
+      }
+    },
+    {
+      "source": "nested {include \"part\"}\nnested.x=2\nx=10\noutside=3",
+      "includes": {
+        "part": "a=[1]\na+=2",
+        "inner": "y=${x}"
+      }
+    },
+    {
+      "source": "include \"part\"\noutside=3",
+      "includes": {
+        "part": "x=1\nx=${x}y",
+        "inner": "y=${x}"
+      }
+    },
+    {
+      "source": "nested {include \"part\"}\nnested.x=2\nx=10\noutside=3",
+      "includes": {
+        "part": "x=1\nx=${x}y",
+        "inner": "y=${x}"
+      }
+    },
+    {
+      "source": "include \"part\"\noutside=3",
+      "includes": {
+        "part": "include \"inner\"\nx=7",
+        "inner": "y=${x}"
+      }
+    },
+    {
+      "source": "nested {include \"part\"}\nnested.x=2\nx=10\noutside=3",
+      "includes": {
+        "part": "include \"inner\"\nx=7",
+        "inner": "y=${x}"
+      }
+    },
+    {
+      "source": "a {include \"part\"}",
+      "includes": {
+        "part": "y=${x}",
+        "outer": "b {include \"part\"}\nx=5"
+      }
+    },
+    {
+      "source": "a.b {include \"part\"}",
+      "includes": {
+        "part": "y=${x}",
+        "outer": "b {include \"part\"}\nx=5"
+      }
+    },
+    {
+      "source": "a {include \"outer\"}\nx=10",
+      "includes": {
+        "part": "y=${x}",
+        "outer": "b {include \"part\"}\nx=5"
+      }
+    },
+    {
+      "source": "a {include \"part\"}\na.x=9",
+      "includes": {
+        "part": "y=${x}",
+        "outer": "b {include \"part\"}\nx=5"
+      }
+    },
+    {
+      "source": "a {include \"part\"}\nx=11",
+      "includes": {
+        "part": "y=${x}",
+        "outer": "b {include \"part\"}\nx=5"
+      }
+    },
+    {
+      "source": "a {include \"part\"}\na.x=null",
+      "includes": {
+        "part": "y=${x}",
+        "outer": "b {include \"part\"}\nx=5"
+      }
+    },
+    {
+      "source": "include required(file(\"part\"))",
+      "includes": {
+        "part": "y=${x}",
+        "outer": "b {include \"part\"}\nx=5"
+      }
+    },
+    {
+      "source": "include\nrequired(\n\"part\"\n)",
+      "includes": {
+        "part": "y=${x}",
+        "outer": "b {include \"part\"}\nx=5"
+      }
+    },
+    {
+      "source": "include required(\"missing\")",
+      "includes": {
+        "part": "y=${x}",
+        "outer": "b {include \"part\"}\nx=5"
+      }
+    },
+    {
+      "source": "a=${x}",
+      "environment": {
+        "x": "environment",
+        "x.y": "dotted"
+      }
+    },
+    {
+      "source": "a=${?x}",
+      "environment": {
+        "x": "environment",
+        "x.y": "dotted"
+      }
+    },
+    {
+      "source": "a=${x}\nx=null",
+      "environment": {
+        "x": "environment",
+        "x.y": "dotted"
+      }
+    },
+    {
+      "source": "a=${x}\nx=3",
+      "environment": {
+        "x": "environment",
+        "x.y": "dotted"
+      }
+    },
+    {
+      "source": "a=${\"x.y\"}",
+      "environment": {
+        "x": "environment",
+        "x.y": "dotted"
+      }
+    },
+    {
+      "source": "a=${?missing}",
+      "environment": {
+        "x": "environment",
+        "x.y": "dotted"
+      }
+    },
+    {
+      "source": "a=${a}x",
+      "fallbacks": [
+        "a=\"base\"\nx=1",
+        "a=9\nx=2\nz=3"
+      ]
+    },
+    {
+      "source": "a=${a}",
+      "fallbacks": [
+        "a=\"base\"\nx=1",
+        "a=9\nx=2\nz=3"
+      ]
+    },
+    {
+      "source": "a={b=2}",
+      "fallbacks": [
+        "a=\"base\"\nx=1",
+        "a=9\nx=2\nz=3"
+      ]
+    },
+    {
+      "source": "a=${x}",
+      "fallbacks": [
+        "a=\"base\"\nx=1",
+        "a=9\nx=2\nz=3"
+      ]
+    },
+    {
+      "source": "a=${?NONE}",
+      "fallbacks": [
+        "a=\"base\"\nx=1",
+        "a=9\nx=2\nz=3"
+      ]
+    },
+    {
+      "source": "a=[1]\na+=2",
+      "fallbacks": [
+        "a=\"base\"\nx=1",
+        "a=9\nx=2\nz=3"
+      ]
+    },
+    {
+      "source": "a=1",
+      "getter": "string",
+      "path": "a"
+    },
+    {
+      "source": "a=1.5",
+      "getter": "string",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5\"",
+      "getter": "string",
+      "path": "a"
+    },
+    {
+      "source": "a=\"true\"",
+      "getter": "string",
+      "path": "a"
+    },
+    {
+      "source": "a=\"yes\"",
+      "getter": "string",
+      "path": "a"
+    },
+    {
+      "source": "a=true",
+      "getter": "string",
+      "path": "a"
+    },
+    {
+      "source": "a=null",
+      "getter": "string",
+      "path": "a"
+    },
+    {
+      "source": "a={0=a,2=b,x=c}",
+      "getter": "string",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.25ms\"",
+      "getter": "string",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 KiB\"",
+      "getter": "string",
+      "path": "a"
+    },
+    {
+      "source": "a=\"off\"",
+      "getter": "string",
+      "path": "a"
+    },
+    {
+      "source": "a=\"TRUE\"",
+      "getter": "string",
+      "path": "a"
+    },
+    {
+      "source": "a=[]",
+      "getter": "string",
+      "path": "a"
+    },
+    {
+      "source": "a={}",
+      "getter": "string",
+      "path": "a"
+    },
+    {
+      "source": "a=\"9007199254740993\"",
+      "getter": "string",
+      "path": "a"
+    },
+    {
+      "source": "a=9223372036854775807",
+      "getter": "string",
+      "path": "a"
+    },
+    {
+      "source": "a=\" 1 \"",
+      "getter": "string",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1e3\"",
+      "getter": "string",
+      "path": "a"
+    },
+    {
+      "source": "a=1",
+      "getter": "boolean",
+      "path": "a"
+    },
+    {
+      "source": "a=1.5",
+      "getter": "boolean",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5\"",
+      "getter": "boolean",
+      "path": "a"
+    },
+    {
+      "source": "a=\"true\"",
+      "getter": "boolean",
+      "path": "a"
+    },
+    {
+      "source": "a=\"yes\"",
+      "getter": "boolean",
+      "path": "a"
+    },
+    {
+      "source": "a=true",
+      "getter": "boolean",
+      "path": "a"
+    },
+    {
+      "source": "a=null",
+      "getter": "boolean",
+      "path": "a"
+    },
+    {
+      "source": "a={0=a,2=b,x=c}",
+      "getter": "boolean",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.25ms\"",
+      "getter": "boolean",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 KiB\"",
+      "getter": "boolean",
+      "path": "a"
+    },
+    {
+      "source": "a=\"off\"",
+      "getter": "boolean",
+      "path": "a"
+    },
+    {
+      "source": "a=\"TRUE\"",
+      "getter": "boolean",
+      "path": "a"
+    },
+    {
+      "source": "a=[]",
+      "getter": "boolean",
+      "path": "a"
+    },
+    {
+      "source": "a={}",
+      "getter": "boolean",
+      "path": "a"
+    },
+    {
+      "source": "a=\"9007199254740993\"",
+      "getter": "boolean",
+      "path": "a"
+    },
+    {
+      "source": "a=9223372036854775807",
+      "getter": "boolean",
+      "path": "a"
+    },
+    {
+      "source": "a=\" 1 \"",
+      "getter": "boolean",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1e3\"",
+      "getter": "boolean",
+      "path": "a"
+    },
+    {
+      "source": "a=1",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=1.5",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"true\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"yes\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=true",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=null",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a={0=a,2=b,x=c}",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.25ms\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 KiB\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"off\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"TRUE\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=[]",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a={}",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"9007199254740993\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=9223372036854775807",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\" 1 \"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1e3\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=1",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=1.5",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"true\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"yes\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=true",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=null",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a={0=a,2=b,x=c}",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.25ms\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 KiB\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"off\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"TRUE\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=[]",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a={}",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"9007199254740993\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=9223372036854775807",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\" 1 \"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1e3\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=1",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=1.5",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"true\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"yes\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=true",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=null",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a={0=a,2=b,x=c}",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.25ms\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 KiB\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"off\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"TRUE\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=[]",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a={}",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"9007199254740993\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=9223372036854775807",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\" 1 \"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1e3\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=1",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=1.5",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"true\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"yes\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=true",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=null",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a={0=a,2=b,x=c}",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.25ms\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 KiB\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"off\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"TRUE\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=[]",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a={}",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"9007199254740993\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=9223372036854775807",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\" 1 \"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1e3\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=1",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=1.5",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"true\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"yes\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=true",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=null",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a={0=a,2=b,x=c}",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.25ms\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 KiB\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"off\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"TRUE\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=[]",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a={}",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"9007199254740993\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=9223372036854775807",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\" 1 \"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1e3\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=1",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=1.5",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"true\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"yes\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=true",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=null",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a={0=a,2=b,x=c}",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.25ms\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 KiB\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"off\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"TRUE\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=[]",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a={}",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"9007199254740993\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=9223372036854775807",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\" 1 \"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1e3\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=1",
+      "getter": "list",
+      "path": "a"
+    },
+    {
+      "source": "a=1.5",
+      "getter": "list",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5\"",
+      "getter": "list",
+      "path": "a"
+    },
+    {
+      "source": "a=\"true\"",
+      "getter": "list",
+      "path": "a"
+    },
+    {
+      "source": "a=\"yes\"",
+      "getter": "list",
+      "path": "a"
+    },
+    {
+      "source": "a=true",
+      "getter": "list",
+      "path": "a"
+    },
+    {
+      "source": "a=null",
+      "getter": "list",
+      "path": "a"
+    },
+    {
+      "source": "a={0=a,2=b,x=c}",
+      "getter": "list",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.25ms\"",
+      "getter": "list",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 KiB\"",
+      "getter": "list",
+      "path": "a"
+    },
+    {
+      "source": "a=\"off\"",
+      "getter": "list",
+      "path": "a"
+    },
+    {
+      "source": "a=\"TRUE\"",
+      "getter": "list",
+      "path": "a"
+    },
+    {
+      "source": "a=[]",
+      "getter": "list",
+      "path": "a"
+    },
+    {
+      "source": "a={}",
+      "getter": "list",
+      "path": "a"
+    },
+    {
+      "source": "a=\"9007199254740993\"",
+      "getter": "list",
+      "path": "a"
+    },
+    {
+      "source": "a=9223372036854775807",
+      "getter": "list",
+      "path": "a"
+    },
+    {
+      "source": "a=\" 1 \"",
+      "getter": "list",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1e3\"",
+      "getter": "list",
+      "path": "a"
+    },
+    {
+      "source": "a=1",
+      "getter": "has",
+      "path": "a"
+    },
+    {
+      "source": "a=1.5",
+      "getter": "has",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5\"",
+      "getter": "has",
+      "path": "a"
+    },
+    {
+      "source": "a=\"true\"",
+      "getter": "has",
+      "path": "a"
+    },
+    {
+      "source": "a=\"yes\"",
+      "getter": "has",
+      "path": "a"
+    },
+    {
+      "source": "a=true",
+      "getter": "has",
+      "path": "a"
+    },
+    {
+      "source": "a=null",
+      "getter": "has",
+      "path": "a"
+    },
+    {
+      "source": "a={0=a,2=b,x=c}",
+      "getter": "has",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.25ms\"",
+      "getter": "has",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 KiB\"",
+      "getter": "has",
+      "path": "a"
+    },
+    {
+      "source": "a=\"off\"",
+      "getter": "has",
+      "path": "a"
+    },
+    {
+      "source": "a=\"TRUE\"",
+      "getter": "has",
+      "path": "a"
+    },
+    {
+      "source": "a=[]",
+      "getter": "has",
+      "path": "a"
+    },
+    {
+      "source": "a={}",
+      "getter": "has",
+      "path": "a"
+    },
+    {
+      "source": "a=\"9007199254740993\"",
+      "getter": "has",
+      "path": "a"
+    },
+    {
+      "source": "a=9223372036854775807",
+      "getter": "has",
+      "path": "a"
+    },
+    {
+      "source": "a=\" 1 \"",
+      "getter": "has",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1e3\"",
+      "getter": "has",
+      "path": "a"
+    },
+    {
+      "source": "a=1",
+      "getter": "null",
+      "path": "a"
+    },
+    {
+      "source": "a=1.5",
+      "getter": "null",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5\"",
+      "getter": "null",
+      "path": "a"
+    },
+    {
+      "source": "a=\"true\"",
+      "getter": "null",
+      "path": "a"
+    },
+    {
+      "source": "a=\"yes\"",
+      "getter": "null",
+      "path": "a"
+    },
+    {
+      "source": "a=true",
+      "getter": "null",
+      "path": "a"
+    },
+    {
+      "source": "a=null",
+      "getter": "null",
+      "path": "a"
+    },
+    {
+      "source": "a={0=a,2=b,x=c}",
+      "getter": "null",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.25ms\"",
+      "getter": "null",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 KiB\"",
+      "getter": "null",
+      "path": "a"
+    },
+    {
+      "source": "a=\"off\"",
+      "getter": "null",
+      "path": "a"
+    },
+    {
+      "source": "a=\"TRUE\"",
+      "getter": "null",
+      "path": "a"
+    },
+    {
+      "source": "a=[]",
+      "getter": "null",
+      "path": "a"
+    },
+    {
+      "source": "a={}",
+      "getter": "null",
+      "path": "a"
+    },
+    {
+      "source": "a=\"9007199254740993\"",
+      "getter": "null",
+      "path": "a"
+    },
+    {
+      "source": "a=9223372036854775807",
+      "getter": "null",
+      "path": "a"
+    },
+    {
+      "source": "a=\" 1 \"",
+      "getter": "null",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1e3\"",
+      "getter": "null",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 ns\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 nano\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 nanos\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 nanosecond\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 nanoseconds\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 us\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 micro\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 micros\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 microsecond\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 microseconds\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 ms\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 milli\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 millis\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 millisecond\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 milliseconds\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 s\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 second\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 seconds\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 m\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 minute\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 minutes\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 h\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 hour\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 hours\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 d\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 day\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 days\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 w\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 week\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 µs\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.5 NANOSECONDS\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 \"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 \"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 b\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 b\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 B\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 B\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 byte\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 byte\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 bytes\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 bytes\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 k\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 k\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 K\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 K\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 kb\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 kb\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 kB\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 kB\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 KB\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 KB\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 Ki\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 Ki\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 KiB\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 KiB\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 kibibyte\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 kibibyte\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 kilobyte\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 kilobyte\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 M\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 M\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 MB\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 MB\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 MiB\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 MiB\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 m\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 m\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 mb\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 mb\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 g\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 g\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 GB\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 GB\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 GiB\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 GiB\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 T\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 T\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 TB\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 TB\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 TiB\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 TiB\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 P\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 P\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 PB\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 PB\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 PiB\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 PiB\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 E\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 E\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 EB\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 EB\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 EiB\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 EiB\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 ZB\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 ZB\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 ZiB\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 ZiB\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 YB\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 YB\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 YiB\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"2 YiB\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=2147483648",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=9223372036854775807",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=9223372036854775808",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=-1",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.2e3ms\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"999999999999999999999999ms\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1e30 bytes\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"-0.1ns\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"-1 byte\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"NaN\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=2147483648",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=9223372036854775807",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=9223372036854775808",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=-1",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.2e3ms\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"999999999999999999999999ms\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1e30 bytes\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"-0.1ns\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"-1 byte\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"NaN\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=2147483648",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=9223372036854775807",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=9223372036854775808",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=-1",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.2e3ms\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"999999999999999999999999ms\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1e30 bytes\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"-0.1ns\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"-1 byte\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"NaN\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=2147483648",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=9223372036854775807",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=9223372036854775808",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=-1",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.2e3ms\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"999999999999999999999999ms\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1e30 bytes\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"-0.1ns\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"-1 byte\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"NaN\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=2147483648",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=9223372036854775807",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=9223372036854775808",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=-1",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1.2e3ms\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"999999999999999999999999ms\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1e30 bytes\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"-0.1ns\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"-1 byte\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a=\"NaN\"",
+      "getter": "duration",
+      "path": "a"
+    },
+    {
+      "source": "a={high=1}",
+      "fallbacks": [
+        "a=0",
+        "a={low=3}\nx=4"
+      ]
+    },
+    {
+      "source": "a={high=1}",
+      "fallbacks": [
+        "a=${x}\nx=0",
+        "a={low=3}\nx=4"
+      ]
+    },
+    {
+      "source": "a={high=1}",
+      "fallbacks": [
+        "a=${a}y",
+        "a={low=3}\nx=4"
+      ]
+    },
+    {
+      "source": "a={high=1}",
+      "fallbacks": [
+        "a={middle=2}",
+        "a={low=3}\nx=4"
+      ]
+    },
+    {
+      "source": "a=${a}z",
+      "fallbacks": [
+        "a=0",
+        "a={low=3}\nx=4"
+      ]
+    },
+    {
+      "source": "a=${a}z",
+      "fallbacks": [
+        "a=${x}\nx=0",
+        "a={low=3}\nx=4"
+      ]
+    },
+    {
+      "source": "a=${a}z",
+      "fallbacks": [
+        "a=${a}y",
+        "a={low=3}\nx=4"
+      ]
+    },
+    {
+      "source": "a=${a}z",
+      "fallbacks": [
+        "a={middle=2}",
+        "a={low=3}\nx=4"
+      ]
+    },
+    {
+      "source": "a=${?NONE}",
+      "fallbacks": [
+        "a=0",
+        "a={low=3}\nx=4"
+      ]
+    },
+    {
+      "source": "a=${?NONE}",
+      "fallbacks": [
+        "a=${x}\nx=0",
+        "a={low=3}\nx=4"
+      ]
+    },
+    {
+      "source": "a=${?NONE}",
+      "fallbacks": [
+        "a=${a}y",
+        "a={low=3}\nx=4"
+      ]
+    },
+    {
+      "source": "a=${?NONE}",
+      "fallbacks": [
+        "a={middle=2}",
+        "a={low=3}\nx=4"
+      ]
+    },
+    {
+      "source": "a=[1]",
+      "fallbacks": [
+        "a=0",
+        "a={low=3}\nx=4"
+      ]
+    },
+    {
+      "source": "a=[1]",
+      "fallbacks": [
+        "a=${x}\nx=0",
+        "a={low=3}\nx=4"
+      ]
+    },
+    {
+      "source": "a=[1]",
+      "fallbacks": [
+        "a=${a}y",
+        "a={low=3}\nx=4"
+      ]
+    },
+    {
+      "source": "a=[1]",
+      "fallbacks": [
+        "a={middle=2}",
+        "a={low=3}\nx=4"
+      ]
+    },
+    {
+      "source": "a=\"NaN\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"Infinity\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"-Infinity\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x1.0p3\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1f\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1d\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"+3\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\" 1 \"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1e309\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x1.fffffffffffffp1023\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x1.fffffffffffff8p1023\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x0.0000000000001p-1022\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x1p-1075\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x1.0000000000001p-1075\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x1.fffffffffffffp-1023\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"-0x1p-1074\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x0p999999\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x1p999999999999\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x1p-999999999999\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x1.00000000000018p0\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x1.00000000000008p0\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x.8p0\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x1.p0f\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x1\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x.p0\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0xp0\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x1p\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x1p+\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1_000\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"nan\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"infinity\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"inf\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"NaNf\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"--1\"",
+      "getter": "double",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1_000\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x1p4\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1f\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1e309\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"NaN\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"inf\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"Infinity\"",
+      "getter": "int",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1_000\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x1p4\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1f\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1e309\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"NaN\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"inf\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"Infinity\"",
+      "getter": "long",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1_000\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x1p4\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1f\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1e309\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"NaN\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"inf\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"Infinity\"",
+      "getter": "memory",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1_000\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"0x1p4\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1f\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"1e309\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"NaN\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"inf\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=\"Infinity\"",
+      "getter": "bytes",
+      "path": "a"
+    },
+    {
+      "source": "a=[1,2]\nb=${a[]}"
+    },
+    {
+      "source": "a=1\nb=${a[]}"
+    },
+    {
+      "source": "a=null\nb=${?a[]}"
+    },
+    {
+      "source": "b=${?absent[]}"
+    },
+    {
+      "source": "a={0=x,1=y}\nb=${a[]}"
+    },
+    {
+      "source": "a=${HOCON_REFERENCE_LIST[]}",
+      "systemEnvironment": true,
+      "environment": {
+        "HOCON_REFERENCE_LIST_0": "one",
+        "HOCON_REFERENCE_LIST_1": "two",
+        "HOCON_REFERENCE_LIST_3": "ignored"
+      }
+    },
+    {
+      "source": "a=${?HOCON_REFERENCE_LIST[]}",
+      "systemEnvironment": true,
+      "environment": {
+        "HOCON_REFERENCE_LIST_0": "one",
+        "HOCON_REFERENCE_LIST_1": "two",
+        "HOCON_REFERENCE_LIST_3": "ignored"
+      }
+    },
+    {
+      "source": "a=${HOCON_REFERENCE_LIST[]}\nHOCON_REFERENCE_LIST=null",
+      "systemEnvironment": true,
+      "environment": {
+        "HOCON_REFERENCE_LIST_0": "one",
+        "HOCON_REFERENCE_LIST_1": "two",
+        "HOCON_REFERENCE_LIST_3": "ignored"
+      }
+    },
+    {
+      "source": "a=${HOCON_REFERENCE_LIST[]}\nHOCON_REFERENCE_LIST=[3]",
+      "systemEnvironment": true,
+      "environment": {
+        "HOCON_REFERENCE_LIST_0": "one",
+        "HOCON_REFERENCE_LIST_1": "two",
+        "HOCON_REFERENCE_LIST_3": "ignored"
+      }
+    }
+  ],
+  "references": [
+    {
+      "accepted": true,
+      "value": {}
+    },
+    {
+      "accepted": true,
+      "value": {}
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 1,
+        "b": true,
+        "c": null,
+        "d": "1"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": -1250
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": [
+          1,
+          false,
+          null,
+          {
+            "x": 2
+          },
+          [
+            3,
+            4
+          ]
+        ]
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": [
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": [
+          "1 2"
+        ]
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "x": 1,
+          "y": 2
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "y": 2
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": [
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "x": 1,
+          "y": 2
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": [
+          1,
+          true
+        ],
+        "b": [
+          1,
+          true
+        ]
+      }
+    },
+    {
+      "accepted": true,
+      "value": {}
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 7
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "suffix"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefix"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": " x"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "x  y"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "  x"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 1,
+        "n": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a.b": 7,
+        "z": 7
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "host": "api",
+        "port": 80,
+        "url": "api:80"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "x": 1
+        },
+        "b": {
+          "x": 1,
+          "y": 2
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "x": 1
+        },
+        "b": {
+          "x": 1
+        },
+        "c": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "1x"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "x"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "x": 1
+        },
+        "b": {
+          "x": 1
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "x": "1y"
+        },
+        "z": {
+          "x": "1y"
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {}
+      }
+    },
+    {
+      "accepted": false,
+      "error": "UnresolvedSubstitution"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 1,
+        "b": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": [
+          1,
+          [
+            2,
+            3
+          ]
+        ]
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": [
+          {
+            "x": 1
+          }
+        ]
+      }
+    },
+    {
+      "accepted": false,
+      "error": "UnresolvedSubstitution"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": []
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "x": 2,
+          "y": 2
+        }
+      }
+    },
+    {
+      "accepted": false,
+      "error": "UnresolvedSubstitution"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 3
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "b": "1z"
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "c": 1,
+          "x": 2
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "1xy"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "1x",
+        "b": "1x"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "UnresolvedSubstitution"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "x": 1,
+          "y": 1
+        }
+      }
+    },
+    {
+      "accepted": false,
+      "error": "UnresolvedSubstitution"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": []
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {}
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "x": "30"
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "x": 2,
+          "y": 3
+        },
+        "obj": {
+          "x": 1,
+          "y": 3
+        }
+      }
+    },
+    {
+      "accepted": false,
+      "error": "UnresolvedSubstitution"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "x": 2,
+          "y": 3
+        },
+        "b": 3,
+        "obj": {
+          "x": 1,
+          "y": 3
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": []
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": [],
+        "x": "foo"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": []
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": []
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {}
+      }
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {},
+        "x": "text"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a b": {
+          "cd": 1
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a ": {
+          " b": 1
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a ": {
+          " b": 1
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "": {
+            "b": 1
+          }
+        }
+      }
+    },
+    {
+      "accepted": false,
+      "error": "BadPath"
+    },
+    {
+      "accepted": false,
+      "error": "BadPath"
+    },
+    {
+      "accepted": false,
+      "error": "BadPath"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "b.c": 1
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "1": {
+          "2": {
+            "3": 4
+          }
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "truefoo": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "hello\nworld"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "a\\nb"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "x\""
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "x\"\""
+      }
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "hello|world"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "foo(bar)"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "foo;bar"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "UnresolvedSubstitution"
+    },
+    {
+      "accepted": false,
+      "error": "UnresolvedSubstitution"
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": true,
+      "value": {}
+    },
+    {
+      "accepted": false,
+      "error": "BadPath"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 1,
+        "x.y": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 1
+      }
+    },
+    {
+      "accepted": false,
+      "error": "IO"
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "include"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "foo include": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 0
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefix0"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 0
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefix00"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefix01"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": -1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefix-01"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 0.5
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefix00.5"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefix1."
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": -0.5
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefix-.5"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": ".5"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefix.5"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": []
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "-"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefix-"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": []
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "-foo"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefix-foo"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": []
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "1e"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefix1e"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": []
+      }
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 0.01
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefix1e-2"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 100
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefix1e+2"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "1e3foo"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefix1e3foo"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "truefoo"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefixtruefoo"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "falsehood"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefixfalsehood"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "nullary"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefixnullary"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "1_000"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefix1_000"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "NaN"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefixNaN"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": []
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "Infinity"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefixInfinity"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": []
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "0x12"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefix0x12"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "1.2.3"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefix1.2.3"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": []
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 1234567890123456800
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "prefix1234567890123456789"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "one\ttwo"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a\tb": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "one\rtwo"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a\rb": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "one\u000btwo"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a\u000bb": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "one\ftwo"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a\fb": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "one\u001ctwo"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a\u001cb": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "one\u001ftwo"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a\u001fb": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "one two"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a b": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "one two"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a b": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "one two"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a b": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "one two"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a b": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "one two"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a b": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "one two"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a b": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "one two"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a b": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "one two"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a b": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "one　two"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a　b": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "one﻿two"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a﻿b": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "1 x"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "x"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "x"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "x x"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": [
+          1
+        ]
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": [
+          1
+        ]
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "x": 1
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "x": 1
+        }
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "x": 1,
+          "y": 2
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": null
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": null
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "null x"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "UnresolvedSubstitution"
+    },
+    {
+      "accepted": true,
+      "value": {}
+    },
+    {
+      "accepted": false,
+      "error": "UnresolvedSubstitution"
+    },
+    {
+      "accepted": false,
+      "error": "UnresolvedSubstitution"
+    },
+    {
+      "accepted": false,
+      "error": "UnresolvedSubstitution"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "outside": 3,
+        "x": 1,
+        "y": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "nested": {
+          "x": 2,
+          "y": 2
+        },
+        "outside": 3,
+        "x": 10
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "outside": 3,
+        "x": 1,
+        "y": 3
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "nested": {
+          "x": 2,
+          "y": 3
+        },
+        "outside": 3,
+        "x": 10
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "outside": 3,
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "nested": {
+          "x": 2
+        },
+        "outside": 3,
+        "x": 10
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": [
+          1,
+          2
+        ],
+        "outside": 3
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "nested": {
+          "a": [
+            1,
+            2
+          ],
+          "x": 2
+        },
+        "outside": 3,
+        "x": 10
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "outside": 3,
+        "x": "1y"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "nested": {
+          "x": 2
+        },
+        "outside": 3,
+        "x": 10
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "outside": 3,
+        "x": 7,
+        "y": 7
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "nested": {
+          "x": 2,
+          "y": 2
+        },
+        "outside": 3,
+        "x": 10
+      }
+    },
+    {
+      "accepted": false,
+      "error": "UnresolvedSubstitution"
+    },
+    {
+      "accepted": false,
+      "error": "UnresolvedSubstitution"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "b": {
+            "y": 10
+          },
+          "x": 5
+        },
+        "x": 10
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "x": 9,
+          "y": 9
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "y": 11
+        },
+        "x": 11
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "x": null,
+          "y": null
+        }
+      }
+    },
+    {
+      "accepted": false,
+      "error": "UnresolvedSubstitution"
+    },
+    {
+      "accepted": false,
+      "error": "UnresolvedSubstitution"
+    },
+    {
+      "accepted": false,
+      "error": "Generic"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "environment"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "environment"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": null,
+        "x": null
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 3,
+        "x": 3
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "dotted"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {}
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "basex",
+        "x": 1,
+        "z": 3
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "base",
+        "x": 1,
+        "z": 3
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "b": 2
+        },
+        "x": 1,
+        "z": 3
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 1,
+        "x": 1,
+        "z": 3
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "base",
+        "x": 1,
+        "z": 3
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": [
+          1,
+          2
+        ],
+        "x": 1,
+        "z": 3
+      }
+    },
+    {
+      "accepted": true,
+      "value": "1"
+    },
+    {
+      "accepted": true,
+      "value": "1.5"
+    },
+    {
+      "accepted": true,
+      "value": "1.5"
+    },
+    {
+      "accepted": true,
+      "value": "true"
+    },
+    {
+      "accepted": true,
+      "value": "yes"
+    },
+    {
+      "accepted": true,
+      "value": "true"
+    },
+    {
+      "accepted": false,
+      "error": "Null"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": "1.25ms"
+    },
+    {
+      "accepted": true,
+      "value": "2 KiB"
+    },
+    {
+      "accepted": true,
+      "value": "off"
+    },
+    {
+      "accepted": true,
+      "value": "TRUE"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": "9007199254740993"
+    },
+    {
+      "accepted": true,
+      "value": "9223372036854775807"
+    },
+    {
+      "accepted": true,
+      "value": " 1 "
+    },
+    {
+      "accepted": true,
+      "value": "1e3"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": true
+    },
+    {
+      "accepted": true,
+      "value": true
+    },
+    {
+      "accepted": true,
+      "value": true
+    },
+    {
+      "accepted": false,
+      "error": "Null"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": false
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": 1
+    },
+    {
+      "accepted": true,
+      "value": 1
+    },
+    {
+      "accepted": true,
+      "value": 1
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "Null"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": 1
+    },
+    {
+      "accepted": true,
+      "value": 1000
+    },
+    {
+      "accepted": true,
+      "value": "1"
+    },
+    {
+      "accepted": true,
+      "value": "1"
+    },
+    {
+      "accepted": true,
+      "value": "1"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "Null"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": "9007199254740993"
+    },
+    {
+      "accepted": true,
+      "value": "9223372036854775807"
+    },
+    {
+      "accepted": true,
+      "value": "1"
+    },
+    {
+      "accepted": true,
+      "value": "1000"
+    },
+    {
+      "accepted": true,
+      "value": 1
+    },
+    {
+      "accepted": true,
+      "value": 1.5
+    },
+    {
+      "accepted": true,
+      "value": 1.5
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "Null"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": 9007199254740992
+    },
+    {
+      "accepted": true,
+      "value": 9223372036854776000
+    },
+    {
+      "accepted": true,
+      "value": 1
+    },
+    {
+      "accepted": true,
+      "value": 1000
+    },
+    {
+      "accepted": true,
+      "value": "1000000"
+    },
+    {
+      "accepted": true,
+      "value": "1500000"
+    },
+    {
+      "accepted": true,
+      "value": "1500000"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "Null"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": "1250000"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": "9223372036854775807"
+    },
+    {
+      "accepted": true,
+      "value": "9223372036854775807"
+    },
+    {
+      "accepted": true,
+      "value": "1000000"
+    },
+    {
+      "accepted": true,
+      "value": "1000000000"
+    },
+    {
+      "accepted": true,
+      "value": "1"
+    },
+    {
+      "accepted": true,
+      "value": "1"
+    },
+    {
+      "accepted": true,
+      "value": "1"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "Null"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": true,
+      "value": "2048"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": "9007199254740993"
+    },
+    {
+      "accepted": true,
+      "value": "9223372036854775807"
+    },
+    {
+      "accepted": true,
+      "value": "1"
+    },
+    {
+      "accepted": true,
+      "value": "1000"
+    },
+    {
+      "accepted": true,
+      "value": "1"
+    },
+    {
+      "accepted": true,
+      "value": "1"
+    },
+    {
+      "accepted": true,
+      "value": "1"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "Null"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": true,
+      "value": "2048"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": "9007199254740993"
+    },
+    {
+      "accepted": true,
+      "value": "9223372036854775807"
+    },
+    {
+      "accepted": true,
+      "value": "1"
+    },
+    {
+      "accepted": true,
+      "value": "1000"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "Null"
+    },
+    {
+      "accepted": true,
+      "value": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": []
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": true
+    },
+    {
+      "accepted": true,
+      "value": true
+    },
+    {
+      "accepted": true,
+      "value": true
+    },
+    {
+      "accepted": true,
+      "value": true
+    },
+    {
+      "accepted": true,
+      "value": true
+    },
+    {
+      "accepted": true,
+      "value": true
+    },
+    {
+      "accepted": true,
+      "value": false
+    },
+    {
+      "accepted": true,
+      "value": true
+    },
+    {
+      "accepted": true,
+      "value": true
+    },
+    {
+      "accepted": true,
+      "value": true
+    },
+    {
+      "accepted": true,
+      "value": true
+    },
+    {
+      "accepted": true,
+      "value": true
+    },
+    {
+      "accepted": true,
+      "value": true
+    },
+    {
+      "accepted": true,
+      "value": true
+    },
+    {
+      "accepted": true,
+      "value": true
+    },
+    {
+      "accepted": true,
+      "value": true
+    },
+    {
+      "accepted": true,
+      "value": true
+    },
+    {
+      "accepted": true,
+      "value": true
+    },
+    {
+      "accepted": true,
+      "value": false
+    },
+    {
+      "accepted": true,
+      "value": false
+    },
+    {
+      "accepted": true,
+      "value": false
+    },
+    {
+      "accepted": true,
+      "value": false
+    },
+    {
+      "accepted": true,
+      "value": false
+    },
+    {
+      "accepted": true,
+      "value": false
+    },
+    {
+      "accepted": true,
+      "value": true
+    },
+    {
+      "accepted": true,
+      "value": false
+    },
+    {
+      "accepted": true,
+      "value": false
+    },
+    {
+      "accepted": true,
+      "value": false
+    },
+    {
+      "accepted": true,
+      "value": false
+    },
+    {
+      "accepted": true,
+      "value": false
+    },
+    {
+      "accepted": true,
+      "value": false
+    },
+    {
+      "accepted": true,
+      "value": false
+    },
+    {
+      "accepted": true,
+      "value": false
+    },
+    {
+      "accepted": true,
+      "value": false
+    },
+    {
+      "accepted": true,
+      "value": false
+    },
+    {
+      "accepted": true,
+      "value": false
+    },
+    {
+      "accepted": true,
+      "value": "1"
+    },
+    {
+      "accepted": true,
+      "value": "1"
+    },
+    {
+      "accepted": true,
+      "value": "1"
+    },
+    {
+      "accepted": true,
+      "value": "1"
+    },
+    {
+      "accepted": true,
+      "value": "1"
+    },
+    {
+      "accepted": true,
+      "value": "1500"
+    },
+    {
+      "accepted": true,
+      "value": "1500"
+    },
+    {
+      "accepted": true,
+      "value": "1500"
+    },
+    {
+      "accepted": true,
+      "value": "1500"
+    },
+    {
+      "accepted": true,
+      "value": "1500"
+    },
+    {
+      "accepted": true,
+      "value": "1500000"
+    },
+    {
+      "accepted": true,
+      "value": "1500000"
+    },
+    {
+      "accepted": true,
+      "value": "1500000"
+    },
+    {
+      "accepted": true,
+      "value": "1500000"
+    },
+    {
+      "accepted": true,
+      "value": "1500000"
+    },
+    {
+      "accepted": true,
+      "value": "1500000000"
+    },
+    {
+      "accepted": true,
+      "value": "1500000000"
+    },
+    {
+      "accepted": true,
+      "value": "1500000000"
+    },
+    {
+      "accepted": true,
+      "value": "90000000000"
+    },
+    {
+      "accepted": true,
+      "value": "90000000000"
+    },
+    {
+      "accepted": true,
+      "value": "90000000000"
+    },
+    {
+      "accepted": true,
+      "value": "5400000000000"
+    },
+    {
+      "accepted": true,
+      "value": "5400000000000"
+    },
+    {
+      "accepted": true,
+      "value": "5400000000000"
+    },
+    {
+      "accepted": true,
+      "value": "129600000000000"
+    },
+    {
+      "accepted": true,
+      "value": "129600000000000"
+    },
+    {
+      "accepted": true,
+      "value": "129600000000000"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": true,
+      "value": "2"
+    },
+    {
+      "accepted": true,
+      "value": "2"
+    },
+    {
+      "accepted": true,
+      "value": "2"
+    },
+    {
+      "accepted": true,
+      "value": "2"
+    },
+    {
+      "accepted": true,
+      "value": "2"
+    },
+    {
+      "accepted": true,
+      "value": "2"
+    },
+    {
+      "accepted": true,
+      "value": "2"
+    },
+    {
+      "accepted": true,
+      "value": "2"
+    },
+    {
+      "accepted": true,
+      "value": "2"
+    },
+    {
+      "accepted": true,
+      "value": "2"
+    },
+    {
+      "accepted": true,
+      "value": "2048"
+    },
+    {
+      "accepted": true,
+      "value": "2048"
+    },
+    {
+      "accepted": true,
+      "value": "2048"
+    },
+    {
+      "accepted": true,
+      "value": "2048"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": true,
+      "value": "2000"
+    },
+    {
+      "accepted": true,
+      "value": "2000"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": true,
+      "value": "2048"
+    },
+    {
+      "accepted": true,
+      "value": "2048"
+    },
+    {
+      "accepted": true,
+      "value": "2048"
+    },
+    {
+      "accepted": true,
+      "value": "2048"
+    },
+    {
+      "accepted": true,
+      "value": "2048"
+    },
+    {
+      "accepted": true,
+      "value": "2048"
+    },
+    {
+      "accepted": true,
+      "value": "2000"
+    },
+    {
+      "accepted": true,
+      "value": "2000"
+    },
+    {
+      "accepted": true,
+      "value": "2097152"
+    },
+    {
+      "accepted": true,
+      "value": "2097152"
+    },
+    {
+      "accepted": true,
+      "value": "2000000"
+    },
+    {
+      "accepted": true,
+      "value": "2000000"
+    },
+    {
+      "accepted": true,
+      "value": "2097152"
+    },
+    {
+      "accepted": true,
+      "value": "2097152"
+    },
+    {
+      "accepted": true,
+      "value": "2097152"
+    },
+    {
+      "accepted": true,
+      "value": "2097152"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": true,
+      "value": "2147483648"
+    },
+    {
+      "accepted": true,
+      "value": "2147483648"
+    },
+    {
+      "accepted": true,
+      "value": "2000000000"
+    },
+    {
+      "accepted": true,
+      "value": "2000000000"
+    },
+    {
+      "accepted": true,
+      "value": "2147483648"
+    },
+    {
+      "accepted": true,
+      "value": "2147483648"
+    },
+    {
+      "accepted": true,
+      "value": "2199023255552"
+    },
+    {
+      "accepted": true,
+      "value": "2199023255552"
+    },
+    {
+      "accepted": true,
+      "value": "2000000000000"
+    },
+    {
+      "accepted": true,
+      "value": "2000000000000"
+    },
+    {
+      "accepted": true,
+      "value": "2199023255552"
+    },
+    {
+      "accepted": true,
+      "value": "2199023255552"
+    },
+    {
+      "accepted": true,
+      "value": "2251799813685248"
+    },
+    {
+      "accepted": true,
+      "value": "2251799813685248"
+    },
+    {
+      "accepted": true,
+      "value": "2000000000000000"
+    },
+    {
+      "accepted": true,
+      "value": "2000000000000000"
+    },
+    {
+      "accepted": true,
+      "value": "2251799813685248"
+    },
+    {
+      "accepted": true,
+      "value": "2251799813685248"
+    },
+    {
+      "accepted": true,
+      "value": "2305843009213693952"
+    },
+    {
+      "accepted": true,
+      "value": "2305843009213693952"
+    },
+    {
+      "accepted": true,
+      "value": "2000000000000000000"
+    },
+    {
+      "accepted": true,
+      "value": "2000000000000000000"
+    },
+    {
+      "accepted": true,
+      "value": "2305843009213693952"
+    },
+    {
+      "accepted": true,
+      "value": "2305843009213693952"
+    },
+    {
+      "accepted": true,
+      "value": "2000000000000000000000"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": true,
+      "value": "2361183241434822606848"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": true,
+      "value": "2000000000000000000000000"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": true,
+      "value": "2417851639229258349412352"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": -1
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": 0
+    },
+    {
+      "accepted": true,
+      "value": "2147483648"
+    },
+    {
+      "accepted": true,
+      "value": "9223372036854775807"
+    },
+    {
+      "accepted": true,
+      "value": "9223372036854775807"
+    },
+    {
+      "accepted": true,
+      "value": "-1"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": "0"
+    },
+    {
+      "accepted": true,
+      "value": "2147483648"
+    },
+    {
+      "accepted": true,
+      "value": "9223372036854775807"
+    },
+    {
+      "accepted": true,
+      "value": "9223372036854775807"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": true,
+      "value": "0"
+    },
+    {
+      "accepted": true,
+      "value": "2147483648"
+    },
+    {
+      "accepted": true,
+      "value": "9223372036854775807"
+    },
+    {
+      "accepted": true,
+      "value": "9223372036854775807"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": true,
+      "value": "1000000000000000000000000000000"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": true,
+      "value": "0"
+    },
+    {
+      "accepted": true,
+      "value": "2147483648000000"
+    },
+    {
+      "accepted": true,
+      "value": "9223372036854775807"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": true,
+      "value": "-1000000"
+    },
+    {
+      "accepted": true,
+      "value": "1200000000"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": true,
+      "value": "0"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "high": 1
+        },
+        "x": 4
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "high": 1
+        },
+        "x": 0
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "high": 1,
+          "low": 3
+        },
+        "x": 4
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "high": 1,
+          "low": 3,
+          "middle": 2
+        },
+        "x": 4
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "0z",
+        "x": 4
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "0z",
+        "x": 0
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "low": 3
+        },
+        "x": 4
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "low": 3,
+          "middle": 2
+        },
+        "x": 4
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 0,
+        "x": 4
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 0,
+        "x": 0
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "low": 3
+        },
+        "x": 4
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "low": 3,
+          "middle": 2
+        },
+        "x": 4
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": [
+          1
+        ],
+        "x": 4
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": [
+          1
+        ],
+        "x": 0
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": [
+          1
+        ],
+        "x": 4
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": [
+          1
+        ],
+        "x": 4
+      }
+    },
+    {
+      "accepted": true,
+      "value": "NaN"
+    },
+    {
+      "accepted": true,
+      "value": "Infinity"
+    },
+    {
+      "accepted": true,
+      "value": "-Infinity"
+    },
+    {
+      "accepted": true,
+      "value": 8
+    },
+    {
+      "accepted": true,
+      "value": 1
+    },
+    {
+      "accepted": true,
+      "value": 1
+    },
+    {
+      "accepted": true,
+      "value": 3
+    },
+    {
+      "accepted": true,
+      "value": 1
+    },
+    {
+      "accepted": true,
+      "value": "Infinity"
+    },
+    {
+      "accepted": true,
+      "value": 1.7976931348623157e+308
+    },
+    {
+      "accepted": true,
+      "value": "Infinity"
+    },
+    {
+      "accepted": true,
+      "value": 5e-324
+    },
+    {
+      "accepted": true,
+      "value": 0
+    },
+    {
+      "accepted": true,
+      "value": 5e-324
+    },
+    {
+      "accepted": true,
+      "value": 2.2250738585072014e-308
+    },
+    {
+      "accepted": true,
+      "value": -5e-324
+    },
+    {
+      "accepted": true,
+      "value": 0
+    },
+    {
+      "accepted": true,
+      "value": "Infinity"
+    },
+    {
+      "accepted": true,
+      "value": 0
+    },
+    {
+      "accepted": true,
+      "value": 1.0000000000000004
+    },
+    {
+      "accepted": true,
+      "value": 1
+    },
+    {
+      "accepted": true,
+      "value": 0.5
+    },
+    {
+      "accepted": true,
+      "value": 1
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": 16
+    },
+    {
+      "accepted": true,
+      "value": 1
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": 0
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": "16"
+    },
+    {
+      "accepted": true,
+      "value": "1"
+    },
+    {
+      "accepted": true,
+      "value": "9223372036854775807"
+    },
+    {
+      "accepted": true,
+      "value": "0"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": "9223372036854775807"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": true,
+      "value": "16"
+    },
+    {
+      "accepted": true,
+      "value": "1"
+    },
+    {
+      "accepted": true,
+      "value": "9223372036854775807"
+    },
+    {
+      "accepted": true,
+      "value": "0"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": true,
+      "value": "9223372036854775807"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": true,
+      "value": "16"
+    },
+    {
+      "accepted": true,
+      "value": "1"
+    },
+    {
+      "accepted": true,
+      "value": "9223372036854775807"
+    },
+    {
+      "accepted": true,
+      "value": "0"
+    },
+    {
+      "accepted": false,
+      "error": "BadValue"
+    },
+    {
+      "accepted": true,
+      "value": "9223372036854775807"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": [
+          1,
+          2
+        ],
+        "b": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 1,
+        "b": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": null,
+        "b": null
+      }
+    },
+    {
+      "accepted": true,
+      "value": {}
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "0": "x",
+          "1": "y"
+        },
+        "b": {
+          "0": "x",
+          "1": "y"
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": [
+          "one",
+          "two"
+        ]
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": [
+          "one",
+          "two"
+        ]
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "HOCON_REFERENCE_LIST": null,
+        "a": null
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "HOCON_REFERENCE_LIST": [
+          3
+        ],
+        "a": [
+          3
+        ]
+      }
+    }
+  ]
+}

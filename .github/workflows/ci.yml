@@ -25,6 +25,9 @@ jobs:
           cp "$engine" web/engine.mjs
       - run: node tools/test-demo.mjs
       - run: node tools/test-cli.mjs
+      - run: node tools/test-host.mjs
+      - run: node tools/test-config-reference.mjs --golden
+      - run: node tools/test-file-reference.mjs --golden
       - run: node tools/robustness.mjs
       - run: node tools/benchmark.mjs
       - uses: actions/upload-artifact@v4

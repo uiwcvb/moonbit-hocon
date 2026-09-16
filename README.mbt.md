@@ -28,4 +28,4 @@ test "typed configuration access reports missing and invalid values" {
 }
 ```
 
-0.3 已区分数字、布尔、null、数组与字符串；尚未完整兼容 Lightbend Config，差距见 FEATURES.md。
+0.4 已增加历史自引用、来源加载、回退/环境和单位访问器；尚未完整兼容 Lightbend Config，差距见 FEATURES.md。
