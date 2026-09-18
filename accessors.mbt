@@ -1,10 +1,8 @@
 ///|
 fn required(config : Value, key : String) -> Value raise ParseError {
-  let keys = split_path(key)
-  match get_path(config, keys) {
-    Some(Null) => raise Invalid("null value: " + key)
-    Some(v) => v
-    None => raise Invalid("missing key: " + key)
+  match required_document_value(config, key) {
+    Bare(s) => Text(s)
+    value => value
   }
 }
 
@@ -23,10 +21,15 @@ pub fn has_path(
 
 ///|
 pub fn get_is_null(config : Value, key : String) -> Bool raise ParseError {
-  match get_path(config, split_path(key)) {
+  match peek_document_path(config, key) {
     None => raise Invalid("missing key: " + key)
     Some(Null) => true
-    _ => false
+    Some(value) =>
+      if uncertain(value) && !known_object(value) {
+        raise Invalid("unresolved path: " + key)
+      } else {
+        false
+      }
   }
 }
 

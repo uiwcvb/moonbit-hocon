@@ -1,15 +1,13 @@
 {
-  "utc": "2026-09-18T17:39:23.331Z",
-  "mode": "live official library",
-  "reference": {
-    "library": "unmodified Lightbend Config 1.4.9",
-    "jarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37"
-  },
-  "total": 4380,
-  "passed": 4380,
-  "failed": 0,
-  "scope": "Resolved tree edits, path/key distinction, entry set, emptiness and structural validation. Exact acceptance/output and sorted validation path/kind with duplicate multiplicity; diagnostic prose/origins/order not compared.",
-  "sourceHashes": {
+  "passed": true,
+  "files": 81,
+  "checks": [
+    "independent collection, HTTP JSON, JDK path, tree and document API test generation",
+    "format",
+    "API generation",
+    "JS build and engine copy"
+  ],
+  "sha256": {
     "accessors.mbt": "06aa165af57a19a001cbe081fcd1604793d8644c23de3e584a1b09276c449b05",
     "cmd/main/main.mbt": "24f2645d844804ee1241fd560f5fe895d55d0ee59010b00f8c121b9f70bdbc19",
     "cmd/main/moon.pkg": "943ab64eded434a3d516e50e98dec859f7815536ed2f4d9265837e266e59b667",
@@ -36,14 +34,19 @@
     "pkg.generated.mbti": "2df07741d3dafb52ed31711933300925ff10287c9f89302feea1c064a3abe8b5",
     "resolver.mbt": "2e7036c0b4ececad033c55d6898cb621be30b471d4bf9221416d852a3c636d09",
     "source_roots_test.mbt": "9b2aa032bcabbdbe89d2da08cd1c350b0758586dee899727d8d842cd51c5485a",
-    "tools/HoconOracle.java": "a84c36dd8aa7a526acb3dd42ce823f5335b9be610a7b852a2fa62ae43deff40a",
-    "tools/HoconReference.java": "c19e62ab9d5ea29b1917564651319634d659c82f9f67af2bbee1e39604d87bc7",
-    "tools/PathCharacters.java": "ddbe4b484ee298f8a3f2920bd8294e324378150a18ff7f0fc7ef345b89f9aa3b",
     "tools/benchmark-collections.mjs": "f2da03ec622a9a1eadd8f639f11638fef7f63125a814de27c88f56436a44aa84",
     "tools/benchmark-document.mjs": "40ce2b4dbec134971306ae88b4b8b3c2ce5d1f89dc63514e6eb7ea2787dc3b1a",
     "tools/benchmark-http.mjs": "f34c69547b6d6b2ee11f7afedd5e2d34fcf2b54935841dcb3a7bd2eb3f2302c9",
     "tools/benchmark-tree.mjs": "2fd3e904f516f044772e0b8379b116cadea2d8751374b1a3aee9dc90a221ccac",
     "tools/benchmark.mjs": "53ac611536ba7cb3732017d22976ff8f38dbd9e7aa579c2469eab75b0cdc7216",
+    "tools/check-collection-generation.py": "ac6f68893d1207741c7f1f8e5aedf227403d820c2d074f6be6bf859357c5c428",
+    "tools/check-collection-proof.py": "62e05030fb57a09b8be13b6871c99b8179caf517abe07a458ce8477aca546636",
+    "tools/check-document-generation.py": "dc63c2ee1fbb2c546be70a4dc74a0f4b7545d3bf5ee6a19c7f39f3de3c20d9d8",
+    "tools/check-document-proof.py": "473e545e57d325d6fad75c85f6de96f9c5ffdff59906c3d0c978733e102cca24",
+    "tools/check-http-generation.py": "7384e23d4003a3bff9bc9ab803506e703e7172c4893b9439be8896a5eb6b2ea3",
+    "tools/check-http-proof.py": "8d692556c50620eee05db9d911f91b52b88efd25a10270ff771624bfbb03a993",
+    "tools/check-tree-generation.py": "e1abb609d603c8bbed9c95a5ed848b213b7d82b676b5343c3719b69200004bde",
+    "tools/check-tree-proof.py": "4fc84fbdf6f6855c2a7b40b311ac06b035c25da7d7782c575910fbac82e0ec54",
     "tools/cli.mjs": "b30b379a0e3f61dfbbd004030f28369aee158c4ddb4f84d9226c1ceb198425ad",
     "tools/config-async-worker.mjs": "b9d5bdfde65e9d5dfaeb2863e0e227acd20805f4793406916bb65eab7cdcb971",
     "tools/config-async.mjs": "2f41f1102915ad1d010a912b4c29e0b616cff950f7ef5127bcbe13431bebfcad",
@@ -54,10 +57,14 @@
     "tools/generate-http-json-tests.mjs": "a47fd1922a3517db97986878ecc22036ba1ded805c7bd92846587f26ca14eb4f",
     "tools/generate-path-characters.mjs": "7944e42ac50357f24957fa3fa9c48dc2f1e425ec346ed8872bcfd264d49f43c1",
     "tools/generate-tree-tests.mjs": "f75919e3937bc4906ec9fd2e9f4ecb7bfb1c4b7a2860d2afd40be21752a76404",
+    "tools/HoconOracle.java": "a84c36dd8aa7a526acb3dd42ce823f5335b9be610a7b852a2fa62ae43deff40a",
+    "tools/HoconReference.java": "c19e62ab9d5ea29b1917564651319634d659c82f9f67af2bbee1e39604d87bc7",
     "tools/http-client.mjs": "d962f3e27b8cbf4b3e652d5d2bf4d232d552bea214f2355855e7ddef24cf2dbc",
     "tools/http-test-server.mjs": "b306856077bfd36c34e9db08bba215608fed3cffb0d6b0ef53362665b3f2fbd7",
     "tools/http-worker.mjs": "bb5d8929d1362a75c00a09e1ab4a4fe8d98dda825a4eb4a0a98f61e7ded6ee69",
+    "tools/PathCharacters.java": "ddbe4b484ee298f8a3f2920bd8294e324378150a18ff7f0fc7ef345b89f9aa3b",
     "tools/robustness.mjs": "24964a078897dccc448ba3d5db4c08f6446d38008424987bf26b4b6f042a21d6",
+    "tools/serve.py": "77361b08fc65d9c6a3d89bda03949d9e1a9754f76e8cc32b20ca11aa9bf1ff5e",
     "tools/test-cli.mjs": "b1acaf8992e16d37e1527fd60beeea275ce0df574a9622ab3b44d86dcaf08b03",
     "tools/test-collection-host.mjs": "0362f5257edfdad1552c1f3e87e288fe71ce4cd5a3d0c117e6f617c81d6f68e5",
     "tools/test-collections.mjs": "8ce6ea9916a54f5e0ba83a6cbcab90349fff66d2f3b02eb8f952cb338b509f76",
@@ -79,10 +86,8 @@
     "typed_test.mbt": "bb4ae7dda24fab3040122820a0bdc079f6858efa36916d594a9ace7595b40016",
     "usability.mbt": "8c2334ce2e395838c3c662d3f69305790ce4bae2f2afca49bd70e3ad5913ed11",
     "validation.mbt": "730645eefb5d4673144d874249ceda7b736ad11331094d63d9e22018e3e74f70",
-    "verify.ps1": "1dd8238865d38ac98dd075140f7ad4f05fb5963990f05592eff119010dd6ffc4",
     "web/app.mjs": "12a0cf3565b6298e2e3760355ec5da3fed88870be604b7f6e1a2f57d7334578d",
     "web/config.mjs": "6cc7edbdb551db766b27f268521f323981c578a2e4878ce9f0bd391c1057ccd4",
     "web/engine.mjs": "a71086dea510ca51f53630e62b902396f1fbad52e528283fc4d0aa83aa74f70f"
-  },
-  "failures": []
+  }
 }

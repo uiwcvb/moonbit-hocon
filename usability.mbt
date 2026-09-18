@@ -1,8 +1,8 @@
 ///|
 /// Required typed lookup. Text values remain text; numeric-looking strings are not coerced.
 pub fn get_string(config : Value, key : String) -> String raise ParseError {
-  match get(config, key) {
-    Some(Text(s)) => s
+  match peek_document_path(config, key) {
+    Some(Text(s) | Bare(s)) => s
     None => raise Invalid("missing key " + key)
     _ => raise Invalid("expected string " + key)
   }
@@ -10,7 +10,7 @@ pub fn get_string(config : Value, key : String) -> String raise ParseError {
 
 ///|
 pub fn get_int(config : Value, key : String) -> Int raise ParseError {
-  match get(config, key) {
+  match peek_document_path(config, key) {
     Some(Number(s)) =>
       @string.parse_int(s) catch {
         _ => raise Invalid("expected 32-bit integer " + key)
@@ -22,7 +22,7 @@ pub fn get_int(config : Value, key : String) -> Int raise ParseError {
 
 ///|
 pub fn get_bool(config : Value, key : String) -> Bool raise ParseError {
-  match get(config, key) {
+  match peek_document_path(config, key) {
     Some(Boolean(b)) => b
     None => raise Invalid("missing key " + key)
     _ => raise Invalid("expected boolean " + key)
@@ -31,7 +31,7 @@ pub fn get_bool(config : Value, key : String) -> Bool raise ParseError {
 
 ///|
 pub fn get_list(config : Value, key : String) -> Array[Value] raise ParseError {
-  match get(config, key) {
+  match peek_document_path(config, key) {
     Some(List(items)) => items.copy()
     None => raise Invalid("missing key " + key)
     _ => raise Invalid("expected list " + key)
@@ -50,7 +50,7 @@ fn render(v : Value, depth : Int, work : Work) -> String raise ParseError {
     raise Invalid("JSON nesting limit")
   }
   let result = match v {
-    Text(s) => s.to_json().stringify()
+    Text(s) | Bare(s) => s.to_json().stringify()
     Number(s) => {
       let checked = @json.parse(s) catch {
         _ => {

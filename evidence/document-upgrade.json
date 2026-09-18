@@ -1,0 +1,413 @@
+{
+  "utc": "2026-09-18T17:42:14.302115+00:00",
+  "version": "0.8.0",
+  "baselineCommit": "dba02853125afb3d57aad1df96534b8ecbd18a2e",
+  "localOnly": true,
+  "fullParity": false,
+  "reference": {
+    "library": "unmodified Lightbend Config 1.4.9",
+    "jarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37",
+    "java": "22.0.1",
+    "platform": "win32"
+  },
+  "engineSha256": "a71086dea510ca51f53630e62b902396f1fbad52e528283fc4d0aa83aa74f70f",
+  "verified": {
+    "js": 8258,
+    "wasmGC": 8258,
+    "liveConfiguration": 714,
+    "liveFiles": 58,
+    "liveCollections": 1300,
+    "liveHTTP": 156,
+    "liveTreeValidation": 4380,
+    "liveDocumentLifecycle": 2520,
+    "totalLiveReference": 9128,
+    "collectionHostCliChecks": 72,
+    "httpHostAsyncCliChecks": 58,
+    "treeHostAsyncCliChecks": 39,
+    "newDocumentHostAsyncCliChecks": 45,
+    "publicDocumentRegressionGroups": 8,
+    "independentJSONBackendCases": 22,
+    "boundedMalformedInputs": 307,
+    "fullVerify": true,
+    "generationFiles": 81,
+    "generationUnchanged": true,
+    "compiledEngineMatches": true,
+    "api": "5 additive functions: parse_unresolved, parse_sources_unresolved, resolve, resolve_with, get_value; Node/async/file/HTTP/CLI state pipelines"
+  },
+  "performance": {
+    "processesPerVariant": 5,
+    "scope": "Warm end-to-end request JSON parse, HOCON parse/deferred resolve/resolveWith/staged fallback and state probes, and JSON response rendering in Node/MoonBit and unmodified Lightbend Config. No startup, file I/O, peak memory or steady-load claim. Fixed alternating process order; equality checked for every process result.",
+    "unstableMeasurements": false,
+    "performanceParityEstablished": false,
+    "summaries": [
+      {
+        "name": "parse-128",
+        "inputBytes": 931,
+        "upstream": {
+          "processMedians": [
+            0.8611,
+            0.9595,
+            0.9091333333333333,
+            0.9106333333333333,
+            0.9074333333333333
+          ],
+          "medianMs": 0.9091333333333333,
+          "processSpread": 1.114272442225061
+        },
+        "current": {
+          "processMedians": [
+            0.6384666666666637,
+            0.6192000000000016,
+            0.5899333333333298,
+            0.6015333333333311,
+            0.6436333333333314
+          ],
+          "medianMs": 0.6192000000000016,
+          "processSpread": 1.0910272347157903
+        },
+        "baseline": {
+          "processMedians": [
+            0.6205666666666664,
+            0.6175666666666663,
+            0.6193333333333347,
+            0.6850000000000023,
+            0.6195666666666663
+          ],
+          "medianMs": 0.6195666666666663,
+          "processSpread": 1.109191990068553
+        },
+        "currentOverUpstream": 0.6810882158832605,
+        "currentOverBaseline": 0.9994081885188606
+      },
+      {
+        "name": "fallback-64",
+        "inputBytes": 821,
+        "upstream": {
+          "processMedians": [
+            1.3375333333333332,
+            1.3428333333333333,
+            1.4236666666666666,
+            1.3776666666666666,
+            1.4108333333333334
+          ],
+          "medianMs": 1.3776666666666666,
+          "processSpread": 1.064397148980711
+        },
+        "current": {
+          "processMedians": [
+            0.7071666666666658,
+            0.6290666666666596,
+            0.6668666666666638,
+            0.77073333333333,
+            0.6565000000000035
+          ],
+          "medianMs": 0.6668666666666638,
+          "processSpread": 1.225201356507003
+        },
+        "baseline": {
+          "processMedians": [
+            0.8330666666666673,
+            0.651600000000002,
+            0.8579999999999947,
+            0.6604666666666693,
+            0.668866666666664
+          ],
+          "medianMs": 0.668866666666664,
+          "processSpread": 1.316758747697962
+        },
+        "currentOverUpstream": 0.48405516573917046,
+        "currentOverBaseline": 0.9970098674374562
+      },
+      {
+        "name": "raw-document-128",
+        "inputBytes": 931,
+        "upstream": {
+          "processMedians": [
+            0.5534666666666667,
+            0.5993666666666667,
+            0.5629666666666666,
+            0.5797,
+            0.5111666666666667
+          ],
+          "medianMs": 0.5629666666666666,
+          "processSpread": 1.17254646234105
+        },
+        "current": {
+          "processMedians": [
+            0.31893333333333845,
+            0.31313333333333543,
+            0.311033333333332,
+            0.4130666666666703,
+            0.26363333333333117
+          ],
+          "medianMs": 0.31313333333333543,
+          "processSpread": 1.5668226071564308
+        },
+        "currentOverUpstream": 0.5562200248682612
+      },
+      {
+        "name": "resolve-chain-64",
+        "inputBytes": 678,
+        "upstream": {
+          "processMedians": [
+            0.9713666666666667,
+            0.9732666666666666,
+            1.0481333333333334,
+            0.9702,
+            0.9912
+          ],
+          "medianMs": 0.9732666666666666,
+          "processSpread": 1.0803270803270804
+        },
+        "current": {
+          "processMedians": [
+            0.4839999999999994,
+            0.4139000000000029,
+            0.4679999999999988,
+            0.3769666666666656,
+            0.42293333333333294
+          ],
+          "medianMs": 0.42293333333333294,
+          "processSpread": 1.2839331505880291
+        },
+        "currentOverUpstream": 0.43455031166518215
+      },
+      {
+        "name": "partial-missing-64",
+        "inputBytes": 1067,
+        "upstream": {
+          "processMedians": [
+            0.7377,
+            0.7543333333333333,
+            0.8285666666666667,
+            0.8187333333333333,
+            0.8835
+          ],
+          "medianMs": 0.8187333333333333,
+          "processSpread": 1.197641317608784
+        },
+        "current": {
+          "processMedians": [
+            0.3747333333333245,
+            0.37376666666665415,
+            0.31603333333333694,
+            0.340533333333326,
+            0.3596999999999942
+          ],
+          "medianMs": 0.3596999999999942,
+          "processSpread": 1.1857399008542988
+        },
+        "currentOverUpstream": 0.4393371875254387
+      },
+      {
+        "name": "external-source-64",
+        "inputBytes": 1067,
+        "upstream": {
+          "processMedians": [
+            1.0578333333333334,
+            0.9313666666666667,
+            1.1332,
+            1.0467666666666666,
+            1.0230666666666666
+          ],
+          "medianMs": 1.0467666666666666,
+          "processSpread": 1.2167066318313589
+        },
+        "current": {
+          "processMedians": [
+            0.499399999999999,
+            0.4729333333333443,
+            0.47013333333332713,
+            0.5122333333333321,
+            0.5267000000000053
+          ],
+          "medianMs": 0.499399999999999,
+          "processSpread": 1.1203204764606045
+        },
+        "currentOverUpstream": 0.47708817628888867
+      },
+      {
+        "name": "partial-then-fallback-64",
+        "inputBytes": 1067,
+        "upstream": {
+          "processMedians": [
+            1.6345666666666667,
+            1.7275666666666667,
+            1.6150333333333333,
+            1.8297,
+            1.7130333333333334
+          ],
+          "medianMs": 1.7130333333333334,
+          "processSpread": 1.132917793234402
+        },
+        "current": {
+          "processMedians": [
+            0.6979000000000042,
+            0.7776666666666566,
+            0.8967666666666597,
+            0.8005999999999934,
+            0.8834333333333385
+          ],
+          "medianMs": 0.8005999999999934,
+          "processSpread": 1.2849500883603013
+        },
+        "currentOverUpstream": 0.46735809772138703
+      }
+    ]
+  },
+  "remaining": [
+    "Complete unresolved ConfigObject container operations and derived-tree sharing identity; unresolved render, origin/comments and exception fidelity",
+    "Persistent JavaScript Config object; existing Node lifecycle support is a bounded operation pipeline",
+    "HTTP proxy/305 and authentication integration; JAR/classloader and JVM application/reference/system-properties default loading",
+    "Remaining number/object/enum collection APIs and complete upstream semantic/version coverage",
+    "High-collision tree-bin and retained-capacity object iteration; complete Unicode numeric indices",
+    "Large-config, peak-memory, sustained-load, cross-platform and complete performance parity"
+  ],
+  "sourceGitBlobSHA256": {
+    ".gitattributes": "968aed8752f58f3554e38c1db0b611ba4663668909552d8d17c2874ff5966312",
+    ".github/workflows/ci.yml": "cb79c043fe84f6effac7d91f25b17d0aeb98fe0e9821e0eba7384569f2811539",
+    ".gitignore": "30491d9520128a4172c7fab325bc552a309133db8bd21b4a699668e2a551e609",
+    "CHANGELOG.md": "bf210a54b08220c86425b31cb64fc25ea61ea15141c5a69f4913bc2fbb6a8351",
+    "CONTRIBUTING.md": "e066713924ff8db789960bf03122a64cea6904cf4dc7666b9747802f3b50d491",
+    "DUPLICATION.md": "516b3f5fe7f8c6c5817efafab22011ab63fdd6232af9702d4b04d6461d6e6397",
+    "FEATURES.md": "e76c609bbbb3b940446ccd7bb575cc1fad7233475f834407c59c0f99c19d4cd2",
+    "LICENSE": "a2ae469f92ac7fd70592f338c7c43657c7e9510be802cfb3db880fff11df3807",
+    "MANIFEST.sha256.json.baseline": "8e6d5bb967a9e93c83d1b406ee350146e33ebc78c3292f2ee64bde7e6b210737",
+    "README.mbt.md": "989930fd21c3e1483f2598cc2af4539d6c61fe711725e82a9db10991e5c3b621",
+    "README.md": "514ac1c84b1e4ebe27dbe1b8b7fb8a03a63c2ed1bd6cfe31fb917ff12eba9796",
+    "ROADMAP.md": "2ce55e042569e0a1b05a481395c7fdaa8b280dbf9832367263b04aaa72880839",
+    "TESTING.md": "a61540b9ea4a94610ae01292012090d8a5f4eb8f7235899a6346cd151a366e3f",
+    "accessors.mbt": "06aa165af57a19a001cbe081fcd1604793d8644c23de3e584a1b09276c449b05",
+    "cmd/main/main.mbt": "24f2645d844804ee1241fd560f5fe895d55d0ee59010b00f8c121b9f70bdbc19",
+    "cmd/main/moon.pkg": "943ab64eded434a3d516e50e98dec859f7815536ed2f4d9265837e266e59b667",
+    "cmd/main/pkg.generated.mbti": "e1b35d99c6ff7a6f9f6bc1fbc0e785be06ee9d96b117867741f0e54465766d7e",
+    "cmd/web/document.mbt": "22ce5dde00a09913b216c5e032ac4e1b6a5315777f6b4424e3dbdf07fb511a25",
+    "cmd/web/inspect.mbt": "6df879b70f4a1fad7382202189246ec74f80b840f9158546682a2938184a4b5e",
+    "cmd/web/main.mbt": "90bbc8c9b43abb8be74aaaa0cd561e9858613d1f17d60556e2108400b62c8f41",
+    "cmd/web/moon.pkg": "c5baa999f1dd8c612a0754b0ceb85fac2629e70e3ca99d23f77f7e7a78215552",
+    "collection_reference_test.mbt": "bf099a46b21de5188967512b9708010d1827b30b062b79d75f0a50edea2bbf81",
+    "config.mbt": "38784931d7d01b34bb33cd6966853005035a355d38341d6ad250c20444569cae",
+    "configuration_test.mbt": "399842f9283153ffa5b840351aa32e20f685df6d42d1358db8b2d787cceed36b",
+    "core_test.mbt": "e196afcb6febabb2211a8d0666928f89dbbc9921f4824fc94a8a796cd05ba188",
+    "document.mbt": "29eae3c25c8fc7f49511aa1e962e32746f5fb29ba8b39060d0b0344ca2cdb970",
+    "document_reference_test.mbt": "b129b0d00de2fa463db5e2c2b2c29f11b4ba9c018333f878adfbc35aa8559145",
+    "document_test.mbt": "d0dd16abf08eba904896b62f5af6729968492a295caabc7cb5f1e39dcde86de5",
+    "examples/document-steps.json": "26cc65e2c33f930dd7b87a058ba21d24310ac79d55aaae53157b24ee88e490f8",
+    "http_json_reference_test.mbt": "f12bdb7c98ae971d3f2ca1b4ce6117f6aa7672637c2063e4c7dd3ab7f873c03c",
+    "json_sources.mbt": "4acc8d2f1f09473f461caecd4782a7b9a65e6b1838f2293f29f4d99950e7fe5f",
+    "lexer.mbt": "f02a3f071dc1a8a8e68d7e95c3b3c816acfbc70a4aa55cf35707f5aac1a9d786",
+    "moon.mod": "d920654e2d92ae92f1dc68956e8619bd39f13ffe3425b7b159d7cab1f1889a1e",
+    "moon.pkg": "47ae82639a3ee30e82b00254cd8b7a12f39ba4f2d798cd84cade63220b449d5c",
+    "numbers.mbt": "0286ce67528f76e85b715bda1a0afac5298f860917dfb5ebb0ef403a6504679d",
+    "object_order.mbt": "42c2914f915e019a8c1cc291758a441dfa3208e0465e87177fa284bc375a392d",
+    "path_characters.mbt": "d1728d6c6d868b078fe9d8ee1b1376ee57db4deae44c6cf46c0399b94895d3d9",
+    "pkg.generated.mbti": "2df07741d3dafb52ed31711933300925ff10287c9f89302feea1c064a3abe8b5",
+    "resolver.mbt": "2e7036c0b4ececad033c55d6898cb621be30b471d4bf9221416d852a3c636d09",
+    "sample.txt": "782f7385849b19280c03bac21b355f54d67273eed7179ac3295c14b55dbfab93",
+    "source_roots_test.mbt": "9b2aa032bcabbdbe89d2da08cd1c350b0758586dee899727d8d842cd51c5485a",
+    "start-review.ps1": "d505b81c37f229e6ea8fd35384cd3e08006befc219b6e0768565210cfd2bfe66",
+    "tools/HoconOracle.java": "a84c36dd8aa7a526acb3dd42ce823f5335b9be610a7b852a2fa62ae43deff40a",
+    "tools/HoconReference.java": "c19e62ab9d5ea29b1917564651319634d659c82f9f67af2bbee1e39604d87bc7",
+    "tools/PathCharacters.java": "ddbe4b484ee298f8a3f2920bd8294e324378150a18ff7f0fc7ef345b89f9aa3b",
+    "tools/benchmark-collections.mjs": "f2da03ec622a9a1eadd8f639f11638fef7f63125a814de27c88f56436a44aa84",
+    "tools/benchmark-document.mjs": "40ce2b4dbec134971306ae88b4b8b3c2ce5d1f89dc63514e6eb7ea2787dc3b1a",
+    "tools/benchmark-http.mjs": "0e5e1181197c923ac80129632a62ffa525f9c675c94865631a3b34e6d3fa1f91",
+    "tools/benchmark-tree.mjs": "2fd3e904f516f044772e0b8379b116cadea2d8751374b1a3aee9dc90a221ccac",
+    "tools/benchmark.mjs": "53ac611536ba7cb3732017d22976ff8f38dbd9e7aa579c2469eab75b0cdc7216",
+    "tools/check-collection-generation.py": "ac6f68893d1207741c7f1f8e5aedf227403d820c2d074f6be6bf859357c5c428",
+    "tools/check-collection-proof.py": "62e05030fb57a09b8be13b6871c99b8179caf517abe07a458ce8477aca546636",
+    "tools/check-document-generation.py": "dc63c2ee1fbb2c546be70a4dc74a0f4b7545d3bf5ee6a19c7f39f3de3c20d9d8",
+    "tools/check-document-proof.py": "473e545e57d325d6fad75c85f6de96f9c5ffdff59906c3d0c978733e102cca24",
+    "tools/check-http-generation.py": "4308fcba1eed75c60eaa0c2a62fb58ea2ec3ac0e0d42136e13d99ffcc696de4f",
+    "tools/check-http-proof.py": "bfd1fd0df511bb95e4e0c5b73abb82bb50225f756a8d8c1f379f61ad411de3d0",
+    "tools/check-tree-generation.py": "e1abb609d603c8bbed9c95a5ed848b213b7d82b676b5343c3719b69200004bde",
+    "tools/check-tree-proof.py": "4fc84fbdf6f6855c2a7b40b311ac06b035c25da7d7782c575910fbac82e0ec54",
+    "tools/cli.mjs": "b30b379a0e3f61dfbbd004030f28369aee158c4ddb4f84d9226c1ceb198425ad",
+    "tools/config-async-worker.mjs": "b9d5bdfde65e9d5dfaeb2863e0e227acd20805f4793406916bb65eab7cdcb971",
+    "tools/config-async.mjs": "2f41f1102915ad1d010a912b4c29e0b616cff950f7ef5127bcbe13431bebfcad",
+    "tools/config.mjs": "f93ce7e192a06f9a44c661156ae565dd5ea75426a7274148823e1b25344c02b0",
+    "tools/evidence.mjs": "44dbf357815228150dc25be1a3d910a405f9ab53518dd54ff727d0a3ae063ea6",
+    "tools/fixtures/README.md": "dbdf5d982a80682edbd8fe171f3651b5dcee32cf322e577652c5992113f49ab4",
+    "tools/fixtures/http-cert.pem": "dc65e1e3f0ea554ac10141a5e6b76629f9a97599e7e0c899c7c4353288891f6a",
+    "tools/fixtures/http-key.pem": "d536405308c7ab59eebb526c68334de5037bcf3dc64926b049b7119c7a1d000c",
+    "tools/generate-collection-tests.mjs": "d289577cfb4b39aaa6146ec907c72f614e7699eca8c70258f7da61b24c96d3e4",
+    "tools/generate-document-tests.mjs": "7853da78fae10af269009598f8a2d42f6a03e788e9fc78a37ae1c6df4369e891",
+    "tools/generate-http-json-tests.mjs": "a47fd1922a3517db97986878ecc22036ba1ded805c7bd92846587f26ca14eb4f",
+    "tools/generate-path-characters.mjs": "7944e42ac50357f24957fa3fa9c48dc2f1e425ec346ed8872bcfd264d49f43c1",
+    "tools/generate-tree-tests.mjs": "f75919e3937bc4906ec9fd2e9f4ecb7bfb1c4b7a2860d2afd40be21752a76404",
+    "tools/http-client.mjs": "d962f3e27b8cbf4b3e652d5d2bf4d232d552bea214f2355855e7ddef24cf2dbc",
+    "tools/http-test-server.mjs": "b306856077bfd36c34e9db08bba215608fed3cffb0d6b0ef53362665b3f2fbd7",
+    "tools/http-worker.mjs": "bb5d8929d1362a75c00a09e1ab4a4fe8d98dda825a4eb4a0a98f61e7ded6ee69",
+    "tools/invalid-input.txt": "64a49c61207045d9c43ad3088b224c85e210975887fed59fabdb625e5fb66801",
+    "tools/robustness.mjs": "24964a078897dccc448ba3d5db4c08f6446d38008424987bf26b4b6f042a21d6",
+    "tools/serve.py": "77361b08fc65d9c6a3d89bda03949d9e1a9754f76e8cc32b20ca11aa9bf1ff5e",
+    "tools/test-cli.mjs": "b1acaf8992e16d37e1527fd60beeea275ce0df574a9622ab3b44d86dcaf08b03",
+    "tools/test-collection-host.mjs": "0362f5257edfdad1552c1f3e87e288fe71ce4cd5a3d0c117e6f617c81d6f68e5",
+    "tools/test-collections.mjs": "8ce6ea9916a54f5e0ba83a6cbcab90349fff66d2f3b02eb8f952cb338b509f76",
+    "tools/test-config-reference.mjs": "7ddeba0046022a6d659418e5271b38f1d55efeb3c57a987a8445dcb88adf71ae",
+    "tools/test-demo.mjs": "02ec6337b9c72c299450db6f0d2b024fd4fd96193d17e5cd501c3a8e6eb87188",
+    "tools/test-document-host.mjs": "5cfcfee6e44dae1d566c98b8b743a7d659b3de62ab3a0bc7ffae306f3ab2d890",
+    "tools/test-document-reference.mjs": "4713ba1ca751a487457930648f358e600e7ceb950e67227d7f01c8c094fa8b49",
+    "tools/test-file-reference.mjs": "eeed35f31f749e5ab391f65862b3741a67979f6f22dd29a7c55892badf04b998",
+    "tools/test-host.mjs": "a498825c200a8d6f2f486d74d6102f7880740d8bdb12cb8b9f58ce152ad03f0a",
+    "tools/test-http-host.mjs": "5f1232af3a5ddb672c73ae5cdab590ab569e4287cb70e8461ef595fc2c528b1e",
+    "tools/test-http-reference.mjs": "4c13d95373b655c2dc8b3a1874f341a35c2b13b8a23de91b346a9b7ff10bd149",
+    "tools/test-reference.mjs": "13fe50483a9fa2708bca2003c7ecd9f6adac4032b0c6a13ae1885923d84dd89f",
+    "tools/test-tree-host.mjs": "8f2ea00626b570f21dd314736ab63381da15a96cf672b5871c0b7f862977adce",
+    "tools/test-tree-reference.mjs": "374f81855c2fe5bcf90fb97f690e2ece2bce1b7b241c0879000a953a700ca32e",
+    "tree_operations.mbt": "135fe67dc4c7addc8283cc42b37c33ca4b33ec971e8b5f9093acb1532a6c42eb",
+    "tree_operations_test.mbt": "8f43200c95e404c26d695c2d87ed6a2d9126a77ed32e426b7206d33535a31b33",
+    "tree_reference_test.mbt": "8177a8b32582253af16b9d2a8bb1a0b3969f8af0dc6d44f0e21c950be3cb3122",
+    "typed_collections.mbt": "81d04d07adc4ac318565982cc475343b0cdc87e4d738e640947701f12f6bbb5c",
+    "typed_test.mbt": "bb4ae7dda24fab3040122820a0bdc079f6858efa36916d594a9ace7595b40016",
+    "usability.mbt": "8c2334ce2e395838c3c662d3f69305790ce4bae2f2afca49bd70e3ad5913ed11",
+    "validation.mbt": "730645eefb5d4673144d874249ceda7b736ad11331094d63d9e22018e3e74f70",
+    "verify.ps1": "1dd8238865d38ac98dd075140f7ad4f05fb5963990f05592eff119010dd6ffc4",
+    "web/app.mjs": "12a0cf3565b6298e2e3760355ec5da3fed88870be604b7f6e1a2f57d7334578d",
+    "web/config.mjs": "6cc7edbdb551db766b27f268521f323981c578a2e4878ce9f0bd391c1057ccd4",
+    "web/engine.mjs": "a71086dea510ca51f53630e62b902396f1fbad52e528283fc4d0aa83aa74f70f",
+    "web/index.html": "cdcbb5d9f2d455d4335bfd7fdcd30bac065fc0b90843d4fe616ef9726fc7aeb8"
+  },
+  "evidenceGitBlobSHA256": {
+    "evidence/benchmark.json": "b95950da224026e6bf33fe25aa3de48f95c3185860e69bee9f6ec140e40f05c5",
+    "evidence/collection-generation.json": "cba2b27b8b028f5cb823bb5499e3dfe00cddfc4c8efc6c227bdcd6adbbb538ce",
+    "evidence/collection-host.json": "85cb387087ec22c01aebee59ae3beeaf9ff1c22eb0e8610528a2290131729570",
+    "evidence/collection-performance.json": "1fdf451786f7baab411276cc225e8b86ef384a536a4f04b314dac16d1823e46f",
+    "evidence/collection-reference-validation.json": "533e9208ec7a8496534d10090835a7a023159484bf1138b577e2c236ed09c209",
+    "evidence/collection-reference-vectors.json": "042a52571088c66d1268d3b19eee205de1b451b84765a0fd8a396fd03ca2fbe3",
+    "evidence/collection-upgrade.json": "04cc9371122f75dcab343e95eef9d867210407e649fd6623045858deebeeef49",
+    "evidence/collection-verify.log": "e4fd6d616d9c972bc0e6c530a60371dd07960dc2c6b2de14cdcb5d72cd4e085d",
+    "evidence/config-reference-validation.json": "805e473b3996e48051920d9e8eded01c916bff645e8545e4d94051a1c746b70a",
+    "evidence/config-reference-vectors.json": "c3a9bfd59b39dc6f162a95fbd67f3df65bff10e4bc8d90fc7ced5c366b6d5f5b",
+    "evidence/config-upgrade.json": "243a0186e0881dc7c818d16f9018b070d07f116d7e592ba625bbfa392722f580",
+    "evidence/document-generation.json": "e9864aed5361426c940ced62e48ee6c16196ab68c704afb8e72a6c849a4246d3",
+    "evidence/document-host.json": "fe789d951d6e1f62606a797a1806abed3a054c4dbced5af9d01bb38860168728",
+    "evidence/document-performance.json": "b48459116a97aeb578f95d8d0b784cb2d7cdf305792f81b3adddefadad585f77",
+    "evidence/document-reference-validation.json": "40763a7c2429a2d4104d441700a4ef532d8b4d851dcccc90afa9a8327008685d",
+    "evidence/document-reference-vectors.json": "70169b07c558b5b9f5b9a3269eba2d53575747a6b688a9019bacd11b9531af95",
+    "evidence/document-verify.log": "25c1767d31a42a807a052a271933ae6e8f7e5ae9c6bc65afd574b4d0028b0772",
+    "evidence/duplication.json": "cc8ed3b5b06515bd9aad9cfdd46a3f0182767eb4091862cd3cb2505ef04f641a",
+    "evidence/file-reference-validation.json": "0e944b89b67af65270a696cb953fe326605221bcd90b247b963874fb609aa629",
+    "evidence/file-reference-vectors.json": "a644cf0d2672331c1f111dd81d5cdc8f0c660265addac3c5aa85a3022276c093",
+    "evidence/http-generation.json": "557be60dca45261c0cae5be0d482b8595aa909e05fb82096116e1eefc7ef4e80",
+    "evidence/http-host.json": "f2e16ddfb0c0952bc37787c09baf81879cde34a57d39e2e6a1767a90f927bd44",
+    "evidence/http-performance.json": "d84d976059949218a6c5a8a0b665d53c5d8c935e5320071b557766ee3674658c",
+    "evidence/http-reference-validation.json": "847d84c1478c999a829da78cac56bc65d6b60d4b1c25d3040e5395dca53695f5",
+    "evidence/http-reference-vectors.json": "d995131c302ebd824206dfa2866e72cd80f284246093746c0be43b4c64ee02f7",
+    "evidence/http-upgrade.json": "0472b7799138051e98a6fdd0a448b32dc1643817b21da808efe6e188be83fc87",
+    "evidence/http-verify.log": "411931bab1fd3dc0d4b651adc14bfa5ec983a9aae4ceaa54e54c496941df6910",
+    "evidence/path-characters.json": "568742a7473703d44ef179fc5125be04530337c36344754768aa9d6beacaa0c2",
+    "evidence/quality-review.json": "b2c33ae55ce0d45d661969a6de563aebc297acbf42027348aed7bdebf04c0c45",
+    "evidence/robustness.json": "12839d23b65911df4e385d1a4f1df5da7bc719ebfdcb490f56fe1d3b1adc9e3a",
+    "evidence/tree-generation.json": "bf9a7faafd266776297c2ef41d88cbfc86289127041ba482fbbe8b6f60974162",
+    "evidence/tree-host.json": "8bae981529aae8529d18fecbe5eae8111817246e3f8a49f6c2d303f32e90cd32",
+    "evidence/tree-performance.json": "39f877a15fe68f87d76ec47d445702eade9ef88d6e5a64d0fcc73157627f5e70",
+    "evidence/tree-reference-validation.json": "489070080bbd8162422ef0cedf7023282fea4bb067c9f6463c008f2044529da9",
+    "evidence/tree-reference-vectors.json": "6bc4e2192866c850bfc72f7c55f17dd10d9196d72dc242e07ab19f366d906007",
+    "evidence/tree-upgrade.json": "8eea7b03d9dec4fff5c7703dbafc175a1e8375a9ac047e9b62b28fcdf05c9d68",
+    "evidence/tree-verify.log": "2f51a99b33c77da9241d1f9cf8687820f0bff84fc846e48163131723291f80b6",
+    "evidence/typed-focused-validation.json": "bf0e2ef8e9056fa57985b3f3925c981ad02d99deaa9e1c78829c43e2b2da188e",
+    "evidence/typed-reference-validation.json": "37ca9296b7030e720b2784333e71abd035581c06d5511ad33a26eda5505f3275",
+    "evidence/verification.json": "87b4279b73d88fa5e230474b93a9def1a9db9acd07692f8119803b443025477f"
+  }
+}

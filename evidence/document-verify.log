@@ -1,0 +1,27 @@
+Finished. moon: ran 2 tasks, now up to date
+Finished. moon: ran 1 task, now up to date
+Finished. moon: ran 4 tasks, now up to date
+Total tests: 8258, passed: 8258, failed: 0.
+Total tests: 8258, passed: 8258, failed: 0.
+Finished. moon: no work to do
+Object(
+  {
+    "service": Object({ "host": Text("localhost"), "port": Number("9090") }),
+    "endpoint": Text("localhost"),
+  },
+)
+hocon: independent browser engine passed
+hocon: CLI input/file/stdin/error/exit-status checks passed
+host: real includes, fallback origins, environment, CLI getters, errors and limits passed
+714/714 configuration reference cases agree
+58/58 file reference cases agree
+1300/1300 typed collection/config cases agree
+72 collection host/CLI checks passed
+156/156 live-transport HTTP reference cases agree
+58 HTTP host/CLI/async checks passed
+4380/4380 tree/validation native cases agree
+39 tree/validation host/async/CLI checks passed
+2520/2520 document lifecycle native cases agree
+45 document file/HTTP/async/CLI checks passed
+hocon: 307 bounded inputs, no uncaught runtime failure
+{"project":"hocon","utc":"2026-09-18T17:37:43.160Z","runtime":"v24.11.0","platform":"win32","cpu":"Intel(R) Core(TM) i7-14700HX","input_utf8_bytes":90,"samples":30,"warmup":5,"median_ms":0.3125,"p95_ms":0.6996000000000038,"max_ms":1.0892000000000053,"scope":"JS warm execution of documented example; no cross-project or upstream performance claim"}

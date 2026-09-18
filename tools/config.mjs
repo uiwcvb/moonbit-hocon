@@ -113,12 +113,15 @@ function createHost(options) {
 }
 
 function execute(source,options,kind) {
+  if(options.document!==undefined&&typeof options.document!=='boolean')throw new TypeError('document must be boolean');
+  if(!options.document&&(options.steps!==undefined||options.probes!==undefined))throw new TypeError('steps/probes require document: true');
+  if(options.document&&['getter','path','operations','checkValid','referenceSource','validationPaths'].some(key=>options[key]!==undefined))throw new TypeError('document pipeline conflicts with resolved getters, edits or validation');
   const host=createHost(options);
   const primary=kind==='url'?host.url(source,false,options.format)[0]:kind==='file'?host.read(path.resolve(options.cwd??process.cwd(),source)):{name:options.sourceName??'<string>',content:source,format:options.format??'hocon'};
   const fallbackSources=(options.fallbacks??[]).map((content,i)=>typeof content==='string'?{name:`<fallback ${i}>`,content,format:'hocon'}:content);
   for(const name of options.fallbackFiles??[])fallbackSources.push(host.read(path.resolve(options.cwd??process.cwd(),name)));
   for(const name of options.fallbackURLs??[])fallbackSources.push(host.url(name,false)[0]);
-  const request={primary,fallbackSources,environment:options.environment??{},getter:options.getter,path:options.path,operations:options.operations,checkValid:options.checkValid,referenceSource:options.referenceSource,validationPaths:options.validationPaths};
+  const request={primary,fallbackSources,environment:options.environment??{},getter:options.getter,path:options.path,operations:options.operations,checkValid:options.checkValid,referenceSource:options.referenceSource,validationPaths:options.validationPaths,document:options.document,steps:options.steps,probes:options.probes};
   const result=JSON.parse(load_json(JSON.stringify(request),input=>{
     try{return JSON.stringify(host.include(JSON.parse(input)));}catch(e){return JSON.stringify({error:e.message});}
   }));

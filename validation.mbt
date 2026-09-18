@@ -14,7 +14,7 @@ pub suberror ValidationError {
 ///|
 fn type_name(value : Value) -> String {
   match value {
-    Text(_) => "string"
+    Text(_) | Bare(_) => "string"
     Number(_) => "number"
     Boolean(_) => "boolean"
     Object(_) => "object"
@@ -27,12 +27,13 @@ fn type_name(value : Value) -> String {
 ///|
 fn validation_compatible(reference : Value, value : Value) -> Bool {
   match (reference, value) {
-    (Null | Text("null"), _) | (_, Null | Text("null")) => true
+    (Null | Text("null") | Bare("null"), _)
+    | (_, Null | Text("null") | Bare("null")) => true
     (Object(_), Object(_)) => true
     (Object(_), _) => false
     (List(_), List(_) | Object(_)) => true
     (List(_), _) => false
-    (Text(_), _) | (_, Text(_)) => true
+    (Text(_) | Bare(_), _) | (_, Text(_) | Bare(_)) => true
     _ => type_name(reference) == type_name(value)
   }
 }

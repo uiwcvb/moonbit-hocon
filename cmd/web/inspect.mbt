@@ -52,6 +52,7 @@ fn inspect_request(input : String, callback : ((String) -> String)?) -> String {
     }
     let includes = string_map(request, "includes")
     let environment = string_map(request, "environment")
+    let document = request is { "document": True, .. }
     let fallbacks : Array[String] = match request {
       { "fallbacks": Array(items), .. } =>
         items.map(x => {
@@ -64,17 +65,30 @@ fn inspect_request(input : String, callback : ((String) -> String)?) -> String {
     }
     let mut config = match callback {
       None =>
-        @lib.parse_sources(
-          { name: "<string>", content: source, format: "hocon", },
-          includes~,
-          environment~,
-          object_only=true,
-          fallbacks=fallbacks.mapi((i, content) => {
-            name: "<fallback " + i.to_string() + ">",
-            content,
-            format: "hocon",
-          }),
-        )
+        if document {
+          @lib.parse_sources_unresolved(
+            { name: "<string>", content: source, format: "hocon", },
+            includes~,
+            object_only=true,
+            fallbacks=fallbacks.mapi((i, content) => {
+              name: "<fallback " + i.to_string() + ">",
+              content,
+              format: "hocon",
+            }),
+          )
+        } else {
+          @lib.parse_sources(
+            { name: "<string>", content: source, format: "hocon", },
+            includes~,
+            environment~,
+            object_only=true,
+            fallbacks=fallbacks.mapi((i, content) => {
+              name: "<fallback " + i.to_string() + ">",
+              content,
+              format: "hocon",
+            }),
+          )
+        }
       Some(host) => {
         let loader = fn(
           req : @lib.IncludeRequest,
@@ -103,15 +117,31 @@ fn inspect_request(input : String, callback : ((String) -> String)?) -> String {
           { "fallbackSources": Array(sources), .. } => sources.map(source_json)
           _ => []
         }
-        @lib.parse_sources(
-          primary,
-          loader=Some(loader),
-          includes~,
-          environment~,
-          fallbacks=sources,
-          object_only=true,
-        )
+        if document {
+          @lib.parse_sources_unresolved(
+            primary,
+            loader=Some(loader),
+            includes~,
+            fallbacks=sources,
+            object_only=true,
+          )
+        } else {
+          @lib.parse_sources(
+            primary,
+            loader=Some(loader),
+            includes~,
+            environment~,
+            fallbacks=sources,
+            object_only=true,
+          )
+        }
       }
+    }
+    if document {
+      return Json::object({
+        "accepted": true,
+        "value": document_pipeline(config, request, environment, callback).to_json(),
+      }).stringify()
     }
     if request is { "operations": Array(operations), .. } {
       if operations.length() > 256 {

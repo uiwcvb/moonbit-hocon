@@ -75,11 +75,38 @@ class HoconOracle {
     var resolve=ConfigResolveOptions.noSystem();
     if(req.hasPath("systemEnvironment")&&req.getBoolean("systemEnvironment"))resolve=resolve.setUseSystemEnvironment(true);
     if(req.hasPath("environment"))resolve=resolve.appendResolver(new Environment(strings(req,"environment"),null));
+    if(req.hasPath("document")&&req.getBoolean("document")){
+      var states=new ArrayList<Object>();states.add(documentState(config,req));
+      if(req.hasPath("steps"))for(Config step:req.getConfigList("steps")){
+        String op=step.getString("op");
+        var selected=resolve.setAllowUnresolved(step.hasPath("allowUnresolved")&&step.getBoolean("allowUnresolved"));
+        if(op.equals("resolve"))config=config.resolve(selected);
+        else if(op.equals("resolve-with-self"))config=config.resolveWith(config,selected);
+        else if(op.equals("resolve-with"))config=config.resolveWith(ConfigFactory.parseString(step.getString("source"),options),selected);
+        else if(op.equals("with-fallback"))config=config.withFallback(ConfigFactory.parseString(step.getString("source"),options));
+        else if(op.equals("with-value")||op.equals("with-key-value")){
+          ConfigValue value=step.hasPath("valueSource")?ConfigFactory.parseString("value="+step.getString("valueSource"),options).root().get("value"):step.root().get("value");
+          config=op.equals("with-value")?config.withValue(step.getString("path"),value):config.root().withValue(step.getString("path"),value).toConfig();
+        }else config=operation(config,step);
+        states.add(documentState(config,req));
+      }
+      return Map.of("accepted",true,"value",states);
+    }
     config=config.resolve(resolve);
     if(req.hasPath("operations"))for(Config op:req.getConfigList("operations"))config=operation(config,op);
     if(req.hasPath("checkValid")){Config check=req.getConfig("checkValid");config.checkValid(ConfigFactory.parseString(check.getString("source")).resolve(ConfigResolveOptions.noSystem()),(check.hasPath("paths")?check.getStringList("paths"):List.<String>of()).toArray(new String[0]));}
     Object result=req.hasPath("getter")?getter(config,req):config.root().unwrapped();
     Map<String,Object> out=new LinkedHashMap<>();out.put("accepted",true);out.put("value",result);return out;
+  }
+  static Object documentState(Config config,Config req){
+    var state=new LinkedHashMap<String,Object>();state.put("resolved",config.isResolved());
+    if(config.isResolved())state.put("value",config.root().unwrapped());
+    var probes=new LinkedHashMap<String,Object>();
+    if(req.hasPath("probes"))for(String path:req.getStringList("probes")){
+      try{probes.put(path,Map.of("accepted",true,"value",config.getValue(path).unwrapped()));}
+      catch(ConfigException e){probes.put(path,Map.of("accepted",false));}
+    }
+    state.put("probes",probes);return state;
   }
   static List<Map<String,Object>> validationProblems(ConfigException.ValidationFailed failure){
     var problems=new ArrayList<Map<String,Object>>();

@@ -6,6 +6,8 @@ priv struct Resolver {
   active : Array[Int]
   cycles : Array[Int]
   work : Work
+  allow_unresolved : Bool
+  blocked_paths : Array[Array[String]]
 }
 
 ///|
@@ -68,7 +70,7 @@ fn lookup_resolved(
   let mut current = root
   let path = []
   for part in keys {
-    let head = evaluate(r, current, root, path, depth + 1, false, None)
+    let head = evaluate(r, current, root, path, depth + 1, false, None, true)
     match head {
       Some(Object(fields)) =>
         match fields.get(part) {
@@ -78,7 +80,19 @@ fn lookup_resolved(
           }
           None => return None
         }
-      _ => return None
+      Some(value) => {
+        if !known_object(value) {
+          return None
+        }
+        match peek_document_child(value, part, depth + 1, r.work) {
+          Some(child) => {
+            current = child
+            path.push(part)
+          }
+          None => return None
+        }
+      }
+      None => return None
     }
   }
   Some(current)
@@ -95,6 +109,7 @@ fn resolve_reference(
   owner : Array[String],
   depth : Int,
   deep : Bool,
+  source_node : Bool,
 ) -> Value? raise ParseError {
   let cache = if deep { r.values } else { r.heads }
   if cache.get(id) is Some(result) {
@@ -116,7 +131,7 @@ fn resolve_reference(
     let mut result : Value? = None
     let mut found = false
     for keys in paths {
-      if ancestor(keys, owner) {
+      if source_node && ancestor(keys, owner) {
         if optional {
           found = true
           break
@@ -125,7 +140,7 @@ fn resolve_reference(
         }
       }
       if lookup_resolved(r, root, keys, depth + 1) is Some(target) {
-        result = evaluate(r, target, root, keys, depth + 1, deep, None)
+        result = evaluate(r, target, root, keys, depth + 1, deep, None, true)
         if result != None {
           found = true
           break
@@ -153,6 +168,17 @@ fn resolve_reference(
   }
   let result = if r.cycles.contains(id) { None } else { result }
   if result == None && !optional {
+    if source_node &&
+      paths
+      .iter()
+      .any(keys => {
+        r.blocked_paths.iter().any(p => p == keys || ancestor(p, keys))
+      }) {
+      raise Invalid("substitution cycle through hidden binding")
+    }
+    if r.allow_unresolved {
+      return Some(Substitution(paths, optional, list_env, id))
+    }
     raise Invalid("unresolved " + paths[paths.length() - 1].join("."))
   }
   cache[id] = result
@@ -178,6 +204,7 @@ fn evaluate(
   depth : Int,
   deep : Bool,
   lower : Value?,
+  source_node : Bool,
 ) -> Value? raise ParseError {
   if depth > 128 {
     raise Invalid("resolution depth limit")
@@ -195,14 +222,32 @@ fn evaluate(
       }
       r.active.push(id)
       defer ignore(r.active.pop())
-      let view = replacement(root, path, 0, lower)
-      let result = evaluate(r, body, view, path, depth + 1, deep, None)
+      let blocked = source_node && lower == None
+      if blocked {
+        r.blocked_paths.push(path)
+      }
+      defer (if blocked { ignore(r.blocked_paths.pop()) })
+      let view = if source_node {
+        replacement(root, path, 0, lower)
+      } else {
+        root
+      }
+      let result = evaluate(
+        r,
+        body,
+        view,
+        path,
+        depth + 1,
+        deep,
+        None,
+        source_node,
+      )
       cache[id] = result
       result
     }
     Substitution(paths, optional, list_env, id) =>
       resolve_reference(
-        r, paths, optional, list_env, id, root, owner, depth, deep,
+        r, paths, optional, list_env, id, root, owner, depth, deep, source_node,
       )
     Reference(s) =>
       resolve_reference(
@@ -215,6 +260,7 @@ fn evaluate(
         owner,
         depth,
         deep,
+        source_node,
       )
     PathReference(keys, optional) =>
       resolve_reference(
@@ -227,6 +273,7 @@ fn evaluate(
         owner,
         depth,
         deep,
+        source_node,
       )
     Object(fields) =>
       if !deep {
@@ -249,6 +296,7 @@ fn evaluate(
               depth + 1,
               true,
               None,
+              source_node,
             )
             is Some(value) {
             out[key] = value
@@ -262,7 +310,7 @@ fn evaluate(
       } else {
         let out = []
         for item in items {
-          if evaluate(r, item, root, owner, depth + 1, true, None)
+          if evaluate(r, item, root, owner, depth + 1, true, None, source_node)
             is Some(value) {
             out.push(value)
           }
@@ -270,12 +318,26 @@ fn evaluate(
         Some(List(out))
       }
     DelayedMerge(a, b) => {
+      if !source_node {
+        raise Invalid(
+          "external resolution cannot replace foreign merge history",
+        )
+      }
       let old = match lower {
         Some(base) => merge(base, a)
         None => a
       }
       let location = owner_of(b, owner)
-      let high = evaluate(r, b, root, location, depth + 1, deep, Some(old))
+      let high = evaluate(
+        r,
+        b,
+        root,
+        location,
+        depth + 1,
+        deep,
+        Some(old),
+        source_node,
+      )
       match high {
         Some(Object(fields)) => {
           let view = replacement(root, location, 0, Some(old))
@@ -288,12 +350,18 @@ fn evaluate(
               depth + 1,
               deep,
               None,
+              source_node,
             ) {
             Some(previous) => Some(merge(previous, Object(fields)))
             None => high
           }
         }
-        Some(_) => high
+        Some(value) =>
+          if uncertain(value) && r.allow_unresolved {
+            Some(DelayedMerge(old, value))
+          } else {
+            high
+          }
         None =>
           evaluate(
             r,
@@ -303,6 +371,7 @@ fn evaluate(
             depth + 1,
             deep,
             None,
+            source_node,
           )
       }
     }
@@ -313,7 +382,8 @@ fn evaluate(
         if !gap.is_empty() {
           values.push(Bare(gap))
         }
-        if evaluate(r, part, root, owner, depth + 1, deep, None) is Some(value) {
+        if evaluate(r, part, root, owner, depth + 1, deep, None, source_node)
+          is Some(value) {
           values.push(value)
           present = true
         }
@@ -323,6 +393,9 @@ fn evaluate(
       }
       if values.is_empty() {
         return None
+      }
+      if values.iter().any(uncertain) {
+        return Some(Concat(values.map(value => ("", value))))
       }
       let mut out = values[0]
       for i in 1..<values.length() {
@@ -363,6 +436,17 @@ fn resolve_document(
   root : Value,
   environment : Map[String, String],
 ) -> Value raise ParseError {
+  resolve_against(root, root, environment, false, true)
+}
+
+///|
+fn resolve_against(
+  root : Value,
+  source : Value,
+  environment : Map[String, String],
+  allow_unresolved : Bool,
+  source_node : Bool,
+) -> Value raise ParseError {
   let r : Resolver = {
     environment,
     heads: Map([]),
@@ -370,9 +454,13 @@ fn resolve_document(
     active: [],
     cycles: [],
     work: { remaining: 200000, next_id: 0, },
+    allow_unresolved,
+    blocked_paths: [],
   }
   normalize_value(
-    evaluate(r, root, root, [], 0, true, None).unwrap_or(Object(Map([]))),
+    evaluate(r, root, source, [], 0, true, None, source_node).unwrap_or(
+      Object(Map([])),
+    ),
   )
 }
 

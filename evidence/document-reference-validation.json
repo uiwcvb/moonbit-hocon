@@ -1,14 +1,14 @@
 {
-  "utc": "2026-09-18T17:39:23.331Z",
+  "utc": "2026-09-18T17:39:27.313Z",
   "mode": "live official library",
   "reference": {
     "library": "unmodified Lightbend Config 1.4.9",
     "jarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37"
   },
-  "total": 4380,
-  "passed": 4380,
+  "total": 2520,
+  "passed": 2520,
   "failed": 0,
-  "scope": "Resolved tree edits, path/key distinction, entry set, emptiness and structural validation. Exact acceptance/output and sorted validation path/kind with duplicate multiplicity; diagnostic prose/origins/order not compared.",
+  "scope": "Every lifecycle state: isResolved, resolved root values and required-value probes. Raw parse/edit/fallback, allowUnresolved, external/self resolution and staged continuation. Exact values/acceptance; error class/text/origin and unresolved rendering not compared.",
   "sourceHashes": {
     "accessors.mbt": "06aa165af57a19a001cbe081fcd1604793d8644c23de3e584a1b09276c449b05",
     "cmd/main/main.mbt": "24f2645d844804ee1241fd560f5fe895d55d0ee59010b00f8c121b9f70bdbc19",

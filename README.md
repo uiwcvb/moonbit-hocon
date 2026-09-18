@@ -1,6 +1,6 @@
 # HOCON 配置解析器
 
-MoonBit 本地 0.7.0：类型化配置、历史值自引用、`+=`、include 重定位、显式回退与环境替换、单位与类型化列表读取、配置树修改与校验、文件/HTTP(S) 加载、可取消异步入口和 CLI。
+MoonBit 本地 0.8.0：类型化配置、历史值自引用、`+=`、include 重定位、显式回退与环境替换、未解析文档/分阶段解析、单位与类型化列表读取、配置树修改与校验、文件/HTTP(S) 加载、可取消异步入口和 CLI。
 解析和求值均由 MoonBit 实现；Node 提供文件、HTTP(S)、properties 和命令行宿主。Java 只用于独立参考测试及路径字符数据生成。
 
 ## 命令行与文件
@@ -63,6 +63,49 @@ const cancellable = await loadURLAsync('https://config.example/app.conf', {
 默认单次请求总超时 5 秒，整次加载的网络期限 30 秒；`network.timeoutMs`/`totalTimeoutMs` 与 CLI `--http-timeout-ms`/`--http-total-timeout-ms` 可调整。`maxRedirects`/`--http-max-redirects` 最大 64；`maxResponseBytes`/`--http-max-bytes` 只能降低 400,000 字节响应上限。累计文件/响应仍限 4,000,000 字节、512 次读取（包括重定向），每源 100,000 UTF-16 单元。失效 Worker 另有最多 2 秒的唤醒看门狗余量。`network:false`/`--no-network` 可禁用 HTTP(S)。无效 UTF-8、截断响应和超限输入明确拒绝，这些是本地约束，不作为上游全范围行为一致的声明。
 
 同步接口会阻塞调用线程；在需要同时服务网络请求的事件循环中使用异步接口。HTTP(S) 是 Node 宿主能力，浏览器演示页没有新增跨域网络控制界面。
+
+## 未解析文档和分阶段解析
+
+```moonbit
+let raw = @hocon.parse_unresolved("a=${missing}\noptional=${?gone}")
+let partial = @hocon.resolve(raw, allow_unresolved=true)
+let filled = @hocon.with_value(partial, "missing", @hocon.Number("7"))
+let ready = @hocon.resolve(filled)
+let value = @hocon.get_value(ready, "a") // Number("7")
+let external = @hocon.resolve_with(raw, @hocon.parse_unresolved("missing=9"))
+```
+
+`parse_unresolved` 与 `parse_sources_unresolved` 先解析源、include 和 fallback，保留尚未求值的节点。`resolve` 返回深层隔离的新值；`allow_unresolved=true` 保留缺失的必需引用，仍拒绝循环。可选缺失引用会被移除，之后补值不会恢复它。环境仍须显式传入。
+
+`resolve_with` 仅使用给定 source 查找替换，不把其字段合入目标；同一对象作为 source 时按自身解析。两个独立解析树会重新分配节点标识，避免缓存互相污染。延迟合并与独立外部 source 的若干组合会被拒绝，此行为已与固定参考版本对照。
+
+`get_value` 对缺失、null 或尚不能读取的值报错，并深复制返回值。已知的延迟对象标量字段可以读取；需要合并未解析低优先级对象的嵌套字段仍可能报错。严格类型 getter 和可转换 getter 均支持这些已知字段。旧 `get`/`get_path` 是原始结构访问，旧 `has_path` 保留不抛错的兼容行为，不代表完整的 Java 未解析对象接口。
+
+```javascript
+import {loadFileAsync} from './tools/config.mjs';
+const states = await loadFileAsync('app.conf', {
+  document: true,
+  probes: ['service.port'],
+  steps: [
+    {op: 'resolve', allowUnresolved: true},
+    {op: 'with-fallback', source: 'PORT=8080'},
+    {op: 'resolve'},
+  ],
+});
+console.log(states.at(-1));
+```
+
+所有同步/异步 load 入口支持 `document:true`。返回初始状态及每步状态：`resolved`、解析完成时的 `value`，以及每条 probe 的 `{accepted,value?}`。这是一批操作的状态记录；尚未提供持久化 JavaScript Config 对象。JSON 数值遵循 JavaScript 双精度；精确数值应使用 MoonBit Value 或原有类型化读取。
+
+步骤支持 `resolve`、`resolve-with`、`resolve-with-self`、`with-fallback`，以及现有路径/字面键编辑和包裹操作。`with-value`/`with-key-value` 可接受 JSON `value` 或未解析 HOCON `valueSource`。source 内的 include 使用主输入的文件/URL 来源；实际宿主读取共用整次加载的限额。不能同时指定普通 getters、operations 或 validation。每次最多 64 步、64 条 probe；状态 JSON 累计最多 1,000,000 UTF-16 单元。
+
+```powershell
+node tools/cli.mjs --input 'service.port=${PORT}' --document-steps examples/document-steps.json --probe service.port
+```
+
+`--document-steps FILE` 读取最多 400,000 字节 UTF-8 JSON 数组；`--probe PATH` 可重复。也可配合 `--file`、`--url`、stdin、fallback 和 `--env`。失败沿用退出码 1/2；与普通编辑、getter、验证或 `--resolved-json` 不可混用。
+
+0.8 的独立参考检查比较 2,520 个生命周期序列的每步解析状态、已解析根值和必需值 probe，另有公开核心 API 回归及文件/HTTP/异步/CLI 检查。仍未覆盖完整的延迟 ConfigObject 容器接口、派生树共享身份、未解析 render、注释/来源和所有错误类；不据此声称已完整追平。
 
 ## MoonBit API
 
@@ -153,7 +196,9 @@ include 中的引用优先查包含位置，再回退根路径。环境替换显
 实时参考运行与证据范围见 [TESTING.md](TESTING.md)。源代码、API、编译引擎与报告 SHA256 一起保存。
 这些用例证明覆盖范围内的结果一致，不代表全部 Lightbend Config API 或生产性能已经追平。
 
-0.7 当前验证：JS/Wasm-GC 各 5,730 项，官方实时对照 6,608/6,608（含 4,380 新树操作/校验案例），39 新宿主/异步/CLI 检查通过；71 个生成/源码文件再生一致。最终五进程对照中，五项新负载当前/官方耗时比为 0.416–0.722，两个旧负载相对 0.6 为 1.027 和 1.052，即约慢 2.7% 和 5.2%；未发现进程中位数超过两倍的波动。此七项有界测量不能证明生产性能或内存/持续负载追平。
+0.8 当前验证：JS/Wasm-GC 各 8,258 项，六组官方实时对照 9,128/9,128（新增 2,520 生命周期序列）；45 项新文件/HTTP/异步/CLI 检查和既有验证全部通过，81 文件再生一致。固定五进程计时中，五项新负载当前/官方耗时比为 0.435–0.556，两个旧负载相对 0.7 为 0.999 与 0.997；未发现进程中位数超过两倍的波动。完整性能、内存及长期负载仍未追平。详见 `evidence/document-upgrade.json` 和 `evidence/document-performance.json`。
+
+0.7 历史验证：JS/Wasm-GC 各 5,730 项，官方实时对照 6,608/6,608（含 4,380 新树操作/校验案例），39 新宿主/异步/CLI 检查通过；71 个生成/源码文件再生一致。最终五进程对照中，五项新负载当前/官方耗时比为 0.416–0.722，两个旧负载相对 0.6 为 1.027 和 1.052，即约慢 2.7% 和 5.2%；未发现进程中位数超过两倍的波动。此七项有界测量不能证明生产性能或内存/持续负载追平。
 
 0.6 历史验证：JS/Wasm-GC 各 1,347 项通过；官方库实时对照 2,228/2,228（714 配置、58 文件、1,300 集合、156 HTTP），72 项集合宿主/CLI 与 58 项 HTTP/异步/CLI 检查通过。22 个独立 JSON 来源案例同时进入双后端回归。
 
@@ -163,11 +208,11 @@ include 中的引用优先查包含位置，再回退根路径。环境替换显
 Node 宿主另限制单文件/响应 400,000 字节、读取累计 4,000,000 字节及 512 次文件/网络读取（含重定向），并拒绝无效 UTF-8。
 数值转换文本限 10,000 单元，任意精度单位指数限 ±4096。这些限制可能拒绝上游能处理的超大输入。
 
-仍缺 HTTP 代理/305/认证集成、JAR/classloader、JVM application/reference/system-properties 默认加载，剩余 number/object/enum 集合和 resolveWith/来源注释 API、保留注释的渲染与端到端性能对照。
+仍缺 HTTP 代理/305/认证集成、JAR/classloader、JVM application/reference/system-properties 默认加载，剩余 number/object/enum 集合、完整未解析对象/共享身份、来源注释 API、保留注释的渲染与完整性能对照。
 更多参考版本、平台、大配置和持续负载尚未完成；详细边界见 [FEATURES.md](FEATURES.md)。
 
 依据 [HOCON 官方规格](https://github.com/lightbend/config/blob/main/HOCON.md)独立实现；参考库采用 [Lightbend Config 1.4.9](https://github.com/lightbend/config/releases/tag/v1.4.9)。
 原创代码 MIT；Java 适配器与测试用例自行编写，上游 JAR 不在本仓库分发。没有复制上游实现或测试集。
 0.5 历史增量验证：JS/Wasm-GC 各 1,323 项；1,300 新集合对照与既有 772 配置/文件对照、72 新宿主/CLI 检查。固定五进程计时中四项既有负载相对 0.4 的耗时比为 0.977–1.019；七项 JSON 请求到结果的负载相对官方库为 0.520–1.094，时长列表仍约慢 9.4%。这不代表全部性能已追平。
 
-全部留在本地，未上传或发布；旧 20 项目合集仍为历史快照，0.7 独立 ZIP/bundle 绑定新的本地提交。
+全部留在本地，未上传或发布；旧 20 项目合集仍为历史快照，独立增量 ZIP/bundle 绑定各自的本地提交。

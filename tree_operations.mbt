@@ -131,6 +131,7 @@ pub fn with_value(
   value : Value,
 ) -> Value raise ParseError {
   let parts = split_path(path)
+  check_edit_descent(config, parts)
   let work = tree_work()
   let fields = object_fields(clone_tree(config, 0, work))
   let value = clone_tree(value, parts.length(), work)
@@ -142,6 +143,7 @@ pub fn with_value(
 pub fn with_only_path(config : Value, path : String) -> Value raise ParseError {
   ignore(object_fields(config))
   let parts = split_path(path)
+  check_edit_descent(config, parts)
   match get_path(config, parts) {
     Some(value) => clone_tree(wrap_path(value, parts), 0, tree_work())
     None => Object(Map([]))
@@ -151,6 +153,7 @@ pub fn with_only_path(config : Value, path : String) -> Value raise ParseError {
 ///|
 pub fn without_path(config : Value, path : String) -> Value raise ParseError {
   let parts = split_path(path)
+  check_edit_descent(config, parts)
   let result = copy_value(config)
   let mut fields = object_fields(result)
   for i = 0; i + 1 < parts.length(); i = i + 1 {
@@ -213,7 +216,7 @@ pub fn is_empty(config : Value) -> Bool raise ParseError {
 
 ///|
 pub fn has_path_or_null(config : Value, path : String) -> Bool raise ParseError {
-  get_path(config, split_path(path)) is Some(_)
+  peek_document_path(config, path) is Some(_)
 }
 
 ///|
@@ -240,7 +243,7 @@ fn resolved_tree(
       }
       true
     }
-    Text(_) | Number(_) | Boolean(_) | Null => true
+    Text(_) | Bare(_) | Number(_) | Boolean(_) | Null => true
     _ => false
   }
 }

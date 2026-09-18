@@ -12,14 +12,16 @@ Lightbend 特定的裸文本接数组、启发式已知扩展名继承 HOCON、J
 
 0.7.0 新增路径/字面键增删筛选、回退/包裹、深复制、路径枚举和多问题结构校验，并接通同步/异步 Node 与 CLI。4,380 个官方独立案例涵盖操作序列、类型矩阵、重复限制及 JDK 路径字符边界；校验比较路径/类别，尚不比较诊断全文/来源/顺序。
 
+0.8.0 补充 `parse_unresolved`/`parse_sources_unresolved`、`resolve`/`resolve_with` 和深复制的 `get_value`。支持缺失引用延后处理、分阶段编辑/回退后继续解析、外部查找源及自解析；同步/异步文件与 HTTP、CLI 操作序列共用该实现。2,520 个独立原生序列比较每一步的状态、可读取值和已解析根值。完整目标仍未完成。
+
 尚未追平：
 
 - HTTP 代理与 305 代理重定向、认证协商、更多运行平台/协议栈；本轮已覆盖普通 HTTP(S) 及 file: URL。
 - JAR/自定义 JVM classloader、默认 application/reference 配置与 Java system properties；目录 classpath、显式 fallback/environment 已实现。
-- number/object/enum 相关集合接口、resolveWith、未解析文档生命周期及注释/来源保真；当前返回已解析值。
+- number/object/enum 相关集合接口、完整未解析 ConfigObject 容器操作/共享身份、未解析 render 与注释/来源保真；已实现有界分阶段解析和 resolveWith，尚未提供持久化 JavaScript Config 对象。
 - 全部错误的精确位置、错误种类与多错误诊断；词法/语法有位置，部分语义错误只有消息。
 - 数字索引对象的高碰撞树桶、删除后容量历史、Unicode 数字键及数组的所有拼接转换角落、格式/值的完整上游边界与多版本覆盖。
 - 独立大配置性能、内存/吞吐、多平台及持续负载。0.5 已增加七项同机五进程端到端请求对照；时长列表仍约慢 9.4%，不能外推大配置或生产负载。
 
 每源/深度/求值/输出及宿主文件限额详见 README。Number 保留文本，但普通 JS JSON 对象里的数值受双精度限制；long/bytes/memory 使用字符串传输。
-编译后的引擎、CLI、API 与证据在本地提交；CI 文件已配置但没有远端运行，独立 0.7 ZIP/bundle 绑定新提交；旧 20 项目合集保持历史版本。
+编译后的引擎、CLI、API 与证据在本地提交；CI 文件已配置但没有远端运行，独立增量 ZIP/bundle 绑定相应提交；旧 20 项目合集保持历史版本。

@@ -1,6 +1,6 @@
 # Validation contract
 
-`./verify.ps1 -MoonPath /absolute/path/to/moon` runs formatting/API generation, deny-warn checks, explicit Wasm-GC and JS public API tests, build/example, compiled browser engine, old CLI contracts, file-host integration, all five saved reference suites, 72 typed-collection checks and the HTTP/HTTPS/async and tree/validation host suites, 307 bounded malformed inputs and the local example benchmark.
+`./verify.ps1 -MoonPath /absolute/path/to/moon` runs formatting/API generation, deny-warn checks, explicit Wasm-GC and JS public API tests, build/example, compiled browser engine, old CLI contracts, file-host integration, all six saved reference suites, 72 typed-collection checks and the HTTP/HTTPS/async and tree/validation/document host suites, 307 bounded malformed inputs and the local example benchmark.
 
 Live independent comparison (Java 11+; the tested host used Java 22.0.1):
 
@@ -42,7 +42,7 @@ The ten new getters add 1,300 live independent Lightbend 1.4.9 cases: type/null/
 
 The matrix includes status codes, optional/required failures, content type/extension/Accept, request order, source origin across redirects, exact redirect limits, cycles, timeout/connection errors, chunked bodies, object roots and JSON BOM/Unicode-space/duplicate-key semantics. `generate-http-json-tests.mjs` carries 22 saved independent JSON-source results into both MoonBit backends. `test-http-host.mjs` checks real sync/async/CLI flows, trusted/untrusted TLS, strict UTF-8 and partial-body refusal, deadlines, actual request counts, total bytes, bounded queues, cancellation reasons, concurrent loads and process exit with idle workers.
 
-`evidence/http-upgrade.json` is the current manifest; 0.5 collection and 0.4 configuration manifests remain historical. `check-http-generation.py /absolute/path/to/moon` regenerates both independent test files, formatting, interfaces and the compiled engine and requires byte stability. `check-http-proof.py --index` checks the staged release fingerprint.
+`evidence/http-upgrade.json` is the historical 0.6 manifest; 0.5 collection and 0.4 configuration manifests remain historical. `check-http-generation.py /absolute/path/to/moon` regenerates both independent test files, formatting, interfaces and the compiled engine and requires byte stability. `check-http-proof.py --index` checks the staged release fingerprint.
 
 The HTTP performance harness uses five processes per variant and loopback-only fixtures. Synchronous variants use 30 warmup executions and 15 samples of three calls per process; async uses three warmups and seven single-call samples through the reusable worker pool. It compares two old local workloads against the fixed 0.5 commit and four network workloads against the native library. Raw process variation is retained; noisy ratios do not establish performance parity. WAN latency, long-running memory, production load and other platforms remain unverified.
 
@@ -54,10 +54,25 @@ The completed 0.6 verifier passed 1,347 tests on each backend, all 2,228 saved r
 
 `PathCharacters.java` is an original JDK Character adapter, not copied upstream code. `generate-path-characters.mjs --live` captures BMP letter/digit ranges from the tested JDK 22.0.1; without --live it regenerates the checked-in table from saved data. Native entry-set tests cover every range boundary and neighbor. Other JDK Unicode versions remain a compatibility boundary.
 
-`test-tree-host.mjs` checks 39 real sync/async string/file and CLI flows, option validation, exact long transport, preserved structured errors, ordering and reference-file includes. Both saved native replay and host tests are mandatory in verify/CI. Current full verifier count is 5,730 per backend; the total live reference count is 6,608 (714 config + 58 file + 1,300 collection + 156 HTTP + 4,380 tree).
+`test-tree-host.mjs` checks 39 real sync/async string/file and CLI flows, option validation, exact long transport, preserved structured errors, ordering and reference-file includes. Both saved native replay and host tests are mandatory in verify/CI. The 0.7 full verifier count was 5,730 per backend; the total live reference count is 6,608 (714 config + 58 file + 1,300 collection + 156 HTTP + 4,380 tree).
 
 `benchmark-tree.mjs` compares two old loads to the fixed 0.6 commit and five new workloads to native Java, using five processes, 30 warmups and 15 samples of three requests. Request JSON decoding, parse/resolve/edit/validation and response rendering are included; process startup, I/O, sustained load and memory peaks are excluded. Every process result must match. Independent process spreads are retained, and full performance parity remains unproven.
 
 `evidence/tree-upgrade.json` is the 0.7 manifest; earlier manifests and performance campaigns remain historical. Generation and proof checks use `check-tree-generation.py /absolute/path/to/moon` and `check-tree-proof.py --index`.
 
 Final 0.7 five-process ratios: new workloads/current-native 0.416–0.722; existing/current-0.6 1.027 and 1.052 (about 2.7% and 5.2% slower). No process-median max/min spread exceeds 2 in this campaign. Raw samples are retained; no full performance parity is claimed.
+
+
+## 0.8 unresolved document lifecycle evidence
+
+`test-document-reference.mjs` compares 2,520 independent lifecycle sequences against the unmodified Config 1.4.9 JAR. Every initial/intermediate/final state compares `isResolved`, the resolved root (when available), and required-value probes via native `getValue(...).unwrapped()`. The matrix covers raw parsing and concatenation, path/literal-key edits, fallback, missing/optional/environment/list-environment references, self/history/cycles, `allowUnresolved`, external `resolveWith` and repeated partial continuation. Reference process environment is explicitly populated for the list-environment cases, which cannot be emulated by the scalar resolver callback alone.
+
+`generate-document-tests.mjs` turns saved native results into public MoonBit tests for both JS and Wasm-GC. Eight further public regressions exercise independently parsed node-ID collisions, deep detachment, raw strict getters/validation, cycle rejection, self identity, delayed known fields and bounded caller-created cyclic data. The original raw graphs remain unchanged by resolution. Comparisons do not establish native delayed ConfigObject container return behavior, retained sharing identity across derived trees, unresolved rendering, source/comment fidelity or exception type/message equivalence.
+
+`test-document-host.mjs` exercises 45 sync/async string, file/include, HTTP/HTTPS, source-stage include, CLI, rejection and limit checks. It checks actual request counts to ensure the root source and include are loaded once per pipeline, not reparsed from changing external files each time resolution continues. The saved replay and host suite are mandatory in verify/CI.
+
+Fresh runs: `node tools/test-document-reference.mjs`, `node tools/test-document-host.mjs`, and `node tools/benchmark-document.mjs` (same `HOCON_REFERENCE_JAR` as above). The performance harness uses five fresh processes per variant and verifies every result, compares two existing loads against the fixed 0.7 commit, and five raw/partial/external/staged lifecycle workloads against native Java. It retains 30 warmups and 15 samples of three executions, excludes startup/I/O/memory/sustained load and does not establish complete performance parity.
+
+`evidence/document-upgrade.json` is the 0.8 manifest. All earlier upgrade/performance manifests remain historical. `check-document-generation.py /absolute/path/to/moon` regenerates independent tests, paths, API, formatting and engine and requires byte stability. `check-document-proof.py --index` checks staged Git blob hashes. Live source fingerprints are refreshed only after the final source/API/engine is fixed.
+
+Final 0.8 validation: 8,258 tests per backend, 9,128/9,128 live native cases across six suites, 45 new lifecycle host checks, all earlier mandatory checks, and 81 regenerated/source files unchanged. Five-process new/current-native ratios are 0.435–0.556; two old/current-0.7 ratios are 0.999 and 0.997. No process-median max/min spread exceeds 2 in this campaign. These bounded results do not establish complete performance parity.

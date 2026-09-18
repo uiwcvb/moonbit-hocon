@@ -583,6 +583,27 @@ pub fn parse_sources(
   environment? : Map[String, String] = Map([]),
   object_only? : Bool = false,
 ) -> Value raise ParseError {
+  resolve_document(
+    parse_sources_unresolved(
+      source,
+      includes~,
+      loader~,
+      fallbacks~,
+      object_only~,
+    ),
+    environment,
+  )
+}
+
+///|
+/// Parse and merge sources without resolving substitutions.
+pub fn parse_sources_unresolved(
+  source : IncludeSource,
+  includes? : Map[String, String] = Map([]),
+  loader? : ((IncludeRequest) -> Result[Array[IncludeSource], String])? = None,
+  fallbacks? : Array[IncludeSource] = [],
+  object_only? : Bool = false,
+) -> Value raise ParseError {
   let context : ParseContext = {
     sources: includes,
     loader,
@@ -603,7 +624,27 @@ pub fn parse_sources(
   for i = layers.length() - 2; i >= 0; i = i - 1 {
     root = merge(root, layers[i])
   }
-  resolve_document(root, environment)
+  root
+}
+
+///|
+pub fn parse_unresolved(
+  source : String,
+  includes? : Map[String, String] = Map([]),
+  loader? : ((IncludeRequest) -> Result[Array[IncludeSource], String])? = None,
+  source_name? : String = "<string>",
+  fallbacks? : Array[String] = [],
+) -> Value raise ParseError {
+  parse_sources_unresolved(
+    { name: source_name, content: source, format: "hocon", },
+    includes~,
+    loader~,
+    fallbacks=fallbacks.mapi((i, content) => {
+      name: "<fallback " + i.to_string() + ">",
+      content,
+      format: "hocon",
+    }),
+  )
 }
 
 ///|
