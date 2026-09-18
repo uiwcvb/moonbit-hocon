@@ -19,6 +19,7 @@ options(
         "config_error",
         "config_read",
         "config_read_native",
+        "config_entries_native",
         "split_path_json",
         "config_status",
         "config_query",

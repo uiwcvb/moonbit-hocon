@@ -1,5 +1,12 @@
 # Changes
 
+## 0.19.0
+
+- Return detached mutable ConfigEntrySet collections with immutable typed ConfigEntry values; preserve the old plain-data API as entrySetData. Keep unresolved references opaque, omit null/empty objects, reject unresolved delayed-object traversal.
+- Add semantic set equality, hashing, mutations and fail-fast cursors without changing the immutable configuration tree. Expose tuple iteration and detached arrays.
+- Normalize delayed fallback stacks, preserve scalar barriers, consolidate known delayed objects, and omit fully shadowed older objects during partial resolution.
+- Add 1,226 independent native programs, 406 portable core programs in 13 groups plus two ownership/resource tests, 17 host checks and the full worker replay. Compare 12 entry workloads against native Config and five resolved count workloads against fixed 0.18. Full parity remains open.
+
 ## 0.18.0
 
 - Validate decimal token spelling, trim and classify numeric strings by direct UTF-16 indexing, avoiding repeated character arrays; reject invalid ASCII integer candidates before entering Unicode digit conversion, while preserving the Unicode fallback.

@@ -1,4 +1,4 @@
-import {config_create,config_error,config_read_native,config_derive,config_child,config_children,config_validate,config_pack,config_unpack,value_kind,value_select,value_read_native,value_equal_native,value_lookup,value_search_native,value_render_native} from '../web/engine.mjs';
+import {config_create,config_error,config_read_native,config_entries_native,config_derive,config_child,config_children,config_validate,config_pack,config_unpack,value_kind,value_select,value_read_native,value_equal_native,value_lookup,value_search_native,value_render_native} from '../web/engine.mjs';
 import {prepare} from './config-host.mjs';
 import {ConfigError} from './config-error.mjs';
 import {executeAsync} from './config-async.mjs';
@@ -85,7 +85,8 @@ export class Config {
  getDurationList(key,unit){return query(this,unit===undefined?'duration-list':'duration-list-in',path(key),{unit});}
  isEmpty(){return query(this,'empty');}
  isResolved(){return query(this,'resolved');}
- entrySet(){return query(this,'entries');}
+ entrySet(){const stored=state(this),entries=config_entries_native(stored.handle);if(!entries.accepted)throw new ConfigError(entries);return new ConfigEntrySet(entries.value.map(([key,handle])=>new ConfigEntry(key,wrapValue(handle,stored.environment))));}
+ entrySetData(){return query(this,'entries');}
  toJSON(){return query(this,undefined);}
  render(options){return options===undefined?query(this,'json-text'):this.root().render(options);}
  resolve(options={}){const checked=resolveOptions(this,options);return derive(this,{op:'resolve',...checked},this,checked.environment);}
@@ -162,6 +163,53 @@ export class ConfigList extends ConfigValue {
  values(){return Object.freeze(Array.from({length:this.size()},(_,i)=>this.get(i)));}
  [Symbol.iterator](){return this.values()[Symbol.iterator]();}
  subList(from,to){const size=this.size();if(!Number.isInteger(from)||!Number.isInteger(to)||from<0||to>size||from>to)throw new RangeError('Invalid subList range');return Object.freeze(Array.from({length:to-from},(_,i)=>this.get(from+i)));}
+}
+
+const entryStates=new WeakMap(),setStates=new WeakMap();
+function entryState(entry){const stored=entryStates.get(entry);if(!stored)throw new TypeError('Expected a ConfigEntry');return stored;}
+function setState(set){const stored=setStates.get(set);if(!stored)throw new TypeError('Expected a ConfigEntrySet');return stored;}
+function entryHash(entry){return entry===null?0:entry.hashCode();}
+function entryEqual(needle,entry){return needle===entry||(needle!==null&&needle.equals(entry));}
+function collectionValues(collection){if(collection===null||collection===undefined||typeof collection[Symbol.iterator]!=='function')throw new TypeError('Expected an iterable collection');return setStates.has(collection)||Array.isArray(collection)||collection instanceof Set?collection:Array.from(collection);}
+function collectionContains(collection,entry){if(setStates.has(collection))return collection.contains(entry);for(const other of collection)if(entryEqual(entry,other))return true;return false;}
+function collectionSize(collection){return setStates.has(collection)?collection.size():collection.length??collection.size;}
+function setFind(stored,entry){if(entry!==null&&!entryStates.has(entry))return undefined;return stored.buckets.get(entryHash(entry))?.find(cell=>entryEqual(entry,cell.entry));}
+function deleteCell(stored,cell){const bucket=stored.buckets.get(cell.hash);bucket.splice(bucket.indexOf(cell),1);if(!bucket.length)stored.buckets.delete(cell.hash);stored.cells.delete(cell);stored.version++;}
+function iteratorError(name){const error=new Error(name);error.name=name;return error;}
+
+/** Immutable path/value pair. A set may also contain manually created null pairs. */
+export class ConfigEntry {
+ constructor(key,value){if(key!==null&&typeof key!=='string')throw new TypeError('Entry key must be a string or null');if(value!==null)valueState(value);entryStates.set(this,{key,value});Object.freeze(this);}
+ getKey(){return entryState(this).key;}
+ getValue(){return entryState(this).value;}
+ setValue(){throw new TypeError('Configuration entries are immutable');}
+ equals(other){if(!entryStates.has(other))return false;const a=entryState(this),b=entryState(other);return a.key===b.key&&(a.value===b.value||(a.value!==null&&a.value.equals(b.value)));}
+ hashCode(){const {key,value}=entryState(this);let hash=0;if(key!==null)for(let i=0;i<key.length;i++)hash=(Math.imul(hash,31)+key.charCodeAt(i))|0;return hash^(value===null?0:value.hashCode());}
+ *[Symbol.iterator](){yield this.getKey();yield this.getValue();}
+}
+
+/** Detached mutable set with ConfigEntry equality, independent of its source. */
+export class ConfigEntrySet {
+ constructor(entries=[]){setStates.set(this,{cells:new Set(),buckets:new Map(),version:0});this.addAll(entries);Object.freeze(this);}
+ size(){return setState(this).cells.size;}
+ isEmpty(){return this.size()===0;}
+ contains(entry){return setFind(setState(this),entry)!==undefined;}
+ containsAll(entries){for(const entry of collectionValues(entries))if(!this.contains(entry))return false;return true;}
+ add(entry){if(entry!==null)entryState(entry);const stored=setState(this);if(setFind(stored,entry))return false;const hash=entryHash(entry),cell={entry,hash};let bucket=stored.buckets.get(hash);if(!bucket)stored.buckets.set(hash,bucket=[]);bucket.push(cell);stored.cells.add(cell);stored.version++;return true;}
+ addAll(entries){let changed=false;for(const entry of collectionValues(entries))changed=this.add(entry)||changed;return changed;}
+ remove(entry){const stored=setState(this),cell=setFind(stored,entry);if(!cell)return false;deleteCell(stored,cell);return true;}
+ removeAll(entries){entries=collectionValues(entries);let changed=false;if(this.size()>collectionSize(entries)){for(const entry of entries)changed=this.remove(entry)||changed;}else{const cursor=this.iterator();while(cursor.hasNext())if(collectionContains(entries,cursor.next())){cursor.remove();changed=true;}}return changed;}
+ retainAll(entries){entries=collectionValues(entries);let changed=false;const cursor=this.iterator();while(cursor.hasNext())if(!collectionContains(entries,cursor.next())){cursor.remove();changed=true;}return changed;}
+ clear(){const stored=setState(this);stored.cells.clear();stored.buckets.clear();stored.version++;}
+ toArray(){return Array.from(setState(this).cells,cell=>cell.entry);}
+ equals(other){return other===this||(setStates.has(other)&&this.size()===other.size()&&this.containsAll(other));}
+ hashCode(){let hash=0;for(const entry of this)hash=(hash+entryHash(entry))|0;return hash;}
+ iterator(){const stored=setState(this),cells=Array.from(stored.cells);let version=stored.version,index=0,last=null;return Object.freeze({
+  hasNext:()=>index<cells.length,
+  next:()=>{if(version!==stored.version)throw iteratorError('ConcurrentModificationException');if(index===cells.length)throw iteratorError('NoSuchElementException');last=cells[index++];return last.entry;},
+  remove:()=>{if(last===null)throw iteratorError('IllegalStateException');if(version!==stored.version)throw iteratorError('ConcurrentModificationException');deleteCell(stored,last);last=null;version=stored.version;}
+ });}
+ [Symbol.iterator](){const cursor=this.iterator();return {next:()=>cursor.hasNext()?{value:cursor.next(),done:false}:{value:undefined,done:true},[Symbol.iterator](){return this;}};}
 }
 for(const Type of [ConfigObject,ConfigList])for(const method of ['clear','put','putAll','remove','replace','replaceAll','compute','computeIfAbsent','computeIfPresent','merge','add','addAll','set','removeAll','retainAll','removeIf','sort'])Object.defineProperty(Type.prototype,method,{value(){throw new TypeError('Configuration containers are immutable');}});
 

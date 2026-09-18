@@ -4,7 +4,7 @@ import {prepare} from './config-host.mjs';
 import {ConfigError} from './config-error.mjs';
 export {ConfigError} from './config-error.mjs';
 export {parseProperties} from './config-host.mjs';
-export {Config,ConfigValue,ConfigObject,ConfigList} from './config-object.mjs';
+export {Config,ConfigValue,ConfigObject,ConfigList,ConfigEntry,ConfigEntrySet} from './config-object.mjs';
 function execute(source,options,kind) {
   if(options.document!==undefined&&typeof options.document!=='boolean')throw new TypeError('document must be boolean');
   if(!options.document&&(options.steps!==undefined||options.probes!==undefined))throw new TypeError('steps/probes require document: true');

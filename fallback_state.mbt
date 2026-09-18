@@ -25,7 +25,20 @@ fn ignores_fallbacks(value : Value) -> Bool {
   match value {
     SealedObject(_) => true
     Object(_) => false
+    Bound(_, _, body) => ignores_fallbacks(body)
+    DelayedMerge(low, _) => ignores_fallbacks(low)
     _ => completely_resolved(value)
+  }
+}
+
+///|
+// A delayed stack is evaluated from its newest binding. Keep its binary form
+// left-associated when a whole previously parsed stack receives a fallback.
+fn append_delayed(low : Value, high : Value) -> Value {
+  match high {
+    DelayedMerge(previous, head) =>
+      DelayedMerge(append_delayed(low, previous), head)
+    _ => DelayedMerge(low, high)
   }
 }
 

@@ -1,6 +1,6 @@
 # HOCON 配置解析器
 
-MoonBit 本地 0.18.0：直接数值扫描和长系数区间转换、极小十进制数精确转换优化、浮点文本渲染优化、原始值的 JSON/HOCON 文本与缩进渲染、直接值遍历和不可变包装哈希缓存、不可变 ConfigValue / ConfigObject / ConfigList、持久化不可变 JavaScript Config、类型化配置、历史值自引用、`+=`、include 重定位、显式回退与环境替换、未解析文档/分阶段解析、数字/对象/通用值/枚举及类型化列表读取、日历周期和指定时间单位、配置树修改与校验、文件/HTTP(S) 加载、可取消异步入口和 CLI。
+MoonBit 本地 0.19.0：类型化 Config 条目集合、直接数值扫描和长系数区间转换、极小十进制数精确转换优化、浮点文本渲染优化、原始值的 JSON/HOCON 文本与缩进渲染、直接值遍历和不可变包装哈希缓存、不可变 ConfigValue / ConfigObject / ConfigList、持久化不可变 JavaScript Config、类型化配置、历史值自引用、`+=`、include 重定位、显式回退与环境替换、未解析文档/分阶段解析、数字/对象/通用值/枚举及类型化列表读取、日历周期和指定时间单位、配置树修改与校验、文件/HTTP(S) 加载、可取消异步入口和 CLI。
 解析和求值均由 MoonBit 实现；Node 提供文件、HTTP(S)、properties 和命令行宿主。Java 只用于独立参考测试及路径字符数据生成。
 
 ## 命令行与文件
@@ -90,9 +90,30 @@ console.log(ports.lastIndexOf(ConfigValue.fromAnyRef(8080))); // 2
 
 对象经过非对象回退后，会保留“忽略之后回退”的状态，即使再嵌入其他对象、编辑、复制、解析或经过 Worker 传递。MoonBit 的新增 `SealedObject` 枚举分支保存此状态；下游穷尽匹配 `Value` 的代码需加入该分支。公共 `value_with_fallback`、`object_get`、`list_get` 与复制/编辑接口保持输入和输出的可变 Map/Array 隔离。
 
-原生 Map/Set 的高碰撞树桶及删除后容量历史、所有容器共享身份、渲染/来源、完整 JVM 工厂与生态仍未追平；集合遍历顺序不作为跨 JDK 保证。当前 `Config.entrySet()` 保持先前的普通叶值数据接口。
+原生 Map/Set 的高碰撞树桶及删除后容量历史、所有容器共享身份、渲染/来源、完整 JVM 工厂与生态仍未追平；集合遍历顺序不作为跨 JDK 保证。`Config.entrySet()` 的新接口及数据接口迁移见下节。
 
 新增独立对照可运行 `node tools/test-value-reference.mjs --golden`；设置 `HOCON_REFERENCE_JAR` 为未修改的 1.4.9 JAR 后，去掉 `--golden` 则实时比较。`tools/generate-value-tests.mjs` 把其中 1,827 个值比较/回退程序生成到 MoonBit 双后端测试（29 个测试分组）；另外 983 个容器程序在 JS 宿主对照，全部 2,810 个程序也经过异步初始加载回放。
+
+## 类型化路径条目集合（0.19）
+
+`Config.entrySet()` 递归枚举非 null、非对象叶值，列表作为一个叶值；空对象不产生条目。返回独立可修改的 `ConfigEntrySet`，每个不可变 `ConfigEntry` 的 `getKey()` 是转义后的路径，`getValue()` 是实际 ConfigValue 视图。未解析引用可以枚举和渲染；需要展开的未解析延迟对象仍拒绝枚举，与固定原版一致。
+
+**0.18 迁移：**原来返回普通叶值数据的行为改为 `entrySetData()`。模块级 `load` 的 `entries` getter、CLI 与 `ConfigObject.entrySet()` 的直接字面键冻结元组数组保持原接口。
+
+```javascript
+import {Config, ConfigEntry, ConfigValue} from './tools/config.mjs';
+const config = Config.parse('service={port=8080,host=${HOST}},empty={},absent=null');
+const entries = config.entrySet();
+for (const [path, value] of entries) console.log(path, value.render());
+entries.add(new ConfigEntry('extra', ConfigValue.fromAnyRef(true)));
+entries.clear(); // 只修改这个集合；config 仍保留全部配置
+```
+
+集合支持 `size/isEmpty/contains/containsAll/add/addAll/remove/removeAll/retainAll/clear/toArray/equals/hashCode`，按条目和值的语义相等去重。`ConfigEntry` 支持 `getKey/getValue/equals/hashCode` 及元组迭代，`setValue` 拒绝修改。手工构造的 null 条目及 null 键/值可加入集合，枚举配置本身不会生成这些项。批量操作接受集合或 iterable；`equals` 比较同类 ConfigEntrySet。`toArray()` 是独立数组。
+
+`iterator()` 提供 Java 风格 `hasNext/next/remove`；非法 remove、耗尽和并发结构修改分别报告对应名称的 Error。普通 `for..of` 也可使用。迭代顺序不保证与 HashSet 相同；未模拟树桶、扩容/删除历史、Spliterator、Stream、Java 泛型擦除后任意对象集合。配置值的完整共享身份也未承诺。可变集合不会改变不可变配置树，解包普通数据仍深复制。
+
+本轮同时修正延迟回退栈的结合方式和标量屏障，避免部分解析时重复低优先级历史；已知延迟对象拼接及被完全覆盖的旧对象按原版行为处理。新增 1,226 个原版程序，其中 406 个核心枚举程序进入双后端 13 个分组；另有 2 个核心所有权/限额测试、17 项真实来源与集合检查。此矩阵不代表完整上游规范已覆盖。
 
 ## 数字、对象、通用值和枚举读取
 
@@ -384,3 +405,9 @@ JS/Wasm-GC 各 16,637 项通过，27,851 个 JDK 解析输入（218 个分组，
 五进程计时中，普通浮点列表读取、长极小数渲染相对 0.17 耗时减少 21.3%、96.2%，当前/原版耗时比为 20.350、18.625；长中点渲染与长引号数字读取当前/原版仍为 501.845、7.978。旧 parse-64 相对 0.17 为 1.026。最大进程中位数波动比 2.466，不稳定标记 true。完整性能仍未追平。
 
 本轮证据见 [numeric-scan-upgrade.json](evidence/numeric-scan-upgrade.json)，完整边界见 [FEATURES.md](FEATURES.md)。
+
+## 0.19 最终验证
+
+JS/Wasm-GC 各 16,652 项；新增 1,226 个实时原版程序通过，含 406 个核心程序/13 分组，另有 2 个核心所有权/限额测试。17 项新宿主检查及同组 1,226 次异步回放通过。文档/值/渲染也重新实时比较，共 8,696 次；15 个保存原版套件回放共 31,776 次，包含原有重叠，不能计为全部新独立案例。205 文件再生一致；编译引擎与交付引擎相同；307 项有界异常输入通过；受控 GC 回收 2,399/2,400 个丢弃配置。
+
+五进程枚举计时中，64 字段计数、哈希当前/原版耗时比为 7.058、7.921；512 字段哈希为 30.204。64 字段计数相对旧 0.18 普通数据接口为 2.234，旧接口展开数据，新接口构造类型化集合，内部工作量不同。最大进程中位数波动比 3.032，不稳定标记 true。该功能升级仍有明显性能差距。 最终清单见 `evidence/entry-upgrade.json`，原始五进程样本见 `evidence/entry-performance.json`。完整目标仍未完成。

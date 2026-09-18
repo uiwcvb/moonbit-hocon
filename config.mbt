@@ -77,7 +77,7 @@ fn merge(a : Value, b : Value) -> Value {
     return b
   }
   if uncertain(a) || uncertain(b) {
-    return DelayedMerge(a, b)
+    return append_delayed(a, b)
   }
   match (a, b) {
     (Object(x) | SealedObject(x), Object(y)) => {

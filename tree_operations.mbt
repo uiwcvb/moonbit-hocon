@@ -271,7 +271,13 @@ fn collect_entries(
         collect_entries(child, next, result, depth + 1, work)
       }
     Null => ()
-    _ => result[join_path(parts)] = clone_tree(value, depth, work)
+    Bound(_, _, body) => collect_entries(body, parts, result, depth + 1, work)
+    _ => {
+      if known_object(value) {
+        raise Invalid("cannot enumerate unresolved object")
+      }
+      result[join_path(parts)] = clone_tree(value, depth, work)
+    }
   }
 }
 

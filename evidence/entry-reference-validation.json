@@ -1,9 +1,14 @@
 {
-  "utc": "2026-09-18T23:41:57.190Z",
-  "total": 2140,
-  "passed": 2140,
+  "utc": "2026-09-18T23:39:51.943Z",
+  "mode": "live official library",
+  "reference": {
+    "library": "unmodified Lightbend Config 1.4.9",
+    "jarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37"
+  },
+  "total": 1226,
+  "passed": 1226,
   "failed": 0,
-  "scope": "Four concurrent worker factories, then render/operations on transferred trees; exact independent native strings. This replays the same native cases, not additional independent coverage.",
+  "scope": "Detached typed entry enumeration, unresolved leaves, escaped paths, null/empty object filtering, immutable values/entries, semantic set operations and iterator mutation. Snapshots sort entries; HashSet iteration order and exact exception messages are not compared",
   "sourceHashes": {
     "accessor_reference_test.mbt": "ef0cea69ffc47506f3c8a54352b8bda45617aca06af288d99676092a662fa3e0",
     "accessors.mbt": "d257c562b827f465a74d8e49bce2df375738688950efb00b0f03280b22d65fed",

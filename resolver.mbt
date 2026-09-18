@@ -200,6 +200,42 @@ fn scalar_text(v : Value) -> String raise ParseError {
 }
 
 ///|
+// A partial high object can already hide every field of an older object.
+// Keep unresolved non-object history, but do not reintroduce hidden objects.
+fn unshadowed_history(
+  value : Value,
+  high : Value,
+  depth : Int,
+  work : Work,
+) -> Value? raise ParseError {
+  tree_step(value, depth, work)
+  match value {
+    DelayedMerge(low, head) => {
+      let a = unshadowed_history(low, high, depth + 1, work)
+      let b = unshadowed_history(head, high, depth + 1, work)
+      match (a, b) {
+        (Some(a), Some(b)) => Some(DelayedMerge(a, b))
+        (Some(_), None) => a
+        _ => b
+      }
+    }
+    Object(fields) | SealedObject(fields) => {
+      for key in fields.keys() {
+        let child = peek_document_child(high, key, depth + 1, work) catch {
+          _ => None
+        }
+        match child {
+          Some(child) => if !ignores_fallbacks(child) { return Some(value) }
+          None => return Some(value)
+        }
+      }
+      None
+    }
+    _ => Some(value)
+  }
+}
+
+///|
 fn evaluate(
   r : Resolver,
   v : Value,
@@ -381,7 +417,15 @@ fn evaluate(
         }
         Some(value) =>
           if !ignores_fallbacks(value) && r.allow_unresolved {
-            Some(DelayedMerge(old, value))
+            let retained = if known_object(value) {
+              unshadowed_history(old, value, depth + 1, r.work)
+            } else {
+              Some(old)
+            }
+            match retained {
+              Some(old) => Some(append_delayed(old, value))
+              None => high
+            }
           } else {
             high
           }
@@ -418,7 +462,28 @@ fn evaluate(
         return None
       }
       if values.iter().any(uncertain) {
-        return Some(Concat(values.map(value => ("", value))))
+        let consolidated : Array[Value] = []
+        for value in values {
+          if !consolidated.is_empty() &&
+            known_object(consolidated.last().unwrap()) {
+            if known_object(value) {
+              let previous = consolidated.pop().unwrap()
+              consolidated.push(merge(previous, value))
+              continue
+            }
+            if value is Bare(_) {
+              continue
+            }
+          }
+          consolidated.push(value)
+        }
+        return Some(
+          if consolidated.length() == 1 {
+            consolidated[0]
+          } else {
+            Concat(consolidated.map(value => ("", value)))
+          },
+        )
       }
       let mut out = values[0]
       for i in 1..<values.length() {

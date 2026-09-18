@@ -94,6 +94,12 @@ try {
   if ($LASTEXITCODE -ne 0) {throw 'render async replay failed'}
   node tools/test-render-host.mjs
   if ($LASTEXITCODE -ne 0) {throw 'render file/HTTP/ownership checks failed'}
+  node tools/test-entry-reference.mjs --golden
+  if ($LASTEXITCODE -ne 0) {throw 'typed entry reference replay failed'}
+  node tools/test-entry-async.mjs
+  if ($LASTEXITCODE -ne 0) {throw 'typed entry async replay failed'}
+  node tools/test-entry-host.mjs
+  if ($LASTEXITCODE -ne 0) {throw 'typed entry host checks failed'}
   node tools/robustness.mjs
   if ($LASTEXITCODE -ne 0) {throw 'robustness failed'}
   node tools/benchmark.mjs

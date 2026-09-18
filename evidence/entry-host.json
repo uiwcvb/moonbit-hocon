@@ -1,9 +1,27 @@
 {
-  "utc": "2026-09-18T23:41:57.190Z",
-  "total": 2140,
-  "passed": 2140,
+  "utc": "2026-09-18T23:42:00.486Z",
+  "checks": 17,
+  "passed": 17,
   "failed": 0,
-  "scope": "Four concurrent worker factories, then render/operations on transferred trees; exact independent native strings. This replays the same native cases, not additional independent coverage.",
+  "names": [
+    "parse retains unresolved typed entries after loading",
+    "parseAsync retains unresolved typed entries after loading",
+    "parseFile retains unresolved typed entries after loading",
+    "parseFileAsync retains unresolved typed entries after loading",
+    "parseURL retains unresolved typed entries after loading",
+    "parseURLAsync retains unresolved typed entries after loading",
+    "http parseURL retains entries",
+    "http parseURLAsync retains entries",
+    "https parseURL retains entries",
+    "https parseURLAsync retains entries",
+    "retained values survive source shutdown and file deletion",
+    "raw references remain usable views while data enumeration rejects them",
+    "list values and arrays are detached from set and source",
+    "dangerous literal keys stay data in entry pairs",
+    "semantic equality, signed hash and null entries are independent of object identity",
+    "iterator failure categories and duplicate add behavior",
+    "collection validation fails without exposing mutable internals"
+  ],
   "sourceHashes": {
     "accessor_reference_test.mbt": "ef0cea69ffc47506f3c8a54352b8bda45617aca06af288d99676092a662fa3e0",
     "accessors.mbt": "d257c562b827f465a74d8e49bce2df375738688950efb00b0f03280b22d65fed",
@@ -180,6 +198,5 @@
     "web/app.mjs": "12a0cf3565b6298e2e3760355ec5da3fed88870be604b7f6e1a2f57d7334578d",
     "web/config.mjs": "6cc7edbdb551db766b27f268521f323981c578a2e4878ce9f0bd391c1057ccd4",
     "web/engine.mjs": "9f8f1419c06c69e8270721b4c9a562e3eedd5024b081dd4abfdf30762d95a610"
-  },
-  "failures": []
+  }
 }
