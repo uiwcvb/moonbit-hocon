@@ -84,6 +84,12 @@ try {
   if ($LASTEXITCODE -ne 0) {throw 'value traversal reference replay failed'}
   node tools/test-value-walk-host.mjs
   if ($LASTEXITCODE -ne 0) {throw 'value traversal host checks failed'}
+  node tools/test-render-reference.mjs --golden
+  if ($LASTEXITCODE -ne 0) {throw 'render reference replay failed'}
+  node tools/test-render-async.mjs
+  if ($LASTEXITCODE -ne 0) {throw 'render async replay failed'}
+  node tools/test-render-host.mjs
+  if ($LASTEXITCODE -ne 0) {throw 'render file/HTTP/ownership checks failed'}
   node tools/robustness.mjs
   if ($LASTEXITCODE -ne 0) {throw 'robustness failed'}
   node tools/benchmark.mjs

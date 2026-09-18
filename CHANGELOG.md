@@ -1,5 +1,15 @@
 # Changes
 
+## 0.15.0
+
+- Core representation migration: resolved unquoted strings retain Bare rather than becoming Text; direct Value matches must support both. Typed string/data access and semantic equality remain unchanged.
+
+- Add bounded JSON/HOCON rendering of raw and resolved ConfigValue trees, concise or formatted; preserve substitutions, concatenations and delayed merge order.
+- Match numeric-key ordering, pinned JDK shortest decimal formatting and root/list indentation, with exact native-output and async comparisons.
+- Consolidate adjacent known objects above an unresolved fallback after partial resolution.
+- Preserve legacy no-argument Config.render; explicit options select the new value renderer. Value rendering defaults to concise output; default origin/comments and environment-origin masking remain unsupported and explicit requests reject.
+- Add portable native rendering regressions, real file/HTTP/async host checks and separate native performance measurements.
+
 ## 0.14.0
 
 - Traverse ordinary values directly for equality/hash and search, preserving directional unresolved-value failures and native short-circuit order.

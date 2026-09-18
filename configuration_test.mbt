@@ -80,8 +80,8 @@ test "coercing accessors retain exact long and memory quantities" {
   assert_eq(@hocon.get_bytes(v, "bytes").to_string(), "2048")
   assert_eq(@hocon.get_memory_size(v, "huge"), "2417851639229258349412352")
   assert_eq(@hocon.get_as_list(v, "indexed"), [
-    @hocon.Text("a"),
-    @hocon.Text("b"),
+    @hocon.Bare("a"),
+    @hocon.Bare("b"),
   ])
 }
 

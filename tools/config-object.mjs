@@ -1,4 +1,4 @@
-import {config_create,config_error,config_read_native,config_derive,config_child,config_children,config_validate,config_pack,config_unpack,value_kind,value_select,value_read_native,value_equal_native,value_lookup,value_search_native} from '../web/engine.mjs';
+import {config_create,config_error,config_read_native,config_derive,config_child,config_children,config_validate,config_pack,config_unpack,value_kind,value_select,value_read_native,value_equal_native,value_lookup,value_search_native,value_render_native} from '../web/engine.mjs';
 import {prepare} from './config-host.mjs';
 import {ConfigError} from './config-error.mjs';
 import {executeAsync} from './config-async.mjs';
@@ -87,7 +87,7 @@ export class Config {
  isResolved(){return query(this,'resolved');}
  entrySet(){return query(this,'entries');}
  toJSON(){return query(this,undefined);}
- render(){return query(this,'json-text');}
+ render(options){return options===undefined?query(this,'json-text'):this.root().render(options);}
  resolve(options={}){const checked=resolveOptions(this,options);return derive(this,{op:'resolve',...checked},this,checked.environment);}
  resolveWith(other,options={}){const checked=resolveOptions(this,options);return derive(this,{op:'resolve-with',...checked},other,checked.environment);}
  withFallback(other){return asConfig(selectValue(this,{op:'fallback'},other));}
@@ -118,6 +118,14 @@ export class ConfigValue {
  static fromAnyRef(value){return Config.fromObject({v:jsonValue(value)}).root().get('v');}
  valueType(){return readValue(this,'type');}
  unwrapped(){return readValue(this,'unwrap');}
+ render(options={}){
+  if(options===null||typeof options!=='object'||Array.isArray(options))throw new TypeError('Render options must be an object');
+  for(const key of Object.keys(options))if(!['json','formatted','comments','originComments','showEnvVariableValues'].includes(key))throw new TypeError('Unknown render option: '+key);
+  const {json=true,formatted=false,comments=false,originComments=false,showEnvVariableValues=true}=options;
+  if([json,formatted,comments,originComments,showEnvVariableValues].some(value=>typeof value!=='boolean'))throw new TypeError('Render options must be boolean');
+  if(comments||originComments||!showEnvVariableValues)throw new TypeError('Origin/comment metadata and environment-origin masking are not yet stored');
+  const rendered=value_render_native(valueState(this).handle,json,formatted);if(!rendered.accepted)throw new ConfigError(rendered);return rendered.value;
+ }
  toJSON(){return this.unwrapped();}
  equals(other){if(!valueStates.has(other))return false;const result=value_equal_native(valueState(this).handle,valueState(other).handle);if(!result.accepted)throw new ConfigError(result);return result.value;}
  hashCode(){return valueState(this).hash??=readValue(this,'hash');}

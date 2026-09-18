@@ -368,7 +368,14 @@ fn evaluate(
               None,
               source_node,
             ) {
-            Some(previous) => Some(merge(previous, Object(fields)))
+            Some(previous) =>
+              Some(
+                match previous {
+                  DelayedMerge(older, Object(_) | SealedObject(_) as head) =>
+                    merge(older, merge(head, Object(fields)))
+                  _ => merge(previous, Object(fields))
+                },
+              )
             None => high
           }
         }
@@ -486,8 +493,9 @@ fn resolve_against(
 
 ///|
 fn normalize_value(value : Value) -> Value {
+  // A resolved unquoted string is still unquoted when rendering HOCON. Keep
+  // Bare; data-only unwrapping and semantic string access normalize its value.
   match value {
-    Bare(s) => Text(s)
     List(xs) => List(xs.map(normalize_value))
     Object(m) | SealedObject(m) => {
       let out = Map([])

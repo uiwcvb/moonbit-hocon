@@ -52,6 +52,9 @@ jobs:
       - run: node tools/test-value-host.mjs
       - run: node tools/test-value-walk-reference.mjs --golden
       - run: node tools/test-value-walk-host.mjs
+      - run: node tools/test-render-reference.mjs --golden
+      - run: node tools/test-render-async.mjs
+      - run: node tools/test-render-host.mjs
       - run: node tools/robustness.mjs
       - run: node tools/benchmark.mjs
       - uses: actions/upload-artifact@v4

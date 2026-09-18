@@ -1,9 +1,9 @@
 {
-  "utc": "2026-09-18T22:04:48.629Z",
-  "programs": 842,
-  "passed": 842,
+  "utc": "2026-09-18T22:04:57.365Z",
+  "total": 2140,
+  "passed": 2140,
   "failed": 0,
-  "scope": "Four concurrent worker factories retain unresolved AST/exact number spelling and produce the same persistent branch outcomes as saved independent native expectations.",
+  "scope": "Four concurrent worker factories, then render/operations on transferred trees; exact independent native strings. This replays the same native cases, not additional independent coverage.",
   "sourceHashes": {
     "accessor_reference_test.mbt": "ef0cea69ffc47506f3c8a54352b8bda45617aca06af288d99676092a662fa3e0",
     "accessors.mbt": "cd1d648bb382d5a88ef32ef32d475dd35b5d15fce9f42134d1bda90067be8474",

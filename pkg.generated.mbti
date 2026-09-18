@@ -130,6 +130,8 @@ pub fn parse_sources_unresolved(IncludeSource, includes? : Map[String, String], 
 
 pub fn parse_unresolved(String, includes? : Map[String, String], loader? : ((IncludeRequest) -> Result[Array[IncludeSource], String])?, source_name? : String, fallbacks? : Array[String]) -> Value raise ParseError
 
+pub fn render_value(Value, json? : Bool, formatted? : Bool) -> String raise ParseError
+
 pub fn resolve(Value, environment? : Map[String, String], allow_unresolved? : Bool) -> Value raise ParseError
 
 pub fn resolve_with(Value, Value, environment? : Map[String, String], allow_unresolved? : Bool) -> Value raise ParseError

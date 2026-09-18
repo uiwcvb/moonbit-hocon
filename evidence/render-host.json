@@ -1,9 +1,27 @@
 {
-  "utc": "2026-09-18T22:04:48.629Z",
-  "programs": 842,
-  "passed": 842,
+  "utc": "2026-09-18T22:04:58.605Z",
+  "checks": 17,
+  "passed": 17,
   "failed": 0,
-  "scope": "Four concurrent worker factories retain unresolved AST/exact number spelling and produce the same persistent branch outcomes as saved independent native expectations.",
+  "names": [
+    "parse preserves raw include render without resolving",
+    "parseAsync preserves raw include render without resolving",
+    "parseFile preserves raw include render without resolving",
+    "parseFileAsync preserves raw include render without resolving",
+    "parseURL preserves raw include render without resolving",
+    "parseURLAsync preserves raw include render without resolving",
+    "http parseURL loads once and renders retained raw data",
+    "http parseURLAsync loads once and renders retained raw data",
+    "https parseURL loads once and renders retained raw data",
+    "https parseURLAsync loads once and renders retained raw data",
+    "render is local after HTTP source shutdown",
+    "legacy Config.render remains source-number JSON while value render canonicalizes",
+    "supported boolean options and omitted metadata flags have explicit behavior",
+    "unresolved rendering does not unwrap or resolve missing fields",
+    "formatted resolved JSON is usable as JSON and leaves immutable branches unchanged",
+    "partial resolution consolidates history without changing retained input",
+    "synchronous and worker numeric spelling agree with saved native boundary vectors"
+  ],
   "sourceHashes": {
     "accessor_reference_test.mbt": "ef0cea69ffc47506f3c8a54352b8bda45617aca06af288d99676092a662fa3e0",
     "accessors.mbt": "cd1d648bb382d5a88ef32ef32d475dd35b5d15fce9f42134d1bda90067be8474",
@@ -155,6 +173,5 @@
     "web/app.mjs": "12a0cf3565b6298e2e3760355ec5da3fed88870be604b7f6e1a2f57d7334578d",
     "web/config.mjs": "6cc7edbdb551db766b27f268521f323981c578a2e4878ce9f0bd391c1057ccd4",
     "web/engine.mjs": "b0299b9cac1050f11cd505cd837136f11eb12798a8c12d56b6199bb3a9aaa164"
-  },
-  "failures": []
+  }
 }

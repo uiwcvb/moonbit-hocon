@@ -7,6 +7,19 @@ pub fn value_kind(handle : ConfigHandle) -> String {
 }
 
 ///|
+pub fn value_render_native(
+  handle : ConfigHandle,
+  json : Bool,
+  formatted : Bool,
+) -> NativeValue {
+  native_success(
+    native_string(@lib.render_value(handle_value(handle), json~, formatted~)),
+  ) catch {
+    error => json_native(bridge_error(error))
+  }
+}
+
+///|
 pub fn value_select(
   handle : ConfigHandle,
   input : String,

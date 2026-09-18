@@ -1,9 +1,14 @@
 {
-  "utc": "2026-09-18T22:04:48.629Z",
-  "programs": 842,
-  "passed": 842,
+  "utc": "2026-09-18T22:06:12.437Z",
+  "mode": "live official library",
+  "reference": {
+    "library": "unmodified Lightbend Config 1.4.9",
+    "jarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37"
+  },
+  "total": 2140,
+  "passed": 2140,
   "failed": 0,
-  "scope": "Four concurrent worker factories retain unresolved AST/exact number spelling and produce the same persistent branch outcomes as saved independent native expectations.",
+  "scope": "Exact rendering strings for concise/formatted JSON and HOCON, raw substitutions/concatenations/delayed merges, scalar numbers/quotes, key order, immutable edits and partial resolution. User and origin comments are omitted. Exact diagnostics and full origin metadata remain separate gaps.",
   "sourceHashes": {
     "accessor_reference_test.mbt": "ef0cea69ffc47506f3c8a54352b8bda45617aca06af288d99676092a662fa3e0",
     "accessors.mbt": "cd1d648bb382d5a88ef32ef32d475dd35b5d15fce9f42134d1bda90067be8474",
