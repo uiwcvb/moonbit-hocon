@@ -1,8 +1,10 @@
 {
-  "utc": "2026-09-18T22:51:07.650Z",
-  "mode": "live JDK primitive formatter recapture matches saved vectors and generated tests",
-  "total": 24254,
-  "unique": 24254,
+  "utc": "2026-09-18T22:51:06.099Z",
+  "mode": "live JDK primitive parser recapture matches saved vectors and generated tests",
+  "total": 27505,
+  "unique": 27505,
+  "accepted": 27475,
+  "rejected": 30,
   "java": "java version \"22.0.1\" 2024-04-16\r\nJava(TM) SE Runtime Environment (build 22.0.1+8-16)\r\nJava HotSpot(TM) 64-Bit Server VM (build 22.0.1+8-16, mixed mode, sharing)",
   "sourceHashes": {
     "accessor_reference_test.mbt": "ef0cea69ffc47506f3c8a54352b8bda45617aca06af288d99676092a662fa3e0",

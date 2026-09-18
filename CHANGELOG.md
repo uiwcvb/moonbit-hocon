@@ -1,5 +1,12 @@
 # Changes
 
+## 0.17.0
+
+- Parse tiny decimal coefficients with exact rational arithmetic and one quotient/remainder rounding, preserving subnormal/normal transitions and ties to even. Ordinary values and coefficients above 768 significant digits retain the runtime conversion.
+- Validate unsigned decimal grammar and magnitude in one pass; preserve outer sign, Java suffix/hex handling, diagnostics and the existing input-length limit.
+- Independently compare 27,505 JDK parsing inputs as exact canonical binary64 bits or rejection, including decimal midpoints, long coefficient fallbacks and huge exponents, in 215 groups on both backends.
+- Measure real retained Double-list reads plus ordinary, subnormal, decimal-power and long-coefficient rendering against fixed 0.16 and native Config. Full parity remains open.
+
 ## 0.16.0
 
 - Normalize the runtime shortest decimal for ordinary binary64 rendering; use a proven integer interval for the smallest one-digit subnormals, with full exact arithmetic if the interval overlaps a rounding boundary. No rendered-result cache is introduced.

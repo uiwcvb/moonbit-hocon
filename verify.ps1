@@ -17,6 +17,8 @@ try {
   if ($LASTEXITCODE -ne 0) {throw 'check failed'}
   node tools/generate-double-render-tests.mjs --check
   if ($LASTEXITCODE -ne 0) {throw 'native binary64 vector generation is stale'}
+  node tools/generate-double-parse-tests.mjs --check
+  if ($LASTEXITCODE -ne 0) {throw 'native binary64 parsing vector generation is stale'}
   & $MoonPath test --target wasm-gc --deny-warn
   if ($LASTEXITCODE -ne 0) {throw 'tests failed'}
   & $MoonPath test --target js --deny-warn

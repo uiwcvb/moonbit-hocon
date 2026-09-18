@@ -97,11 +97,7 @@ fn double_value(text : String) -> Double raise ParseError {
   let value = if unsigned.has_prefix("0x") || unsigned.has_prefix("0X") {
     hex_double(unsigned)
   } else {
-    if !numeric_text(unsigned) || unsigned.has_prefix("-") {
-      raise Invalid("invalid number: " + text)
-    }
-    @string.parse_double(unsigned) catch {
-      Failure::Failure("value out of range") => 1.0 / 0.0
+    decimal_double(unsigned) catch {
       _ => raise Invalid("invalid number: " + text)
     }
   }
