@@ -1,6 +1,6 @@
 # HOCON 配置解析器
 
-MoonBit 本地 0.8.0：类型化配置、历史值自引用、`+=`、include 重定位、显式回退与环境替换、未解析文档/分阶段解析、单位与类型化列表读取、配置树修改与校验、文件/HTTP(S) 加载、可取消异步入口和 CLI。
+MoonBit 本地 0.9.0：类型化配置、历史值自引用、`+=`、include 重定位、显式回退与环境替换、未解析文档/分阶段解析、数字/对象/通用值/枚举及类型化列表读取、配置树修改与校验、文件/HTTP(S) 加载、可取消异步入口和 CLI。
 解析和求值均由 MoonBit 实现；Node 提供文件、HTTP(S)、properties 和命令行宿主。Java 只用于独立参考测试及路径字符数据生成。
 
 ## 命令行与文件
@@ -63,6 +63,29 @@ const cancellable = await loadURLAsync('https://config.example/app.conf', {
 默认单次请求总超时 5 秒，整次加载的网络期限 30 秒；`network.timeoutMs`/`totalTimeoutMs` 与 CLI `--http-timeout-ms`/`--http-total-timeout-ms` 可调整。`maxRedirects`/`--http-max-redirects` 最大 64；`maxResponseBytes`/`--http-max-bytes` 只能降低 400,000 字节响应上限。累计文件/响应仍限 4,000,000 字节、512 次读取（包括重定向），每源 100,000 UTF-16 单元。失效 Worker 另有最多 2 秒的唤醒看门狗余量。`network:false`/`--no-network` 可禁用 HTTP(S)。无效 UTF-8、截断响应和超限输入明确拒绝，这些是本地约束，不作为上游全范围行为一致的声明。
 
 同步接口会阻塞调用线程；在需要同时服务网络请求的事件循环中使用异步接口。HTTP(S) 是 Node 宿主能力，浏览器演示页没有新增跨域网络控制界面。
+
+## 数字、对象、通用值和枚举读取
+
+0.9 新增 `get_number`/`get_number_list`、`get_object`/`get_object_list`、`get_any_ref`/`get_any_ref_list`、`get_enum`/`get_enum_list`。Node/CLI 的 getter 名为 number、number-list、object、object-list、any-ref、any-ref-list、enum、enum-list。
+
+`ConfigNumber` 区分 `Integer(Int)`、`Long(Int64)`、`Floating(Double)`；例如原始 `1` 为 Integer，字符串 `"1"` 转换为 Long，字符串 `"1.0"` 转换为 Floating。其 JSON 表示带 `kind`：整数的 `value` 是精确十进制字符串；浮点的 `value` 为 JSON 数字或 NaN/Infinity/-Infinity/-0.0 字符串，并附带十进制 `bits` 保存 IEEE-754 位模式。NaN 使用规范位模式。
+
+`get_object` 返回深复制的 `Map[String,Value]`；对象列表也深复制每层。`get_any_ref` 返回深复制的 Value，拒绝内部尚未解析的引用；通用列表允许 null 元素，但顶层缺失/null 仍拒绝。Value 保留数字原文；通用 Node JSON 数值仍受双精度约束，需精确数字类型时使用 number/number-list。
+
+```moonbit
+let config = @hocon.parse("mode=FAST\nvalues=[1,\"2\",1.5]")
+let selected = @hocon.get_enum(config, "mode", { "FAST": 1, "SAFE": 2 })
+let numbers = @hocon.get_number_list(config, "values")
+```
+
+枚举 API 接受 `Map[String,T]`，可返回调用方自定义的 MoonBit 枚举；名字区分大小写、不自动去掉空白。Node 使用 `enumChoices` 字符串数组；CLI 重复指定 `--enum-choice`。最多 1,024 个不重复名字、累计 100,000 UTF-16 单元；没有匹配值时报错。
+
+```powershell
+node tools/cli.mjs --input 'mode=FAST' --get mode --type enum --enum-choice FAST --enum-choice SAFE
+node tools/cli.mjs --input 'values=[1,"2",1.5]' --get values --type number-list
+```
+
+数字字符串及数字索引对象支持 JDK 22.0.1 的 37 个 BMP 十进制数字块；补充平面字符按 Java UTF-16 char 整数解析规则拒绝。纯整数字面量超出 Int64 后，HOCON 将其作为文本、JSON 来源拒绝；JSON 数字原始拼写保留到 Value，避免丢失指数/整数类型信息。数据由本地 JDK 生成，其他 JDK Unicode 版本仍需独立验证。
 
 ## 未解析文档和分阶段解析
 
@@ -196,7 +219,9 @@ include 中的引用优先查包含位置，再回退根路径。环境替换显
 实时参考运行与证据范围见 [TESTING.md](TESTING.md)。源代码、API、编译引擎与报告 SHA256 一起保存。
 这些用例证明覆盖范围内的结果一致，不代表全部 Lightbend Config API 或生产性能已经追平。
 
-0.8 当前验证：JS/Wasm-GC 各 8,258 项，六组官方实时对照 9,128/9,128（新增 2,520 生命周期序列）；45 项新文件/HTTP/异步/CLI 检查和既有验证全部通过，81 文件再生一致。固定五进程计时中，五项新负载当前/官方耗时比为 0.435–0.556，两个旧负载相对 0.7 为 0.999 与 0.997；未发现进程中位数超过两倍的波动。完整性能、内存及长期负载仍未追平。详见 `evidence/document-upgrade.json` 和 `evidence/document-performance.json`。
+0.9 当前验证：JS/Wasm-GC 各 11,827 项，七组官方实时对照 12,690/12,690（新增 3,562 扩展读取案例），55 项新文件/HTTP/异步/CLI 检查及既有门禁通过；94 文件再生一致。最终固定五进程计时中，六项新负载当前/官方中位耗时比为 0.372–0.907，两个旧负载相对 0.8 为 1.057 与 1.048（约慢 5.7% 和 4.8%）。进程中位数最大/最小比最高 2.636，报告标记测量不稳定；不据此建立完整性能追平。开发阶段的三份计时结果也保留，最终代码使用 `evidence/accessor-performance.json`，完整清单见 `evidence/accessor-upgrade.json`。
+
+0.8 历史验证：JS/Wasm-GC 各 8,258 项，六组官方实时对照 9,128/9,128（新增 2,520 生命周期序列）；45 项新文件/HTTP/异步/CLI 检查和既有验证全部通过，81 文件再生一致。固定五进程计时中，五项新负载当前/官方耗时比为 0.435–0.556，两个旧负载相对 0.7 为 0.999 与 0.997；未发现进程中位数超过两倍的波动。完整性能、内存及长期负载仍未追平。详见 `evidence/document-upgrade.json` 和 `evidence/document-performance.json`。
 
 0.7 历史验证：JS/Wasm-GC 各 5,730 项，官方实时对照 6,608/6,608（含 4,380 新树操作/校验案例），39 新宿主/异步/CLI 检查通过；71 个生成/源码文件再生一致。最终五进程对照中，五项新负载当前/官方耗时比为 0.416–0.722，两个旧负载相对 0.6 为 1.027 和 1.052，即约慢 2.7% 和 5.2%；未发现进程中位数超过两倍的波动。此七项有界测量不能证明生产性能或内存/持续负载追平。
 
@@ -208,7 +233,7 @@ include 中的引用优先查包含位置，再回退根路径。环境替换显
 Node 宿主另限制单文件/响应 400,000 字节、读取累计 4,000,000 字节及 512 次文件/网络读取（含重定向），并拒绝无效 UTF-8。
 数值转换文本限 10,000 单元，任意精度单位指数限 ±4096。这些限制可能拒绝上游能处理的超大输入。
 
-仍缺 HTTP 代理/305/认证集成、JAR/classloader、JVM application/reference/system-properties 默认加载，剩余 number/object/enum 集合、完整未解析对象/共享身份、来源注释 API、保留注释的渲染与完整性能对照。
+仍缺 HTTP 代理/305/认证集成、JAR/classloader、JVM application/reference/system-properties 默认加载，Period/TemporalAmount/指定单位读取、完整未解析对象/共享身份、来源注释 API、保留注释的渲染与完整性能对照。
 更多参考版本、平台、大配置和持续负载尚未完成；详细边界见 [FEATURES.md](FEATURES.md)。
 
 依据 [HOCON 官方规格](https://github.com/lightbend/config/blob/main/HOCON.md)独立实现；参考库采用 [Lightbend Config 1.4.9](https://github.com/lightbend/config/releases/tag/v1.4.9)。

@@ -2,11 +2,17 @@
 fn has_index_aliases(fields : Map[String, Value]) -> Bool {
   let indices : Map[Int, Bool] = Map([])
   for key, _ in fields {
-    if key.is_empty() ||
-      !((key[0] >= 48 && key[0] <= 57) || key[0] == 43 || key[0] == 45) {
+    if key.is_empty() {
       continue
     }
-    let index = @string.parse_int(key) catch { _ => -1 }
+    let first = key[0].to_int()
+    if !((first >= 48 && first <= 57) ||
+      first == 43 ||
+      first == 45 ||
+      (first >= 128 && numeric_digit(first) >= 0)) {
+      continue
+    }
+    let index = numeric_index(key)
     if index >= 0 {
       if indices.contains(index) {
         return true

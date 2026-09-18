@@ -7,6 +7,12 @@ import java.util.*;
 
 // Original JSON-lines adapter around the unmodified upstream library.
 class HoconOracle {
+  enum Choice { RED,GREEN,BLUE,on,yes,NaN,Infinity,蓝色,Α,_foo,$dollar }
+  static Object numeric(Number n){
+    if(n instanceof Integer)return Map.of("kind","int","value",n.toString());
+    if(n instanceof Long)return Map.of("kind","long","value",n.toString());
+    double d=n.doubleValue();return Map.of("kind","double","value",Double.isFinite(d)&&!(d==0.0&&Double.doubleToRawLongBits(d)<0)?(Object)d:Double.toString(d),"bits",Long.toString(Double.doubleToLongBits(d)));
+  }
   static final ConfigRenderOptions RENDER=ConfigRenderOptions.concise();
   static class MemoryIncludes implements ConfigIncluder, ConfigIncluderFile, ConfigIncluderURL, ConfigIncluderClasspath {
     final Map<String,String> sources;
@@ -37,6 +43,14 @@ class HoconOracle {
       case "int" -> config.getInt(path);
       case "long" -> Long.toString(config.getLong(path));
       case "double" -> {double d=config.getDouble(path);yield Double.isFinite(d)?d:Double.toString(d);}
+      case "number" -> numeric(config.getNumber(path));
+      case "number-list" -> config.getNumberList(path).stream().map(HoconOracle::numeric).toList();
+      case "object" -> config.getObject(path).unwrapped();
+      case "object-list" -> config.getObjectList(path).stream().map(ConfigObject::unwrapped).toList();
+      case "any-ref" -> config.getAnyRef(path);
+      case "any-ref-list" -> config.getAnyRefList(path);
+      case "enum" -> config.getEnum(Choice.class,path).name();
+      case "enum-list" -> config.getEnumList(Choice.class,path).stream().map(Enum::name).toList();
       case "duration" -> Long.toString(config.getDuration(path).toNanos());
       case "bytes" -> Long.toString(config.getBytes(path));
       case "memory" -> config.getMemorySize(path).toBytesBigInteger().toString();
@@ -63,6 +77,7 @@ class HoconOracle {
   }
   static Map<String,Object> handle(Config req){
     var options=ConfigParseOptions.defaults().setAllowMissing(false);
+    if(req.hasPath("format"))options=options.setSyntax(req.getString("format").equals("json")?ConfigSyntax.JSON:ConfigSyntax.CONF);
     if(req.hasPath("classpath")) {
       try{var urls=new ArrayList<URL>();for(String s:req.getStringList("classpath"))urls.add(new File(s).toURI().toURL());options=options.setClassLoader(new URLClassLoader(urls.toArray(new URL[0]),null));}
       catch(java.net.MalformedURLException e){throw new IllegalArgumentException(e);}

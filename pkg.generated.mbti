@@ -18,6 +18,10 @@ pub fn entry_set(Value) -> Map[String, Value] raise ParseError
 
 pub fn get(Value, String) -> Value?
 
+pub fn get_any_ref(Value, String) -> Value raise ParseError
+
+pub fn get_any_ref_list(Value, String) -> Array[Value] raise ParseError
+
 pub fn get_as_bool(Value, String) -> Bool raise ParseError
 
 pub fn get_as_int(Value, String) -> Int raise ParseError
@@ -46,6 +50,10 @@ pub fn get_duration(Value, String) -> Int64 raise ParseError
 
 pub fn get_duration_list(Value, String) -> Array[Int64] raise ParseError
 
+pub fn[T] get_enum(Value, String, Map[String, T]) -> T raise ParseError
+
+pub fn[T] get_enum_list(Value, String, Map[String, T]) -> Array[T] raise ParseError
+
 pub fn get_int(Value, String) -> Int raise ParseError
 
 pub fn get_int_list(Value, String) -> Array[Int] raise ParseError
@@ -61,6 +69,14 @@ pub fn get_long_list(Value, String) -> Array[Int64] raise ParseError
 pub fn get_memory_size(Value, String) -> String raise ParseError
 
 pub fn get_memory_size_list(Value, String) -> Array[String] raise ParseError
+
+pub fn get_number(Value, String) -> ConfigNumber raise ParseError
+
+pub fn get_number_list(Value, String) -> Array[ConfigNumber] raise ParseError
+
+pub fn get_object(Value, String) -> Map[String, Value] raise ParseError
+
+pub fn get_object_list(Value, String) -> Array[Map[String, Value]] raise ParseError
 
 pub fn get_path(Value, Array[String]) -> Value?
 
@@ -121,6 +137,13 @@ pub suberror ValidationError {
 } derive(@debug.Debug)
 
 // Types and methods
+pub(all) enum ConfigNumber {
+  Integer(Int)
+  Long(Int64)
+  Floating(Double)
+} derive(Eq, @debug.Debug)
+pub impl ToJson for ConfigNumber
+
 pub(all) struct IncludeRequest {
   name : String
   kind : String

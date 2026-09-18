@@ -1,6 +1,6 @@
 # Validation contract
 
-`./verify.ps1 -MoonPath /absolute/path/to/moon` runs formatting/API generation, deny-warn checks, explicit Wasm-GC and JS public API tests, build/example, compiled browser engine, old CLI contracts, file-host integration, all six saved reference suites, 72 typed-collection checks and the HTTP/HTTPS/async and tree/validation/document host suites, 307 bounded malformed inputs and the local example benchmark.
+`./verify.ps1 -MoonPath /absolute/path/to/moon` runs formatting/API generation, deny-warn checks, explicit Wasm-GC and JS public API tests, build/example, compiled browser engine, old CLI contracts, file-host integration, all seven saved reference suites, 72 typed-collection checks and the HTTP/HTTPS/async and tree/validation/document/extended-accessor host suites, 307 bounded malformed inputs and the local example benchmark.
 
 Live independent comparison (Java 11+; the tested host used Java 22.0.1):
 
@@ -34,7 +34,7 @@ The ten new getters add 1,300 live independent Lightbend 1.4.9 cases: type/null/
 
 `test-collection-host.mjs` checks 72 actual Node/CLI operations across direct input, UTF-8 stdin, relative include files, quoted paths and error exit codes. The compiled bridge is tested; a new interactive browser UI was not introduced or claimed.
 
-`benchmark-collections.mjs` uses five fresh processes per variant, alternating order, 30 warmup executions and 15 samples of three executions per process. It compares the fixed 0.4 commit, current engine and unmodified Java library; every process output is compared. The measured boundary includes request JSON decoding, HOCON parse/resolve/getter and response JSON rendering, excludes startup and disk I/O, and does not establish steady-load or peak-memory parity. Four existing workload ratios to 0.4 are 0.977–1.019; seven current/upstream ratios are 0.520–1.094. Raw samples are in `evidence/collection-performance.json`. High-collision tree bins and retained map capacity after deletions are not reproduced; complete Unicode numeric-key conversion remains missing.
+`benchmark-collections.mjs` uses five fresh processes per variant, alternating order, 30 warmup executions and 15 samples of three executions per process. It compares the fixed 0.4 commit, current engine and unmodified Java library; every process output is compared. The measured boundary includes request JSON decoding, HOCON parse/resolve/getter and response JSON rendering, excludes startup and disk I/O, and does not establish steady-load or peak-memory parity. Four existing workload ratios to 0.4 are 0.977–1.019; seven current/upstream ratios are 0.520–1.094. Raw samples are in `evidence/collection-performance.json`. High-collision tree bins and retained map capacity after deletions are not reproduced; this 0.5 snapshot lacked Unicode numeric-key conversion, subsequently covered for the pinned JDK in 0.9.
 
 ## 0.6 network and JSON evidence
 
@@ -76,3 +76,18 @@ Fresh runs: `node tools/test-document-reference.mjs`, `node tools/test-document-
 `evidence/document-upgrade.json` is the 0.8 manifest. All earlier upgrade/performance manifests remain historical. `check-document-generation.py /absolute/path/to/moon` regenerates independent tests, paths, API, formatting and engine and requires byte stability. `check-document-proof.py --index` checks staged Git blob hashes. Live source fingerprints are refreshed only after the final source/API/engine is fixed.
 
 Final 0.8 validation: 8,258 tests per backend, 9,128/9,128 live native cases across six suites, 45 new lifecycle host checks, all earlier mandatory checks, and 81 regenerated/source files unchanged. Five-process new/current-native ratios are 0.435–0.556; two old/current-0.7 ratios are 0.999 and 0.997. No process-median max/min spread exceeds 2 in this campaign. These bounded results do not establish complete performance parity.
+
+
+## 0.9 extended getter and numeric-source evidence
+
+`test-accessor-reference.mjs` runs 3,562 independently authored cases against Config 1.4.9. It compares Number's Integer/Long/Double subtype, exact integer strings, canonical IEEE-754 bits (including signed zero, infinities and NaN), object/any/enum scalar and list reads, missing/null/error cases, quoted paths, resolved substitutions/includes/fallback/environment, numeric-index objects and all 37 JDK 22.0.1 BMP decimal digit blocks with adjacent non-digit boundaries. JSON syntax is explicitly selected in the oracle and engine for JSON numeric overflow/exponent cases. Native enum tests use an actual Java enum; MoonBit's generic API maps exact names to caller-defined values instead of Java reflection.
+
+`generate-accessor-tests.mjs` carries independent native expectations into both MoonBit backends. Seven extra public regressions cover generic enum return types, object/value deep isolation, unresolved unwrap rejection, source-mode overflow distinctions, nested JSON numeric spelling/order and UTF-16 digit semantics. `NumericCharacters.java` is an original data adapter that exhaustively scans BMP `Character.digit(char,10)` and validates contiguous 0-9 blocks; `generate-numeric-characters.mjs --live` records the JDK version. This closes the fixed-JDK digit conversion gap, not cross-JDK Unicode or high-collision/retained-capacity map iteration.
+
+`test-accessor-host.mjs` verifies each getter through real CLI file/stdin and async file includes, exact numeric transport, choice validation/limits, JSON mode, Unicode indices and HTTP/HTTPS worker boundaries. Mandatory verify and CI include both new reference replay and host checks. No new browser UI or Java-compatible ConfigObject identity is claimed.
+
+`benchmark-accessor.mjs` compares two old loads with the fixed 0.8 commit and six extended-getter workloads with native Java. It keeps five fresh processes, 30 warmups and 15 samples of three calls; every process result must match. The boundary is JSON request to rendered result; startup, I/O, peak memory, long-running and cross-platform performance remain outside the measurement.
+
+Fresh commands are `node tools/test-accessor-reference.mjs`, `node tools/test-accessor-host.mjs`, `node tools/benchmark-accessor.mjs`, `python tools/check-accessor-generation.py /absolute/path/to/moon`, and `python tools/check-accessor-proof.py --index`. The 0.9 manifest is `evidence/accessor-upgrade.json`; previous manifests remain historical.
+
+Final 0.9 verification: 11,827 tests on each backend, 12,690/12,690 live native comparisons over seven suites, 55 new host checks and all earlier gates, 94 generated/source files unchanged. Final five-process new/current-native ratios are 0.372-0.907; old/current-0.8 ratios are 1.057 and 1.048 (about 5.7% and 4.8% slower). The maximum process-median spread is 2.636; unstableMeasurements is true and complete performance parity remains unproven. Development reports accessor-performance-initial.json, accessor-performance-ascii.json and accessor-performance-enum.json retain the earlier engines' results; they are not the final performance fingerprint.

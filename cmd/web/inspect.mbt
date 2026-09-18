@@ -53,6 +53,10 @@ fn inspect_request(input : String, callback : ((String) -> String)?) -> String {
     let includes = string_map(request, "includes")
     let environment = string_map(request, "environment")
     let document = request is { "document": True, .. }
+    let format = match request {
+      { "format": String(format), .. } => format
+      _ => "hocon"
+    }
     let fallbacks : Array[String] = match request {
       { "fallbacks": Array(items), .. } =>
         items.map(x => {
@@ -67,7 +71,7 @@ fn inspect_request(input : String, callback : ((String) -> String)?) -> String {
       None =>
         if document {
           @lib.parse_sources_unresolved(
-            { name: "<string>", content: source, format: "hocon", },
+            { name: "<string>", content: source, format, },
             includes~,
             object_only=true,
             fallbacks=fallbacks.mapi((i, content) => {
@@ -78,7 +82,7 @@ fn inspect_request(input : String, callback : ((String) -> String)?) -> String {
           )
         } else {
           @lib.parse_sources(
-            { name: "<string>", content: source, format: "hocon", },
+            { name: "<string>", content: source, format, },
             includes~,
             environment~,
             object_only=true,
@@ -184,6 +188,29 @@ fn inspect_request(input : String, callback : ((String) -> String)?) -> String {
               value.to_json()
             }
           }
+          "number" => @lib.get_number(config, path).to_json()
+          "number-list" => @lib.get_number_list(config, path).to_json()
+          "object" =>
+            @json.parse(
+              @lib.Object(@lib.get_object(config, path)).to_json_string(),
+            )
+          "object-list" =>
+            @json.parse(
+              @lib.List(
+                @lib.get_object_list(config, path).map(fields => {
+                  @lib.Object(fields)
+                }),
+              ).to_json_string(),
+            )
+          "any-ref" =>
+            @json.parse(@lib.get_any_ref(config, path).to_json_string())
+          "any-ref-list" =>
+            @json.parse(
+              @lib.List(@lib.get_any_ref_list(config, path)).to_json_string(),
+            )
+          "enum" => @lib.get_enum(config, path, enum_choices(request)).to_json()
+          "enum-list" =>
+            @lib.get_enum_list(config, path, enum_choices(request)).to_json()
           "duration" => @lib.get_duration(config, path).to_string().to_json()
           "bytes" => @lib.get_bytes(config, path).to_string().to_json()
           "memory" => @lib.get_memory_size(config, path).to_json()

@@ -36,8 +36,13 @@ pub fn get_is_null(config : Value, key : String) -> Bool raise ParseError {
 ///|
 /// HOCON's recommended conversions, separate from the original strict getters.
 pub fn get_as_string(config : Value, key : String) -> String raise ParseError {
-  match required(config, key) {
-    Text(s) | Number(s) => s
+  string_value(required(config, key))
+}
+
+///|
+fn string_value(value : Value) -> String raise ParseError {
+  match value {
+    Text(s) | Bare(s) | Number(s) => s
     Boolean(b) => if b { "true" } else { "false" }
     _ => raise Invalid("expected string-compatible scalar")
   }
@@ -109,7 +114,11 @@ fn double_value(text : String) -> Double raise ParseError {
 
 ///|
 pub fn get_double(config : Value, key : String) -> Double raise ParseError {
-  double_value(number_text(required(config, key)))
+  match get_number(config, key) {
+    Integer(n) => n.to_double()
+    Long(n) => n.to_double()
+    Floating(n) => n
+  }
 }
 
 ///|
@@ -127,13 +136,7 @@ fn java_long(value : Double) -> Int64 {
 
 ///|
 fn long_value(text : String) -> Int64 raise ParseError {
-  if integer_spelling(text) {
-    @string.parse_int64(text) catch {
-      _ => java_long(double_value(text))
-    }
-  } else {
-    java_long(double_value(text))
-  }
+  java_integer_value(text).unwrap_or_else(() => java_long(double_value(text)))
 }
 
 ///|
@@ -160,7 +163,7 @@ pub fn get_as_list(
     Object(m) => {
       let indexed : Map[Int, Value] = Map([])
       for name in object_iteration_keys(m) {
-        let n = @string.parse_int(name) catch { _ => -1 }
+        let n = numeric_index(name)
         if n >= 0 {
           indexed[n] = m[name]
         }

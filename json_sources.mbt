@@ -31,7 +31,13 @@ fn json_source_space(text : String) -> String {
 }
 
 ///|
-fn configuration_json(text : String, name : String) -> Json raise ParseError {
+priv struct JsonNumbers {
+  values : Array[String]
+  mut offset : Int
+}
+
+///|
+fn configuration_json(text : String, name : String) -> Value raise ParseError {
   let text = json_source_space(text)
   let value = @json.parse(text) catch {
     _ => raise Invalid("invalid JSON source: " + name)
@@ -39,12 +45,29 @@ fn configuration_json(text : String, name : String) -> Json raise ParseError {
   // Standard JSON parsing establishes syntax first. Scan only object member
   // spellings so a map conversion cannot silently erase duplicate keys.
   let objects : Array[Map[String, Bool]] = []
+  let numbers = []
   let mut i = 0
   while i < text.length() {
     if text[i] == 123 {
       objects.push(Map([]))
     } else if text[i] == 125 {
       ignore(objects.pop())
+    } else if text[i] == 45 || (text[i] >= 48 && text[i] <= 57) {
+      let start = i
+      while i + 1 < text.length() &&
+            (
+              [45, 43, 46, 101, 69].contains(text[i + 1].to_int()) ||
+              (text[i + 1] >= 48 && text[i + 1] <= 57)
+            ) {
+        i += 1
+      }
+      let number = text[start:i + 1].to_owned()
+      numbers.push(number)
+      if number.length() > 18 &&
+        integer_spelling(number) &&
+        java_integer_value(number) == None {
+        raise Invalid("integer token exceeds JSON source range: " + name)
+      }
     } else if text[i] == 34 {
       let start = i
       let mut escaped = false
@@ -83,5 +106,12 @@ fn configuration_json(text : String, name : String) -> Json raise ParseError {
     }
     i += 1
   }
-  value
+  // Json maps retain source insertion order. Replay numeric spellings through
+  // the parsed structure so decimal exponents and exact integers survive.
+  let spellings : JsonNumbers = { values: numbers, offset: 0, }
+  let result = from_json(value, spellings)
+  if spellings.offset != numbers.length() {
+    raise Invalid("JSON number spelling mismatch")
+  }
+  result
 }

@@ -283,8 +283,7 @@ fn parse_source(
         nesting -= 1
       }
     }
-    let json = configuration_json(source.content, source.name)
-    return from_json(json)
+    return configuration_json(source.content, source.name)
   }
   if source.format != "hocon" {
     raise Invalid("unsupported source format: " + source.format)
@@ -506,18 +505,24 @@ fn value(
 }
 
 ///|
-fn from_json(j : Json) -> Value {
+fn from_json(j : Json, numbers : JsonNumbers) -> Value raise ParseError {
   match j {
     String(s) => Text(s)
-    Number(_, ..) => Number(j.stringify())
+    Number(_, ..) => {
+      let text = numbers.values
+        .get(numbers.offset)
+        .unwrap_or_else(() => raise Invalid("JSON number spelling mismatch"))
+      numbers.offset += 1
+      Number(text)
+    }
     True => Boolean(true)
     False => Boolean(false)
     Null => Null
-    Array(xs) => List(xs.map(from_json))
+    Array(xs) => List(xs.map(value => from_json(value, numbers)))
     Object(m) => {
       let out = Map([])
       for k, v in m {
-        out[k] = from_json(v)
+        out[k] = from_json(v, numbers)
       }
       Object(out)
     }

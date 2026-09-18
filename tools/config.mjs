@@ -121,7 +121,7 @@ function execute(source,options,kind) {
   const fallbackSources=(options.fallbacks??[]).map((content,i)=>typeof content==='string'?{name:`<fallback ${i}>`,content,format:'hocon'}:content);
   for(const name of options.fallbackFiles??[])fallbackSources.push(host.read(path.resolve(options.cwd??process.cwd(),name)));
   for(const name of options.fallbackURLs??[])fallbackSources.push(host.url(name,false)[0]);
-  const request={primary,fallbackSources,environment:options.environment??{},getter:options.getter,path:options.path,operations:options.operations,checkValid:options.checkValid,referenceSource:options.referenceSource,validationPaths:options.validationPaths,document:options.document,steps:options.steps,probes:options.probes};
+  const request={primary,fallbackSources,environment:options.environment??{},getter:options.getter,path:options.path,operations:options.operations,checkValid:options.checkValid,referenceSource:options.referenceSource,validationPaths:options.validationPaths,document:options.document,steps:options.steps,probes:options.probes,enumChoices:options.enumChoices};
   const result=JSON.parse(load_json(JSON.stringify(request),input=>{
     try{return JSON.stringify(host.include(JSON.parse(input)));}catch(e){return JSON.stringify({error:e.message});}
   }));

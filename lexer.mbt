@@ -252,7 +252,17 @@ fn lex(source : String, origin : String) -> Cursor raise ParseError {
         )
       } else if !number.is_empty() && numeric_text(number) {
         i = number_end
-        (number, false, "number")
+        (
+          number,
+          false,
+          if number.length() > 18 &&
+            integer_spelling(number) &&
+            java_integer_value(number) == None {
+            "word"
+          } else {
+            "number"
+          },
+        )
       } else {
         i += 1
         while i < cs.length() {
