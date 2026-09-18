@@ -229,20 +229,27 @@ fn integer_spelling(s : String) -> Bool {
 }
 
 ///|
-fn saturate_big(n : @bigint.BigInt) -> Int64 {
-  if n.compare_int64(9223372036854775807L) > 0 {
+fn scale_time(value : Int64, factor : Int64) -> Int64 {
+  // All callers supply a positive unit ratio. Check before multiplying to
+  // reproduce TimeUnit saturation without arbitrary-precision allocation.
+  if value > 9223372036854775807L / factor {
     9223372036854775807L
-  } else if n.compare_int64(-9223372036854775808L) < 0 {
+  } else if value < -9223372036854775808L / factor {
     -9223372036854775808L
   } else {
-    n.to_int64()
+    value * factor
   }
 }
 
 ///|
 /// Duration in nanoseconds; unitless values use milliseconds.
 pub fn get_duration(config : Value, key : String) -> Int64 raise ParseError {
-  let (n, unit) = quantity(number_text(required(config, key)))
+  duration_text(number_text(required(config, key)))
+}
+
+///|
+fn duration_text(text : String) -> Int64 raise ParseError {
+  let (n, unit) = quantity(text)
   let multiplier : Int64 = match unit {
     "ns" | "nano" | "nanos" | "nanosecond" | "nanoseconds" => 1L
     "us" | "micro" | "micros" | "microsecond" | "microseconds" => 1000L
@@ -257,9 +264,7 @@ pub fn get_duration(config : Value, key : String) -> Int64 raise ParseError {
     let whole = @string.parse_int64(n) catch {
       _ => raise Invalid("duration integer overflow")
     }
-    saturate_big(
-      @bigint.BigInt::from_int64(whole) * @bigint.BigInt::from_int64(multiplier),
-    )
+    scale_time(whole, multiplier)
   } else {
     java_long(double_value(n) * multiplier.to_double())
   }

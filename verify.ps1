@@ -56,6 +56,10 @@ try {
   if ($LASTEXITCODE -ne 0) {throw 'extended accessor reference replay failed'}
   node tools/test-accessor-host.mjs
   if ($LASTEXITCODE -ne 0) {throw 'extended accessor file/HTTP/async/CLI tests failed'}
+  node tools/test-temporal-reference.mjs --golden
+  if ($LASTEXITCODE -ne 0) {throw 'temporal reference replay failed'}
+  node tools/test-temporal-host.mjs
+  if ($LASTEXITCODE -ne 0) {throw 'temporal file/HTTP/async/CLI tests failed'}
   node tools/robustness.mjs
   if ($LASTEXITCODE -ne 0) {throw 'robustness failed'}
   node tools/benchmark.mjs

@@ -1,6 +1,6 @@
 # HOCON 配置解析器
 
-MoonBit 本地 0.9.0：类型化配置、历史值自引用、`+=`、include 重定位、显式回退与环境替换、未解析文档/分阶段解析、数字/对象/通用值/枚举及类型化列表读取、配置树修改与校验、文件/HTTP(S) 加载、可取消异步入口和 CLI。
+MoonBit 本地 0.10.0：类型化配置、历史值自引用、`+=`、include 重定位、显式回退与环境替换、未解析文档/分阶段解析、数字/对象/通用值/枚举及类型化列表读取、日历周期和指定时间单位、配置树修改与校验、文件/HTTP(S) 加载、可取消异步入口和 CLI。
 解析和求值均由 MoonBit 实现；Node 提供文件、HTTP(S)、properties 和命令行宿主。Java 只用于独立参考测试及路径字符数据生成。
 
 ## 命令行与文件
@@ -86,6 +86,29 @@ node tools/cli.mjs --input 'values=[1,"2",1.5]' --get values --type number-list
 ```
 
 数字字符串及数字索引对象支持 JDK 22.0.1 的 37 个 BMP 十进制数字块；补充平面字符按 Java UTF-16 char 整数解析规则拒绝。纯整数字面量超出 Int64 后，HOCON 将其作为文本、JSON 来源拒绝；JSON 数字原始拼写保留到 Value，避免丢失指数/整数类型信息。数据由本地 JDK 生成，其他 JDK Unicode 版本仍需独立验证。
+
+## 日历周期与时间单位
+
+0.10 新增 `get_period`、`get_temporal`、`get_duration_in`、`get_duration_list_in`，以及 `get_milliseconds`/`get_nanoseconds` 和对应列表别名。`DurationUnit` 的七个选项为 Nanoseconds、Microseconds、Milliseconds、Seconds、Minutes、Hours、Days。
+
+`get_period` 返回 `ConfigPeriod { years, months, days }`：默认单位是天，支持 d/day/days、w/week/weeks、m/mo/month/months、y/year/years，区分大小写。只接受 Int32 整数，周乘以 7 后也检查 Int32 范围；12 months 保持 months=12，不自动归一年。周期字段支持固定 JDK 的 BMP 十进制数字。
+
+`get_temporal` 优先解析时长，失败再尝试日历周期；因此 `2m` 是两分钟，`2mo` 是两个月，无单位数字是毫秒。返回 `TemporalAmount::Duration(Int64)` 或 `Period(ConfigPeriod)`；Node/CLI 输出带 `kind` 的对象，时长使用精确 `nanoseconds` 字符串，周期使用 years/months/days 数字字段。
+
+指定单位的时长结果向零截断。标量和字符串列表元素先解析为有饱和上限的 Int64 纳秒，再转目标单位；数字列表元素直接从整毫秒转目标单位。例如数字列表元素 9223372036854775807 读取毫秒可保留原值，同内容的字符串元素则先受纳秒上限约束。这与标量/列表的参考语义一致。
+
+```moonbit
+let config = @hocon.parse("calendar=12months\ntimeout=1.5s")
+let calendar = @hocon.get_period(config, "calendar") // months=12
+let millis = @hocon.get_duration_in(config, "timeout", @hocon.Milliseconds) // 1500L
+```
+
+```powershell
+node tools/cli.mjs --input 'calendar=12months' --get calendar --type period
+node tools/cli.mjs --input 'timeout=1.5s' --get timeout --type duration-in --time-unit milliseconds
+```
+
+Node getter 名为 period、temporal、duration-in、duration-list-in、milliseconds、nanoseconds、milliseconds-list、nanoseconds-list。指定单位的两个 getter 必须提供 `unit`，名称为上述七个枚举名字的全小写形式；CLI 使用 `--time-unit`。新接口共用既有数量字符串 10,000 单元上限，不提供日历运算、日期时区或完整 Java 时间对象。
 
 ## 未解析文档和分阶段解析
 
@@ -219,7 +242,9 @@ include 中的引用优先查包含位置，再回退根路径。环境替换显
 实时参考运行与证据范围见 [TESTING.md](TESTING.md)。源代码、API、编译引擎与报告 SHA256 一起保存。
 这些用例证明覆盖范围内的结果一致，不代表全部 Lightbend Config API 或生产性能已经追平。
 
-0.9 当前验证：JS/Wasm-GC 各 11,827 项，七组官方实时对照 12,690/12,690（新增 3,562 扩展读取案例），55 项新文件/HTTP/异步/CLI 检查及既有门禁通过；94 文件再生一致。最终固定五进程计时中，六项新负载当前/官方中位耗时比为 0.372–0.907，两个旧负载相对 0.8 为 1.057 与 1.048（约慢 5.7% 和 4.8%）。进程中位数最大/最小比最高 2.636，报告标记测量不稳定；不据此建立完整性能追平。开发阶段的三份计时结果也保留，最终代码使用 `evidence/accessor-performance.json`，完整清单见 `evidence/accessor-upgrade.json`。
+0.10 当前验证：JS/Wasm-GC 各 14,001 项；八组官方实时对照 14,861/14,861（新增 2,171 个时间接口案例）；57 项新文件/HTTP/异步/CLI 检查及既有门禁通过，104 文件再生一致。最终五进程计时中新负载当前/官方中位耗时比为 0.271–1.267，两个旧负载相对 0.9 为 1.007 与 1.021。大整数毫秒列表仍比官方慢约 26.7%；进程中位数最大/最小比最高 1.783，本轮未触发两倍波动标记。初测保存在 `evidence/temporal-performance-initial.json`，最终结果及完整清单见 `evidence/temporal-performance.json` 和 `evidence/temporal-upgrade.json`；完整性能仍未追平。
+
+0.9 历史验证：JS/Wasm-GC 各 11,827 项，七组官方实时对照 12,690/12,690（新增 3,562 扩展读取案例），55 项新文件/HTTP/异步/CLI 检查及既有门禁通过；94 文件再生一致。最终固定五进程计时中，六项新负载当前/官方中位耗时比为 0.372–0.907，两个旧负载相对 0.8 为 1.057 与 1.048（约慢 5.7% 和 4.8%）。进程中位数最大/最小比最高 2.636，报告标记测量不稳定；不据此建立完整性能追平。开发阶段的三份计时结果也保留，最终代码使用 `evidence/accessor-performance.json`，完整清单见 `evidence/accessor-upgrade.json`。
 
 0.8 历史验证：JS/Wasm-GC 各 8,258 项，六组官方实时对照 9,128/9,128（新增 2,520 生命周期序列）；45 项新文件/HTTP/异步/CLI 检查和既有验证全部通过，81 文件再生一致。固定五进程计时中，五项新负载当前/官方耗时比为 0.435–0.556，两个旧负载相对 0.7 为 0.999 与 0.997；未发现进程中位数超过两倍的波动。完整性能、内存及长期负载仍未追平。详见 `evidence/document-upgrade.json` 和 `evidence/document-performance.json`。
 
@@ -233,7 +258,7 @@ include 中的引用优先查包含位置，再回退根路径。环境替换显
 Node 宿主另限制单文件/响应 400,000 字节、读取累计 4,000,000 字节及 512 次文件/网络读取（含重定向），并拒绝无效 UTF-8。
 数值转换文本限 10,000 单元，任意精度单位指数限 ±4096。这些限制可能拒绝上游能处理的超大输入。
 
-仍缺 HTTP 代理/305/认证集成、JAR/classloader、JVM application/reference/system-properties 默认加载，Period/TemporalAmount/指定单位读取、完整未解析对象/共享身份、来源注释 API、保留注释的渲染与完整性能对照。
+仍缺 HTTP 代理/305/认证集成、JAR/classloader、JVM application/reference/system-properties 默认加载、完整未解析对象/共享身份、来源注释 API、保留注释的渲染与完整性能对照。
 更多参考版本、平台、大配置和持续负载尚未完成；详细边界见 [FEATURES.md](FEATURES.md)。
 
 依据 [HOCON 官方规格](https://github.com/lightbend/config/blob/main/HOCON.md)独立实现；参考库采用 [Lightbend Config 1.4.9](https://github.com/lightbend/config/releases/tag/v1.4.9)。

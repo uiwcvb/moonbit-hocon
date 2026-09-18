@@ -48,7 +48,11 @@ pub fn get_double_list(Value, String) -> Array[Double] raise ParseError
 
 pub fn get_duration(Value, String) -> Int64 raise ParseError
 
+pub fn get_duration_in(Value, String, DurationUnit) -> Int64 raise ParseError
+
 pub fn get_duration_list(Value, String) -> Array[Int64] raise ParseError
+
+pub fn get_duration_list_in(Value, String, DurationUnit) -> Array[Int64] raise ParseError
 
 pub fn[T] get_enum(Value, String, Map[String, T]) -> T raise ParseError
 
@@ -70,6 +74,14 @@ pub fn get_memory_size(Value, String) -> String raise ParseError
 
 pub fn get_memory_size_list(Value, String) -> Array[String] raise ParseError
 
+pub fn get_milliseconds(Value, String) -> Int64 raise ParseError
+
+pub fn get_milliseconds_list(Value, String) -> Array[Int64] raise ParseError
+
+pub fn get_nanoseconds(Value, String) -> Int64 raise ParseError
+
+pub fn get_nanoseconds_list(Value, String) -> Array[Int64] raise ParseError
+
 pub fn get_number(Value, String) -> ConfigNumber raise ParseError
 
 pub fn get_number_list(Value, String) -> Array[ConfigNumber] raise ParseError
@@ -80,9 +92,13 @@ pub fn get_object_list(Value, String) -> Array[Map[String, Value]] raise ParseEr
 
 pub fn get_path(Value, Array[String]) -> Value?
 
+pub fn get_period(Value, String) -> ConfigPeriod raise ParseError
+
 pub fn get_string(Value, String) -> String raise ParseError
 
 pub fn get_string_list(Value, String) -> Array[String] raise ParseError
+
+pub fn get_temporal(Value, String) -> TemporalAmount raise ParseError
 
 pub fn get_value(Value, String) -> Value raise ParseError
 
@@ -144,6 +160,22 @@ pub(all) enum ConfigNumber {
 } derive(Eq, @debug.Debug)
 pub impl ToJson for ConfigNumber
 
+pub(all) struct ConfigPeriod {
+  years : Int
+  months : Int
+  days : Int
+} derive(Eq, ToJson, @debug.Debug)
+
+pub(all) enum DurationUnit {
+  Nanoseconds
+  Microseconds
+  Milliseconds
+  Seconds
+  Minutes
+  Hours
+  Days
+} derive(Eq, @debug.Debug)
+
 pub(all) struct IncludeRequest {
   name : String
   kind : String
@@ -163,6 +195,12 @@ pub(all) struct SourcePosition {
   line : Int
   column : Int
 } derive(Eq, ToJson, @debug.Debug)
+
+pub(all) enum TemporalAmount {
+  Duration(Int64)
+  Period(ConfigPeriod)
+} derive(Eq, @debug.Debug)
+pub impl ToJson for TemporalAmount
 
 pub(all) struct ValidationProblem {
   path : String

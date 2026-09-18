@@ -58,11 +58,7 @@ pub fn get_duration_list(
 ) -> Array[Int64] raise ParseError {
   typed_list(config, key, (item, path) => {
     match required(item, path) {
-      Number(text) =>
-        saturate_big(
-          @bigint.BigInt::from_int64(long_value(text)) *
-          @bigint.BigInt::from_int(1000000),
-        )
+      Number(text) => scale_time(long_value(text), 1000000L)
       _ => get_duration(item, path)
     }
   })

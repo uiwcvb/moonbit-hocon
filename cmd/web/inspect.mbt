@@ -211,6 +211,28 @@ fn inspect_request(input : String, callback : ((String) -> String)?) -> String {
           "enum" => @lib.get_enum(config, path, enum_choices(request)).to_json()
           "enum-list" =>
             @lib.get_enum_list(config, path, enum_choices(request)).to_json()
+          "period" => @lib.get_period(config, path).to_json()
+          "temporal" => @lib.get_temporal(config, path).to_json()
+          "duration-in" =>
+            @lib.get_duration_in(config, path, time_unit(request))
+            .to_string()
+            .to_json()
+          "duration-list-in" =>
+            @lib.get_duration_list_in(config, path, time_unit(request))
+            .map(n => n.to_string())
+            .to_json()
+          "milliseconds" =>
+            @lib.get_milliseconds(config, path).to_string().to_json()
+          "nanoseconds" =>
+            @lib.get_nanoseconds(config, path).to_string().to_json()
+          "milliseconds-list" =>
+            @lib.get_milliseconds_list(config, path)
+            .map(n => n.to_string())
+            .to_json()
+          "nanoseconds-list" =>
+            @lib.get_nanoseconds_list(config, path)
+            .map(n => n.to_string())
+            .to_json()
           "duration" => @lib.get_duration(config, path).to_string().to_json()
           "bytes" => @lib.get_bytes(config, path).to_string().to_json()
           "memory" => @lib.get_memory_size(config, path).to_json()

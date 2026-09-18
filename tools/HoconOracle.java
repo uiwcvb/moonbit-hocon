@@ -8,6 +8,11 @@ import java.util.*;
 // Original JSON-lines adapter around the unmodified upstream library.
 class HoconOracle {
   enum Choice { RED,GREEN,BLUE,on,yes,NaN,Infinity,蓝色,Α,_foo,$dollar }
+  static Object period(java.time.Period p){return Map.of("years",p.getYears(),"months",p.getMonths(),"days",p.getDays());}
+  static Object temporal(java.time.temporal.TemporalAmount t){
+    if(t instanceof java.time.Duration d)return Map.of("kind","duration","nanoseconds",Long.toString(d.toNanos()));
+    var p=(java.time.Period)t;return Map.of("kind","period","years",p.getYears(),"months",p.getMonths(),"days",p.getDays());
+  }
   static Object numeric(Number n){
     if(n instanceof Integer)return Map.of("kind","int","value",n.toString());
     if(n instanceof Long)return Map.of("kind","long","value",n.toString());
@@ -51,6 +56,14 @@ class HoconOracle {
       case "any-ref-list" -> config.getAnyRefList(path);
       case "enum" -> config.getEnum(Choice.class,path).name();
       case "enum-list" -> config.getEnumList(Choice.class,path).stream().map(Enum::name).toList();
+      case "period" -> period(config.getPeriod(path));
+      case "temporal" -> temporal(config.getTemporal(path));
+      case "duration-in" -> Long.toString(config.getDuration(path,java.util.concurrent.TimeUnit.valueOf(req.getString("unit").toUpperCase(Locale.ROOT))));
+      case "duration-list-in" -> config.getDurationList(path,java.util.concurrent.TimeUnit.valueOf(req.getString("unit").toUpperCase(Locale.ROOT))).stream().map(Object::toString).toList();
+      case "milliseconds" -> Long.toString(config.getMilliseconds(path));
+      case "nanoseconds" -> Long.toString(config.getNanoseconds(path));
+      case "milliseconds-list" -> config.getMillisecondsList(path).stream().map(Object::toString).toList();
+      case "nanoseconds-list" -> config.getNanosecondsList(path).stream().map(Object::toString).toList();
       case "duration" -> Long.toString(config.getDuration(path).toNanos());
       case "bytes" -> Long.toString(config.getBytes(path));
       case "memory" -> config.getMemorySize(path).toBytesBigInteger().toString();

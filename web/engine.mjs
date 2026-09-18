@@ -306,6 +306,14 @@ function _M0DTPC16result6ResultGRPB5ArrayGsERP411localreview5hocon3cmd3web11Brid
   this._0 = param0;
 }
 _M0DTPC16result6ResultGRPB5ArrayGsERP411localreview5hocon3cmd3web11BridgeErrorE2Ok.prototype.$tag = 1;
+function _M0DTPC16result6ResultGRPB5ArrayGlERP211localreview5hocon10ParseErrorE3Err(param0) {
+  this._0 = param0;
+}
+_M0DTPC16result6ResultGRPB5ArrayGlERP211localreview5hocon10ParseErrorE3Err.prototype.$tag = 0;
+function _M0DTPC16result6ResultGRPB5ArrayGlERP211localreview5hocon10ParseErrorE2Ok(param0) {
+  this._0 = param0;
+}
+_M0DTPC16result6ResultGRPB5ArrayGlERP211localreview5hocon10ParseErrorE2Ok.prototype.$tag = 1;
 function _M0DTPC16result6ResultGRPB5ArrayGRP211localreview5hocon5ValueERP211localreview5hocon10ParseErrorE3Err(param0) {
   this._0 = param0;
 }
@@ -518,6 +526,14 @@ function _M0DTPC16result6ResultGdRPB7FailureE2Ok(param0) {
   this._0 = param0;
 }
 _M0DTPC16result6ResultGdRPB7FailureE2Ok.prototype.$tag = 1;
+function _M0DTPC16result6ResultGORPC28internal7strconv6NumberRPB7FailureE3Err(param0) {
+  this._0 = param0;
+}
+_M0DTPC16result6ResultGORPC28internal7strconv6NumberRPB7FailureE3Err.prototype.$tag = 0;
+function _M0DTPC16result6ResultGORPC28internal7strconv6NumberRPB7FailureE2Ok(param0) {
+  this._0 = param0;
+}
+_M0DTPC16result6ResultGORPC28internal7strconv6NumberRPB7FailureE2Ok.prototype.$tag = 1;
 function _M0DTPC16result6ResultGiRPB7FailureE3Err(param0) {
   this._0 = param0;
 }
@@ -534,14 +550,6 @@ function _M0DTPC16result6ResultGlRPB7FailureE2Ok(param0) {
   this._0 = param0;
 }
 _M0DTPC16result6ResultGlRPB7FailureE2Ok.prototype.$tag = 1;
-function _M0DTPC16result6ResultGORPC28internal7strconv6NumberRPB7FailureE3Err(param0) {
-  this._0 = param0;
-}
-_M0DTPC16result6ResultGORPC28internal7strconv6NumberRPB7FailureE3Err.prototype.$tag = 0;
-function _M0DTPC16result6ResultGORPC28internal7strconv6NumberRPB7FailureE2Ok(param0) {
-  this._0 = param0;
-}
-_M0DTPC16result6ResultGORPC28internal7strconv6NumberRPB7FailureE2Ok.prototype.$tag = 1;
 function _M0DTPC16result6ResultGORPC28internal7strconv6NumberRPC15error5ErrorE3Err(param0) {
   this._0 = param0;
 }
@@ -1124,6 +1132,35 @@ _M0DTPC16result6ResultGUsRP211localreview5hocon5ValueERP211localreview5hocon10Pa
 function _M0TPB8MutLocalGRPB3MapGsRP211localreview5hocon5ValueEE(param0) {
   this.val = param0;
 }
+function _M0DTPC16result6ResultGRP211localreview5hocon12ConfigPeriodRP211localreview5hocon10ParseErrorE3Err(param0) {
+  this._0 = param0;
+}
+_M0DTPC16result6ResultGRP211localreview5hocon12ConfigPeriodRP211localreview5hocon10ParseErrorE3Err.prototype.$tag = 0;
+function _M0DTPC16result6ResultGRP211localreview5hocon12ConfigPeriodRP211localreview5hocon10ParseErrorE2Ok(param0) {
+  this._0 = param0;
+}
+_M0DTPC16result6ResultGRP211localreview5hocon12ConfigPeriodRP211localreview5hocon10ParseErrorE2Ok.prototype.$tag = 1;
+function _M0TP211localreview5hocon12ConfigPeriod(param0, param1, param2) {
+  this.years = param0;
+  this.months = param1;
+  this.days = param2;
+}
+function _M0DTPC16result6ResultGRP211localreview5hocon14TemporalAmountRP211localreview5hocon10ParseErrorE3Err(param0) {
+  this._0 = param0;
+}
+_M0DTPC16result6ResultGRP211localreview5hocon14TemporalAmountRP211localreview5hocon10ParseErrorE3Err.prototype.$tag = 0;
+function _M0DTPC16result6ResultGRP211localreview5hocon14TemporalAmountRP211localreview5hocon10ParseErrorE2Ok(param0) {
+  this._0 = param0;
+}
+_M0DTPC16result6ResultGRP211localreview5hocon14TemporalAmountRP211localreview5hocon10ParseErrorE2Ok.prototype.$tag = 1;
+function _M0DTP211localreview5hocon14TemporalAmount8Duration(param0) {
+  this._0 = param0;
+}
+_M0DTP211localreview5hocon14TemporalAmount8Duration.prototype.$tag = 0;
+function _M0DTP211localreview5hocon14TemporalAmount6Period(param0) {
+  this._0 = param0;
+}
+_M0DTP211localreview5hocon14TemporalAmount6Period.prototype.$tag = 1;
 function _M0TPB8MutLocalGORP211localreview5hocon5ValueE(param0) {
   this.val = param0;
 }
@@ -1192,6 +1229,22 @@ function _M0TPB9ArrayViewGUssEE(param0, param1, param2) {
   this.start = param1;
   this.end = param2;
 }
+function _M0DTPC16result6ResultGRP211localreview5hocon12DurationUnitRPC15error5ErrorE3Err(param0) {
+  this._0 = param0;
+}
+_M0DTPC16result6ResultGRP211localreview5hocon12DurationUnitRPC15error5ErrorE3Err.prototype.$tag = 0;
+function _M0DTPC16result6ResultGRP211localreview5hocon12DurationUnitRPC15error5ErrorE2Ok(param0) {
+  this._0 = param0;
+}
+_M0DTPC16result6ResultGRP211localreview5hocon12DurationUnitRPC15error5ErrorE2Ok.prototype.$tag = 1;
+function _M0DTPC16result6ResultGRP211localreview5hocon12DurationUnitRP411localreview5hocon3cmd3web11BridgeErrorE3Err(param0) {
+  this._0 = param0;
+}
+_M0DTPC16result6ResultGRP211localreview5hocon12DurationUnitRP411localreview5hocon3cmd3web11BridgeErrorE3Err.prototype.$tag = 0;
+function _M0DTPC16result6ResultGRP211localreview5hocon12DurationUnitRP411localreview5hocon3cmd3web11BridgeErrorE2Ok(param0) {
+  this._0 = param0;
+}
+_M0DTPC16result6ResultGRP211localreview5hocon12DurationUnitRP411localreview5hocon3cmd3web11BridgeErrorE2Ok.prototype.$tag = 1;
 function _M0DTPC16option6OptionGOWRP211localreview5hocon14IncludeRequestERPC16result6ResultGRPB5ArrayGRP211localreview5hocon13IncludeSourceEsEE4None() {}
 _M0DTPC16option6OptionGOWRP211localreview5hocon14IncludeRequestERPC16result6ResultGRPB5ArrayGRP211localreview5hocon13IncludeSourceEsEE4None.prototype.$tag = 0;
 const _M0DTPC16option6OptionGOWRP211localreview5hocon14IncludeRequestERPC16result6ResultGRPB5ArrayGRP211localreview5hocon13IncludeSourceEsEE4None__ = new _M0DTPC16option6OptionGOWRP211localreview5hocon14IncludeRequestERPC16result6ResultGRPB5ArrayGRP211localreview5hocon13IncludeSourceEsEE4None();
@@ -5324,6 +5377,31 @@ function _M0MPC15array5Array3mapGsRPB4JsonE(self, f) {
   }
   return arr;
 }
+function _M0MPC15array5Array3mapGRP211localreview5hocon5ValuelEHRP211localreview5hocon10ParseError(self, f) {
+  const arr = new Array(self.length);
+  const _bind = self.length;
+  let _tmp = 0;
+  while (true) {
+    const i = _tmp;
+    if (i < _bind) {
+      const v = self[i];
+      const _bind$2 = f(v);
+      let _tmp$2;
+      if (_bind$2.$tag === 1) {
+        const _ok = _bind$2;
+        _tmp$2 = _ok._0;
+      } else {
+        return _bind$2;
+      }
+      arr[i] = _tmp$2;
+      _tmp = i + 1 | 0;
+      continue;
+    } else {
+      break;
+    }
+  }
+  return new _M0DTPC16result6ResultGRPB5ArrayGlERP211localreview5hocon10ParseErrorE2Ok(arr);
+}
 function _M0MPC15array5Array3mapGbRPB4JsonE(self, f) {
   const arr = new Array(self.length);
   const _bind = self.length;
@@ -8652,6 +8730,9 @@ function _M0FPC28internal7strconv10range__errGuE() {
 function _M0FPC28internal7strconv11syntax__errGdE() {
   return new _M0DTPC16result6ResultGdRPB7FailureE3Err(new _M0DTPC15error5Error48moonbitlang_2fcore_2fbuiltin_2eFailure_2eFailure(_M0FPC28internal7strconv16syntax__err__str));
 }
+function _M0FPC28internal7strconv11syntax__errGORPC28internal7strconv6NumberE() {
+  return new _M0DTPC16result6ResultGORPC28internal7strconv6NumberRPB7FailureE3Err(new _M0DTPC15error5Error48moonbitlang_2fcore_2fbuiltin_2eFailure_2eFailure(_M0FPC28internal7strconv16syntax__err__str));
+}
 function _M0FPC28internal7strconv11syntax__errGiE() {
   return new _M0DTPC16result6ResultGiRPB7FailureE3Err(new _M0DTPC15error5Error48moonbitlang_2fcore_2fbuiltin_2eFailure_2eFailure(_M0FPC28internal7strconv16syntax__err__str));
 }
@@ -8660,9 +8741,6 @@ function _M0FPC28internal7strconv11syntax__errGuE() {
 }
 function _M0FPC28internal7strconv11syntax__errGlE() {
   return new _M0DTPC16result6ResultGlRPB7FailureE3Err(new _M0DTPC15error5Error48moonbitlang_2fcore_2fbuiltin_2eFailure_2eFailure(_M0FPC28internal7strconv16syntax__err__str));
-}
-function _M0FPC28internal7strconv11syntax__errGORPC28internal7strconv6NumberE() {
-  return new _M0DTPC16result6ResultGORPC28internal7strconv6NumberRPB7FailureE3Err(new _M0DTPC15error5Error48moonbitlang_2fcore_2fbuiltin_2eFailure_2eFailure(_M0FPC28internal7strconv16syntax__err__str));
 }
 function _M0EPC16string10StringViewPC28internal7strconv12fold__digitsGmE(self, init, f) {
   let _tmp = self;
@@ -12542,468 +12620,468 @@ function _M0FPC14math6scalbn(x, exp) {
   const ui = BigInt.asUintN(64, _M0MPC13int3Int10to__uint64(1023 + n | 0) << BigInt(52 & 63));
   return y * $i64_reinterpret_f64(ui);
 }
-function _M0IP211localreview5hocon14SourcePositionPC15debug5Debug8to__repr(_x_1069) {
-  const _bind = [{ _0: "source", _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_x_1069.source) }, { _0: "offset", _1: _M0IPC13int3IntPC15debug5Debug8to__repr(_x_1069.offset) }, { _0: "line", _1: _M0IPC13int3IntPC15debug5Debug8to__repr(_x_1069.line) }, { _0: "column", _1: _M0IPC13int3IntPC15debug5Debug8to__repr(_x_1069.column) }];
+function _M0IP211localreview5hocon14SourcePositionPC15debug5Debug8to__repr(_x_1141) {
+  const _bind = [{ _0: "source", _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_x_1141.source) }, { _0: "offset", _1: _M0IPC13int3IntPC15debug5Debug8to__repr(_x_1141.offset) }, { _0: "line", _1: _M0IPC13int3IntPC15debug5Debug8to__repr(_x_1141.line) }, { _0: "column", _1: _M0IPC13int3IntPC15debug5Debug8to__repr(_x_1141.column) }];
   return _M0MPC15debug4Repr6record(_M0MPB3Map3MapGsRPC15debug4ReprE(new _M0TPB9ArrayViewGUsRPC15debug4ReprEE(_bind, 0, 4), undefined));
 }
-function _M0IP211localreview5hocon14SourcePositionPB6ToJson8to__json(_x_1062) {
+function _M0IP211localreview5hocon14SourcePositionPB6ToJson8to__json(_x_1134) {
   const _bind = [];
   const $36$map = _M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind, 0, 0), undefined);
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "source", _M0IPC16string6StringPB6ToJson8to__json(_x_1062.source));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "offset", _M0IPC13int3IntPB6ToJson8to__json(_x_1062.offset));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "line", _M0IPC13int3IntPB6ToJson8to__json(_x_1062.line));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "column", _M0IPC13int3IntPB6ToJson8to__json(_x_1062.column));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "source", _M0IPC16string6StringPB6ToJson8to__json(_x_1134.source));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "offset", _M0IPC13int3IntPB6ToJson8to__json(_x_1134.offset));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "line", _M0IPC13int3IntPB6ToJson8to__json(_x_1134.line));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "column", _M0IPC13int3IntPB6ToJson8to__json(_x_1134.column));
   return _M0MPC14json4Json6object($36$map);
 }
-function _M0IP211localreview5hocon15ValidationErrorPC15debug5Debug8to__reprGRP211localreview5hocon15ValidationErrorE(_x_1058) {
-  let _arg_1059;
+function _M0IP211localreview5hocon15ValidationErrorPC15debug5Debug8to__reprGRP211localreview5hocon15ValidationErrorE(_x_1130) {
+  let _arg_1131;
   _L: {
-    const _ValidationFailed = _x_1058;
-    const _$42$arg_1059 = _ValidationFailed._0;
-    _arg_1059 = _$42$arg_1059;
+    const _ValidationFailed = _x_1130;
+    const _$42$arg_1131 = _ValidationFailed._0;
+    _arg_1131 = _$42$arg_1131;
     break _L;
   }
-  return _M0MPC15debug4Repr4ctor("ValidationFailed", [{ _0: undefined, _1: _M0IPC15array5ArrayPC15debug5Debug8to__reprGRP211localreview5hocon17ValidationProblemE(_arg_1059) }]);
+  return _M0MPC15debug4Repr4ctor("ValidationFailed", [{ _0: undefined, _1: _M0IPC15array5ArrayPC15debug5Debug8to__reprGRP211localreview5hocon17ValidationProblemE(_arg_1131) }]);
 }
-function _M0IP211localreview5hocon10ParseErrorPC15debug5Debug8to__repr(_x_1050) {
-  let _arg_1052;
-  let _arg_1053;
+function _M0IP211localreview5hocon10ParseErrorPC15debug5Debug8to__repr(_x_1122) {
+  let _arg_1124;
+  let _arg_1125;
   _L: {
-    let _arg_1051;
+    let _arg_1123;
     _L$2: {
-      if (_x_1050.$tag === 1) {
-        const _Invalid = _x_1050;
-        const _$42$arg_1051 = _Invalid._0;
-        _arg_1051 = _$42$arg_1051;
+      if (_x_1122.$tag === 1) {
+        const _Invalid = _x_1122;
+        const _$42$arg_1123 = _Invalid._0;
+        _arg_1123 = _$42$arg_1123;
         break _L$2;
       } else {
-        const _Located = _x_1050;
-        const _$42$arg_1052 = _Located._0;
-        const _$42$arg_1053 = _Located._1;
-        _arg_1052 = _$42$arg_1052;
-        _arg_1053 = _$42$arg_1053;
+        const _Located = _x_1122;
+        const _$42$arg_1124 = _Located._0;
+        const _$42$arg_1125 = _Located._1;
+        _arg_1124 = _$42$arg_1124;
+        _arg_1125 = _$42$arg_1125;
         break _L;
       }
     }
-    return _M0MPC15debug4Repr4ctor("Invalid", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_1051) }]);
+    return _M0MPC15debug4Repr4ctor("Invalid", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_1123) }]);
   }
-  return _M0MPC15debug4Repr4ctor("Located", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_1052) }, { _0: undefined, _1: _M0IP211localreview5hocon14SourcePositionPC15debug5Debug8to__repr(_arg_1053) }]);
+  return _M0MPC15debug4Repr4ctor("Located", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_1124) }, { _0: undefined, _1: _M0IP211localreview5hocon14SourcePositionPC15debug5Debug8to__repr(_arg_1125) }]);
 }
-function _M0IP211localreview5hocon10ParseErrorPC15debug5Debug8to__reprGRP211localreview5hocon10ParseErrorE(_x_1050) {
-  let _arg_1052;
-  let _arg_1053;
+function _M0IP211localreview5hocon10ParseErrorPC15debug5Debug8to__reprGRP211localreview5hocon10ParseErrorE(_x_1122) {
+  let _arg_1124;
+  let _arg_1125;
   _L: {
-    let _arg_1051;
+    let _arg_1123;
     _L$2: {
-      if (_x_1050.$tag === 1) {
-        const _Invalid = _x_1050;
-        const _$42$arg_1051 = _Invalid._0;
-        _arg_1051 = _$42$arg_1051;
+      if (_x_1122.$tag === 1) {
+        const _Invalid = _x_1122;
+        const _$42$arg_1123 = _Invalid._0;
+        _arg_1123 = _$42$arg_1123;
         break _L$2;
       } else {
-        const _Located = _x_1050;
-        const _$42$arg_1052 = _Located._0;
-        const _$42$arg_1053 = _Located._1;
-        _arg_1052 = _$42$arg_1052;
-        _arg_1053 = _$42$arg_1053;
+        const _Located = _x_1122;
+        const _$42$arg_1124 = _Located._0;
+        const _$42$arg_1125 = _Located._1;
+        _arg_1124 = _$42$arg_1124;
+        _arg_1125 = _$42$arg_1125;
         break _L;
       }
     }
-    return _M0MPC15debug4Repr4ctor("Invalid", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_1051) }]);
+    return _M0MPC15debug4Repr4ctor("Invalid", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_1123) }]);
   }
-  return _M0MPC15debug4Repr4ctor("Located", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_1052) }, { _0: undefined, _1: _M0IP211localreview5hocon14SourcePositionPC15debug5Debug8to__repr(_arg_1053) }]);
+  return _M0MPC15debug4Repr4ctor("Located", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_1124) }, { _0: undefined, _1: _M0IP211localreview5hocon14SourcePositionPC15debug5Debug8to__repr(_arg_1125) }]);
 }
-function _M0IP211localreview5hocon5ValuePC15debug5Debug8to__repr(_x_1010) {
-  let _arg_1028;
-  let _arg_1026;
-  let _arg_1027;
-  let _arg_1029;
+function _M0IP211localreview5hocon5ValuePC15debug5Debug8to__repr(_x_1076) {
+  let _arg_1094;
+  let _arg_1092;
+  let _arg_1093;
+  let _arg_1095;
   _L: {
-    let _arg_1024;
-    let _arg_1023;
-    let _arg_1025;
+    let _arg_1090;
+    let _arg_1089;
+    let _arg_1091;
     _L$2: {
-      let _arg_1021;
-      let _arg_1022;
+      let _arg_1087;
+      let _arg_1088;
       _L$3: {
-        let _arg_1020;
+        let _arg_1086;
         _L$4: {
-          let _arg_1019;
+          let _arg_1085;
           _L$5: {
-            let _arg_1017;
-            let _arg_1018;
+            let _arg_1083;
+            let _arg_1084;
             _L$6: {
-              let _arg_1016;
+              let _arg_1082;
               _L$7: {
-                let _arg_1015;
+                let _arg_1081;
                 _L$8: {
-                  let _arg_1014;
+                  let _arg_1080;
                   _L$9: {
-                    let _arg_1013;
+                    let _arg_1079;
                     _L$10: {
-                      let _arg_1012;
+                      let _arg_1078;
                       _L$11: {
-                        let _arg_1011;
+                        let _arg_1077;
                         _L$12: {
-                          switch (_x_1010.$tag) {
+                          switch (_x_1076.$tag) {
                             case 0: {
-                              const _Text = _x_1010;
-                              const _$42$arg_1011 = _Text._0;
-                              _arg_1011 = _$42$arg_1011;
+                              const _Text = _x_1076;
+                              const _$42$arg_1077 = _Text._0;
+                              _arg_1077 = _$42$arg_1077;
                               break _L$12;
                             }
                             case 1: {
-                              const _Bare = _x_1010;
-                              const _$42$arg_1012 = _Bare._0;
-                              _arg_1012 = _$42$arg_1012;
+                              const _Bare = _x_1076;
+                              const _$42$arg_1078 = _Bare._0;
+                              _arg_1078 = _$42$arg_1078;
                               break _L$11;
                             }
                             case 2: {
-                              const _Number = _x_1010;
-                              const _$42$arg_1013 = _Number._0;
-                              _arg_1013 = _$42$arg_1013;
+                              const _Number = _x_1076;
+                              const _$42$arg_1079 = _Number._0;
+                              _arg_1079 = _$42$arg_1079;
                               break _L$10;
                             }
                             case 3: {
-                              const _Boolean = _x_1010;
-                              const _$42$arg_1014 = _Boolean._0;
-                              _arg_1014 = _$42$arg_1014;
+                              const _Boolean = _x_1076;
+                              const _$42$arg_1080 = _Boolean._0;
+                              _arg_1080 = _$42$arg_1080;
                               break _L$9;
                             }
                             case 4: {
                               return _M0MPC15debug4Repr4ctor("Null", []);
                             }
                             case 5: {
-                              const _List = _x_1010;
-                              const _$42$arg_1015 = _List._0;
-                              _arg_1015 = _$42$arg_1015;
+                              const _List = _x_1076;
+                              const _$42$arg_1081 = _List._0;
+                              _arg_1081 = _$42$arg_1081;
                               break _L$8;
                             }
                             case 6: {
-                              const _Reference = _x_1010;
-                              const _$42$arg_1016 = _Reference._0;
-                              _arg_1016 = _$42$arg_1016;
+                              const _Reference = _x_1076;
+                              const _$42$arg_1082 = _Reference._0;
+                              _arg_1082 = _$42$arg_1082;
                               break _L$7;
                             }
                             case 7: {
-                              const _PathReference = _x_1010;
-                              const _$42$arg_1017 = _PathReference._0;
-                              const _$42$arg_1018 = _PathReference._1;
-                              _arg_1017 = _$42$arg_1017;
-                              _arg_1018 = _$42$arg_1018;
+                              const _PathReference = _x_1076;
+                              const _$42$arg_1083 = _PathReference._0;
+                              const _$42$arg_1084 = _PathReference._1;
+                              _arg_1083 = _$42$arg_1083;
+                              _arg_1084 = _$42$arg_1084;
                               break _L$6;
                             }
                             case 8: {
-                              const _Object = _x_1010;
-                              const _$42$arg_1019 = _Object._0;
-                              _arg_1019 = _$42$arg_1019;
+                              const _Object = _x_1076;
+                              const _$42$arg_1085 = _Object._0;
+                              _arg_1085 = _$42$arg_1085;
                               break _L$5;
                             }
                             case 9: {
-                              const _Concat = _x_1010;
-                              const _$42$arg_1020 = _Concat._0;
-                              _arg_1020 = _$42$arg_1020;
+                              const _Concat = _x_1076;
+                              const _$42$arg_1086 = _Concat._0;
+                              _arg_1086 = _$42$arg_1086;
                               break _L$4;
                             }
                             case 10: {
-                              const _DelayedMerge = _x_1010;
-                              const _$42$arg_1021 = _DelayedMerge._0;
-                              const _$42$arg_1022 = _DelayedMerge._1;
-                              _arg_1021 = _$42$arg_1021;
-                              _arg_1022 = _$42$arg_1022;
+                              const _DelayedMerge = _x_1076;
+                              const _$42$arg_1087 = _DelayedMerge._0;
+                              const _$42$arg_1088 = _DelayedMerge._1;
+                              _arg_1087 = _$42$arg_1087;
+                              _arg_1088 = _$42$arg_1088;
                               break _L$3;
                             }
                             case 11: {
-                              const _Bound = _x_1010;
-                              const _$42$arg_1023 = _Bound._0;
-                              const _$42$arg_1024 = _Bound._1;
-                              const _$42$arg_1025 = _Bound._2;
-                              _arg_1024 = _$42$arg_1024;
-                              _arg_1023 = _$42$arg_1023;
-                              _arg_1025 = _$42$arg_1025;
+                              const _Bound = _x_1076;
+                              const _$42$arg_1089 = _Bound._0;
+                              const _$42$arg_1090 = _Bound._1;
+                              const _$42$arg_1091 = _Bound._2;
+                              _arg_1090 = _$42$arg_1090;
+                              _arg_1089 = _$42$arg_1089;
+                              _arg_1091 = _$42$arg_1091;
                               break _L$2;
                             }
                             default: {
-                              const _Substitution = _x_1010;
-                              const _$42$arg_1026 = _Substitution._0;
-                              const _$42$arg_1027 = _Substitution._1;
-                              const _$42$arg_1028 = _Substitution._2;
-                              const _$42$arg_1029 = _Substitution._3;
-                              _arg_1028 = _$42$arg_1028;
-                              _arg_1026 = _$42$arg_1026;
-                              _arg_1027 = _$42$arg_1027;
-                              _arg_1029 = _$42$arg_1029;
+                              const _Substitution = _x_1076;
+                              const _$42$arg_1092 = _Substitution._0;
+                              const _$42$arg_1093 = _Substitution._1;
+                              const _$42$arg_1094 = _Substitution._2;
+                              const _$42$arg_1095 = _Substitution._3;
+                              _arg_1094 = _$42$arg_1094;
+                              _arg_1092 = _$42$arg_1092;
+                              _arg_1093 = _$42$arg_1093;
+                              _arg_1095 = _$42$arg_1095;
                               break _L;
                             }
                           }
                         }
-                        return _M0MPC15debug4Repr4ctor("Text", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_1011) }]);
+                        return _M0MPC15debug4Repr4ctor("Text", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_1077) }]);
                       }
-                      return _M0MPC15debug4Repr4ctor("Bare", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_1012) }]);
+                      return _M0MPC15debug4Repr4ctor("Bare", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_1078) }]);
                     }
-                    return _M0MPC15debug4Repr4ctor("Number", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_1013) }]);
+                    return _M0MPC15debug4Repr4ctor("Number", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_1079) }]);
                   }
-                  return _M0MPC15debug4Repr4ctor("Boolean", [{ _0: undefined, _1: _M0IPC14bool4BoolPC15debug5Debug8to__repr(_arg_1014) }]);
+                  return _M0MPC15debug4Repr4ctor("Boolean", [{ _0: undefined, _1: _M0IPC14bool4BoolPC15debug5Debug8to__repr(_arg_1080) }]);
                 }
-                return _M0MPC15debug4Repr4ctor("List", [{ _0: undefined, _1: _M0IPC15array5ArrayPC15debug5Debug8to__reprGRP211localreview5hocon5ValueE(_arg_1015) }]);
+                return _M0MPC15debug4Repr4ctor("List", [{ _0: undefined, _1: _M0IPC15array5ArrayPC15debug5Debug8to__reprGRP211localreview5hocon5ValueE(_arg_1081) }]);
               }
-              return _M0MPC15debug4Repr4ctor("Reference", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_1016) }]);
+              return _M0MPC15debug4Repr4ctor("Reference", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_1082) }]);
             }
-            return _M0MPC15debug4Repr4ctor("PathReference", [{ _0: undefined, _1: _M0IPC15array5ArrayPC15debug5Debug8to__reprGsE(_arg_1017) }, { _0: undefined, _1: _M0IPC14bool4BoolPC15debug5Debug8to__repr(_arg_1018) }]);
+            return _M0MPC15debug4Repr4ctor("PathReference", [{ _0: undefined, _1: _M0IPC15array5ArrayPC15debug5Debug8to__reprGsE(_arg_1083) }, { _0: undefined, _1: _M0IPC14bool4BoolPC15debug5Debug8to__repr(_arg_1084) }]);
           }
-          return _M0MPC15debug4Repr4ctor("Object", [{ _0: undefined, _1: _M0IPB3MapPC15debug5Debug8to__reprGsRP211localreview5hocon5ValueE(_arg_1019) }]);
+          return _M0MPC15debug4Repr4ctor("Object", [{ _0: undefined, _1: _M0IPB3MapPC15debug5Debug8to__reprGsRP211localreview5hocon5ValueE(_arg_1085) }]);
         }
-        return _M0MPC15debug4Repr4ctor("Concat", [{ _0: undefined, _1: _M0IPC15array5ArrayPC15debug5Debug8to__reprGUsRP211localreview5hocon5ValueEE(_arg_1020) }]);
+        return _M0MPC15debug4Repr4ctor("Concat", [{ _0: undefined, _1: _M0IPC15array5ArrayPC15debug5Debug8to__reprGUsRP211localreview5hocon5ValueEE(_arg_1086) }]);
       }
-      return _M0MPC15debug4Repr4ctor("DelayedMerge", [{ _0: undefined, _1: _M0IP211localreview5hocon5ValuePC15debug5Debug8to__repr(_arg_1021) }, { _0: undefined, _1: _M0IP211localreview5hocon5ValuePC15debug5Debug8to__repr(_arg_1022) }]);
+      return _M0MPC15debug4Repr4ctor("DelayedMerge", [{ _0: undefined, _1: _M0IP211localreview5hocon5ValuePC15debug5Debug8to__repr(_arg_1087) }, { _0: undefined, _1: _M0IP211localreview5hocon5ValuePC15debug5Debug8to__repr(_arg_1088) }]);
     }
-    return _M0MPC15debug4Repr4ctor("Bound", [{ _0: undefined, _1: _M0IPC15array5ArrayPC15debug5Debug8to__reprGsE(_arg_1023) }, { _0: undefined, _1: _M0IPC13int3IntPC15debug5Debug8to__repr(_arg_1024) }, { _0: undefined, _1: _M0IP211localreview5hocon5ValuePC15debug5Debug8to__repr(_arg_1025) }]);
+    return _M0MPC15debug4Repr4ctor("Bound", [{ _0: undefined, _1: _M0IPC15array5ArrayPC15debug5Debug8to__reprGsE(_arg_1089) }, { _0: undefined, _1: _M0IPC13int3IntPC15debug5Debug8to__repr(_arg_1090) }, { _0: undefined, _1: _M0IP211localreview5hocon5ValuePC15debug5Debug8to__repr(_arg_1091) }]);
   }
-  return _M0MPC15debug4Repr4ctor("Substitution", [{ _0: undefined, _1: _M0IPC15array5ArrayPC15debug5Debug8to__reprGRPB5ArrayGsEE(_arg_1026) }, { _0: undefined, _1: _M0IPC14bool4BoolPC15debug5Debug8to__repr(_arg_1027) }, { _0: undefined, _1: _M0IPC14bool4BoolPC15debug5Debug8to__repr(_arg_1028) }, { _0: undefined, _1: _M0IPC13int3IntPC15debug5Debug8to__repr(_arg_1029) }]);
+  return _M0MPC15debug4Repr4ctor("Substitution", [{ _0: undefined, _1: _M0IPC15array5ArrayPC15debug5Debug8to__reprGRPB5ArrayGsEE(_arg_1092) }, { _0: undefined, _1: _M0IPC14bool4BoolPC15debug5Debug8to__repr(_arg_1093) }, { _0: undefined, _1: _M0IPC14bool4BoolPC15debug5Debug8to__repr(_arg_1094) }, { _0: undefined, _1: _M0IPC13int3IntPC15debug5Debug8to__repr(_arg_1095) }]);
 }
-function _M0IP211localreview5hocon5ValuePB2Eq5equal(_x_930, _x_931) {
-  let _tmp = _x_930;
-  let _tmp$2 = _x_931;
+function _M0IP211localreview5hocon5ValuePB2Eq5equal(_x_996, _x_997) {
+  let _tmp = _x_996;
+  let _tmp$2 = _x_997;
   _L: while (true) {
-    const _x_930$2 = _tmp;
-    const _x_931$2 = _tmp$2;
-    let _x3_965;
-    let _x1_963;
-    let _x0_962;
-    let _x2_964;
-    let _y2_968;
-    let _y0_966;
-    let _y1_967;
-    let _y3_969;
+    const _x_996$2 = _tmp;
+    const _x_997$2 = _tmp$2;
+    let _x3_1031;
+    let _x1_1029;
+    let _x0_1028;
+    let _x2_1030;
+    let _y2_1034;
+    let _y0_1032;
+    let _y1_1033;
+    let _y3_1035;
     _L$2: {
-      let _x2_958;
-      let _x0_956;
-      let _x1_957;
-      let _y1_960;
-      let _y0_959;
-      let _y2_961;
+      let _x2_1024;
+      let _x0_1022;
+      let _x1_1023;
+      let _y1_1026;
+      let _y0_1025;
+      let _y2_1027;
       _L$3: {
-        let _x1_953;
-        let _x0_952;
-        let _y0_954;
-        let _y1_955;
+        let _x1_1019;
+        let _x0_1018;
+        let _y0_1020;
+        let _y1_1021;
         _L$4: {
-          let _x0_950;
-          let _y0_951;
+          let _x0_1016;
+          let _y0_1017;
           _L$5: {
-            let _x0_948;
-            let _y0_949;
+            let _x0_1014;
+            let _y0_1015;
             _L$6: {
-              let _x1_945;
-              let _x0_944;
-              let _y0_946;
-              let _y1_947;
+              let _x1_1011;
+              let _x0_1010;
+              let _y0_1012;
+              let _y1_1013;
               _L$7: {
-                let _x0_942;
-                let _y0_943;
+                let _x0_1008;
+                let _y0_1009;
                 _L$8: {
-                  let _x0_940;
-                  let _y0_941;
+                  let _x0_1006;
+                  let _y0_1007;
                   _L$9: {
-                    let _x0_938;
-                    let _y0_939;
+                    let _x0_1004;
+                    let _y0_1005;
                     _L$10: {
-                      let _x0_936;
-                      let _y0_937;
+                      let _x0_1002;
+                      let _y0_1003;
                       _L$11: {
-                        let _x0_934;
-                        let _y0_935;
+                        let _x0_1000;
+                        let _y0_1001;
                         _L$12: {
-                          let _x0_932;
-                          let _y0_933;
+                          let _x0_998;
+                          let _y0_999;
                           _L$13: {
-                            switch (_x_930$2.$tag) {
+                            switch (_x_996$2.$tag) {
                               case 0: {
-                                const _Text = _x_930$2;
-                                const _$42$x0_932 = _Text._0;
-                                if (_x_931$2.$tag === 0) {
-                                  const _Text$2 = _x_931$2;
-                                  const _$42$y0_933 = _Text$2._0;
-                                  _x0_932 = _$42$x0_932;
-                                  _y0_933 = _$42$y0_933;
+                                const _Text = _x_996$2;
+                                const _$42$x0_998 = _Text._0;
+                                if (_x_997$2.$tag === 0) {
+                                  const _Text$2 = _x_997$2;
+                                  const _$42$y0_999 = _Text$2._0;
+                                  _x0_998 = _$42$x0_998;
+                                  _y0_999 = _$42$y0_999;
                                   break _L$13;
                                 } else {
                                   return false;
                                 }
                               }
                               case 1: {
-                                const _Bare = _x_930$2;
-                                const _$42$x0_934 = _Bare._0;
-                                if (_x_931$2.$tag === 1) {
-                                  const _Bare$2 = _x_931$2;
-                                  const _$42$y0_935 = _Bare$2._0;
-                                  _x0_934 = _$42$x0_934;
-                                  _y0_935 = _$42$y0_935;
+                                const _Bare = _x_996$2;
+                                const _$42$x0_1000 = _Bare._0;
+                                if (_x_997$2.$tag === 1) {
+                                  const _Bare$2 = _x_997$2;
+                                  const _$42$y0_1001 = _Bare$2._0;
+                                  _x0_1000 = _$42$x0_1000;
+                                  _y0_1001 = _$42$y0_1001;
                                   break _L$12;
                                 } else {
                                   return false;
                                 }
                               }
                               case 2: {
-                                const _Number = _x_930$2;
-                                const _$42$x0_936 = _Number._0;
-                                if (_x_931$2.$tag === 2) {
-                                  const _Number$2 = _x_931$2;
-                                  const _$42$y0_937 = _Number$2._0;
-                                  _x0_936 = _$42$x0_936;
-                                  _y0_937 = _$42$y0_937;
+                                const _Number = _x_996$2;
+                                const _$42$x0_1002 = _Number._0;
+                                if (_x_997$2.$tag === 2) {
+                                  const _Number$2 = _x_997$2;
+                                  const _$42$y0_1003 = _Number$2._0;
+                                  _x0_1002 = _$42$x0_1002;
+                                  _y0_1003 = _$42$y0_1003;
                                   break _L$11;
                                 } else {
                                   return false;
                                 }
                               }
                               case 3: {
-                                const _Boolean = _x_930$2;
-                                const _$42$x0_938 = _Boolean._0;
-                                if (_x_931$2.$tag === 3) {
-                                  const _Boolean$2 = _x_931$2;
-                                  const _$42$y0_939 = _Boolean$2._0;
-                                  _x0_938 = _$42$x0_938;
-                                  _y0_939 = _$42$y0_939;
+                                const _Boolean = _x_996$2;
+                                const _$42$x0_1004 = _Boolean._0;
+                                if (_x_997$2.$tag === 3) {
+                                  const _Boolean$2 = _x_997$2;
+                                  const _$42$y0_1005 = _Boolean$2._0;
+                                  _x0_1004 = _$42$x0_1004;
+                                  _y0_1005 = _$42$y0_1005;
                                   break _L$10;
                                 } else {
                                   return false;
                                 }
                               }
                               case 4: {
-                                if (_x_931$2.$tag === 4) {
+                                if (_x_997$2.$tag === 4) {
                                   return true;
                                 } else {
                                   return false;
                                 }
                               }
                               case 5: {
-                                const _List = _x_930$2;
-                                const _$42$x0_940 = _List._0;
-                                if (_x_931$2.$tag === 5) {
-                                  const _List$2 = _x_931$2;
-                                  const _$42$y0_941 = _List$2._0;
-                                  _x0_940 = _$42$x0_940;
-                                  _y0_941 = _$42$y0_941;
+                                const _List = _x_996$2;
+                                const _$42$x0_1006 = _List._0;
+                                if (_x_997$2.$tag === 5) {
+                                  const _List$2 = _x_997$2;
+                                  const _$42$y0_1007 = _List$2._0;
+                                  _x0_1006 = _$42$x0_1006;
+                                  _y0_1007 = _$42$y0_1007;
                                   break _L$9;
                                 } else {
                                   return false;
                                 }
                               }
                               case 6: {
-                                const _Reference = _x_930$2;
-                                const _$42$x0_942 = _Reference._0;
-                                if (_x_931$2.$tag === 6) {
-                                  const _Reference$2 = _x_931$2;
-                                  const _$42$y0_943 = _Reference$2._0;
-                                  _x0_942 = _$42$x0_942;
-                                  _y0_943 = _$42$y0_943;
+                                const _Reference = _x_996$2;
+                                const _$42$x0_1008 = _Reference._0;
+                                if (_x_997$2.$tag === 6) {
+                                  const _Reference$2 = _x_997$2;
+                                  const _$42$y0_1009 = _Reference$2._0;
+                                  _x0_1008 = _$42$x0_1008;
+                                  _y0_1009 = _$42$y0_1009;
                                   break _L$8;
                                 } else {
                                   return false;
                                 }
                               }
                               case 7: {
-                                const _PathReference = _x_930$2;
-                                const _$42$x0_944 = _PathReference._0;
-                                const _$42$x1_945 = _PathReference._1;
-                                if (_x_931$2.$tag === 7) {
-                                  const _PathReference$2 = _x_931$2;
-                                  const _$42$y0_946 = _PathReference$2._0;
-                                  const _$42$y1_947 = _PathReference$2._1;
-                                  _x1_945 = _$42$x1_945;
-                                  _x0_944 = _$42$x0_944;
-                                  _y0_946 = _$42$y0_946;
-                                  _y1_947 = _$42$y1_947;
+                                const _PathReference = _x_996$2;
+                                const _$42$x0_1010 = _PathReference._0;
+                                const _$42$x1_1011 = _PathReference._1;
+                                if (_x_997$2.$tag === 7) {
+                                  const _PathReference$2 = _x_997$2;
+                                  const _$42$y0_1012 = _PathReference$2._0;
+                                  const _$42$y1_1013 = _PathReference$2._1;
+                                  _x1_1011 = _$42$x1_1011;
+                                  _x0_1010 = _$42$x0_1010;
+                                  _y0_1012 = _$42$y0_1012;
+                                  _y1_1013 = _$42$y1_1013;
                                   break _L$7;
                                 } else {
                                   return false;
                                 }
                               }
                               case 8: {
-                                const _Object = _x_930$2;
-                                const _$42$x0_948 = _Object._0;
-                                if (_x_931$2.$tag === 8) {
-                                  const _Object$2 = _x_931$2;
-                                  const _$42$y0_949 = _Object$2._0;
-                                  _x0_948 = _$42$x0_948;
-                                  _y0_949 = _$42$y0_949;
+                                const _Object = _x_996$2;
+                                const _$42$x0_1014 = _Object._0;
+                                if (_x_997$2.$tag === 8) {
+                                  const _Object$2 = _x_997$2;
+                                  const _$42$y0_1015 = _Object$2._0;
+                                  _x0_1014 = _$42$x0_1014;
+                                  _y0_1015 = _$42$y0_1015;
                                   break _L$6;
                                 } else {
                                   return false;
                                 }
                               }
                               case 9: {
-                                const _Concat = _x_930$2;
-                                const _$42$x0_950 = _Concat._0;
-                                if (_x_931$2.$tag === 9) {
-                                  const _Concat$2 = _x_931$2;
-                                  const _$42$y0_951 = _Concat$2._0;
-                                  _x0_950 = _$42$x0_950;
-                                  _y0_951 = _$42$y0_951;
+                                const _Concat = _x_996$2;
+                                const _$42$x0_1016 = _Concat._0;
+                                if (_x_997$2.$tag === 9) {
+                                  const _Concat$2 = _x_997$2;
+                                  const _$42$y0_1017 = _Concat$2._0;
+                                  _x0_1016 = _$42$x0_1016;
+                                  _y0_1017 = _$42$y0_1017;
                                   break _L$5;
                                 } else {
                                   return false;
                                 }
                               }
                               case 10: {
-                                const _DelayedMerge = _x_930$2;
-                                const _$42$x0_952 = _DelayedMerge._0;
-                                const _$42$x1_953 = _DelayedMerge._1;
-                                if (_x_931$2.$tag === 10) {
-                                  const _DelayedMerge$2 = _x_931$2;
-                                  const _$42$y0_954 = _DelayedMerge$2._0;
-                                  const _$42$y1_955 = _DelayedMerge$2._1;
-                                  _x1_953 = _$42$x1_953;
-                                  _x0_952 = _$42$x0_952;
-                                  _y0_954 = _$42$y0_954;
-                                  _y1_955 = _$42$y1_955;
+                                const _DelayedMerge = _x_996$2;
+                                const _$42$x0_1018 = _DelayedMerge._0;
+                                const _$42$x1_1019 = _DelayedMerge._1;
+                                if (_x_997$2.$tag === 10) {
+                                  const _DelayedMerge$2 = _x_997$2;
+                                  const _$42$y0_1020 = _DelayedMerge$2._0;
+                                  const _$42$y1_1021 = _DelayedMerge$2._1;
+                                  _x1_1019 = _$42$x1_1019;
+                                  _x0_1018 = _$42$x0_1018;
+                                  _y0_1020 = _$42$y0_1020;
+                                  _y1_1021 = _$42$y1_1021;
                                   break _L$4;
                                 } else {
                                   return false;
                                 }
                               }
                               case 11: {
-                                const _Bound = _x_930$2;
-                                const _$42$x0_956 = _Bound._0;
-                                const _$42$x1_957 = _Bound._1;
-                                const _$42$x2_958 = _Bound._2;
-                                if (_x_931$2.$tag === 11) {
-                                  const _Bound$2 = _x_931$2;
-                                  const _$42$y0_959 = _Bound$2._0;
-                                  const _$42$y1_960 = _Bound$2._1;
-                                  const _$42$y2_961 = _Bound$2._2;
-                                  _x2_958 = _$42$x2_958;
-                                  _x0_956 = _$42$x0_956;
-                                  _x1_957 = _$42$x1_957;
-                                  _y1_960 = _$42$y1_960;
-                                  _y0_959 = _$42$y0_959;
-                                  _y2_961 = _$42$y2_961;
+                                const _Bound = _x_996$2;
+                                const _$42$x0_1022 = _Bound._0;
+                                const _$42$x1_1023 = _Bound._1;
+                                const _$42$x2_1024 = _Bound._2;
+                                if (_x_997$2.$tag === 11) {
+                                  const _Bound$2 = _x_997$2;
+                                  const _$42$y0_1025 = _Bound$2._0;
+                                  const _$42$y1_1026 = _Bound$2._1;
+                                  const _$42$y2_1027 = _Bound$2._2;
+                                  _x2_1024 = _$42$x2_1024;
+                                  _x0_1022 = _$42$x0_1022;
+                                  _x1_1023 = _$42$x1_1023;
+                                  _y1_1026 = _$42$y1_1026;
+                                  _y0_1025 = _$42$y0_1025;
+                                  _y2_1027 = _$42$y2_1027;
                                   break _L$3;
                                 } else {
                                   return false;
                                 }
                               }
                               default: {
-                                const _Substitution = _x_930$2;
-                                const _$42$x0_962 = _Substitution._0;
-                                const _$42$x1_963 = _Substitution._1;
-                                const _$42$x2_964 = _Substitution._2;
-                                const _$42$x3_965 = _Substitution._3;
-                                if (_x_931$2.$tag === 12) {
-                                  const _Substitution$2 = _x_931$2;
-                                  const _$42$y0_966 = _Substitution$2._0;
-                                  const _$42$y1_967 = _Substitution$2._1;
-                                  const _$42$y2_968 = _Substitution$2._2;
-                                  const _$42$y3_969 = _Substitution$2._3;
-                                  _x3_965 = _$42$x3_965;
-                                  _x1_963 = _$42$x1_963;
-                                  _x0_962 = _$42$x0_962;
-                                  _x2_964 = _$42$x2_964;
-                                  _y2_968 = _$42$y2_968;
-                                  _y0_966 = _$42$y0_966;
-                                  _y1_967 = _$42$y1_967;
-                                  _y3_969 = _$42$y3_969;
+                                const _Substitution = _x_996$2;
+                                const _$42$x0_1028 = _Substitution._0;
+                                const _$42$x1_1029 = _Substitution._1;
+                                const _$42$x2_1030 = _Substitution._2;
+                                const _$42$x3_1031 = _Substitution._3;
+                                if (_x_997$2.$tag === 12) {
+                                  const _Substitution$2 = _x_997$2;
+                                  const _$42$y0_1032 = _Substitution$2._0;
+                                  const _$42$y1_1033 = _Substitution$2._1;
+                                  const _$42$y2_1034 = _Substitution$2._2;
+                                  const _$42$y3_1035 = _Substitution$2._3;
+                                  _x3_1031 = _$42$x3_1031;
+                                  _x1_1029 = _$42$x1_1029;
+                                  _x0_1028 = _$42$x0_1028;
+                                  _x2_1030 = _$42$x2_1030;
+                                  _y2_1034 = _$42$y2_1034;
+                                  _y0_1032 = _$42$y0_1032;
+                                  _y1_1033 = _$42$y1_1033;
+                                  _y3_1035 = _$42$y3_1035;
                                   break _L$2;
                                 } else {
                                   return false;
@@ -13011,37 +13089,37 @@ function _M0IP211localreview5hocon5ValuePB2Eq5equal(_x_930, _x_931) {
                               }
                             }
                           }
-                          return _x0_932 === _y0_933;
+                          return _x0_998 === _y0_999;
                         }
-                        return _x0_934 === _y0_935;
+                        return _x0_1000 === _y0_1001;
                       }
-                      return _x0_936 === _y0_937;
+                      return _x0_1002 === _y0_1003;
                     }
-                    return _x0_938 === _y0_939;
+                    return _x0_1004 === _y0_1005;
                   }
-                  return _M0IPC15array5ArrayPB2Eq5equalGRP211localreview5hocon5ValueE(_x0_940, _y0_941);
+                  return _M0IPC15array5ArrayPB2Eq5equalGRP211localreview5hocon5ValueE(_x0_1006, _y0_1007);
                 }
-                return _x0_942 === _y0_943;
+                return _x0_1008 === _y0_1009;
               }
-              return _M0IPC15array5ArrayPB2Eq5equalGsE(_x0_944, _y0_946) && _x1_945 === _y1_947;
+              return _M0IPC15array5ArrayPB2Eq5equalGsE(_x0_1010, _y0_1012) && _x1_1011 === _y1_1013;
             }
-            return _M0IPB3MapPB2Eq5equalGsRP211localreview5hocon5ValueE(_x0_948, _y0_949);
+            return _M0IPB3MapPB2Eq5equalGsRP211localreview5hocon5ValueE(_x0_1014, _y0_1015);
           }
-          return _M0IPC15array5ArrayPB2Eq5equalGUsRP211localreview5hocon5ValueEE(_x0_950, _y0_951);
+          return _M0IPC15array5ArrayPB2Eq5equalGUsRP211localreview5hocon5ValueEE(_x0_1016, _y0_1017);
         }
-        if (_M0IP211localreview5hocon5ValuePB2Eq5equal(_x0_952, _y0_954)) {
-          _tmp = _x1_953;
-          _tmp$2 = _y1_955;
+        if (_M0IP211localreview5hocon5ValuePB2Eq5equal(_x0_1018, _y0_1020)) {
+          _tmp = _x1_1019;
+          _tmp$2 = _y1_1021;
           continue;
         } else {
           return false;
         }
       }
-      if (_M0IPC15array5ArrayPB2Eq5equalGsE(_x0_956, _y0_959)) {
+      if (_M0IPC15array5ArrayPB2Eq5equalGsE(_x0_1022, _y0_1025)) {
         let _tmp$3;
-        if (_x1_957 === _y1_960) {
-          _tmp = _x2_958;
-          _tmp$2 = _y2_961;
+        if (_x1_1023 === _y1_1026) {
+          _tmp = _x2_1024;
+          _tmp$2 = _y2_1027;
           continue;
         } else {
           _tmp$3 = false;
@@ -13051,29 +13129,37 @@ function _M0IP211localreview5hocon5ValuePB2Eq5equal(_x_930, _x_931) {
         return false;
       }
     }
-    return _M0IPC15array5ArrayPB2Eq5equalGRPB5ArrayGsEE(_x0_962, _y0_966) && (_x1_963 === _y1_967 && (_x2_964 === _y2_968 && _x3_965 === _y3_969));
+    return _M0IPC15array5ArrayPB2Eq5equalGRPB5ArrayGsEE(_x0_1028, _y0_1032) && (_x1_1029 === _y1_1033 && (_x2_1030 === _y2_1034 && _x3_1031 === _y3_1035));
   }
 }
-function _M0IP211localreview5hocon14IncludeRequestPB6ToJson8to__json(_x_915) {
+function _M0IP211localreview5hocon14IncludeRequestPB6ToJson8to__json(_x_981) {
   const _bind = [];
   const $36$map = _M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind, 0, 0), undefined);
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "name", _M0IPC16string6StringPB6ToJson8to__json(_x_915.name));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "kind", _M0IPC16string6StringPB6ToJson8to__json(_x_915.kind));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "from", _M0IPC16string6StringPB6ToJson8to__json(_x_915.from));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "required", _M0IPC14bool4BoolPB6ToJson8to__json(_x_915.required));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "name", _M0IPC16string6StringPB6ToJson8to__json(_x_981.name));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "kind", _M0IPC16string6StringPB6ToJson8to__json(_x_981.kind));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "from", _M0IPC16string6StringPB6ToJson8to__json(_x_981.from));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "required", _M0IPC14bool4BoolPB6ToJson8to__json(_x_981.required));
   return _M0MPC14json4Json6object($36$map);
 }
-function _M0IP211localreview5hocon17ValidationProblemPC15debug5Debug8to__repr(_x_889) {
-  const _bind = [{ _0: "path", _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_x_889.path) }, { _0: "kind", _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_x_889.kind) }, { _0: "expected", _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_x_889.expected) }, { _0: "actual", _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_x_889.actual) }];
-  return _M0MPC15debug4Repr6record(_M0MPB3Map3MapGsRPC15debug4ReprE(new _M0TPB9ArrayViewGUsRPC15debug4ReprEE(_bind, 0, 4), undefined));
-}
-function _M0IP211localreview5hocon17ValidationProblemPB6ToJson8to__json(_x_882) {
+function _M0IP211localreview5hocon12ConfigPeriodPB6ToJson8to__json(_x_972) {
   const _bind = [];
   const $36$map = _M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind, 0, 0), undefined);
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "path", _M0IPC16string6StringPB6ToJson8to__json(_x_882.path));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "kind", _M0IPC16string6StringPB6ToJson8to__json(_x_882.kind));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "expected", _M0IPC16string6StringPB6ToJson8to__json(_x_882.expected));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "actual", _M0IPC16string6StringPB6ToJson8to__json(_x_882.actual));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "years", _M0IPC13int3IntPB6ToJson8to__json(_x_972.years));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "months", _M0IPC13int3IntPB6ToJson8to__json(_x_972.months));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "days", _M0IPC13int3IntPB6ToJson8to__json(_x_972.days));
+  return _M0MPC14json4Json6object($36$map);
+}
+function _M0IP211localreview5hocon17ValidationProblemPC15debug5Debug8to__repr(_x_928) {
+  const _bind = [{ _0: "path", _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_x_928.path) }, { _0: "kind", _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_x_928.kind) }, { _0: "expected", _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_x_928.expected) }, { _0: "actual", _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_x_928.actual) }];
+  return _M0MPC15debug4Repr6record(_M0MPB3Map3MapGsRPC15debug4ReprE(new _M0TPB9ArrayViewGUsRPC15debug4ReprEE(_bind, 0, 4), undefined));
+}
+function _M0IP211localreview5hocon17ValidationProblemPB6ToJson8to__json(_x_921) {
+  const _bind = [];
+  const $36$map = _M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind, 0, 0), undefined);
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "path", _M0IPC16string6StringPB6ToJson8to__json(_x_921.path));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "kind", _M0IPC16string6StringPB6ToJson8to__json(_x_921.kind));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "expected", _M0IPC16string6StringPB6ToJson8to__json(_x_921.expected));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "actual", _M0IPC16string6StringPB6ToJson8to__json(_x_921.actual));
   return _M0MPC14json4Json6object($36$map);
 }
 function _M0FP211localreview5hocon10type__name(value) {
@@ -15900,39 +15986,37 @@ function _M0FP211localreview5hocon8quantity(text) {
   }
   return new _M0DTPC16result6ResultGUssERP211localreview5hocon10ParseErrorE2Ok({ _0: number, _1: unit });
 }
-function _M0FP211localreview5hocon13saturate__big(n) {
-  return _M0MPC16bigint6BigInt14compare__int64(n, 9223372036854775807n) > 0 ? 9223372036854775807n : _M0MPC16bigint6BigInt14compare__int64(n, 9223372036854775808n) < 0 ? 9223372036854775808n : _M0MPC16bigint6BigInt9to__int64(n);
+function _M0FP211localreview5hocon11scale__time(value, factor) {
+  if (factor === 0n) {
+    $panic();
+  }
+  if (BigInt.asIntN(64, value) > BigInt.asIntN(64, BigInt.asUintN(64, BigInt.asIntN(64, 9223372036854775807n) / BigInt.asIntN(64, factor)))) {
+    return 9223372036854775807n;
+  } else {
+    if (factor === 0n) {
+      $panic();
+    }
+    if (BigInt.asIntN(64, value) < BigInt.asIntN(64, BigInt.asUintN(64, BigInt.asIntN(64, 9223372036854775808n) / BigInt.asIntN(64, factor)))) {
+      return 9223372036854775808n;
+    } else {
+      return BigInt.asUintN(64, value * factor);
+    }
+  }
 }
-function _M0FP211localreview5hocon13get__duration(config, key) {
+function _M0FP211localreview5hocon14duration__text(text) {
   let n;
   let unit;
   _L: {
-    const _bind = _M0FP211localreview5hocon8required(config, key);
-    let _tmp;
+    const _bind = _M0FP211localreview5hocon8quantity(text);
+    let _bind$2;
     if (_bind.$tag === 1) {
       const _ok = _bind;
-      _tmp = _ok._0;
+      _bind$2 = _ok._0;
     } else {
       return _bind;
     }
-    const _bind$2 = _M0FP211localreview5hocon12number__text(_tmp);
-    let _tmp$2;
-    if (_bind$2.$tag === 1) {
-      const _ok = _bind$2;
-      _tmp$2 = _ok._0;
-    } else {
-      return _bind$2;
-    }
-    const _bind$3 = _M0FP211localreview5hocon8quantity(_tmp$2);
-    let _bind$4;
-    if (_bind$3.$tag === 1) {
-      const _ok = _bind$3;
-      _bind$4 = _ok._0;
-    } else {
-      return _bind$3;
-    }
-    const _n = _bind$4._0;
-    const _unit = _bind$4._1;
+    const _n = _bind$2._0;
+    const _unit = _bind$2._1;
     n = _n;
     unit = _unit;
     break _L;
@@ -16074,7 +16158,7 @@ function _M0FP211localreview5hocon13get__duration(config, key) {
       }
       return new _M0DTPC16result6ResultGlRP211localreview5hocon10ParseErrorE3Err(new _M0DTPC15error5Error42localreview_2fhocon_2eParseError_2eInvalid("duration integer overflow"));
     }
-    _tmp = _M0FP211localreview5hocon13saturate__big(_M0IPC16bigint6BigIntPB3Mul3mul(_M0MPC16bigint6BigInt11from__int64(whole), _M0MPC16bigint6BigInt11from__int64(multiplier)));
+    _tmp = _M0FP211localreview5hocon11scale__time(whole, multiplier);
   } else {
     const _bind = _M0FP211localreview5hocon13double__value(n);
     let _tmp$2;
@@ -16087,6 +16171,25 @@ function _M0FP211localreview5hocon13get__duration(config, key) {
     _tmp = _M0FP211localreview5hocon10java__long(_tmp$2 * $f64_convert_i64(BigInt.asIntN(64, multiplier)));
   }
   return new _M0DTPC16result6ResultGlRP211localreview5hocon10ParseErrorE2Ok(_tmp);
+}
+function _M0FP211localreview5hocon13get__duration(config, key) {
+  const _bind = _M0FP211localreview5hocon8required(config, key);
+  let _tmp;
+  if (_bind.$tag === 1) {
+    const _ok = _bind;
+    _tmp = _ok._0;
+  } else {
+    return _bind;
+  }
+  const _bind$2 = _M0FP211localreview5hocon12number__text(_tmp);
+  let _tmp$2;
+  if (_bind$2.$tag === 1) {
+    const _ok = _bind$2;
+    _tmp$2 = _ok._0;
+  } else {
+    return _bind$2;
+  }
+  return _M0FP211localreview5hocon14duration__text(_tmp$2);
 }
 function _M0FP211localreview5hocon19get__duration__list(config, key) {
   return _M0FP211localreview5hocon11typed__listGRP211localreview5hocon12ConfigNumberE(config, key, (item, path) => {
@@ -16117,7 +16220,7 @@ function _M0FP211localreview5hocon19get__duration__list(config, key) {
     } else {
       return _bind;
     }
-    return new _M0DTPC16result6ResultGlRP211localreview5hocon10ParseErrorE2Ok(_M0FP211localreview5hocon13saturate__big(_M0IPC16bigint6BigIntPB3Mul3mul(_M0MPC16bigint6BigInt11from__int64(_tmp), _M0MPC16bigint6BigInt9from__int(1000000))));
+    return new _M0DTPC16result6ResultGlRP211localreview5hocon10ParseErrorE2Ok(_M0FP211localreview5hocon11scale__time(_tmp, 1000000n));
   });
 }
 function _M0FP211localreview5hocon16byte__multiplier(unit) {
@@ -17081,6 +17184,327 @@ function _M0FP211localreview5hocon10entry__set(config) {
     return _bind$3;
   }
   return new _M0DTPC16result6ResultGRPB3MapGsRP211localreview5hocon5ValueERP211localreview5hocon10ParseErrorE2Ok(result);
+}
+function _M0IP211localreview5hocon14TemporalAmountPB6ToJson8to__json(self) {
+  let p;
+  _L: {
+    let n;
+    _L$2: {
+      if (self.$tag === 0) {
+        const _Duration = self;
+        const _n = _Duration._0;
+        n = _n;
+        break _L$2;
+      } else {
+        const _Period = self;
+        const _p = _Period._0;
+        p = _p;
+        break _L;
+      }
+    }
+    const _bind = [{ _0: "kind", _1: _M0MPC14json4Json6string("duration") }, { _0: "nanoseconds", _1: _M0IPC16string6StringPB6ToJson8to__json(_M0MPC15int645Int6418to__string_2einner(n, 10)) }];
+    return _M0MPC14json4Json6object(_M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind, 0, 2), undefined));
+  }
+  const _bind = [{ _0: "kind", _1: _M0MPC14json4Json6string("period") }, { _0: "years", _1: _M0IPC13int3IntPB6ToJson8to__json(p.years) }, { _0: "months", _1: _M0IPC13int3IntPB6ToJson8to__json(p.months) }, { _0: "days", _1: _M0IPC13int3IntPB6ToJson8to__json(p.days) }];
+  return _M0MPC14json4Json6object(_M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind, 0, 4), undefined));
+}
+function _M0FP211localreview5hocon21duration__unit__nanos(unit) {
+  switch (unit) {
+    case 0: {
+      return 1n;
+    }
+    case 1: {
+      return 1000n;
+    }
+    case 2: {
+      return 1000000n;
+    }
+    case 3: {
+      return 1000000000n;
+    }
+    case 4: {
+      return 60000000000n;
+    }
+    case 5: {
+      return 3600000000000n;
+    }
+    default: {
+      return 86400000000000n;
+    }
+  }
+}
+function _M0FP211localreview5hocon12period__text(text) {
+  if (text.length > 10000) {
+    return new _M0DTPC16result6ResultGRP211localreview5hocon12ConfigPeriodRP211localreview5hocon10ParseErrorE3Err(new _M0DTPC15error5Error42localreview_2fhocon_2eParseError_2eInvalid("period length limit"));
+  }
+  const text$2 = _M0FP211localreview5hocon11trim__space(text);
+  const end = new _M0TPB8MutLocalGiE(text$2.length);
+  while (true) {
+    let _tmp;
+    if (end.val > 0) {
+      let _tmp$2;
+      let _tmp$3;
+      const _tmp$4 = end.val - 1 | 0;
+      if ((_tmp$4 >>> 0 < text$2.length ? text$2.charCodeAt(_tmp$4) : $oob()) >= 65) {
+        const _tmp$5 = end.val - 1 | 0;
+        _tmp$3 = (_tmp$5 >>> 0 < text$2.length ? text$2.charCodeAt(_tmp$5) : $oob()) <= 90;
+      } else {
+        _tmp$3 = false;
+      }
+      if (_tmp$3) {
+        _tmp$2 = true;
+      } else {
+        let _tmp$5;
+        const _tmp$6 = end.val - 1 | 0;
+        if ((_tmp$6 >>> 0 < text$2.length ? text$2.charCodeAt(_tmp$6) : $oob()) >= 97) {
+          const _tmp$7 = end.val - 1 | 0;
+          _tmp$5 = (_tmp$7 >>> 0 < text$2.length ? text$2.charCodeAt(_tmp$7) : $oob()) <= 122;
+        } else {
+          _tmp$5 = false;
+        }
+        _tmp$2 = _tmp$5;
+      }
+      _tmp = _tmp$2;
+    } else {
+      _tmp = false;
+    }
+    if (_tmp) {
+      end.val = end.val - 1 | 0;
+      continue;
+    } else {
+      break;
+    }
+  }
+  const spelling = _M0FP211localreview5hocon11trim__space(_M0MPC16string10StringView9to__owned(_M0MPC16string6String11sub_2einner(text$2, 0, end.val)));
+  const unit = _M0MPC16string10StringView9to__owned(_M0MPC16string6String11sub_2einner(text$2, end.val, undefined));
+  const _bind = _M0MPC16option6Option16unwrap__or__elseGlEHRP211localreview5hocon10ParseError(_M0FP211localreview5hocon20java__integer__value(spelling), () => new _M0DTPC16result6ResultGlRP211localreview5hocon10ParseErrorE3Err(new _M0DTPC15error5Error42localreview_2fhocon_2eParseError_2eInvalid("invalid period integer")));
+  let number;
+  if (_bind.$tag === 1) {
+    const _ok = _bind;
+    number = _ok._0;
+  } else {
+    return _bind;
+  }
+  if (BigInt.asIntN(64, number) < BigInt.asIntN(64, 18446744071562067968n) || BigInt.asIntN(64, number) > BigInt.asIntN(64, 2147483647n)) {
+    return new _M0DTPC16result6ResultGRP211localreview5hocon12ConfigPeriodRP211localreview5hocon10ParseErrorE3Err(new _M0DTPC15error5Error42localreview_2fhocon_2eParseError_2eInvalid("period integer out of range"));
+  }
+  const n = Number(BigInt.asIntN(32, number)) | 0;
+  _L: {
+    _L$2: {
+      _L$3: {
+        _L$4: {
+          switch (unit) {
+            case "": {
+              break _L$4;
+            }
+            case "d": {
+              break _L$4;
+            }
+            case "day": {
+              break _L$4;
+            }
+            case "days": {
+              break _L$4;
+            }
+            case "w": {
+              break _L$3;
+            }
+            case "week": {
+              break _L$3;
+            }
+            case "weeks": {
+              break _L$3;
+            }
+            case "m": {
+              break _L$2;
+            }
+            case "mo": {
+              break _L$2;
+            }
+            case "month": {
+              break _L$2;
+            }
+            case "months": {
+              break _L$2;
+            }
+            case "y": {
+              break _L;
+            }
+            case "year": {
+              break _L;
+            }
+            case "years": {
+              break _L;
+            }
+            default: {
+              return new _M0DTPC16result6ResultGRP211localreview5hocon12ConfigPeriodRP211localreview5hocon10ParseErrorE3Err(new _M0DTPC15error5Error42localreview_2fhocon_2eParseError_2eInvalid(`unknown period unit: ${unit}`));
+            }
+          }
+        }
+        return new _M0DTPC16result6ResultGRP211localreview5hocon12ConfigPeriodRP211localreview5hocon10ParseErrorE2Ok(new _M0TP211localreview5hocon12ConfigPeriod(0, 0, n));
+      }
+      const days = BigInt.asUintN(64, number * 7n);
+      if (BigInt.asIntN(64, days) < BigInt.asIntN(64, 18446744071562067968n) || BigInt.asIntN(64, days) > BigInt.asIntN(64, 2147483647n)) {
+        return new _M0DTPC16result6ResultGRP211localreview5hocon12ConfigPeriodRP211localreview5hocon10ParseErrorE3Err(new _M0DTPC15error5Error42localreview_2fhocon_2eParseError_2eInvalid("period weeks out of range"));
+      }
+      return new _M0DTPC16result6ResultGRP211localreview5hocon12ConfigPeriodRP211localreview5hocon10ParseErrorE2Ok(new _M0TP211localreview5hocon12ConfigPeriod(0, 0, Number(BigInt.asIntN(32, days)) | 0));
+    }
+    return new _M0DTPC16result6ResultGRP211localreview5hocon12ConfigPeriodRP211localreview5hocon10ParseErrorE2Ok(new _M0TP211localreview5hocon12ConfigPeriod(0, n, 0));
+  }
+  return new _M0DTPC16result6ResultGRP211localreview5hocon12ConfigPeriodRP211localreview5hocon10ParseErrorE2Ok(new _M0TP211localreview5hocon12ConfigPeriod(n, 0, 0));
+}
+function _M0FP211localreview5hocon11get__period(config, key) {
+  const _bind = _M0FP211localreview5hocon15get__as__string(config, key);
+  let _tmp;
+  if (_bind.$tag === 1) {
+    const _ok = _bind;
+    _tmp = _ok._0;
+  } else {
+    return _bind;
+  }
+  return _M0FP211localreview5hocon12period__text(_tmp);
+}
+function _M0FP211localreview5hocon13get__temporal(config, key) {
+  const _bind = _M0FP211localreview5hocon15get__as__string(config, key);
+  let text;
+  if (_bind.$tag === 1) {
+    const _ok = _bind;
+    text = _ok._0;
+  } else {
+    return _bind;
+  }
+  let _tmp;
+  let _try_err;
+  _L: {
+    _L$2: {
+      const _bind$2 = _M0FP211localreview5hocon14duration__text(text);
+      let _tmp$2;
+      if (_bind$2.$tag === 1) {
+        const _ok = _bind$2;
+        _tmp$2 = _ok._0;
+      } else {
+        const _err = _bind$2;
+        _try_err = _err._0;
+        break _L$2;
+      }
+      _tmp = new _M0DTP211localreview5hocon14TemporalAmount8Duration(_tmp$2);
+      break _L;
+    }
+    const _bind$2 = _M0FP211localreview5hocon12period__text(text);
+    let _tmp$2;
+    if (_bind$2.$tag === 1) {
+      const _ok = _bind$2;
+      _tmp$2 = _ok._0;
+    } else {
+      return _bind$2;
+    }
+    _tmp = new _M0DTP211localreview5hocon14TemporalAmount6Period(_tmp$2);
+  }
+  return new _M0DTPC16result6ResultGRP211localreview5hocon14TemporalAmountRP211localreview5hocon10ParseErrorE2Ok(_tmp);
+}
+function _M0FP211localreview5hocon17get__duration__in(config, key, unit) {
+  const _bind = _M0FP211localreview5hocon13get__duration(config, key);
+  let _tmp;
+  if (_bind.$tag === 1) {
+    const _ok = _bind;
+    _tmp = _ok._0;
+  } else {
+    return _bind;
+  }
+  const _tmp$2 = _M0FP211localreview5hocon21duration__unit__nanos(unit);
+  if (_tmp$2 === 0n) {
+    $panic();
+  }
+  return new _M0DTPC16result6ResultGlRP211localreview5hocon10ParseErrorE2Ok(BigInt.asUintN(64, BigInt.asIntN(64, _tmp) / BigInt.asIntN(64, _tmp$2)));
+}
+function _M0FP211localreview5hocon23get__duration__list__in(config, key, unit) {
+  const scale = _M0FP211localreview5hocon21duration__unit__nanos(unit);
+  const _bind = _M0FP211localreview5hocon13get__as__list(config, key);
+  let _tmp;
+  if (_bind.$tag === 1) {
+    const _ok = _bind;
+    _tmp = _ok._0;
+  } else {
+    return _bind;
+  }
+  return _M0MPC15array5Array3mapGRP211localreview5hocon5ValuelEHRP211localreview5hocon10ParseError(_tmp, (value) => {
+    let text;
+    _L: {
+      let text$2;
+      _L$2: {
+        switch (value.$tag) {
+          case 2: {
+            const _Number = value;
+            const _text = _Number._0;
+            text$2 = _text;
+            break _L$2;
+          }
+          case 0: {
+            const _Text = value;
+            const _text$2 = _Text._0;
+            text = _text$2;
+            break _L;
+          }
+          case 1: {
+            const _Bare = value;
+            const _text$3 = _Bare._0;
+            text = _text$3;
+            break _L;
+          }
+          default: {
+            return new _M0DTPC16result6ResultGlRP211localreview5hocon10ParseErrorE3Err(new _M0DTPC15error5Error42localreview_2fhocon_2eParseError_2eInvalid("expected duration-compatible list element"));
+          }
+        }
+      }
+      const _bind$2 = _M0FP211localreview5hocon11long__value(text$2);
+      let millis;
+      if (_bind$2.$tag === 1) {
+        const _ok = _bind$2;
+        millis = _ok._0;
+      } else {
+        return _bind$2;
+      }
+      if (BigInt.asIntN(64, scale) >= BigInt.asIntN(64, 1000000n)) {
+        if (1000000n === 0n) {
+          $panic();
+        }
+        const _tmp$2 = BigInt.asUintN(64, BigInt.asIntN(64, scale) / BigInt.asIntN(64, 1000000n));
+        if (_tmp$2 === 0n) {
+          $panic();
+        }
+        return new _M0DTPC16result6ResultGlRP211localreview5hocon10ParseErrorE2Ok(BigInt.asUintN(64, BigInt.asIntN(64, millis) / BigInt.asIntN(64, _tmp$2)));
+      } else {
+        if (scale === 0n) {
+          $panic();
+        }
+        return new _M0DTPC16result6ResultGlRP211localreview5hocon10ParseErrorE2Ok(_M0FP211localreview5hocon11scale__time(millis, BigInt.asUintN(64, BigInt.asIntN(64, 1000000n) / BigInt.asIntN(64, scale))));
+      }
+    }
+    const _bind$2 = _M0FP211localreview5hocon14duration__text(text);
+    let _tmp$2;
+    if (_bind$2.$tag === 1) {
+      const _ok = _bind$2;
+      _tmp$2 = _ok._0;
+    } else {
+      return _bind$2;
+    }
+    if (scale === 0n) {
+      $panic();
+    }
+    return new _M0DTPC16result6ResultGlRP211localreview5hocon10ParseErrorE2Ok(BigInt.asUintN(64, BigInt.asIntN(64, _tmp$2) / BigInt.asIntN(64, scale)));
+  });
+}
+function _M0FP211localreview5hocon17get__milliseconds(config, key) {
+  return _M0FP211localreview5hocon17get__duration__in(config, key, 2);
+}
+function _M0FP211localreview5hocon16get__nanoseconds(config, key) {
+  return _M0FP211localreview5hocon13get__duration(config, key);
+}
+function _M0FP211localreview5hocon23get__milliseconds__list(config, key) {
+  return _M0FP211localreview5hocon23get__duration__list__in(config, key, 2);
+}
+function _M0FP211localreview5hocon22get__nanoseconds__list(config, key) {
+  return _M0FP211localreview5hocon23get__duration__list__in(config, key, 0);
 }
 function _M0FP211localreview5hocon11replacement(root, path, index, value) {
   if (index === path.length) {
@@ -20326,6 +20750,56 @@ function _M0FP211localreview5hocon10get__bytes(config, key) {
   }
   return new _M0DTPC16result6ResultGlRP211localreview5hocon10ParseErrorE2Ok(_M0MPC16bigint6BigInt9to__int64(value));
 }
+function _M0FP411localreview5hocon3cmd3web10time__unit(request) {
+  _L: {
+    if (request.$tag === 6) {
+      const _Object = request;
+      const _x = _Object._0;
+      const _x$2 = _M0MPB3Map3getGsRPB4JsonE(_x, "unit");
+      if (_x$2 === undefined) {
+        break _L;
+      } else {
+        const _Some = _x$2;
+        const _x$3 = _Some;
+        if (_x$3.$tag === 4) {
+          const _String = _x$3;
+          const _x$4 = _String._0;
+          switch (_x$4) {
+            case "nanoseconds": {
+              return new _M0DTPC16result6ResultGRP211localreview5hocon12DurationUnitRPC15error5ErrorE2Ok(0);
+            }
+            case "microseconds": {
+              return new _M0DTPC16result6ResultGRP211localreview5hocon12DurationUnitRPC15error5ErrorE2Ok(1);
+            }
+            case "milliseconds": {
+              return new _M0DTPC16result6ResultGRP211localreview5hocon12DurationUnitRPC15error5ErrorE2Ok(2);
+            }
+            case "seconds": {
+              return new _M0DTPC16result6ResultGRP211localreview5hocon12DurationUnitRPC15error5ErrorE2Ok(3);
+            }
+            case "minutes": {
+              return new _M0DTPC16result6ResultGRP211localreview5hocon12DurationUnitRPC15error5ErrorE2Ok(4);
+            }
+            case "hours": {
+              return new _M0DTPC16result6ResultGRP211localreview5hocon12DurationUnitRPC15error5ErrorE2Ok(5);
+            }
+            case "days": {
+              return new _M0DTPC16result6ResultGRP211localreview5hocon12DurationUnitRPC15error5ErrorE2Ok(6);
+            }
+            default: {
+              break _L;
+            }
+          }
+        } else {
+          break _L;
+        }
+      }
+    } else {
+      break _L;
+    }
+  }
+  return new _M0DTPC16result6ResultGRP211localreview5hocon12DurationUnitRP411localreview5hocon3cmd3web11BridgeErrorE3Err(_M0DTPC15error5Error57localreview_2fhocon_2fcmd_2fweb_2eBridgeError_2eBadGetter__);
+}
 function _M0FP411localreview5hocon3cmd3web3run(input) {
   let _try_err;
   _L: {
@@ -22221,8 +22695,8 @@ function _M0FP411localreview5hocon3cmd3web16inspect__request(input, callback) {
             value = _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_tmp$17);
             break;
           }
-          case "duration": {
-            const _bind$29 = _M0FP211localreview5hocon13get__duration(config.val, path);
+          case "period": {
+            const _bind$29 = _M0FP211localreview5hocon11get__period(config.val, path);
             let _tmp$18;
             if (_bind$29.$tag === 1) {
               const _ok = _bind$29;
@@ -22232,11 +22706,11 @@ function _M0FP411localreview5hocon3cmd3web16inspect__request(input, callback) {
               _try_err = _err._0;
               break _L;
             }
-            value = _M0IPC16string6StringPB6ToJson8to__json(_M0MPC15int645Int6418to__string_2einner(_tmp$18, 10));
+            value = _M0IP211localreview5hocon12ConfigPeriodPB6ToJson8to__json(_tmp$18);
             break;
           }
-          case "bytes": {
-            const _bind$30 = _M0FP211localreview5hocon10get__bytes(config.val, path);
+          case "temporal": {
+            const _bind$30 = _M0FP211localreview5hocon13get__temporal(config.val, path);
             let _tmp$19;
             if (_bind$30.$tag === 1) {
               const _ok = _bind$30;
@@ -22246,226 +22720,360 @@ function _M0FP411localreview5hocon3cmd3web16inspect__request(input, callback) {
               _try_err = _err._0;
               break _L;
             }
-            value = _M0IPC16string6StringPB6ToJson8to__json(_M0MPC15int645Int6418to__string_2einner(_tmp$19, 10));
+            value = _M0IP211localreview5hocon14TemporalAmountPB6ToJson8to__json(_tmp$19);
             break;
           }
-          case "memory": {
-            const _bind$31 = _M0FP211localreview5hocon17get__memory__size(config.val, path);
-            let _tmp$20;
+          case "duration-in": {
+            const _tmp$20 = config.val;
+            const _bind$31 = _M0FP411localreview5hocon3cmd3web10time__unit(request);
+            let _tmp$21;
             if (_bind$31.$tag === 1) {
               const _ok = _bind$31;
-              _tmp$20 = _ok._0;
+              _tmp$21 = _ok._0;
             } else {
               const _err = _bind$31;
               _try_err = _err._0;
               break _L;
             }
-            value = _M0IPC16string6StringPB6ToJson8to__json(_tmp$20);
-            break;
-          }
-          case "string-list": {
-            const _bind$32 = _M0FP211localreview5hocon17get__string__list(config.val, path);
-            let _tmp$21;
+            const _bind$32 = _M0FP211localreview5hocon17get__duration__in(_tmp$20, path, _tmp$21);
+            let _tmp$22;
             if (_bind$32.$tag === 1) {
               const _ok = _bind$32;
-              _tmp$21 = _ok._0;
+              _tmp$22 = _ok._0;
             } else {
               const _err = _bind$32;
               _try_err = _err._0;
               break _L;
             }
-            value = _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_tmp$21);
+            value = _M0IPC16string6StringPB6ToJson8to__json(_M0MPC15int645Int6418to__string_2einner(_tmp$22, 10));
             break;
           }
-          case "boolean-list": {
-            const _bind$33 = _M0FP211localreview5hocon15get__bool__list(config.val, path);
-            let _tmp$22;
+          case "duration-list-in": {
+            const _tmp$23 = config.val;
+            const _bind$33 = _M0FP411localreview5hocon3cmd3web10time__unit(request);
+            let _tmp$24;
             if (_bind$33.$tag === 1) {
               const _ok = _bind$33;
-              _tmp$22 = _ok._0;
+              _tmp$24 = _ok._0;
             } else {
               const _err = _bind$33;
               _try_err = _err._0;
               break _L;
             }
-            value = _M0IPC15array5ArrayPB6ToJson8to__jsonGbE(_tmp$22);
-            break;
-          }
-          case "int-list": {
-            const _bind$34 = _M0FP211localreview5hocon14get__int__list(config.val, path);
-            let _tmp$23;
+            const _bind$34 = _M0FP211localreview5hocon23get__duration__list__in(_tmp$23, path, _tmp$24);
+            let _tmp$25;
             if (_bind$34.$tag === 1) {
               const _ok = _bind$34;
-              _tmp$23 = _ok._0;
+              _tmp$25 = _ok._0;
             } else {
               const _err = _bind$34;
               _try_err = _err._0;
               break _L;
             }
-            value = _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_tmp$23);
+            value = _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_M0MPC15array5Array3mapGlsE(_tmp$25, (n) => _M0MPC15int645Int6418to__string_2einner(n, 10)));
             break;
           }
-          case "long-list": {
-            const _bind$35 = _M0FP211localreview5hocon15get__long__list(config.val, path);
-            let _tmp$24;
+          case "milliseconds": {
+            const _bind$35 = _M0FP211localreview5hocon17get__milliseconds(config.val, path);
+            let _tmp$26;
             if (_bind$35.$tag === 1) {
               const _ok = _bind$35;
-              _tmp$24 = _ok._0;
+              _tmp$26 = _ok._0;
             } else {
               const _err = _bind$35;
               _try_err = _err._0;
               break _L;
             }
-            value = _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_M0MPC15array5Array3mapGlsE(_tmp$24, (n) => _M0MPC15int645Int6418to__string_2einner(n, 10)));
+            value = _M0IPC16string6StringPB6ToJson8to__json(_M0MPC15int645Int6418to__string_2einner(_tmp$26, 10));
             break;
           }
-          case "double-list": {
-            const _bind$36 = _M0FP211localreview5hocon17get__double__list(config.val, path);
-            let _tmp$25;
+          case "nanoseconds": {
+            const _bind$36 = _M0FP211localreview5hocon16get__nanoseconds(config.val, path);
+            let _tmp$27;
             if (_bind$36.$tag === 1) {
               const _ok = _bind$36;
-              _tmp$25 = _ok._0;
+              _tmp$27 = _ok._0;
             } else {
               const _err = _bind$36;
               _try_err = _err._0;
               break _L;
             }
-            value = _M0IPC15array5ArrayPB6ToJson8to__jsonGRPB4JsonE(_M0MPC15array5Array3mapGdRPB4JsonE(_tmp$25, (n) => _M0MPC16double6Double7is__nan(n) ? _M0IPC16string6StringPB6ToJson8to__json("NaN") : _M0MPC16double6Double7is__inf(n) ? _M0IPC16string6StringPB6ToJson8to__json(n > 0 ? "Infinity" : "-Infinity") : _M0IPC16double6DoublePB6ToJson8to__json(n)));
+            value = _M0IPC16string6StringPB6ToJson8to__json(_M0MPC15int645Int6418to__string_2einner(_tmp$27, 10));
             break;
           }
-          case "duration-list": {
-            const _bind$37 = _M0FP211localreview5hocon19get__duration__list(config.val, path);
-            let _tmp$26;
+          case "milliseconds-list": {
+            const _bind$37 = _M0FP211localreview5hocon23get__milliseconds__list(config.val, path);
+            let _tmp$28;
             if (_bind$37.$tag === 1) {
               const _ok = _bind$37;
-              _tmp$26 = _ok._0;
+              _tmp$28 = _ok._0;
             } else {
               const _err = _bind$37;
               _try_err = _err._0;
               break _L;
             }
-            value = _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_M0MPC15array5Array3mapGlsE(_tmp$26, (n) => _M0MPC15int645Int6418to__string_2einner(n, 10)));
+            value = _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_M0MPC15array5Array3mapGlsE(_tmp$28, (n) => _M0MPC15int645Int6418to__string_2einner(n, 10)));
             break;
           }
-          case "bytes-list": {
-            const _bind$38 = _M0FP211localreview5hocon16get__bytes__list(config.val, path);
-            let _tmp$27;
+          case "nanoseconds-list": {
+            const _bind$38 = _M0FP211localreview5hocon22get__nanoseconds__list(config.val, path);
+            let _tmp$29;
             if (_bind$38.$tag === 1) {
               const _ok = _bind$38;
-              _tmp$27 = _ok._0;
+              _tmp$29 = _ok._0;
             } else {
               const _err = _bind$38;
               _try_err = _err._0;
               break _L;
             }
-            value = _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_M0MPC15array5Array3mapGlsE(_tmp$27, (n) => _M0MPC15int645Int6418to__string_2einner(n, 10)));
+            value = _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_M0MPC15array5Array3mapGlsE(_tmp$29, (n) => _M0MPC15int645Int6418to__string_2einner(n, 10)));
             break;
           }
-          case "memory-list": {
-            const _bind$39 = _M0FP211localreview5hocon23get__memory__size__list(config.val, path);
-            let _tmp$28;
+          case "duration": {
+            const _bind$39 = _M0FP211localreview5hocon13get__duration(config.val, path);
+            let _tmp$30;
             if (_bind$39.$tag === 1) {
               const _ok = _bind$39;
-              _tmp$28 = _ok._0;
+              _tmp$30 = _ok._0;
             } else {
               const _err = _bind$39;
               _try_err = _err._0;
               break _L;
             }
-            value = _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_tmp$28);
+            value = _M0IPC16string6StringPB6ToJson8to__json(_M0MPC15int645Int6418to__string_2einner(_tmp$30, 10));
             break;
           }
-          case "config": {
-            const _bind$40 = _M0FP211localreview5hocon11get__config(config.val, path);
-            let _tmp$29;
+          case "bytes": {
+            const _bind$40 = _M0FP211localreview5hocon10get__bytes(config.val, path);
+            let _tmp$31;
             if (_bind$40.$tag === 1) {
               const _ok = _bind$40;
-              _tmp$29 = _ok._0;
+              _tmp$31 = _ok._0;
             } else {
               const _err = _bind$40;
               _try_err = _err._0;
               break _L;
             }
-            const _bind$41 = _M0MP211localreview5hocon5Value16to__json__string(_tmp$29);
-            let _bind$42;
+            value = _M0IPC16string6StringPB6ToJson8to__json(_M0MPC15int645Int6418to__string_2einner(_tmp$31, 10));
+            break;
+          }
+          case "memory": {
+            const _bind$41 = _M0FP211localreview5hocon17get__memory__size(config.val, path);
+            let _tmp$32;
             if (_bind$41.$tag === 1) {
               const _ok = _bind$41;
-              _bind$42 = _ok._0;
+              _tmp$32 = _ok._0;
             } else {
               const _err = _bind$41;
               _try_err = _err._0;
               break _L;
             }
-            const _bind$43 = _M0FPC14json13parse_2einner(new _M0TPC16string10StringView(_bind$42, 0, _bind$42.length), 1024);
+            value = _M0IPC16string6StringPB6ToJson8to__json(_tmp$32);
+            break;
+          }
+          case "string-list": {
+            const _bind$42 = _M0FP211localreview5hocon17get__string__list(config.val, path);
+            let _tmp$33;
+            if (_bind$42.$tag === 1) {
+              const _ok = _bind$42;
+              _tmp$33 = _ok._0;
+            } else {
+              const _err = _bind$42;
+              _try_err = _err._0;
+              break _L;
+            }
+            value = _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_tmp$33);
+            break;
+          }
+          case "boolean-list": {
+            const _bind$43 = _M0FP211localreview5hocon15get__bool__list(config.val, path);
+            let _tmp$34;
             if (_bind$43.$tag === 1) {
               const _ok = _bind$43;
-              value = _ok._0;
+              _tmp$34 = _ok._0;
             } else {
               const _err = _bind$43;
+              _try_err = _err._0;
+              break _L;
+            }
+            value = _M0IPC15array5ArrayPB6ToJson8to__jsonGbE(_tmp$34);
+            break;
+          }
+          case "int-list": {
+            const _bind$44 = _M0FP211localreview5hocon14get__int__list(config.val, path);
+            let _tmp$35;
+            if (_bind$44.$tag === 1) {
+              const _ok = _bind$44;
+              _tmp$35 = _ok._0;
+            } else {
+              const _err = _bind$44;
+              _try_err = _err._0;
+              break _L;
+            }
+            value = _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_tmp$35);
+            break;
+          }
+          case "long-list": {
+            const _bind$45 = _M0FP211localreview5hocon15get__long__list(config.val, path);
+            let _tmp$36;
+            if (_bind$45.$tag === 1) {
+              const _ok = _bind$45;
+              _tmp$36 = _ok._0;
+            } else {
+              const _err = _bind$45;
+              _try_err = _err._0;
+              break _L;
+            }
+            value = _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_M0MPC15array5Array3mapGlsE(_tmp$36, (n) => _M0MPC15int645Int6418to__string_2einner(n, 10)));
+            break;
+          }
+          case "double-list": {
+            const _bind$46 = _M0FP211localreview5hocon17get__double__list(config.val, path);
+            let _tmp$37;
+            if (_bind$46.$tag === 1) {
+              const _ok = _bind$46;
+              _tmp$37 = _ok._0;
+            } else {
+              const _err = _bind$46;
+              _try_err = _err._0;
+              break _L;
+            }
+            value = _M0IPC15array5ArrayPB6ToJson8to__jsonGRPB4JsonE(_M0MPC15array5Array3mapGdRPB4JsonE(_tmp$37, (n) => _M0MPC16double6Double7is__nan(n) ? _M0IPC16string6StringPB6ToJson8to__json("NaN") : _M0MPC16double6Double7is__inf(n) ? _M0IPC16string6StringPB6ToJson8to__json(n > 0 ? "Infinity" : "-Infinity") : _M0IPC16double6DoublePB6ToJson8to__json(n)));
+            break;
+          }
+          case "duration-list": {
+            const _bind$47 = _M0FP211localreview5hocon19get__duration__list(config.val, path);
+            let _tmp$38;
+            if (_bind$47.$tag === 1) {
+              const _ok = _bind$47;
+              _tmp$38 = _ok._0;
+            } else {
+              const _err = _bind$47;
+              _try_err = _err._0;
+              break _L;
+            }
+            value = _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_M0MPC15array5Array3mapGlsE(_tmp$38, (n) => _M0MPC15int645Int6418to__string_2einner(n, 10)));
+            break;
+          }
+          case "bytes-list": {
+            const _bind$48 = _M0FP211localreview5hocon16get__bytes__list(config.val, path);
+            let _tmp$39;
+            if (_bind$48.$tag === 1) {
+              const _ok = _bind$48;
+              _tmp$39 = _ok._0;
+            } else {
+              const _err = _bind$48;
+              _try_err = _err._0;
+              break _L;
+            }
+            value = _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_M0MPC15array5Array3mapGlsE(_tmp$39, (n) => _M0MPC15int645Int6418to__string_2einner(n, 10)));
+            break;
+          }
+          case "memory-list": {
+            const _bind$49 = _M0FP211localreview5hocon23get__memory__size__list(config.val, path);
+            let _tmp$40;
+            if (_bind$49.$tag === 1) {
+              const _ok = _bind$49;
+              _tmp$40 = _ok._0;
+            } else {
+              const _err = _bind$49;
+              _try_err = _err._0;
+              break _L;
+            }
+            value = _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_tmp$40);
+            break;
+          }
+          case "config": {
+            const _bind$50 = _M0FP211localreview5hocon11get__config(config.val, path);
+            let _tmp$41;
+            if (_bind$50.$tag === 1) {
+              const _ok = _bind$50;
+              _tmp$41 = _ok._0;
+            } else {
+              const _err = _bind$50;
+              _try_err = _err._0;
+              break _L;
+            }
+            const _bind$51 = _M0MP211localreview5hocon5Value16to__json__string(_tmp$41);
+            let _bind$52;
+            if (_bind$51.$tag === 1) {
+              const _ok = _bind$51;
+              _bind$52 = _ok._0;
+            } else {
+              const _err = _bind$51;
+              _try_err = _err._0;
+              break _L;
+            }
+            const _bind$53 = _M0FPC14json13parse_2einner(new _M0TPC16string10StringView(_bind$52, 0, _bind$52.length), 1024);
+            if (_bind$53.$tag === 1) {
+              const _ok = _bind$53;
+              value = _ok._0;
+            } else {
+              const _err = _bind$53;
               _try_err = _err._0;
               break _L;
             }
             break;
           }
           case "config-list": {
-            const _bind$44 = _M0FP211localreview5hocon17get__config__list(config.val, path);
-            let _tmp$30;
-            if (_bind$44.$tag === 1) {
-              const _ok = _bind$44;
-              _tmp$30 = _ok._0;
+            const _bind$54 = _M0FP211localreview5hocon17get__config__list(config.val, path);
+            let _tmp$42;
+            if (_bind$54.$tag === 1) {
+              const _ok = _bind$54;
+              _tmp$42 = _ok._0;
             } else {
-              const _err = _bind$44;
+              const _err = _bind$54;
               _try_err = _err._0;
               break _L;
             }
-            const _bind$45 = _M0MP211localreview5hocon5Value16to__json__string(new _M0DTP211localreview5hocon5Value4List(_tmp$30));
-            let _bind$46;
-            if (_bind$45.$tag === 1) {
-              const _ok = _bind$45;
-              _bind$46 = _ok._0;
+            const _bind$55 = _M0MP211localreview5hocon5Value16to__json__string(new _M0DTP211localreview5hocon5Value4List(_tmp$42));
+            let _bind$56;
+            if (_bind$55.$tag === 1) {
+              const _ok = _bind$55;
+              _bind$56 = _ok._0;
             } else {
-              const _err = _bind$45;
+              const _err = _bind$55;
               _try_err = _err._0;
               break _L;
             }
-            const _bind$47 = _M0FPC14json13parse_2einner(new _M0TPC16string10StringView(_bind$46, 0, _bind$46.length), 1024);
-            if (_bind$47.$tag === 1) {
-              const _ok = _bind$47;
+            const _bind$57 = _M0FPC14json13parse_2einner(new _M0TPC16string10StringView(_bind$56, 0, _bind$56.length), 1024);
+            if (_bind$57.$tag === 1) {
+              const _ok = _bind$57;
               value = _ok._0;
             } else {
-              const _err = _bind$47;
+              const _err = _bind$57;
               _try_err = _err._0;
               break _L;
             }
             break;
           }
           case "list": {
-            const _bind$48 = _M0FP211localreview5hocon13get__as__list(config.val, path);
-            let _tmp$31;
-            if (_bind$48.$tag === 1) {
-              const _ok = _bind$48;
-              _tmp$31 = _ok._0;
+            const _bind$58 = _M0FP211localreview5hocon13get__as__list(config.val, path);
+            let _tmp$43;
+            if (_bind$58.$tag === 1) {
+              const _ok = _bind$58;
+              _tmp$43 = _ok._0;
             } else {
-              const _err = _bind$48;
+              const _err = _bind$58;
               _try_err = _err._0;
               break _L;
             }
-            const _bind$49 = _M0MP211localreview5hocon5Value16to__json__string(new _M0DTP211localreview5hocon5Value4List(_tmp$31));
-            let _bind$50;
-            if (_bind$49.$tag === 1) {
-              const _ok = _bind$49;
-              _bind$50 = _ok._0;
+            const _bind$59 = _M0MP211localreview5hocon5Value16to__json__string(new _M0DTP211localreview5hocon5Value4List(_tmp$43));
+            let _bind$60;
+            if (_bind$59.$tag === 1) {
+              const _ok = _bind$59;
+              _bind$60 = _ok._0;
             } else {
-              const _err = _bind$49;
+              const _err = _bind$59;
               _try_err = _err._0;
               break _L;
             }
-            const _bind$51 = _M0FPC14json13parse_2einner(new _M0TPC16string10StringView(_bind$50, 0, _bind$50.length), 1024);
-            if (_bind$51.$tag === 1) {
-              const _ok = _bind$51;
+            const _bind$61 = _M0FPC14json13parse_2einner(new _M0TPC16string10StringView(_bind$60, 0, _bind$60.length), 1024);
+            if (_bind$61.$tag === 1) {
+              const _ok = _bind$61;
               value = _ok._0;
             } else {
-              const _err = _bind$51;
+              const _err = _bind$61;
               _try_err = _err._0;
               break _L;
             }
@@ -22476,102 +23084,102 @@ function _M0FP411localreview5hocon3cmd3web16inspect__request(input, callback) {
             break;
           }
           case "null": {
-            const _bind$52 = _M0FP211localreview5hocon13get__is__null(config.val, path);
-            let _tmp$32;
-            if (_bind$52.$tag === 1) {
-              const _ok = _bind$52;
-              _tmp$32 = _ok._0;
+            const _bind$62 = _M0FP211localreview5hocon13get__is__null(config.val, path);
+            let _tmp$44;
+            if (_bind$62.$tag === 1) {
+              const _ok = _bind$62;
+              _tmp$44 = _ok._0;
             } else {
-              const _err = _bind$52;
+              const _err = _bind$62;
               _try_err = _err._0;
               break _L;
             }
-            value = _M0IPC14bool4BoolPB6ToJson8to__json(_tmp$32);
+            value = _M0IPC14bool4BoolPB6ToJson8to__json(_tmp$44);
             break;
           }
           case "has-or-null": {
-            const _bind$53 = _M0FP211localreview5hocon19has__path__or__null(config.val, path);
-            let _tmp$33;
-            if (_bind$53.$tag === 1) {
-              const _ok = _bind$53;
-              _tmp$33 = _ok._0;
+            const _bind$63 = _M0FP211localreview5hocon19has__path__or__null(config.val, path);
+            let _tmp$45;
+            if (_bind$63.$tag === 1) {
+              const _ok = _bind$63;
+              _tmp$45 = _ok._0;
             } else {
-              const _err = _bind$53;
+              const _err = _bind$63;
               _try_err = _err._0;
               break _L;
             }
-            value = _M0IPC14bool4BoolPB6ToJson8to__json(_tmp$33);
+            value = _M0IPC14bool4BoolPB6ToJson8to__json(_tmp$45);
             break;
           }
           case "empty": {
-            const _bind$54 = _M0FP211localreview5hocon9is__empty(config.val);
-            let _tmp$34;
-            if (_bind$54.$tag === 1) {
-              const _ok = _bind$54;
-              _tmp$34 = _ok._0;
+            const _bind$64 = _M0FP211localreview5hocon9is__empty(config.val);
+            let _tmp$46;
+            if (_bind$64.$tag === 1) {
+              const _ok = _bind$64;
+              _tmp$46 = _ok._0;
             } else {
-              const _err = _bind$54;
+              const _err = _bind$64;
               _try_err = _err._0;
               break _L;
             }
-            value = _M0IPC14bool4BoolPB6ToJson8to__json(_tmp$34);
+            value = _M0IPC14bool4BoolPB6ToJson8to__json(_tmp$46);
             break;
           }
           case "json-text": {
-            const _bind$55 = _M0MP211localreview5hocon5Value16to__json__string(config.val);
-            let _tmp$35;
-            if (_bind$55.$tag === 1) {
-              const _ok = _bind$55;
-              _tmp$35 = _ok._0;
+            const _bind$65 = _M0MP211localreview5hocon5Value16to__json__string(config.val);
+            let _tmp$47;
+            if (_bind$65.$tag === 1) {
+              const _ok = _bind$65;
+              _tmp$47 = _ok._0;
             } else {
-              const _err = _bind$55;
+              const _err = _bind$65;
               _try_err = _err._0;
               break _L;
             }
-            value = _M0IPC16string6StringPB6ToJson8to__json(_tmp$35);
+            value = _M0IPC16string6StringPB6ToJson8to__json(_tmp$47);
             break;
           }
           case "resolved": {
-            const _bind$56 = _M0FP211localreview5hocon12is__resolved(config.val);
-            let _tmp$36;
-            if (_bind$56.$tag === 1) {
-              const _ok = _bind$56;
-              _tmp$36 = _ok._0;
+            const _bind$66 = _M0FP211localreview5hocon12is__resolved(config.val);
+            let _tmp$48;
+            if (_bind$66.$tag === 1) {
+              const _ok = _bind$66;
+              _tmp$48 = _ok._0;
             } else {
-              const _err = _bind$56;
+              const _err = _bind$66;
               _try_err = _err._0;
               break _L;
             }
-            value = _M0IPC14bool4BoolPB6ToJson8to__json(_tmp$36);
+            value = _M0IPC14bool4BoolPB6ToJson8to__json(_tmp$48);
             break;
           }
           case "entries": {
-            const _bind$57 = _M0FP211localreview5hocon10entry__set(config.val);
-            let _tmp$37;
-            if (_bind$57.$tag === 1) {
-              const _ok = _bind$57;
-              _tmp$37 = _ok._0;
+            const _bind$67 = _M0FP211localreview5hocon10entry__set(config.val);
+            let _tmp$49;
+            if (_bind$67.$tag === 1) {
+              const _ok = _bind$67;
+              _tmp$49 = _ok._0;
             } else {
-              const _err = _bind$57;
+              const _err = _bind$67;
               _try_err = _err._0;
               break _L;
             }
-            const _bind$58 = _M0MP211localreview5hocon5Value16to__json__string(new _M0DTP211localreview5hocon5Value6Object(_tmp$37));
-            let _bind$59;
-            if (_bind$58.$tag === 1) {
-              const _ok = _bind$58;
-              _bind$59 = _ok._0;
+            const _bind$68 = _M0MP211localreview5hocon5Value16to__json__string(new _M0DTP211localreview5hocon5Value6Object(_tmp$49));
+            let _bind$69;
+            if (_bind$68.$tag === 1) {
+              const _ok = _bind$68;
+              _bind$69 = _ok._0;
             } else {
-              const _err = _bind$58;
+              const _err = _bind$68;
               _try_err = _err._0;
               break _L;
             }
-            const _bind$60 = _M0FPC14json13parse_2einner(new _M0TPC16string10StringView(_bind$59, 0, _bind$59.length), 1024);
-            if (_bind$60.$tag === 1) {
-              const _ok = _bind$60;
+            const _bind$70 = _M0FPC14json13parse_2einner(new _M0TPC16string10StringView(_bind$69, 0, _bind$69.length), 1024);
+            if (_bind$70.$tag === 1) {
+              const _ok = _bind$70;
               value = _ok._0;
             } else {
-              const _err = _bind$60;
+              const _err = _bind$70;
               _try_err = _err._0;
               break _L;
             }
@@ -22604,39 +23212,39 @@ function _M0FP411localreview5hocon3cmd3web16inspect__request(input, callback) {
                     break _L$10;
                   }
                 }
-                const _tmp$38 = config.val;
-                const _bind$61 = _M0FP211localreview5hocon5parse(reference, undefined, _M0DTPC16option6OptionGOWRP211localreview5hocon14IncludeRequestERPC16result6ResultGRPB5ArrayGRP211localreview5hocon13IncludeSourceEsEE4None__, undefined, _M0DTPC16option6OptionGRPB5ArrayGsEE4None__, undefined);
-                let _tmp$39;
-                if (_bind$61.$tag === 1) {
-                  const _ok = _bind$61;
-                  _tmp$39 = _ok._0;
+                const _tmp$50 = config.val;
+                const _bind$71 = _M0FP211localreview5hocon5parse(reference, undefined, _M0DTPC16option6OptionGOWRP211localreview5hocon14IncludeRequestERPC16result6ResultGRPB5ArrayGRP211localreview5hocon13IncludeSourceEsEE4None__, undefined, _M0DTPC16option6OptionGRPB5ArrayGsEE4None__, undefined);
+                let _tmp$51;
+                if (_bind$71.$tag === 1) {
+                  const _ok = _bind$71;
+                  _tmp$51 = _ok._0;
                 } else {
-                  const _err = _bind$61;
+                  const _err = _bind$71;
                   _try_err = _err._0;
                   break _L;
                 }
-                const _tmp$40 = _tmp$39;
-                const _bind$62 = _M0FP411localreview5hocon3cmd3web13string__array(request, "validationPaths");
-                let _tmp$41;
-                if (_bind$62.$tag === 1) {
-                  const _ok = _bind$62;
-                  _tmp$41 = _ok._0;
+                const _tmp$52 = _tmp$51;
+                const _bind$72 = _M0FP411localreview5hocon3cmd3web13string__array(request, "validationPaths");
+                let _tmp$53;
+                if (_bind$72.$tag === 1) {
+                  const _ok = _bind$72;
+                  _tmp$53 = _ok._0;
                 } else {
-                  const _err = _bind$62;
+                  const _err = _bind$72;
                   _try_err = _err._0;
                   break _L;
                 }
-                const _bind$63 = _M0FP211localreview5hocon28validation__problems_2einner(_tmp$38, _tmp$40, _tmp$41);
-                let _tmp$42;
-                if (_bind$63.$tag === 1) {
-                  const _ok = _bind$63;
-                  _tmp$42 = _ok._0;
+                const _bind$73 = _M0FP211localreview5hocon28validation__problems_2einner(_tmp$50, _tmp$52, _tmp$53);
+                let _tmp$54;
+                if (_bind$73.$tag === 1) {
+                  const _ok = _bind$73;
+                  _tmp$54 = _ok._0;
                 } else {
-                  const _err = _bind$63;
+                  const _err = _bind$73;
                   _try_err = _err._0;
                   break _L;
                 }
-                value = _M0IPC15array5ArrayPB6ToJson8to__jsonGRP211localreview5hocon17ValidationProblemE(_tmp$42);
+                value = _M0IPC15array5ArrayPB6ToJson8to__jsonGRP211localreview5hocon17ValidationProblemE(_tmp$54);
                 break _L$9;
               }
               _try_err = _M0DTPC15error5Error57localreview_2fhocon_2fcmd_2fweb_2eBridgeError_2eBadSource__;
@@ -22651,33 +23259,33 @@ function _M0FP411localreview5hocon3cmd3web16inspect__request(input, callback) {
           case "value": {
             let v;
             _L$10: {
-              const _bind$61 = _M0FP211localreview5hocon3get(config.val, path);
-              if (_bind$61 === undefined) {
+              const _bind$71 = _M0FP211localreview5hocon3get(config.val, path);
+              if (_bind$71 === undefined) {
                 _try_err = _M0DTPC15error5Error60localreview_2fhocon_2fcmd_2fweb_2eBridgeError_2eMissingValue__;
                 break _L;
               } else {
-                const _Some = _bind$61;
+                const _Some = _bind$71;
                 const _v = _Some;
                 v = _v;
                 break _L$10;
               }
             }
-            const _bind$61 = _M0MP211localreview5hocon5Value16to__json__string(v);
-            let _bind$62;
-            if (_bind$61.$tag === 1) {
-              const _ok = _bind$61;
-              _bind$62 = _ok._0;
+            const _bind$71 = _M0MP211localreview5hocon5Value16to__json__string(v);
+            let _bind$72;
+            if (_bind$71.$tag === 1) {
+              const _ok = _bind$71;
+              _bind$72 = _ok._0;
             } else {
-              const _err = _bind$61;
+              const _err = _bind$71;
               _try_err = _err._0;
               break _L;
             }
-            const _bind$63 = _M0FPC14json13parse_2einner(new _M0TPC16string10StringView(_bind$62, 0, _bind$62.length), 1024);
-            if (_bind$63.$tag === 1) {
-              const _ok = _bind$63;
+            const _bind$73 = _M0FPC14json13parse_2einner(new _M0TPC16string10StringView(_bind$72, 0, _bind$72.length), 1024);
+            if (_bind$73.$tag === 1) {
+              const _ok = _bind$73;
               value = _ok._0;
             } else {
-              const _err = _bind$63;
+              const _err = _bind$73;
               _try_err = _err._0;
               break _L;
             }
