@@ -1,5 +1,11 @@
 # Changes
 
+## 0.16.0
+
+- Normalize the runtime shortest decimal for ordinary binary64 rendering; use a proven integer interval for the smallest one-digit subnormals, with full exact arithmetic if the interval overlaps a rounding boundary. No rendered-result cache is introduced.
+- Check 24,254 distinct independently captured JDK bit patterns in 190 whitebox groups on both backends, alongside all existing public Config rendering and host tests. Samples span every exponent field, signs, decimal boundaries, subnormals, non-finite values and deterministic random patterns; they do not exhaust binary64.
+- Require saved-vector/generated-test consistency in verification and CI, and compare ordinary and exceptional rendering workloads against fixed 0.15 and native Config. Full functional and performance parity remains open.
+
 ## 0.15.0
 
 - Core representation migration: resolved unquoted strings retain Bare rather than becoming Text; direct Value matches must support both. Typed string/data access and semantic equality remain unchanged.

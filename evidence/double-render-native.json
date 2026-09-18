@@ -1,9 +1,9 @@
 {
-  "utc": "2026-09-18T22:32:46.266Z",
-  "checks": 72,
-  "passed": 72,
-  "failed": 0,
-  "scope": "Actual Node load and CLI input/stdin/relative-include files; ten getters, quoted paths, values and error exit codes.",
+  "utc": "2026-09-18T22:31:31.153Z",
+  "mode": "live JDK primitive formatter recapture matches saved vectors and generated tests",
+  "total": 24254,
+  "unique": 24254,
+  "java": "java version \"22.0.1\" 2024-04-16\r\nJava(TM) SE Runtime Environment (build 22.0.1+8-16)\r\nJava HotSpot(TM) 64-Bit Server VM (build 22.0.1+8-16, mixed mode, sharing)",
   "sourceHashes": {
     "accessor_reference_test.mbt": "ef0cea69ffc47506f3c8a54352b8bda45617aca06af288d99676092a662fa3e0",
     "accessors.mbt": "cd1d648bb382d5a88ef32ef32d475dd35b5d15fce9f42134d1bda90067be8474",

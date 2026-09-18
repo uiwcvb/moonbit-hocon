@@ -1,6 +1,6 @@
 # HOCON 配置解析器
 
-MoonBit 本地 0.15.0：原始值的 JSON/HOCON 文本与缩进渲染、直接值遍历和不可变包装哈希缓存、不可变 ConfigValue / ConfigObject / ConfigList、持久化不可变 JavaScript Config、类型化配置、历史值自引用、`+=`、include 重定位、显式回退与环境替换、未解析文档/分阶段解析、数字/对象/通用值/枚举及类型化列表读取、日历周期和指定时间单位、配置树修改与校验、文件/HTTP(S) 加载、可取消异步入口和 CLI。
+MoonBit 本地 0.16.0：浮点文本渲染优化、原始值的 JSON/HOCON 文本与缩进渲染、直接值遍历和不可变包装哈希缓存、不可变 ConfigValue / ConfigObject / ConfigList、持久化不可变 JavaScript Config、类型化配置、历史值自引用、`+=`、include 重定位、显式回退与环境替换、未解析文档/分阶段解析、数字/对象/通用值/枚举及类型化列表读取、日历周期和指定时间单位、配置树修改与校验、文件/HTTP(S) 加载、可取消异步入口和 CLI。
 解析和求值均由 MoonBit 实现；Node 提供文件、HTTP(S)、properties 和命令行宿主。Java 只用于独立参考测试及路径字符数据生成。
 
 ## 命令行与文件
@@ -360,3 +360,11 @@ config.render({json: false, formatted: true}); // same explicit rendering option
 JSON 模式的未解析替换、重复字段和非有限数字仍可能不是合法 JSON，与参考库一致；完整解析且只有有限数字的结果可交给 JSON 解析器。输出及遍历使用有界预算，拒绝循环调用方数据。新渲染不会替代既有 `to_json_string()` 的数值原始拼写行为。
 
 0.15 核心表示迁移：`parse`/`resolve` 后的裸字符串保留 `Bare`，不会再一律转为 `Text`，以保留正确 HOCON 渲染。直接匹配 `Value` 的代码需同时处理二者；`get_string`、类型化读取、语义相等/哈希和 `value_unwrapped` 的普通字符串结果保持一致。
+
+## 0.16 浮点渲染验证
+
+JS/Wasm-GC 各 16,419 项通过，包含 24,254 个独立 JDK 位模式（190 个分组）及一项精确区间证明；2,140 个既有 Config 渲染程序重新实时对照并通过异步回放。完整兼容与性能目标仍未完成。
+
+五进程计时中，普通浮点渲染相对 0.15 耗时减少 82.5%，当前/原版耗时比 7.057；次正规数与十进制幂相对 0.15 为 0.478、0.597，当前/原版为 945.942、13.106。十六项非渲染旧负载相对 0.15 为 0.918–1.042。最大进程中位数波动比 2.094，不稳定标记 true。完整性能仍未追平。
+
+本轮证据见 [double-render-upgrade.json](evidence/double-render-upgrade.json)，完整边界见 [FEATURES.md](FEATURES.md)。
