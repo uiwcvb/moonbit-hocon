@@ -1,6 +1,6 @@
 # HOCON 配置解析器
 
-MoonBit 本地 0.4.0：类型化配置、历史值自引用、`+=`、include 重定位、显式回退与环境替换、单位读取，以及真实文件加载和 CLI。
+MoonBit 本地 0.5.0：类型化配置、历史值自引用、`+=`、include 重定位、显式回退与环境替换、单位与类型化列表读取、配置子对象，以及真实文件加载和 CLI。
 解析和求值均由 MoonBit 实现；Node 仅提供文件、properties 和命令行宿主。Java 只用于独立参考测试。
 
 ## 命令行与文件
@@ -16,7 +16,8 @@ node tools/cli.mjs --file app.conf --classpath ./resources --resolved-json --jso
 `--env` 显式启用当前进程环境，默认不读取。classpath 接收目录，首个目录优先。
 `--resolved-json` 输出最终 JSON；默认输出值类型调试展示；`--json` 保留 `{ok,output}` 结果信封。
 `--get` 接受带引号路径，`--type` 支持 value/string/boolean/int/long/double/duration/bytes/memory/list/has/null。
-long、duration、bytes、memory 的 CLI 结果为精确十进制字符串；duration 单位为纳秒。
+另支持 string-list/boolean-list/int-list/long-list/double-list/duration-list/bytes-list/memory-list/config/config-list。
+long、duration、bytes、memory 及其列表元素的 CLI 结果为精确十进制字符串；duration 单位为纳秒。
 错误退出码：配置或读取错误 2，宿主/参数错误 1，成功 0。也支持 UTF-8 stdin。
 
 ```javascript
@@ -67,7 +68,13 @@ Bare、Bound、Substitution、Reference、PathReference、Concat、DelayedMerge 
 | get_as_list | 数组或非负整数索引对象，忽略非数字键并按索引排序 |
 | get_duration | 纳秒 Int64；缺省单位毫秒，支持 ns/us/ms/s/m/h/d 及英文别名 |
 | get_bytes/get_memory_size | SI/IEC 内存单位；前者要求 Int64，后者返回任意精度十进制字符串 |
+| get_string_list/get_bool_list/get_int_list/get_long_list/get_double_list | 逐元素转换；任一元素类型错误、null 或越界则拒绝整个读取 |
+| get_duration_list | 数字元素先截断成 Int64 毫秒再转纳秒；字符串按时长解析，保留小数单位 |
+| get_bytes_list/get_memory_size_list | 字符串直接作十进制单位解析，不经过单值 getter 的浮点预转换；bytes 要求 Int64 |
+| get_config/get_config_list | 读取对象或对象数组；返回 Value，复制顶层 Map，不承诺深层不可变 |
 | has_path/get_is_null | 区分缺失与 null；has_path 的 include_null 默认 false |
+
+数字索引对象按数值索引排序，同一索引的多种拼写（例如 1/01/+1）合并为一个元素；普通哈希桶遍历与回退合并顺序已对照参考库。高碰撞树桶与删除后的容量历史尚未复现，Unicode 数字键的完整转换仍缺。
 
 Double API 可返回 NaN/Infinity；JSON 桥接和 CLI 用 "NaN"/"Infinity"/"-Infinity" 表示这些非 JSON 数值。
 普通 JSON 数字通过 JS 宿主会受双精度限制；需要精确长整数应使用 long getter，或直接在 MoonBit 读取 Number/Int64。
@@ -94,9 +101,11 @@ include 中的引用优先查包含位置，再回退根路径。环境替换显
 Node 宿主另限制单文件 400,000 字节、读取累计 4,000,000 字节及 512 次文件读取，并拒绝无效 UTF-8。
 数值转换文本限 10,000 单元，任意精度单位指数限 ±4096。这些限制可能拒绝上游能处理的超大输入。
 
-仍缺 HTTP(S) include、JAR/classloader、JVM application/reference/system-properties 默认加载，完整 typed-list/object/checkValid/编辑/来源注释 API、保留注释的渲染与端到端性能对照。
+仍缺 HTTP(S) include、JAR/classloader、JVM application/reference/system-properties 默认加载，剩余 number/object/enum 集合和 checkValid/编辑/来源注释 API、保留注释的渲染与端到端性能对照。
 更多参考版本、平台、大配置和持续负载尚未完成；详细边界见 [FEATURES.md](FEATURES.md)。
 
 依据 [HOCON 官方规格](https://github.com/lightbend/config/blob/main/HOCON.md)独立实现；参考库采用 [Lightbend Config 1.4.9](https://github.com/lightbend/config/releases/tag/v1.4.9)。
 原创代码 MIT；Java 适配器与测试用例自行编写，上游 JAR 不在本仓库分发。没有复制上游实现或测试集。
-全部留在本地，未上传或发布；旧 ZIP/bundle 为历史快照，本轮未重打包。
+0.5 增量验证：JS/Wasm-GC 各 1,323 项；1,300 新集合对照与既有 772 配置/文件对照、72 新宿主/CLI 检查。固定五进程计时中四项既有负载相对 0.4 的耗时比为 0.977–1.019；七项 JSON 请求到结果的负载相对官方库为 0.520–1.094，时长列表仍约慢 9.4%。这不代表全部性能已追平。
+
+全部留在本地，未上传或发布；旧 20 项目合集仍为历史快照，0.5 独立 ZIP/bundle 绑定新的本地提交。

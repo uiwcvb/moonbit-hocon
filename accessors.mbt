@@ -155,24 +155,19 @@ pub fn get_as_list(
   match required(config, key) {
     List(xs) => xs.copy()
     Object(m) => {
-      let indices : Array[(Int, String)] = []
-      for name, _ in m {
+      let indexed : Map[Int, Value] = Map([])
+      for name in object_iteration_keys(m) {
         let n = @string.parse_int(name) catch { _ => -1 }
         if n >= 0 {
-          indices.push((n, name))
+          indexed[n] = m[name]
         }
       }
+      let indices = indexed.keys().collect()
       if indices.is_empty() {
         raise Invalid("object has no numeric list indices")
       }
-      indices.sort_by((a, b) => {
-        if a.0 == b.0 {
-          a.1.compare(b.1)
-        } else {
-          a.0.compare(b.0)
-        }
-      })
-      indices.map(pair => m[pair.1])
+      indices.sort()
+      indices.map(index => indexed[index])
     }
     _ => raise Invalid("expected list-compatible value")
   }

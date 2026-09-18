@@ -1,0 +1,345 @@
+{
+  "utc": "2026-09-18T15:03:43.464906+00:00",
+  "version": "0.5.0",
+  "baselineCommit": "ad0f46c0dab1db20e9ae29122b7eee96c53a273f",
+  "localOnly": true,
+  "fullParity": false,
+  "reference": {
+    "library": "Lightbend Config 1.4.9",
+    "jarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37",
+    "unmodified": true
+  },
+  "engineSha256": "5366e7f8f9d98ea96d6e2af84c244b4bae2bae700c7fec9fd03ef0d8a4c0b7e1",
+  "verified": {
+    "js": 1323,
+    "wasmGC": 1323,
+    "liveCollections": 1300,
+    "liveConfiguration": 714,
+    "liveFiles": 58,
+    "totalLiveReference": 2072,
+    "newHostCliChecks": 72,
+    "boundedMalformedInputs": 307,
+    "fullVerify": true,
+    "generationFiles": 44,
+    "generationUnchanged": true,
+    "compiledEngineMatches": true,
+    "api": "ten additive public functions"
+  },
+  "performance": {
+    "processesPerVariant": 5,
+    "scope": "Warm end-to-end request JSON parse, HOCON parse/resolve/getter, and JSON response rendering in Node/MoonBit and unmodified Lightbend Config. No startup, file I/O, peak memory or steady-load claim. Fixed alternating process order; equality checked for every process result.",
+    "workloads": [
+      {
+        "name": "parse-64",
+        "inputBytes": 427,
+        "upstream": {
+          "processMedians": [
+            0.3762,
+            0.378,
+            0.36656666666666665,
+            0.3721333333333333,
+            0.3681
+          ],
+          "medianMs": 0.3721333333333333
+        },
+        "current": {
+          "processMedians": [
+            0.2700666666666649,
+            0.2605666666666669,
+            0.2890000000000015,
+            0.2673333333333356,
+            0.28343333333333476
+          ],
+          "medianMs": 0.2700666666666649
+        },
+        "baseline": {
+          "processMedians": [
+            0.27096666666666636,
+            0.27163333333333145,
+            0.2790999999999997,
+            0.2620333333333302,
+            0.2623000000000009
+          ],
+          "medianMs": 0.27096666666666636
+        },
+        "currentOverUpstream": 0.7257255463991353,
+        "currentOverBaseline": 0.9966785582482417
+      },
+      {
+        "name": "parse-256",
+        "inputBytes": 2083,
+        "upstream": {
+          "processMedians": [
+            0.8836333333333334,
+            0.9426,
+            0.8854666666666666,
+            0.9052666666666667,
+            0.9468
+          ],
+          "medianMs": 0.9052666666666667
+        },
+        "current": {
+          "processMedians": [
+            0.5083999999999994,
+            0.5672666666666686,
+            0.4688333333333361,
+            0.4725999999999999,
+            0.6659666666666624
+          ],
+          "medianMs": 0.5083999999999994
+        },
+        "baseline": {
+          "processMedians": [
+            0.5548333333333346,
+            0.49636666666666923,
+            0.4924000000000035,
+            0.5202333333333323,
+            0.5681333333333308
+          ],
+          "medianMs": 0.5202333333333323
+        },
+        "currentOverUpstream": 0.5616024744090132,
+        "currentOverBaseline": 0.9772537963734229
+      },
+      {
+        "name": "nested-32",
+        "inputBytes": 1323,
+        "upstream": {
+          "processMedians": [
+            0.5726333333333333,
+            0.5771,
+            0.6168,
+            0.6234,
+            0.5880666666666666
+          ],
+          "medianMs": 0.5880666666666666
+        },
+        "current": {
+          "processMedians": [
+            0.4504666666666708,
+            0.3848000000000032,
+            0.3954000000000046,
+            0.387566666666667,
+            0.397766666666674
+          ],
+          "medianMs": 0.3954000000000046
+        },
+        "baseline": {
+          "processMedians": [
+            0.38366666666667015,
+            0.43183333333332524,
+            0.38809999999999906,
+            0.3622000000000014,
+            0.4479333333333386
+          ],
+          "medianMs": 0.38809999999999906
+        },
+        "currentOverUpstream": 0.672372746854106,
+        "currentOverBaseline": 1.0188095851584786
+      },
+      {
+        "name": "fallback-64",
+        "inputBytes": 821,
+        "upstream": {
+          "processMedians": [
+            0.8744333333333333,
+            0.7213,
+            0.9224333333333333,
+            0.8298333333333333,
+            0.8355333333333334
+          ],
+          "medianMs": 0.8355333333333334
+        },
+        "current": {
+          "processMedians": [
+            0.4678333333333266,
+            0.39769999999999567,
+            0.43243333333333567,
+            0.519566666666672,
+            0.4348666666666645
+          ],
+          "medianMs": 0.4348666666666645
+        },
+        "baseline": {
+          "processMedians": [
+            0.379966666666661,
+            0.4325999999999984,
+            0.4332333333333338,
+            0.4219000000000032,
+            0.4431333333333309
+          ],
+          "medianMs": 0.4325999999999984
+        },
+        "currentOverUpstream": 0.5204659698396208,
+        "currentOverBaseline": 1.0052396363075962
+      },
+      {
+        "name": "duration-128",
+        "inputBytes": 1301,
+        "upstream": {
+          "processMedians": [
+            0.5056,
+            0.5123666666666666,
+            0.5052,
+            0.47383333333333333,
+            0.4961333333333333
+          ],
+          "medianMs": 0.5052
+        },
+        "current": {
+          "processMedians": [
+            0.5548999999999941,
+            0.5310000000000059,
+            0.5524666666666652,
+            0.5186999999999955,
+            0.5749666666666636
+          ],
+          "medianMs": 0.5524666666666652
+        },
+        "currentOverUpstream": 1.093560306149377
+      },
+      {
+        "name": "memory-128",
+        "inputBytes": 1429,
+        "upstream": {
+          "processMedians": [
+            0.6171,
+            0.5055666666666667,
+            0.5054666666666666,
+            0.5853333333333334,
+            0.5673666666666667
+          ],
+          "medianMs": 0.5673666666666667
+        },
+        "current": {
+          "processMedians": [
+            0.4687666666666625,
+            0.4805333333333313,
+            0.4477666666666664,
+            0.51636666666667,
+            0.48303333333332904
+          ],
+          "medianMs": 0.4805333333333313
+        },
+        "currentOverUpstream": 0.8469537629986451
+      },
+      {
+        "name": "config-list-64",
+        "inputBytes": 1273,
+        "upstream": {
+          "processMedians": [
+            0.5054666666666666,
+            0.5510333333333334,
+            0.6454,
+            0.6206,
+            0.6111333333333333
+          ],
+          "medianMs": 0.6111333333333333
+        },
+        "current": {
+          "processMedians": [
+            0.37643333333333356,
+            0.37023333333333613,
+            0.3742333333333363,
+            0.35719999999999646,
+            0.41603333333334075
+          ],
+          "medianMs": 0.3742333333333363
+        },
+        "currentOverUpstream": 0.6123595505618027
+      }
+    ]
+  },
+  "remaining": [
+    "High-collision tree-bin and retained-capacity object iteration; complete Unicode numeric indices",
+    "HTTP(S) includes, JAR/classloader and JVM default loading",
+    "Remaining number/object/enum collection APIs, checkValid, resolveWith and editing",
+    "Complete source/comment preservation, diagnostic classes and locations",
+    "Large-config, memory, sustained-load, cross-platform and upstream-version coverage",
+    "Duration-list measured end-to-end workload remains about 9.4% slower than the pinned reference"
+  ],
+  "sourceGitBlobSHA256": {
+    ".gitattributes": "968aed8752f58f3554e38c1db0b611ba4663668909552d8d17c2874ff5966312",
+    ".github/workflows/ci.yml": "29b6dc752dfd4aa985ac6a36a57cd8c86a3d58ff84b4bf267e2817fdced3f95a",
+    ".gitignore": "30491d9520128a4172c7fab325bc552a309133db8bd21b4a699668e2a551e609",
+    "CHANGELOG.md": "b37e22d3e5e673e01213a1f6303ae782e24aadb1835b07430a46d394e2a93f0a",
+    "CONTRIBUTING.md": "e066713924ff8db789960bf03122a64cea6904cf4dc7666b9747802f3b50d491",
+    "DUPLICATION.md": "516b3f5fe7f8c6c5817efafab22011ab63fdd6232af9702d4b04d6461d6e6397",
+    "FEATURES.md": "d393241d28d08ce0433d31b46f1eea44b377290083f5e1e3f384fe3dc6f68489",
+    "LICENSE": "a2ae469f92ac7fd70592f338c7c43657c7e9510be802cfb3db880fff11df3807",
+    "MANIFEST.sha256.json.baseline": "8e6d5bb967a9e93c83d1b406ee350146e33ebc78c3292f2ee64bde7e6b210737",
+    "README.mbt.md": "821df68df33d8d124c00f617d6fda43dd80e5d4fe6160b54a0cd744646d3245a",
+    "README.md": "dae4e66aaf9b3ec7b9e824117542bb48d5f5d81591c7b5134b51bddb7ece6f1d",
+    "ROADMAP.md": "513813b17abf4daf27b4f9ecc500c24491e05ebd340a3a6cf08a64ac493de391",
+    "TESTING.md": "ce0e89e4b9f6c05dd85c6a56cd24cdc5680f249e2e2a4904d9c329e88d4a307f",
+    "accessors.mbt": "b5b4ee7e9154aad1c2fc43bb2c51f9f622056ff119ba94b1c55e3cfbb3fa172b",
+    "cmd/main/main.mbt": "24f2645d844804ee1241fd560f5fe895d55d0ee59010b00f8c121b9f70bdbc19",
+    "cmd/main/moon.pkg": "943ab64eded434a3d516e50e98dec859f7815536ed2f4d9265837e266e59b667",
+    "cmd/main/pkg.generated.mbti": "e1b35d99c6ff7a6f9f6bc1fbc0e785be06ee9d96b117867741f0e54465766d7e",
+    "cmd/web/inspect.mbt": "0245f57580d918bd40d7aba1a039b532c6ea29277221e019df7784d279429b8c",
+    "cmd/web/main.mbt": "90bbc8c9b43abb8be74aaaa0cd561e9858613d1f17d60556e2108400b62c8f41",
+    "cmd/web/moon.pkg": "c5baa999f1dd8c612a0754b0ceb85fac2629e70e3ca99d23f77f7e7a78215552",
+    "collection_reference_test.mbt": "bf099a46b21de5188967512b9708010d1827b30b062b79d75f0a50edea2bbf81",
+    "config.mbt": "1f8d8ea0c4646bf16f209fa12ccb0b3eb2b602a288b4450735382d04db897e79",
+    "configuration_test.mbt": "399842f9283153ffa5b840351aa32e20f685df6d42d1358db8b2d787cceed36b",
+    "core_test.mbt": "e196afcb6febabb2211a8d0666928f89dbbc9921f4824fc94a8a796cd05ba188",
+    "lexer.mbt": "f02a3f071dc1a8a8e68d7e95c3b3c816acfbc70a4aa55cf35707f5aac1a9d786",
+    "moon.mod": "93605bf9c128f41244165ceba8ae5db567b62e076c728d9cc879f2990865e554",
+    "moon.pkg": "47ae82639a3ee30e82b00254cd8b7a12f39ba4f2d798cd84cade63220b449d5c",
+    "numbers.mbt": "0286ce67528f76e85b715bda1a0afac5298f860917dfb5ebb0ef403a6504679d",
+    "object_order.mbt": "42c2914f915e019a8c1cc291758a441dfa3208e0465e87177fa284bc375a392d",
+    "pkg.generated.mbti": "0c6876429016f4baae620147fc3f430bcd266f6adfb208c661d92e726262b7d5",
+    "resolver.mbt": "67e6fbc44766e0e2a704ccd7f8fb5baad59e1cca9c6f22f37aa120a4c9fbf113",
+    "sample.txt": "782f7385849b19280c03bac21b355f54d67273eed7179ac3295c14b55dbfab93",
+    "start-review.ps1": "d505b81c37f229e6ea8fd35384cd3e08006befc219b6e0768565210cfd2bfe66",
+    "tools/HoconOracle.java": "ed4a03ce93b7951a8b6853d499cd511c159c04383c9bb9792ccb3964d39554b5",
+    "tools/HoconReference.java": "c19e62ab9d5ea29b1917564651319634d659c82f9f67af2bbee1e39604d87bc7",
+    "tools/benchmark-collections.mjs": "f2da03ec622a9a1eadd8f639f11638fef7f63125a814de27c88f56436a44aa84",
+    "tools/benchmark.mjs": "53ac611536ba7cb3732017d22976ff8f38dbd9e7aa579c2469eab75b0cdc7216",
+    "tools/check-collection-generation.py": "ac6f68893d1207741c7f1f8e5aedf227403d820c2d074f6be6bf859357c5c428",
+    "tools/check-collection-proof.py": "62e05030fb57a09b8be13b6871c99b8179caf517abe07a458ce8477aca546636",
+    "tools/cli.mjs": "4bfbecaa7fdc70ed4006802cadd0cda8b048856639be2ee9b22898ce3fa94dea",
+    "tools/config.mjs": "ac41259a5ba1c60bc49895a7d7c9d002a9c40f4ff55a59181336543841c8cefc",
+    "tools/evidence.mjs": "44dbf357815228150dc25be1a3d910a405f9ab53518dd54ff727d0a3ae063ea6",
+    "tools/generate-collection-tests.mjs": "d289577cfb4b39aaa6146ec907c72f614e7699eca8c70258f7da61b24c96d3e4",
+    "tools/invalid-input.txt": "64a49c61207045d9c43ad3088b224c85e210975887fed59fabdb625e5fb66801",
+    "tools/robustness.mjs": "24964a078897dccc448ba3d5db4c08f6446d38008424987bf26b4b6f042a21d6",
+    "tools/serve.py": "77361b08fc65d9c6a3d89bda03949d9e1a9754f76e8cc32b20ca11aa9bf1ff5e",
+    "tools/test-cli.mjs": "b1acaf8992e16d37e1527fd60beeea275ce0df574a9622ab3b44d86dcaf08b03",
+    "tools/test-collection-host.mjs": "0362f5257edfdad1552c1f3e87e288fe71ce4cd5a3d0c117e6f617c81d6f68e5",
+    "tools/test-collections.mjs": "8ce6ea9916a54f5e0ba83a6cbcab90349fff66d2f3b02eb8f952cb338b509f76",
+    "tools/test-config-reference.mjs": "7ddeba0046022a6d659418e5271b38f1d55efeb3c57a987a8445dcb88adf71ae",
+    "tools/test-demo.mjs": "02ec6337b9c72c299450db6f0d2b024fd4fd96193d17e5cd501c3a8e6eb87188",
+    "tools/test-file-reference.mjs": "eeed35f31f749e5ab391f65862b3741a67979f6f22dd29a7c55892badf04b998",
+    "tools/test-host.mjs": "37e71f25a46e7c24638bf20dc5fcddbded46a6f52a7862e948446771b8b106ad",
+    "tools/test-reference.mjs": "13fe50483a9fa2708bca2003c7ecd9f6adac4032b0c6a13ae1885923d84dd89f",
+    "typed_collections.mbt": "81d04d07adc4ac318565982cc475343b0cdc87e4d738e640947701f12f6bbb5c",
+    "typed_test.mbt": "bb4ae7dda24fab3040122820a0bdc079f6858efa36916d594a9ace7595b40016",
+    "usability.mbt": "342475b870b4f60f97806abd3bd30c44052423ad4ea042e1d0b2ef5f33e917aa",
+    "verify.ps1": "c38b97b1e690cdb298528b130d57041589dab1e61b577403b3c3b50dc0e52e8a",
+    "web/app.mjs": "12a0cf3565b6298e2e3760355ec5da3fed88870be604b7f6e1a2f57d7334578d",
+    "web/config.mjs": "2c6b5b3f4a6c5606ce87aade2155541ce22a74eef1a1a1c62385e69dc6756602",
+    "web/engine.mjs": "5366e7f8f9d98ea96d6e2af84c244b4bae2bae700c7fec9fd03ef0d8a4c0b7e1",
+    "web/index.html": "cdcbb5d9f2d455d4335bfd7fdcd30bac065fc0b90843d4fe616ef9726fc7aeb8"
+  },
+  "evidenceGitBlobSHA256": {
+    "evidence/benchmark.json": "ffb1d247f279a81fbdd15f57e136aff1679723df10e144c98428c2a86cf4eaf1",
+    "evidence/collection-generation.json": "cba2b27b8b028f5cb823bb5499e3dfe00cddfc4c8efc6c227bdcd6adbbb538ce",
+    "evidence/collection-host.json": "66e202ccefd9f1cb34eaa9d0974aee4173376d46d2d2d0250f65b062603d381f",
+    "evidence/collection-performance.json": "1fdf451786f7baab411276cc225e8b86ef384a536a4f04b314dac16d1823e46f",
+    "evidence/collection-reference-validation.json": "183617eca00303c17061de29f2a73d6ee9a6ab09273ecea825155157c6dd56a2",
+    "evidence/collection-reference-vectors.json": "042a52571088c66d1268d3b19eee205de1b451b84765a0fd8a396fd03ca2fbe3",
+    "evidence/collection-verify.log": "e4fd6d616d9c972bc0e6c530a60371dd07960dc2c6b2de14cdcb5d72cd4e085d",
+    "evidence/config-reference-validation.json": "a17482dfc126fdf90eb3fabcf8d45eb2fd85e44e349798b99e98a8357c4e1616",
+    "evidence/config-reference-vectors.json": "c3a9bfd59b39dc6f162a95fbd67f3df65bff10e4bc8d90fc7ced5c366b6d5f5b",
+    "evidence/config-upgrade.json": "243a0186e0881dc7c818d16f9018b070d07f116d7e592ba625bbfa392722f580",
+    "evidence/duplication.json": "cc8ed3b5b06515bd9aad9cfdd46a3f0182767eb4091862cd3cb2505ef04f641a",
+    "evidence/file-reference-validation.json": "9fbe1983fa145925d507640fca5ab6d2a84881e057460fc7c6f12d8f10d4a4fb",
+    "evidence/file-reference-vectors.json": "a644cf0d2672331c1f111dd81d5cdc8f0c660265addac3c5aa85a3022276c093",
+    "evidence/quality-review.json": "b2c33ae55ce0d45d661969a6de563aebc297acbf42027348aed7bdebf04c0c45",
+    "evidence/robustness.json": "12839d23b65911df4e385d1a4f1df5da7bc719ebfdcb490f56fe1d3b1adc9e3a",
+    "evidence/typed-focused-validation.json": "bf0e2ef8e9056fa57985b3f3925c981ad02d99deaa9e1c78829c43e2b2da188e",
+    "evidence/typed-reference-validation.json": "37ca9296b7030e720b2784333e71abd035581c06d5511ad33a26eda5505f3275",
+    "evidence/verification.json": "87b4279b73d88fa5e230474b93a9def1a9db9acd07692f8119803b443025477f"
+  }
+}

@@ -1,12 +1,13 @@
 {
-  "utc": "2026-09-18T15:02:30.243Z",
-  "mode": "live Lightbend Config",
-  "reference": "config-1.4.9.jar",
-  "jarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37",
-  "total": 714,
-  "passed": 714,
-  "failed": 0,
-  "sourceHashes": {
+  "passed": true,
+  "files": 44,
+  "checks": [
+    "independent test generation",
+    "format",
+    "API generation",
+    "JS build and engine copy"
+  ],
+  "sha256": {
     "accessors.mbt": "b5b4ee7e9154aad1c2fc43bb2c51f9f622056ff119ba94b1c55e3cfbb3fa172b",
     "cmd/main/main.mbt": "24f2645d844804ee1241fd560f5fe895d55d0ee59010b00f8c121b9f70bdbc19",
     "cmd/main/moon.pkg": "943ab64eded434a3d516e50e98dec859f7815536ed2f4d9265837e266e59b667",
@@ -25,15 +26,18 @@
     "object_order.mbt": "42c2914f915e019a8c1cc291758a441dfa3208e0465e87177fa284bc375a392d",
     "pkg.generated.mbti": "0c6876429016f4baae620147fc3f430bcd266f6adfb208c661d92e726262b7d5",
     "resolver.mbt": "67e6fbc44766e0e2a704ccd7f8fb5baad59e1cca9c6f22f37aa120a4c9fbf113",
-    "tools/HoconOracle.java": "ed4a03ce93b7951a8b6853d499cd511c159c04383c9bb9792ccb3964d39554b5",
-    "tools/HoconReference.java": "c19e62ab9d5ea29b1917564651319634d659c82f9f67af2bbee1e39604d87bc7",
     "tools/benchmark-collections.mjs": "f2da03ec622a9a1eadd8f639f11638fef7f63125a814de27c88f56436a44aa84",
     "tools/benchmark.mjs": "53ac611536ba7cb3732017d22976ff8f38dbd9e7aa579c2469eab75b0cdc7216",
+    "tools/check-collection-generation.py": "ac6f68893d1207741c7f1f8e5aedf227403d820c2d074f6be6bf859357c5c428",
+    "tools/check-collection-proof.py": "62e05030fb57a09b8be13b6871c99b8179caf517abe07a458ce8477aca546636",
     "tools/cli.mjs": "4bfbecaa7fdc70ed4006802cadd0cda8b048856639be2ee9b22898ce3fa94dea",
     "tools/config.mjs": "ac41259a5ba1c60bc49895a7d7c9d002a9c40f4ff55a59181336543841c8cefc",
     "tools/evidence.mjs": "44dbf357815228150dc25be1a3d910a405f9ab53518dd54ff727d0a3ae063ea6",
     "tools/generate-collection-tests.mjs": "d289577cfb4b39aaa6146ec907c72f614e7699eca8c70258f7da61b24c96d3e4",
+    "tools/HoconOracle.java": "ed4a03ce93b7951a8b6853d499cd511c159c04383c9bb9792ccb3964d39554b5",
+    "tools/HoconReference.java": "c19e62ab9d5ea29b1917564651319634d659c82f9f67af2bbee1e39604d87bc7",
     "tools/robustness.mjs": "24964a078897dccc448ba3d5db4c08f6446d38008424987bf26b4b6f042a21d6",
+    "tools/serve.py": "77361b08fc65d9c6a3d89bda03949d9e1a9754f76e8cc32b20ca11aa9bf1ff5e",
     "tools/test-cli.mjs": "b1acaf8992e16d37e1527fd60beeea275ce0df574a9622ab3b44d86dcaf08b03",
     "tools/test-collection-host.mjs": "0362f5257edfdad1552c1f3e87e288fe71ce4cd5a3d0c117e6f617c81d6f68e5",
     "tools/test-collections.mjs": "8ce6ea9916a54f5e0ba83a6cbcab90349fff66d2f3b02eb8f952cb338b509f76",
@@ -45,10 +49,8 @@
     "typed_collections.mbt": "81d04d07adc4ac318565982cc475343b0cdc87e4d738e640947701f12f6bbb5c",
     "typed_test.mbt": "bb4ae7dda24fab3040122820a0bdc079f6858efa36916d594a9ace7595b40016",
     "usability.mbt": "342475b870b4f60f97806abd3bd30c44052423ad4ea042e1d0b2ef5f33e917aa",
-    "verify.ps1": "c38b97b1e690cdb298528b130d57041589dab1e61b577403b3c3b50dc0e52e8a",
     "web/app.mjs": "12a0cf3565b6298e2e3760355ec5da3fed88870be604b7f6e1a2f57d7334578d",
     "web/config.mjs": "3ef877cf5af97870f60993d68de78f8c2367e3e6af4188a4a186a582e1edea5f",
     "web/engine.mjs": "5366e7f8f9d98ea96d6e2af84c244b4bae2bae700c7fec9fd03ef0d8a4c0b7e1"
-  },
-  "failures": []
+  }
 }

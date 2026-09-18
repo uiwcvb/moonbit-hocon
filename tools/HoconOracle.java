@@ -39,6 +39,16 @@ class HoconOracle {
       case "duration" -> Long.toString(config.getDuration(path).toNanos());
       case "bytes" -> Long.toString(config.getBytes(path));
       case "memory" -> config.getMemorySize(path).toBytesBigInteger().toString();
+      case "string-list" -> config.getStringList(path);
+      case "boolean-list" -> config.getBooleanList(path);
+      case "int-list" -> config.getIntList(path);
+      case "long-list" -> config.getLongList(path).stream().map(Object::toString).toList();
+      case "double-list" -> config.getDoubleList(path).stream().map(d -> Double.isFinite(d)?(Object)d:Double.toString(d)).toList();
+      case "duration-list" -> config.getDurationList(path).stream().map(d -> Long.toString(d.toNanos())).toList();
+      case "bytes-list" -> config.getBytesList(path).stream().map(Object::toString).toList();
+      case "memory-list" -> config.getMemorySizeList(path).stream().map(d -> d.toBytesBigInteger().toString()).toList();
+      case "config" -> config.getConfig(path).root().unwrapped();
+      case "config-list" -> config.getConfigList(path).stream().map(c -> c.root().unwrapped()).toList();
       case "list" -> config.getAnyRefList(path);
       case "has" -> config.hasPath(path);
       case "null" -> config.getIsNull(path);
@@ -66,6 +76,16 @@ class HoconOracle {
     var output=new PrintWriter(new OutputStreamWriter(System.out,StandardCharsets.UTF_8),true);
     try(var input=new BufferedReader(new InputStreamReader(System.in,StandardCharsets.UTF_8))){
       for(String line;(line=input.readLine())!=null;){
+        if(args.length==1&&args[0].equals("--benchmark")){
+          String result="";double[] samples=new double[15];
+          for(int i=-10;i<samples.length;i++){
+            long start=System.nanoTime();
+            for(int repeat=0;repeat<3;repeat++)result=ConfigValueFactory.fromMap(handle(ConfigFactory.parseString(line,ConfigParseOptions.defaults().setSyntax(ConfigSyntax.JSON)))).render(RENDER);
+            if(i>=0)samples[i]=(System.nanoTime()-start)/3000000.0;
+          }
+          var record=new LinkedHashMap<String,Object>();record.put("samplesMs",Arrays.stream(samples).boxed().toList());record.put("result",result);record.put("java",System.getProperty("java.version"));
+          output.println(ConfigValueFactory.fromMap(record).render(RENDER));continue;
+        }
         Map<String,Object> result;
         try{result=handle(ConfigFactory.parseString(line,ConfigParseOptions.defaults().setSyntax(ConfigSyntax.JSON)));}
         catch(ConfigException|IllegalArgumentException|ArithmeticException e){result=new LinkedHashMap<>();result.put("accepted",false);result.put("error",e.getClass().getSimpleName());}

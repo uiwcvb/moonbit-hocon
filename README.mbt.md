@@ -28,4 +28,4 @@ test "typed configuration access reports missing and invalid values" {
 }
 ```
 
-0.4 已增加历史自引用、来源加载、回退/环境和单位访问器；尚未完整兼容 Lightbend Config，差距见 FEATURES.md。
+0.5 已增加八种类型化列表和 config/config-list；历史自引用、来源加载、回退/环境和单位访问器保持可用。尚未完整兼容 Lightbend Config，差距见 FEATURES.md。

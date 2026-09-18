@@ -5,7 +5,7 @@ try {
  for(let i=0;i<args.length;i++){
   const a=args[i];
   if(a==='--help'){
-   process.stdout.write('Usage: node tools/cli.mjs [--input TEXT | --file PATH] [--json] [--resolved-json]\n  --fallback FILE   Add a lower-priority configuration file (repeatable)\n  --env             Enable process environment substitutions\n  --classpath DIR   Add a directory of classpath resources (repeatable)\n  --get PATH        Read one resolved path\n  --type TYPE       value|string|boolean|int|long|double|duration|bytes|memory|list|has|null\nWithout --input/--file, reads UTF-8 stdin. Duration is nanoseconds. Long/bytes/memory use exact decimal strings.\nExit: 0 success, 2 invalid configuration or getter, 1 host/argument error.\n');process.exit(0);
+   process.stdout.write('Usage: node tools/cli.mjs [--input TEXT | --file PATH] [--json] [--resolved-json]\n  --fallback FILE   Add a lower-priority configuration file (repeatable)\n  --env             Enable process environment substitutions\n  --classpath DIR   Add a directory of classpath resources (repeatable)\n  --get PATH        Read one resolved path\n  --type TYPE       value|string|boolean|int|long|double|duration|bytes|memory|list|has|null\n  Collection types: string-list|boolean-list|int-list|long-list|double-list|duration-list|bytes-list|memory-list|config|config-list\nWithout --input/--file, reads UTF-8 stdin. Duration is nanoseconds. Long/bytes/memory use exact decimal strings.\nExit: 0 success, 2 invalid configuration or getter, 1 host/argument error.\n');process.exit(0);
   }else if(a==='--json')json=true;
   else if(a==='--resolved-json')resolved=true;
   else if(a==='--env')options.environment={...process.env};
@@ -19,7 +19,7 @@ try {
   }else throw new Error('Unknown argument: '+a);
  }
  if(type!==undefined&&query===undefined)throw new Error('--type requires --get');
- if(type!==undefined&&!['value','string','boolean','int','long','double','duration','bytes','memory','list','has','null'].includes(type))throw new Error('Unknown getter type: '+type);
+ if(type!==undefined&&!['value','string','boolean','int','long','double','duration','bytes','memory','list','has','null','string-list','boolean-list','int-list','long-list','double-list','duration-list','bytes-list','memory-list','config','config-list'].includes(type))throw new Error('Unknown getter type: '+type);
  if(input===undefined&&file===undefined){let size=0;const chunks=[];for await(const chunk of process.stdin){size+=chunk.length;if(size>400000)throw new Error('Input exceeds file limit');chunks.push(chunk);}input=new TextDecoder('utf-8',{fatal:true,ignoreBOM:true}).decode(Buffer.concat(chunks));}
  if(query!==undefined){options.path=query;options.getter=type??'value';}else if(!resolved)options.getter='debug';
  let output,ok=true;

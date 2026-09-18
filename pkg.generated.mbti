@@ -18,13 +18,27 @@ pub fn get_as_string(Value, String) -> String raise ParseError
 
 pub fn get_bool(Value, String) -> Bool raise ParseError
 
+pub fn get_bool_list(Value, String) -> Array[Bool] raise ParseError
+
 pub fn get_bytes(Value, String) -> Int64 raise ParseError
+
+pub fn get_bytes_list(Value, String) -> Array[Int64] raise ParseError
+
+pub fn get_config(Value, String) -> Value raise ParseError
+
+pub fn get_config_list(Value, String) -> Array[Value] raise ParseError
 
 pub fn get_double(Value, String) -> Double raise ParseError
 
+pub fn get_double_list(Value, String) -> Array[Double] raise ParseError
+
 pub fn get_duration(Value, String) -> Int64 raise ParseError
 
+pub fn get_duration_list(Value, String) -> Array[Int64] raise ParseError
+
 pub fn get_int(Value, String) -> Int raise ParseError
+
+pub fn get_int_list(Value, String) -> Array[Int] raise ParseError
 
 pub fn get_is_null(Value, String) -> Bool raise ParseError
 
@@ -32,11 +46,17 @@ pub fn get_list(Value, String) -> Array[Value] raise ParseError
 
 pub fn get_long(Value, String) -> Int64 raise ParseError
 
+pub fn get_long_list(Value, String) -> Array[Int64] raise ParseError
+
 pub fn get_memory_size(Value, String) -> String raise ParseError
+
+pub fn get_memory_size_list(Value, String) -> Array[String] raise ParseError
 
 pub fn get_path(Value, Array[String]) -> Value?
 
 pub fn get_string(Value, String) -> String raise ParseError
+
+pub fn get_string_list(Value, String) -> Array[String] raise ParseError
 
 pub fn has_path(Value, String, include_null? : Bool) -> Bool
 

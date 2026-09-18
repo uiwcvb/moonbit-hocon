@@ -80,12 +80,26 @@ fn merge(a : Value, b : Value) -> Value {
   }
   match (a, b) {
     (Object(x), Object(y)) => {
-      let out = x.copy()
+      let combined = x.copy()
       for k, v in y {
-        out[k] = match out.get(k) {
+        combined[k] = match combined.get(k) {
           Some(old) => merge(old, v)
           None => v
         }
+      }
+      if !has_index_aliases(combined) {
+        return Object(combined)
+      }
+      let keys = Map([])
+      for k in object_iteration_keys(y) {
+        keys[k] = Null
+      }
+      for k in object_iteration_keys(x) {
+        keys[k] = Null
+      }
+      let out = Map([])
+      for k in object_iteration_keys(keys) {
+        out[k] = combined[k]
       }
       Object(out)
     }

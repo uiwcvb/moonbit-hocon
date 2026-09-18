@@ -124,6 +124,36 @@ fn inspect_request(input : String, callback : ((String) -> String)?) -> String {
           "duration" => @lib.get_duration(config, path).to_string().to_json()
           "bytes" => @lib.get_bytes(config, path).to_string().to_json()
           "memory" => @lib.get_memory_size(config, path).to_json()
+          "string-list" => @lib.get_string_list(config, path).to_json()
+          "boolean-list" => @lib.get_bool_list(config, path).to_json()
+          "int-list" => @lib.get_int_list(config, path).to_json()
+          "long-list" =>
+            @lib.get_long_list(config, path).map(n => n.to_string()).to_json()
+          "double-list" =>
+            @lib.get_double_list(config, path)
+            .map(n => {
+              if n.is_nan() {
+                "NaN".to_json()
+              } else if n.is_inf() {
+                (if n > 0 { "Infinity" } else { "-Infinity" }).to_json()
+              } else {
+                n.to_json()
+              }
+            })
+            .to_json()
+          "duration-list" =>
+            @lib.get_duration_list(config, path)
+            .map(n => n.to_string())
+            .to_json()
+          "bytes-list" =>
+            @lib.get_bytes_list(config, path).map(n => n.to_string()).to_json()
+          "memory-list" => @lib.get_memory_size_list(config, path).to_json()
+          "config" =>
+            @json.parse(@lib.get_config(config, path).to_json_string())
+          "config-list" =>
+            @json.parse(
+              @lib.List(@lib.get_config_list(config, path)).to_json_string(),
+            )
           "list" =>
             @json.parse(
               @lib.List(@lib.get_as_list(config, path)).to_json_string(),

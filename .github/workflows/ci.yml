@@ -28,6 +28,8 @@ jobs:
       - run: node tools/test-host.mjs
       - run: node tools/test-config-reference.mjs --golden
       - run: node tools/test-file-reference.mjs --golden
+      - run: node tools/test-collections.mjs --golden
+      - run: node tools/test-collection-host.mjs
       - run: node tools/robustness.mjs
       - run: node tools/benchmark.mjs
       - uses: actions/upload-artifact@v4

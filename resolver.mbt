@@ -233,8 +233,13 @@ fn evaluate(
         Some(v)
       } else {
         let out = Map([])
-        let keys = fields.keys().collect()
-        keys.sort()
+        let keys = if has_index_aliases(fields) {
+          object_iteration_keys(fields)
+        } else {
+          let keys = fields.keys().collect()
+          keys.sort()
+          keys
+        }
         for key in keys {
           if evaluate(
               r,

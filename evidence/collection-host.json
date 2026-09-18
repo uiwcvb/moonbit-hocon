@@ -1,11 +1,9 @@
 {
-  "utc": "2026-09-18T15:02:30.243Z",
-  "mode": "live Lightbend Config",
-  "reference": "config-1.4.9.jar",
-  "jarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37",
-  "total": 714,
-  "passed": 714,
+  "utc": "2026-09-18T15:02:43.480Z",
+  "checks": 72,
+  "passed": 72,
   "failed": 0,
+  "scope": "Actual Node load and CLI input/stdin/relative-include files; ten getters, quoted paths, values and error exit codes.",
   "sourceHashes": {
     "accessors.mbt": "b5b4ee7e9154aad1c2fc43bb2c51f9f622056ff119ba94b1c55e3cfbb3fa172b",
     "cmd/main/main.mbt": "24f2645d844804ee1241fd560f5fe895d55d0ee59010b00f8c121b9f70bdbc19",
@@ -49,6 +47,5 @@
     "web/app.mjs": "12a0cf3565b6298e2e3760355ec5da3fed88870be604b7f6e1a2f57d7334578d",
     "web/config.mjs": "3ef877cf5af97870f60993d68de78f8c2367e3e6af4188a4a186a582e1edea5f",
     "web/engine.mjs": "5366e7f8f9d98ea96d6e2af84c244b4bae2bae700c7fec9fd03ef0d8a4c0b7e1"
-  },
-  "failures": []
+  }
 }

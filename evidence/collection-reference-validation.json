@@ -1,10 +1,13 @@
 {
-  "utc": "2026-09-18T15:02:30.243Z",
-  "mode": "live Lightbend Config",
-  "reference": "config-1.4.9.jar",
-  "jarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37",
-  "total": 714,
-  "passed": 714,
+  "utc": "2026-09-18T15:02:33.738Z",
+  "mode": "live pinned official library",
+  "reference": {
+    "library": "Lightbend Config 1.4.9",
+    "jarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37",
+    "unmodified": true
+  },
+  "total": 1300,
+  "passed": 1300,
   "failed": 0,
   "sourceHashes": {
     "accessors.mbt": "b5b4ee7e9154aad1c2fc43bb2c51f9f622056ff119ba94b1c55e3cfbb3fa172b",
@@ -50,5 +53,7 @@
     "web/config.mjs": "3ef877cf5af97870f60993d68de78f8c2367e3e6af4188a4a186a582e1edea5f",
     "web/engine.mjs": "5366e7f8f9d98ea96d6e2af84c244b4bae2bae700c7fec9fd03ef0d8a4c0b7e1"
   },
+  "engineSha256": "5366e7f8f9d98ea96d6e2af84c244b4bae2bae700c7fec9fd03ef0d8a4c0b7e1",
+  "scope": "Ten typed-list/config getters; exact JSON values and acceptance, not error wording. Config/long/unit values follow the documented JSON bridge representation.",
   "failures": []
 }
