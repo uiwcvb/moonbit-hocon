@@ -40,7 +40,22 @@ fn java_integer_value(text : String) -> Int64? {
   if text.is_empty() || text.length() > 10000 {
     return None
   }
-  if integer_spelling(text) {
+  let start = if text[0] == 43 || text[0] == 45 { 1 } else { 0 }
+  if start == text.length() {
+    return None
+  }
+  let mut ascii = true
+  for i = start; i < text.length(); i = i + 1 {
+    let c = text[i]
+    if c >= 128 {
+      ascii = false
+      break
+    }
+    if c < 48 || c > 57 {
+      return None
+    }
+  }
+  if ascii {
     return Some(@string.parse_int64(text)) catch { _ => None }
   }
   let out = StringBuilder()

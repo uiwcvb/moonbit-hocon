@@ -71,29 +71,37 @@ fn double_value(text : String) -> Double raise ParseError {
   if text.length() > 10000 {
     raise Invalid("number length limit")
   }
-  let cs = text.to_array()
   let mut start = 0
-  let mut end = cs.length()
-  while start < end && cs[start].to_int() <= 32 {
+  let mut end = text.length()
+  while start < end && text[start] <= 32 {
     start += 1
   }
-  while end > start && cs[end - 1].to_int() <= 32 {
+  while end > start && text[end - 1] <= 32 {
     end -= 1
   }
-  let negative = start < end && cs[start] == '-'
-  if start < end && (cs[start] == '+' || cs[start] == '-') {
+  let negative = start < end && text[start] == 45
+  if start < end && (text[start] == 43 || text[start] == 45) {
     start += 1
   }
-  let unsigned = String::from_array(cs[start:end])
-  if unsigned == "NaN" || unsigned == "Infinity" {
-    return @string.parse_double((if negative { "-" } else { "" }) + unsigned) catch {
+  let unsigned = text.view(start_offset=start, end_offset=end)
+  if unsigned == "NaN" {
+    return @string.parse_double(if negative { "-NaN" } else { "NaN" }) catch {
       _ => raise Invalid("invalid number")
     }
   }
-  if end > start && ['f', 'F', 'd', 'D'].contains(cs[end - 1]) {
+  if unsigned == "Infinity" {
+    return if negative { -1.0 / 0.0 } else { 1.0 / 0.0 }
+  }
+  if end > start &&
+    (
+      text[end - 1] == 102 ||
+      text[end - 1] == 70 ||
+      text[end - 1] == 100 ||
+      text[end - 1] == 68
+    ) {
     end -= 1
   }
-  let unsigned = String::from_array(cs[start:end])
+  let unsigned = text.view(start_offset=start, end_offset=end).to_owned()
   let value = if unsigned.has_prefix("0x") || unsigned.has_prefix("0X") {
     hex_double(unsigned)
   } else {
@@ -215,13 +223,16 @@ fn quantity(text : String) -> (String, String) raise ParseError {
 
 ///|
 fn integer_spelling(s : String) -> Bool {
-  let cs = s.to_array()
-  let start = if !cs.is_empty() && (cs[0] == '-' || cs[0] == '+') {
-    1
-  } else {
-    0
+  let start = if !s.is_empty() && (s[0] == 45 || s[0] == 43) { 1 } else { 0 }
+  if s.length() <= start {
+    return false
   }
-  cs.length() > start && cs[start:].iter().all(c => c >= '0' && c <= '9')
+  for i = start; i < s.length(); i = i + 1 {
+    if s[i] < 48 || s[i] > 57 {
+      return false
+    }
+  }
+  true
 }
 
 ///|

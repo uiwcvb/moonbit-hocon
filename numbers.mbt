@@ -1,19 +1,19 @@
 ///|
 fn numeric_text(s : String) -> Bool {
-  let cs = s.to_array()
+  let cs = s
   let mut i = 0
-  if !cs.is_empty() && cs[0] == '-' {
+  if !cs.is_empty() && cs[0] == 45 {
     i += 1
   }
   let start = i
-  while i < cs.length() && cs[i] >= '0' && cs[i] <= '9' {
+  while i < cs.length() && cs[i] >= 48 && cs[i] <= 57 {
     i += 1
   }
   let before = i - start
-  if i < cs.length() && cs[i] == '.' {
+  if i < cs.length() && cs[i] == 46 {
     i += 1
     let start = i
-    while i < cs.length() && cs[i] >= '0' && cs[i] <= '9' {
+    while i < cs.length() && cs[i] >= 48 && cs[i] <= 57 {
       i += 1
     }
     if i == start && before == 0 {
@@ -22,13 +22,13 @@ fn numeric_text(s : String) -> Bool {
   } else if before == 0 {
     return false
   }
-  if i < cs.length() && (cs[i] == 'e' || cs[i] == 'E') {
+  if i < cs.length() && (cs[i] == 101 || cs[i] == 69) {
     i += 1
-    if i < cs.length() && (cs[i] == '+' || cs[i] == '-') {
+    if i < cs.length() && (cs[i] == 43 || cs[i] == 45) {
       i += 1
     }
     let start = i
-    while i < cs.length() && cs[i] >= '0' && cs[i] <= '9' {
+    while i < cs.length() && cs[i] >= 48 && cs[i] <= 57 {
       i += 1
     }
     if i == start {

@@ -1,5 +1,12 @@
 # Changes
 
+## 0.18.0
+
+- Validate decimal token spelling, trim and classify numeric strings by direct UTF-16 indexing, avoiding repeated character arrays; reject invalid ASCII integer candidates before entering Unicode digit conversion, while preserving the Unicode fallback.
+- Bound long tiny decimal coefficients by 32-digit then 768-digit prefixes. Return only when both exact rounded endpoints agree; ambiguous inputs retain full conversion. Remove trailing prefix zeros before exact rational work.
+- Extend the independent primitive parser matrix to 27,851 strings (346 additions, 218 groups), including long nonzero tails and midpoint boundary extensions. Keep all earlier public/native and backend checks.
+- Compare 29 workloads against fixed 0.17 and native Config, including long midpoint rendering and retained quoted Double-list parsing. Full parity remains open.
+
 ## 0.17.0
 
 - Parse tiny decimal coefficients with exact rational arithmetic and one quotient/remainder rounding, preserving subnormal/normal transitions and ties to even. Ordinary values and coefficients above 768 significant digits retain the runtime conversion.

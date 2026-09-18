@@ -222,3 +222,21 @@ Final 0.17 verifier: JS/Wasm-GC each 16,634 passed, including 215 new parser gro
 Final five-process results: tiny-value rendering and retained tiny-Double-list reads take 0.022187 and 0.025509 times fixed 0.16 (97.8% and 97.4% less time); current/native ratios are 21.277328 and 4.455193. Ordinary Double-list reads/current-0.16 is 1.065590 (measured regression 6.6%), current/native 25.331754; long-coefficient fallback rendering/current-0.16 is 0.969596, current/native 607.936508. Maximum process spread is 2.217391, unstableMeasurements=true. All variant/process outputs match; full performance parity remains false.
 
 `evidence/double-parse-upgrade.json` supersedes the 0.16 manifest. The fresh saved-reference replay reports are consolidated in `double-parse-reference-replays.json`; older live capture reports retain their own fingerprints.
+
+## 0.18 direct numeric scans and long coefficients
+
+The existing primitive parsing matrix now contains 27,851 distinct strings (346 additions to 0.17), in 218 groups. New inputs include long random nonzero suffixes and more exact-midpoint/neighbor extensions. Existing parser and formatter captures are refreshed at final source; native Config accessor/render comparisons and all mandatory saved-native/host checks remain required.
+
+Numeric preprocessing now indexes UTF-16 directly for ASCII trim/sign/suffix checks. It keeps the original NaN conversion and error behavior. ASCII integer candidates reject punctuation immediately; the first non-ASCII character switches to the existing full Unicode digit converter. This preserves the pinned JDK BMP digit rules.
+
+For a long tiny decimal, a kept prefix bounds the exact value between consecutive prefix integers at an adjusted decimal power. Monotonic correctly rounded conversion means identical rounded endpoints prove the full suffix cannot change the result. Try 32 then 768 digits; ambiguous long intervals retain the runtime converter. Prefix trailing zeros are removed before exact rational computation. This does not assume random tails or discard a rounding tie.
+
+`benchmark-numeric-scan.mjs` compares fixed 0.17, current and native Config in five processes over all prior 27 workloads plus long midpoint rendering and quoted long-Double-list reading. The midpoint values are exact 2^-1075 and decimal neighbors 10^-2099 away, exercising conclusive and ambiguous prefix boundaries. Getter/render work remains inside timing and output comparison occurs after timing; no result cache is introduced. Full performance, startup, peak-memory and cross-platform parity remain open.
+
+Development timing before the decimal-token scan change is retained in `numeric-scan-performance-initial.json`; final timing is separately fingerprinted. Decimal token recognition also scans UTF-16 directly, preserving its ASCII-only sign/dot/exponent grammar.
+
+Final 0.18 verifier: JS/Wasm-GC each 16,637 passed; 27,851 primitive parser inputs in 218 groups and all existing mandatory checks passed. Final-source live Config comparisons: accessors 3,562/3,562 and rendering 2,140/2,140. 192 source/generated files were byte-stable. Fourteen saved-reference suites replayed 30,550 runs; historical overlaps remain and these are not claimed as new independent live programs.
+
+Final five-process results: ordinary Double-list reads and long-tiny rendering take 0.786934 and 0.037540 times fixed 0.17 (21.3% and 96.2% less time), with current/native ratios 20.349515 and 18.625000. Long-midpoint rendering and long quoted-Double-list reads/current-0.17 are 0.321857 and 0.320848; current/native 501.844720 and 7.978477. Legacy parse-64/current-0.17 is 1.025773. Maximum process spread is 2.465961, unstableMeasurements=true. All variant/process outputs match; full performance parity remains false.
+
+`evidence/numeric-scan-upgrade.json` supersedes the 0.17 manifest; final saved-reference replays are consolidated in `numeric-scan-reference-replays.json`. Prior manifests and separately named development performance remain historical evidence.

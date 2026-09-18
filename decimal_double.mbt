@@ -68,26 +68,65 @@ fn decimal_double(text : String) -> Double raise ParseError {
     return 1.0 / 0.0
   }
   let significant_count = digits - leading - trailing
-  if magnitude <= -308 && significant_count <= 768 {
-    let coefficient = StringBuilder()
-    let mut position = 0
-    for j = 0; j < mantissa_end; j = j + 1 {
-      if text[j] != 46 {
-        if position >= leading && position < digits - trailing {
-          coefficient.write_char(text[j].to_int().unsafe_to_char())
-        }
-        position += 1
+  if magnitude <= -308 {
+    let power = exponent - fraction + trailing
+    // A discarded suffix lies between consecutive prefix integers. Equal
+    // rounded endpoints prove the full input has that same binary64 result.
+    // Increase the prefix if it crosses a rounding boundary; ambiguous long
+    // inputs keep the runtime's exact conversion.
+    for keep in [32, 768] {
+      let count = keep.min(significant_count)
+      let prefix = decimal_coefficient(text, mantissa_end, leading, count)
+      let prefix_power = power + significant_count - count
+      let lower = tiny_decimal_text(prefix, prefix_power)
+      if count == significant_count {
+        return lower
+      }
+      let upper = tiny_decimal_ratio(
+        @bigint.BigInt::from_string(prefix) + @bigint.BigInt::from_int(1),
+        prefix_power,
+      )
+      if lower == upper {
+        return lower
       }
     }
-    return tiny_decimal_ratio(
-      @bigint.BigInt::from_string(coefficient.to_string()),
-      exponent - fraction + trailing,
-    )
   }
   @string.parse_double(text) catch {
     Failure::Failure("value out of range") => 1.0 / 0.0
     _ => raise Invalid("invalid decimal number")
   }
+}
+
+///|
+fn decimal_coefficient(
+  text : String,
+  mantissa_end : Int,
+  leading : Int,
+  count : Int,
+) -> String {
+  let coefficient = StringBuilder()
+  let mut position = 0
+  for j = 0; j < mantissa_end && position < leading + count; j = j + 1 {
+    if text[j] != 46 {
+      if position >= leading {
+        coefficient.write_char(text[j].to_int().unsafe_to_char())
+      }
+      position += 1
+    }
+  }
+  coefficient.to_string()
+}
+
+///|
+fn tiny_decimal_text(coefficient : String, power : Int) -> Double {
+  let mut end = coefficient.length()
+  while end > 1 && coefficient[end - 1] == 48 {
+    end -= 1
+  }
+  tiny_decimal_ratio(
+    @bigint.BigInt::from_string(coefficient.view(end_offset=end).to_owned()),
+    power + coefficient.length() - end,
+  )
 }
 
 ///|
