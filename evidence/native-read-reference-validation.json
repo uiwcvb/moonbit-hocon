@@ -1,9 +1,14 @@
 {
-  "utc": "2026-09-18T20:16:42.157Z",
-  "programs": 842,
-  "passed": 842,
+  "utc": "2026-09-18T20:17:33.346Z",
+  "mode": "live official library",
+  "reference": {
+    "library": "unmodified Lightbend Config 1.4.9",
+    "jarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37"
+  },
+  "total": 7063,
+  "passed": 7063,
   "failed": 0,
-  "scope": "Four concurrent worker factories retain unresolved AST/exact number spelling and produce the same persistent branch outcomes as saved independent native expectations.",
+  "scope": "7033 existing collection/accessor/temporal requests rerun through actual Config.get with live native results, plus 30 root JSON numeric cases including negative zero and underflow. Overlaps earlier native suites; not 7063 newly unique cases. Native lines preserve negative zero.",
   "sourceHashes": {
     "accessor_reference_test.mbt": "ef0cea69ffc47506f3c8a54352b8bda45617aca06af288d99676092a662fa3e0",
     "accessors.mbt": "62da8f7f1bcb85e426dfd11827f50068db2de598c5b74b2fd14d0ae7b5d7cc09",

@@ -119,7 +119,11 @@ fn valid_unicode(s : String) -> Bool {
 }
 
 ///|
-fn lex(source : String, origin : String) -> Cursor raise ParseError {
+fn lex(
+  source : String,
+  origin : String,
+  comments? : Bool = true,
+) -> Cursor raise ParseError {
   if source.length() > 100000 || !valid_unicode(source) {
     raise Invalid("excessive or ill-formed source")
   }
@@ -148,6 +152,9 @@ fn lex(source : String, origin : String) -> Cursor raise ParseError {
       continue
     }
     if c == '#' || (c == '/' && i + 1 < cs.length() && cs[i + 1] == '/') {
+      if !comments {
+        raise Located("comments are not allowed in paths", position)
+      }
       while i < cs.length() && cs[i] != '\n' {
         i += 1
         column += 1

@@ -68,6 +68,12 @@ try {
   if ($LASTEXITCODE -ne 0) {throw 'persistent file/HTTP/ownership failed'}
   node tools/test-persistent-memory.mjs
   if ($LASTEXITCODE -ne 0) {throw 'persistent bounded collection failed'}
+  node tools/test-path-reference.mjs --golden
+  if ($LASTEXITCODE -ne 0) {throw 'API path reference replay failed'}
+  node tools/test-native-read-reference.mjs --golden
+  if ($LASTEXITCODE -ne 0) {throw 'direct result native reference replay failed'}
+  node tools/test-native-read-host.mjs
+  if ($LASTEXITCODE -ne 0) {throw 'native result transport failed'}
   node tools/robustness.mjs
   if ($LASTEXITCODE -ne 0) {throw 'robustness failed'}
   node tools/benchmark.mjs

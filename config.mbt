@@ -204,12 +204,76 @@ fn path(
 ///|
 /// Parse HOCON path expressions, including quoted periods and empty components.
 pub fn split_path(text : String) -> Array[String] raise ParseError {
-  let c = lex(text, "<path>")
+  if plain_ascii_path(text) {
+    return text.split(".").map(part => part.to_owned()).collect()
+  }
+  if trimmed_api_path(text) is Some(parts) {
+    return parts
+  }
+  let c = lex(text, "<path>", comments=false)
   let result = path(c, substitution=true)
   if !c.done() {
     raise Located("trailing path input", c.location())
   }
   result
+}
+
+///|
+// Avoid token/source-position allocation for ordinary dotted ASCII paths.
+// Every other spelling goes through the existing lexer, including malformed
+// separators, quoting, comments, Unicode, resource limits and their diagnostics.
+fn plain_ascii_path(text : String, outer_trimmed? : Bool = false) -> Bool {
+  if text.is_empty() || text.length() > 100000 {
+    return false
+  }
+  let mut component = false
+  let mut depth = 1
+  for unit in text.code_units() {
+    let n = unit.to_int()
+    if n == 46 {
+      if !component || depth == 32 {
+        return false
+      }
+      component = false
+      depth += 1
+    } else if (n >= 65 && n <= 90) ||
+      (n >= 97 && n <= 122) ||
+      (!outer_trimmed && n >= 48 && n <= 57) ||
+      (n == 45 && (!outer_trimmed || component)) ||
+      n == 95 {
+      component = true
+    } else {
+      return false
+    }
+  }
+  component
+}
+
+///|
+// The native API accepts outer newlines only for its simple, nonnumeric path
+// grammar. Quoted/numeric/Unicode spellings must retain full lexer behavior.
+fn trimmed_api_path(text : String) -> Array[String]? {
+  if text.is_empty() || text.length() > 100000 {
+    return None
+  }
+  let units = text.code_units()
+  let mut start = 0
+  let mut end = units.length()
+  while start < end && whitespace(units[start].to_int().unsafe_to_char()) {
+    start += 1
+  }
+  while end > start && whitespace(units[end - 1].to_int().unsafe_to_char()) {
+    end -= 1
+  }
+  if start == 0 && end == units.length() {
+    return None
+  }
+  let trimmed = text.view(start_offset=start, end_offset=end).to_owned()
+  if plain_ascii_path(trimmed, outer_trimmed=true) {
+    Some(trimmed.split(".").map(part => part.to_owned()).collect())
+  } else {
+    None
+  }
 }
 
 ///|

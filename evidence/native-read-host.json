@@ -1,9 +1,34 @@
 {
-  "utc": "2026-09-18T20:16:42.157Z",
-  "programs": 842,
-  "passed": 842,
+  "utc": "2026-09-18T20:16:45.391Z",
+  "checks": 24,
+  "passed": 24,
   "failed": 0,
-  "scope": "Four concurrent worker factories retain unresolved AST/exact number spelling and produce the same persistent branch outcomes as saved independent native expectations.",
+  "names": [
+    "load native objects preserve own data keys and isolation",
+    "loadAsync native objects preserve own data keys and isolation",
+    "native object conversion defines properties without invoking inherited setters",
+    "native double values preserve signed zero and explicit nonfinite strings",
+    "complex scalar and list values are detached in every native read",
+    "native/text transport equality int x",
+    "native/text transport equality boolean y",
+    "native/text transport equality period p",
+    "native/text transport equality int-list l",
+    "native/text transport equality no-such-type x",
+    "native/text transport equality int absent",
+    "native/text transport equality int a..b",
+    "native/text transport equality enum y",
+    "native/text transport equality duration-in x",
+    "native malformed options reject null",
+    "native malformed options reject []",
+    "native malformed options reject true",
+    "native malformed options reject 1",
+    "native malformed options reject \"x\"",
+    "native malformed options reject {",
+    "native malformed options reject {\"bad\":1}",
+    "Config wrapper converts located native errors to shared ConfigError",
+    "path bridge rejects malformed UTF-16 and preserves quoted comment characters",
+    "native lookup follows corrected API path rules"
+  ],
   "sourceHashes": {
     "accessor_reference_test.mbt": "ef0cea69ffc47506f3c8a54352b8bda45617aca06af288d99676092a662fa3e0",
     "accessors.mbt": "62da8f7f1bcb85e426dfd11827f50068db2de598c5b74b2fd14d0ae7b5d7cc09",
@@ -124,6 +149,5 @@
     "web/app.mjs": "12a0cf3565b6298e2e3760355ec5da3fed88870be604b7f6e1a2f57d7334578d",
     "web/config.mjs": "6cc7edbdb551db766b27f268521f323981c578a2e4878ce9f0bd391c1057ccd4",
     "web/engine.mjs": "0b7b64d0dff85efc5c08026ea9d08d2fc813c82fd5f54d45b57d4aa21d53430b"
-  },
-  "failures": []
+  }
 }

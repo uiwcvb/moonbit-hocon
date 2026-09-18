@@ -1,4 +1,4 @@
-import {config_create,config_error,config_read,config_derive,config_child,config_children,config_validate,config_pack,config_unpack} from '../web/engine.mjs';
+import {config_create,config_error,config_read_native,config_derive,config_child,config_children,config_validate,config_pack,config_unpack} from '../web/engine.mjs';
 import {prepare} from './config-host.mjs';
 import {ConfigError} from './config-error.mjs';
 import {executeAsync} from './config-async.mjs';
@@ -27,7 +27,7 @@ async function createAsync(source,options,method){
  const wire=await executeAsync(source,{...cloned,signal},'config-'+method,error=>error.name==='ConfigError'?new ConfigError({error:error.message,position:error.position,problems:error.problems}):new Error(error.message));
  return new Config(token,config_unpack(wire),cloned.environment);
 }
-function query(config,getter,key,options){return result(config_read(state(config).handle,getter??'',key??'',options?JSON.stringify(options):''));}
+function query(config,getter,key,options){const value=config_read_native(state(config).handle,getter??'',key??'',options?JSON.stringify(options):'');if(!value.accepted)throw new ConfigError(value);return value.value;}
 function derive(config,operation,other=config,env=state(config).environment){
  return new Config(token,config_derive(state(config).handle,JSON.stringify(operation),state(other).handle),env);
 }
