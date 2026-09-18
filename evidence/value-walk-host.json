@@ -1,14 +1,18 @@
 {
-  "utc": "2026-09-18T21:32:04.469Z",
-  "mode": "live official library",
-  "reference": {
-    "library": "unmodified Lightbend Config 1.4.9",
-    "jarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37"
-  },
-  "total": 2810,
-  "passed": 2810,
+  "utc": "2026-09-18T21:30:20.071Z",
+  "checks": 8,
+  "passed": 8,
   "failed": 0,
-  "scope": "Raw/resolved ConfigValue, object and list reads; literal keys/null; immutable edits; arbitrary-value fallback barriers across embedding and continued operations. Exact type/data/acceptance; errors/origins/rendering and high-collision iteration are outside scope.",
+  "names": [
+    "load repeated hashes and detached output cannot stale retained immutable values",
+    "loadAsync repeated hashes and detached output cannot stale retained immutable values",
+    "raw value lookup shares only opaque data and preserves delayed paths",
+    "native lookup keeps path errors and literal key semantics",
+    "direct searches retain directional equality and early/late rejection",
+    "large list searches preserve absent/first/last results without materializing wrappers",
+    "unwrapped direct serialization preserves own data keys and compact zero",
+    "opaque lookup rejects invalid selectors and indexes without corrupting handles"
+  ],
   "sourceHashes": {
     "accessor_reference_test.mbt": "ef0cea69ffc47506f3c8a54352b8bda45617aca06af288d99676092a662fa3e0",
     "accessors.mbt": "cd1d648bb382d5a88ef32ef32d475dd35b5d15fce9f42134d1bda90067be8474",
@@ -149,6 +153,5 @@
     "web/app.mjs": "12a0cf3565b6298e2e3760355ec5da3fed88870be604b7f6e1a2f57d7334578d",
     "web/config.mjs": "6cc7edbdb551db766b27f268521f323981c578a2e4878ce9f0bd391c1057ccd4",
     "web/engine.mjs": "b2bcd7ddc93403ef2b4fa22c9cf3805edca1de86dd788c2efdcdbd06b821eaa1"
-  },
-  "failures": []
+  }
 }

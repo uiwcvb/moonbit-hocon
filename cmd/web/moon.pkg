@@ -32,6 +32,8 @@ options(
         "value_select",
         "value_read_native",
         "value_equal_native",
+        "value_lookup",
+        "value_search_native",
       ],
       "format": "esm",
     },

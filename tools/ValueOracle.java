@@ -80,6 +80,7 @@ class ValueOracle {
     Supplier<Object> work=()->{var result=new ArrayList<Object>();for(int j=0;j<repeats;j++)result.add(switch(mode){
       case "value-read" -> config.getValue("child").unwrapped();
       case "value-hash" -> child.hashCode();
+      case "value-cold-hash" -> config.getValue("child").hashCode();
       case "value-equals" -> child.equals(other);
       case "value-search" -> list.indexOf(needle);
       case "value-fallback" -> child.withFallback(fallback).unwrapped();

@@ -80,6 +80,10 @@ try {
   if ($LASTEXITCODE -ne 0) {throw 'value/container async replay failed'}
   node tools/test-value-host.mjs
   if ($LASTEXITCODE -ne 0) {throw 'value/container host checks failed'}
+  node tools/test-value-walk-reference.mjs --golden
+  if ($LASTEXITCODE -ne 0) {throw 'value traversal reference replay failed'}
+  node tools/test-value-walk-host.mjs
+  if ($LASTEXITCODE -ne 0) {throw 'value traversal host checks failed'}
   node tools/robustness.mjs
   if ($LASTEXITCODE -ne 0) {throw 'robustness failed'}
   node tools/benchmark.mjs

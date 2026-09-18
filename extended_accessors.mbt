@@ -95,7 +95,12 @@ pub fn get_number(
   config : Value,
   key : String,
 ) -> ConfigNumber raise ParseError {
-  match required(config, key) {
+  number_value(required(config, key))
+}
+
+///|
+fn number_value(value : Value) -> ConfigNumber raise ParseError {
+  match value {
     Number(text) =>
       match java_integer_value(text) {
         Some(n) => compact_number(n)

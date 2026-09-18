@@ -1,0 +1,43 @@
+Finished. moon: ran 12 tasks, now up to date
+Finished. moon: no work to do
+Finished. moon: ran 4 tasks, now up to date
+Total tests: 16191, passed: 16191, failed: 0.
+Total tests: 16191, passed: 16191, failed: 0.
+Finished. moon: no work to do
+Object(
+  {
+    "service": Object({ "host": Text("localhost"), "port": Number("9090") }),
+    "endpoint": Text("localhost"),
+  },
+)
+hocon: independent browser engine passed
+hocon: CLI input/file/stdin/error/exit-status checks passed
+host: real includes, fallback origins, environment, CLI getters, errors and limits passed
+714/714 configuration reference cases agree
+58/58 file reference cases agree
+1300/1300 typed collection/config cases agree
+72 collection host/CLI checks passed
+156/156 live-transport HTTP reference cases agree
+58 HTTP host/CLI/async checks passed
+4380/4380 tree/validation native cases agree
+39 tree/validation host/async/CLI checks passed
+2520/2520 document lifecycle native cases agree
+45 document file/HTTP/async/CLI checks passed
+3562/3562 extended accessor native cases agree
+55 extended accessor file/HTTP/async/CLI checks passed
+2171/2171 temporal native cases agree
+57 temporal file/HTTP/async/CLI checks passed
+842/842 persistent Config native programs agree
+842/842 async persistent native programs agree
+54 persistent file/HTTP/async/ownership checks passed
+Persistent Config bounded collection check passed: 2399/2400 collected
+1898/1898 path native cases agree
+7063/7063 direct-result native cases agree
+24 direct-result ownership/shape/error/path checks passed
+2810/2810 value/container native programs agree
+2810/2810 async value/container programs agree
+22 value/container host checks passed
+936/936 value traversal native programs agree
+8 value traversal host checks passed
+hocon: 307 bounded inputs, no uncaught runtime failure
+{"project":"hocon","utc":"2026-09-18T21:30:20.611Z","runtime":"v24.11.0","platform":"win32","cpu":"Intel(R) Core(TM) i7-14700HX","input_utf8_bytes":90,"samples":30,"warmup":5,"median_ms":0.25430000000000064,"p95_ms":0.5643000000000029,"max_ms":0.9335999999999984,"scope":"JS warm execution of documented example; no cross-project or upstream performance claim"}

@@ -1,5 +1,13 @@
 # Changes
 
+## 0.14.0
+
+- Traverse ordinary values directly for equality/hash and search, preserving directional unresolved-value failures and native short-circuit order.
+- Read opaque immutable children without copying the full subtree or serializing selector commands; retain detached unwrapped output.
+- Cache successful hashes only in immutable JavaScript value wrappers; public mutable MoonBit values retain live computation.
+- Add 906 distinct native traversal programs across 936 matrix runs, 15 portable test groups, two core ownership/resource regressions and eight host checks to the mandatory verifier.
+- Measure repeated retained hashes separately from fresh-wrapper hashes against fixed 0.13 and native Config. Full performance and functional parity remain open.
+
 ## 0.13.0
 
 - Add immutable ConfigValue, ConfigObject and ConfigList views, raw/null-aware reads, literal-key edits, value equality/hash, list search/ranges and arbitrary-value fallbacks.

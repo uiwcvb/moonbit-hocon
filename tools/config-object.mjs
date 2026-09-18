@@ -1,4 +1,4 @@
-import {config_create,config_error,config_read_native,config_derive,config_child,config_children,config_validate,config_pack,config_unpack,value_kind,value_select,value_read_native,value_equal_native} from '../web/engine.mjs';
+import {config_create,config_error,config_read_native,config_derive,config_child,config_children,config_validate,config_pack,config_unpack,value_kind,value_select,value_read_native,value_equal_native,value_lookup,value_search_native} from '../web/engine.mjs';
 import {prepare} from './config-host.mjs';
 import {ConfigError} from './config-error.mjs';
 import {executeAsync} from './config-async.mjs';
@@ -10,7 +10,8 @@ function valueState(value){const stored=valueStates.get(value);if(!stored)throw 
 function mergeable(value){return states.get(value)??valueState(value);}
 function readValue(value,op){const result=value_read_native(valueState(value).handle,op);if(!result.accepted)throw new ConfigError(result);return result.value;}
 function wrapValue(handle,env){const error=config_error(handle);if(error)result(error);const kind=value_kind(handle);if(kind==='MISSING')return null;const Type=kind==='OBJECT'?ConfigObject:kind==='LIST'?ConfigList:ConfigValue;return new Type(token,handle,env);}
-function selectValue(value,op,other=value){const stored=mergeable(value);return wrapValue(value_select(stored.handle,JSON.stringify(op),mergeable(other).handle),stored.environment);}
+function selectValue(value,op,other=value){const stored=mergeable(value);return wrapValue(op.op.startsWith('get-')?value_lookup(stored.handle,op.op,op.key??'',op.index??0):value_select(stored.handle,JSON.stringify(op),mergeable(other).handle),stored.environment);}
+function searchValue(value,needle,op){const result=value_search_native(valueState(value).handle,valueState(needle).handle,op);if(!result.accepted)throw new ConfigError(result);return result.value;}
 function asConfig(value){const stored=valueState(value);if(!(value instanceof ConfigObject))throw new TypeError('Expected a ConfigObject');return stored.config??=new Config(token,stored.handle,stored.environment);}
 function path(value){if(typeof value!=='string')throw new TypeError('Configuration path must be a string');return value;}
 function environment(value={}){
@@ -119,7 +120,7 @@ export class ConfigValue {
  unwrapped(){return readValue(this,'unwrap');}
  toJSON(){return this.unwrapped();}
  equals(other){if(!valueStates.has(other))return false;const result=value_equal_native(valueState(this).handle,valueState(other).handle);if(!result.accepted)throw new ConfigError(result);return result.value;}
- hashCode(){return readValue(this,'hash');}
+ hashCode(){return valueState(this).hash??=readValue(this,'hash');}
  withFallback(other){return selectValue(this,{op:'fallback'},other);}
  atKey(key){return asConfig(selectValue(this,{op:'at-key',key:path(key)}));}
  atPath(key){return asConfig(selectValue(this,{op:'at-path',key:path(key)}));}
@@ -136,7 +137,7 @@ export class ConfigObject extends ConfigValue {
   for(const key of keys){const value=this.get(key),h=value.hashCode();if(!unique.some(entry=>entry.h===h&&value.equals(entry.value)))unique.push({value,h,bucket:(h^(h>>>16))&(capacity-1),position:unique.length});}
   unique.sort((a,b)=>a.bucket-b.bucket||a.position-b.position);return Object.freeze(unique.map(entry=>entry.value));
  }
- containsValue(value){const keys=this.keySet();return valueStates.has(value)&&keys.some(key=>value.equals(this.get(key)));}
+ containsValue(value){if(!valueStates.has(value)){this.size();return false;}return searchValue(this,value,'contains-value');}
  entrySet(){return Object.freeze(this.keySet().map(key=>Object.freeze([key,this.get(key)])));}
  [Symbol.iterator](){return this.entrySet()[Symbol.iterator]();}
  withValue(key,value){valueState(value);return selectValue(this,{op:'with-value',key:path(key)},value);}
@@ -148,8 +149,8 @@ export class ConfigList extends ConfigValue {
  size(){return readValue(this,'size');}
  isEmpty(){return this.size()===0;}
  contains(value){return this.indexOf(value)!==-1;}
- indexOf(value){if(!valueStates.has(value))return -1;for(let i=0,n=this.size();i<n;i++)if(value.equals(this.get(i)))return i;return -1;}
- lastIndexOf(value){if(!valueStates.has(value))return -1;for(let i=this.size()-1;i>=0;i--)if(value.equals(this.get(i)))return i;return -1;}
+ indexOf(value){return valueStates.has(value)?searchValue(this,value,'index-of'):-1;}
+ lastIndexOf(value){return valueStates.has(value)?searchValue(this,value,'last-index-of'):-1;}
  values(){return Object.freeze(Array.from({length:this.size()},(_,i)=>this.get(i)));}
  [Symbol.iterator](){return this.values()[Symbol.iterator]();}
  subList(from,to){const size=this.size();if(!Number.isInteger(from)||!Number.isInteger(to)||from<0||to>size||from>to)throw new RangeError('Invalid subList range');return Object.freeze(Array.from({length:to-from},(_,i)=>this.get(from+i)));}

@@ -1,0 +1,996 @@
+{
+  "utc": "2026-09-18T21:36:22.511743+00:00",
+  "version": "0.14.0",
+  "baselineCommit": "1ab3b1af96331cf811b42301e36f55fd9263d443",
+  "localOnly": true,
+  "fullParity": false,
+  "engineSha256": "b2bcd7ddc93403ef2b4fa22c9cf3805edca1de86dd788c2efdcdbd06b821eaa1",
+  "reference": {
+    "library": "unmodified Lightbend Config 1.4.9",
+    "jarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37",
+    "java": "22.0.1",
+    "platform": "win32"
+  },
+  "verified": {
+    "js": 16191,
+    "wasmGC": 16191,
+    "liveReferenceComparisons": {
+      "config": 714,
+      "file": 58,
+      "collection": 1300,
+      "http": 156,
+      "tree": 4380,
+      "document": 2520,
+      "accessor": 3562,
+      "temporal": 2171,
+      "persistent": 842,
+      "path": 1898,
+      "native-read": 7063,
+      "value": 2810,
+      "value-walk": 936
+    },
+    "totalLiveReferenceRuns": 28410,
+    "newValueTraversalRuns": 936,
+    "newUniqueValueTraversalPrograms": 906,
+    "duplicateTraversalMatrixRuns": 30,
+    "newPortableGroups": 15,
+    "newCoreOwnershipResourceGroups": 2,
+    "coverageNote": "936 traversal matrix runs contain 906 distinct new programs, with 30 repeated requests from empty/single-element early/late list positions; all enter 15 portable groups. The 7063 direct-read runs overlap 7033 older requests plus 30 root numeric requests. Existing 2810 async value programs are replays, not newly added independent cases. The new traversal cases are not claimed as async coverage.",
+    "hostChecks": {
+      "collection": 72,
+      "http": 58,
+      "tree": 39,
+      "document": 45,
+      "accessor": 55,
+      "temporal": 57,
+      "persistent": 54,
+      "native-read": 24,
+      "value": 22,
+      "value-walk": 8
+    },
+    "asyncPersistentPrograms": 842,
+    "asyncValuePrograms": 2810,
+    "boundedMalformedInputs": 307,
+    "boundedCollection": {
+      "created": 2400,
+      "collected": 2399,
+      "baselineHeapBytes": 7123240,
+      "afterGCRoundHeapBytes": [
+        7780360,
+        7860504,
+        7839256,
+        7866864,
+        7836464,
+        7892768
+      ],
+      "maxRetainedGrowthBytes": 769528,
+      "retainedControlReadable": true
+    },
+    "generationFiles": 159,
+    "generationUnchanged": true,
+    "compiledEngineMatches": true,
+    "fullVerify": true,
+    "api": "Direct bounded value equality/hash/search; opaque immutable child lookup without full subtree copies or JSON selector transport; detached unwrapped output; successful hash cache only in immutable JS wrappers, never in caller-mutable core Values"
+  },
+  "performance": {
+    "processesPerWorkload": 5,
+    "scope": "Two old JSON-request workloads and eight retained-object workloads compare fixed 0.13, current and native adapters, plus six value/container workloads including both repeated retained hashes and fresh-wrapper hashes. The full baseline JS module dependency tree is loaded from the fixed Git commit. Retained workloads compare real Config methods with native Config; construction excluded, immutable operations/getter transport included, final result serialization excluded. Each workload has five fresh processes; Java legacy and retained workloads use separate processes. Startup, I/O and sustained/peak-memory parity are not measured.",
+    "unstableMeasurements": false,
+    "performanceParityEstablished": false,
+    "summaries": [
+      {
+        "name": "legacy-parse-64",
+        "scope": "request JSON through response JSON, including parse and resolve",
+        "upstream": {
+          "processMedians": [
+            0.43073333333333336,
+            0.4488,
+            0.5267,
+            0.5162,
+            0.4593
+          ],
+          "medianMs": 0.4593,
+          "processSpread": 1.222798328432131
+        },
+        "current": {
+          "processMedians": [
+            0.3432333333333351,
+            0.3549333333333351,
+            0.359233333333331,
+            0.3930333333333351,
+            0.41330000000000194
+          ],
+          "medianMs": 0.359233333333331,
+          "processSpread": 1.2041371273186359
+        },
+        "baseline": {
+          "processMedians": [
+            0.3651000000000029,
+            0.36566666666666475,
+            0.4000999999999995,
+            0.35976666666666784,
+            0.37529999999999575
+          ],
+          "medianMs": 0.36566666666666475,
+          "processSpread": 1.112109700731951
+        },
+        "currentOverUpstream": 0.78213223020538,
+        "currentOverBaseline": 0.9824065633546023
+      },
+      {
+        "name": "legacy-fallback-32",
+        "scope": "request JSON through response JSON, including parse and resolve",
+        "upstream": {
+          "processMedians": [
+            0.6757,
+            0.7097,
+            0.726,
+            0.7239333333333333,
+            0.6711666666666667
+          ],
+          "medianMs": 0.7097,
+          "processSpread": 1.0816985348894959
+        },
+        "current": {
+          "processMedians": [
+            0.4165999999999978,
+            0.42029999999999745,
+            0.41013333333333435,
+            0.3996666666666613,
+            0.47946666666666715
+          ],
+          "medianMs": 0.4165999999999978,
+          "processSpread": 1.1996663886572316
+        },
+        "baseline": {
+          "processMedians": [
+            0.4144333333333255,
+            0.4521000000000015,
+            0.4041333333333341,
+            0.4352999999999933,
+            0.4265000000000043
+          ],
+          "medianMs": 0.4265000000000043,
+          "processSpread": 1.1186902012537132
+        },
+        "currentOverUpstream": 0.5870085951810593,
+        "currentOverBaseline": 0.9767878077373824
+      },
+      {
+        "name": "retained-nested-int-32",
+        "scope": "already parsed Config objects; typed reads or immutable operations; result serialization outside timing",
+        "upstream": {
+          "processMedians": [
+            0.10546666666666667,
+            0.1073,
+            0.09303333333333333,
+            0.11076666666666667,
+            0.0948
+          ],
+          "medianMs": 0.10546666666666667,
+          "processSpread": 1.1906126836259405
+        },
+        "current": {
+          "processMedians": [
+            0.06409999999999627,
+            0.06866666666666295,
+            0.073599999999999,
+            0.06663333333333792,
+            0.0706333333333286
+          ],
+          "medianMs": 0.06866666666666295,
+          "processSpread": 1.1482059282371806
+        },
+        "baseline": {
+          "processMedians": [
+            0.0630333333333321,
+            0.07403333333333724,
+            0.06299999999999766,
+            0.06429999999999343,
+            0.06400000000000243
+          ],
+          "medianMs": 0.06400000000000243,
+          "processSpread": 1.175132275132381
+        },
+        "currentOverUpstream": 0.6510745891276513,
+        "currentOverBaseline": 1.072916666666568
+      },
+      {
+        "name": "retained-quoted-int-32",
+        "scope": "already parsed Config objects; typed reads or immutable operations; result serialization outside timing",
+        "upstream": {
+          "processMedians": [
+            0.09506666666666666,
+            0.09926666666666667,
+            0.102,
+            0.10833333333333334,
+            0.0957
+          ],
+          "medianMs": 0.09926666666666667,
+          "processSpread": 1.1395511921458628
+        },
+        "current": {
+          "processMedians": [
+            0.13149999999999787,
+            0.12716666666667228,
+            0.1301333333333332,
+            0.12953333333333225,
+            0.1292666666666662
+          ],
+          "medianMs": 0.12953333333333225,
+          "processSpread": 1.0340760157273294
+        },
+        "baseline": {
+          "processMedians": [
+            0.13473333333333434,
+            0.13016666666666765,
+            0.13500000000000037,
+            0.1264666666666585,
+            0.12943333333332893
+          ],
+          "medianMs": 0.13016666666666765,
+          "processSpread": 1.0674749604639622
+        },
+        "currentOverUpstream": 1.3049026192075108,
+        "currentOverBaseline": 0.9951344430217511
+      },
+      {
+        "name": "retained-int-32",
+        "scope": "already parsed Config objects; typed reads or immutable operations; result serialization outside timing",
+        "upstream": {
+          "processMedians": [
+            0.041633333333333335,
+            0.035666666666666666,
+            0.03623333333333333,
+            0.035666666666666666,
+            0.03506666666666667
+          ],
+          "medianMs": 0.035666666666666666,
+          "processSpread": 1.1872623574144485
+        },
+        "current": {
+          "processMedians": [
+            0.03983333333333879,
+            0.03883333333333402,
+            0.03850000000000856,
+            0.03876666666666514,
+            0.03873333333334017
+          ],
+          "medianMs": 0.03876666666666514,
+          "processSpread": 1.0346320346319464
+        },
+        "baseline": {
+          "processMedians": [
+            0.03733333333333159,
+            0.03906666666666562,
+            0.03800000000000144,
+            0.038066666666660844,
+            0.037466666666659876
+          ],
+          "medianMs": 0.03800000000000144,
+          "processSpread": 1.0464285714285924
+        },
+        "currentOverUpstream": 1.0869158878504244,
+        "currentOverBaseline": 1.0201754385964124
+      },
+      {
+        "name": "retained-number-32",
+        "scope": "already parsed Config objects; typed reads or immutable operations; result serialization outside timing",
+        "upstream": {
+          "processMedians": [
+            0.05676666666666667,
+            0.059833333333333336,
+            0.0511,
+            0.054066666666666666,
+            0.0517
+          ],
+          "medianMs": 0.054066666666666666,
+          "processSpread": 1.1709067188519244
+        },
+        "current": {
+          "processMedians": [
+            0.0821333333333314,
+            0.07349999999999568,
+            0.07266666666667258,
+            0.07280000000000086,
+            0.0733666666666674
+          ],
+          "medianMs": 0.0733666666666674,
+          "processSpread": 1.1302752293576794
+        },
+        "baseline": {
+          "processMedians": [
+            0.07983333333333083,
+            0.07370000000000232,
+            0.07810000000000628,
+            0.08613333333333155,
+            0.10080000000000193
+          ],
+          "medianMs": 0.07983333333333083,
+          "processSpread": 1.367706919945709
+        },
+        "currentOverUpstream": 1.356966707768201,
+        "currentOverBaseline": 0.9189979123173658
+      },
+      {
+        "name": "retained-child-32",
+        "scope": "already parsed Config objects; typed reads or immutable operations; result serialization outside timing",
+        "upstream": {
+          "processMedians": [
+            0.0136,
+            0.0182,
+            0.017133333333333334,
+            0.0187,
+            0.018233333333333334
+          ],
+          "medianMs": 0.0182,
+          "processSpread": 1.3750000000000002
+        },
+        "current": {
+          "processMedians": [
+            0.05169999999999201,
+            0.046900000000003196,
+            0.046499999999999396,
+            0.048666666666662195,
+            0.047033333333331484
+          ],
+          "medianMs": 0.047033333333331484,
+          "processSpread": 1.1118279569890899
+        },
+        "baseline": {
+          "processMedians": [
+            0.048300000000002306,
+            0.04356666666666342,
+            0.04349999999999454,
+            0.05010000000000522,
+            0.047066666666665924
+          ],
+          "medianMs": 0.047066666666665924,
+          "processSpread": 1.1517241379312988
+        },
+        "currentOverUpstream": 2.5842490842489827,
+        "currentOverBaseline": 0.999291784702526
+      },
+      {
+        "name": "retained-period-32",
+        "scope": "already parsed Config objects; typed reads or immutable operations; result serialization outside timing",
+        "upstream": {
+          "processMedians": [
+            0.04956666666666667,
+            0.05146666666666667,
+            0.04763333333333333,
+            0.0528,
+            0.0514
+          ],
+          "medianMs": 0.0514,
+          "processSpread": 1.1084674597620714
+        },
+        "current": {
+          "processMedians": [
+            0.08609999999999711,
+            0.08346666666666162,
+            0.08406666666666258,
+            0.08809999999999718,
+            0.08740000000000236
+          ],
+          "medianMs": 0.08609999999999711,
+          "processSpread": 1.0555111821086562
+        },
+        "baseline": {
+          "processMedians": [
+            0.09209999999999734,
+            0.08453333333333528,
+            0.08736666666665845,
+            0.09219999999999118,
+            0.08786666666666558
+          ],
+          "medianMs": 0.08786666666666558,
+          "processSpread": 1.090694006309019
+        },
+        "currentOverUpstream": 1.675097276264535,
+        "currentOverBaseline": 0.9798937784521795
+      },
+      {
+        "name": "immutable-edits-16",
+        "scope": "already parsed Config objects; typed reads or immutable operations; result serialization outside timing",
+        "upstream": {
+          "processMedians": [
+            0.1895,
+            0.1946,
+            0.17946666666666666,
+            0.17783333333333334,
+            0.16003333333333333
+          ],
+          "medianMs": 0.17946666666666666,
+          "processSpread": 1.2159966673609663
+        },
+        "current": {
+          "processMedians": [
+            0.6796333333333374,
+            0.6609666666666575,
+            0.6936333333333286,
+            0.7012333333333345,
+            0.6729666666666768
+          ],
+          "medianMs": 0.6796333333333374,
+          "processSpread": 1.0609208734681692
+        },
+        "baseline": {
+          "processMedians": [
+            0.6830666666666616,
+            0.6597999999999994,
+            0.7244666666666717,
+            0.7243000000000089,
+            0.6917000000000068
+          ],
+          "medianMs": 0.6917000000000068,
+          "processSpread": 1.0980094978276331
+        },
+        "currentOverUpstream": 3.786961367013396,
+        "currentOverBaseline": 0.9825550575875824
+      },
+      {
+        "name": "retained-resolve-16",
+        "scope": "already parsed Config objects; typed reads or immutable operations; result serialization outside timing",
+        "upstream": {
+          "processMedians": [
+            0.2536,
+            0.2413,
+            0.22393333333333335,
+            0.2647,
+            0.221
+          ],
+          "medianMs": 0.2413,
+          "processSpread": 1.197737556561086
+        },
+        "current": {
+          "processMedians": [
+            0.16603333333334072,
+            0.1620999999999905,
+            0.15633333333333135,
+            0.1627333333333354,
+            0.16356666666666797
+          ],
+          "medianMs": 0.1627333333333354,
+          "processSpread": 1.0620469083156256
+        },
+        "baseline": {
+          "processMedians": [
+            0.16436666666667557,
+            0.1657666666666652,
+            0.16420000000001286,
+            0.1777333333333407,
+            0.16643333333333507
+          ],
+          "medianMs": 0.1657666666666652,
+          "processSpread": 1.0824198132358513
+        },
+        "currentOverUpstream": 0.6744025417875483,
+        "currentOverBaseline": 0.9817011864066167
+      },
+      {
+        "name": "value-read-32",
+        "scope": "already parsed Config objects; typed reads or immutable operations; result serialization outside timing",
+        "upstream": {
+          "processMedians": [
+            0.14666666666666667,
+            0.13156666666666667,
+            0.1257,
+            0.1368,
+            0.1471
+          ],
+          "medianMs": 0.1368,
+          "processSpread": 1.1702466189339698
+        },
+        "current": {
+          "processMedians": [
+            0.6328666666666815,
+            0.6532000000000077,
+            0.6657333333333403,
+            0.6322999999999865,
+            0.7027666666666619
+          ],
+          "medianMs": 0.6532000000000077,
+          "processSpread": 1.1114449891929097
+        },
+        "baseline": {
+          "processMedians": [
+            1.212100000000002,
+            1.1835999999999938,
+            1.189233333333334,
+            1.2390666666666637,
+            1.191033333333337
+          ],
+          "medianMs": 1.191033333333337,
+          "processSpread": 1.046862678832942
+        },
+        "currentOverUpstream": 4.774853801169646,
+        "currentOverBaseline": 0.5484313341356293
+      },
+      {
+        "name": "value-hash-32",
+        "scope": "already parsed Config objects; typed reads or immutable operations; result serialization outside timing",
+        "upstream": {
+          "processMedians": [
+            0.30156666666666665,
+            0.3399333333333333,
+            0.3107,
+            0.3370666666666667,
+            0.2967
+          ],
+          "medianMs": 0.3107,
+          "processSpread": 1.1457139647230647
+        },
+        "current": {
+          "processMedians": [
+            0.0030333333333298165,
+            0.003166666666667576,
+            0.003199999999992542,
+            0.0031333333333236624,
+            0.003799999999993512
+          ],
+          "medianMs": 0.003166666666667576,
+          "processSpread": 1.2527472527465664
+        },
+        "baseline": {
+          "processMedians": [
+            1.930466666666651,
+            1.9613333333333383,
+            1.9499666666666826,
+            2.1452666666666573,
+            2.184100000000001
+          ],
+          "medianMs": 1.9613333333333383,
+          "processSpread": 1.1313844666229333
+        },
+        "currentOverUpstream": 0.010192039480745338,
+        "currentOverBaseline": 0.001614547926581017
+      },
+      {
+        "name": "value-cold-hash-32",
+        "scope": "already parsed Config objects; typed reads or immutable operations; result serialization outside timing",
+        "upstream": {
+          "processMedians": [
+            0.2362,
+            0.26643333333333336,
+            0.2486,
+            0.3477,
+            0.22063333333333332
+          ],
+          "medianMs": 0.2486,
+          "processSpread": 1.5759178123583624
+        },
+        "current": {
+          "processMedians": [
+            0.8066000000000031,
+            0.8519000000000005,
+            0.8077666666666611,
+            0.8237666666666618,
+            0.7915999999999977
+          ],
+          "medianMs": 0.8077666666666611,
+          "processSpread": 1.076174835775648
+        },
+        "baseline": {
+          "processMedians": [
+            2.3215666666666643,
+            2.3599333333333257,
+            2.4418333333333444,
+            2.51103333333333,
+            2.3864333333333434
+          ],
+          "medianMs": 2.3864333333333434,
+          "processSpread": 1.0816115554151648
+        },
+        "currentOverUpstream": 3.249262536873134,
+        "currentOverBaseline": 0.3384828125654705
+      },
+      {
+        "name": "value-equals-32",
+        "scope": "already parsed Config objects; typed reads or immutable operations; result serialization outside timing",
+        "upstream": {
+          "processMedians": [
+            0.15223333333333333,
+            0.1452,
+            0.1439,
+            0.16903333333333334,
+            0.15453333333333333
+          ],
+          "medianMs": 0.15223333333333333,
+          "processSpread": 1.1746583275422748
+        },
+        "current": {
+          "processMedians": [
+            1.377900000000011,
+            1.4057666666666744,
+            1.3742333333332983,
+            1.3433999999999742,
+            1.3416333333333341
+          ],
+          "medianMs": 1.3742333333332983,
+          "processSpread": 1.0478024298740394
+        },
+        "baseline": {
+          "processMedians": [
+            2.8682666666666514,
+            2.863266666666656,
+            3.0102333333333413,
+            3.094633333333339,
+            2.8011666666666692
+          ],
+          "medianMs": 2.8682666666666514,
+          "processSpread": 1.1047658713631237
+        },
+        "currentOverUpstream": 9.027151302824382,
+        "currentOverBaseline": 0.4791163071773797
+      },
+      {
+        "name": "value-search-32",
+        "scope": "already parsed Config objects; typed reads or immutable operations; result serialization outside timing",
+        "upstream": {
+          "processMedians": [
+            0.005366666666666666,
+            0.009633333333333334,
+            0.005433333333333333,
+            0.008533333333333334,
+            0.005366666666666666
+          ],
+          "medianMs": 0.005433333333333333,
+          "processSpread": 1.7950310559006213
+        },
+        "current": {
+          "processMedians": [
+            0.0952666666666649,
+            0.09089999999999539,
+            0.0894666666666808,
+            0.09199999999998454,
+            0.09499999999998938
+          ],
+          "medianMs": 0.09199999999998454,
+          "processSpread": 1.064828614008754
+        },
+        "baseline": {
+          "processMedians": [
+            0.7111666666666755,
+            0.7506999999999758,
+            0.7858333333333576,
+            0.7622666666666191,
+            0.7226999999999938
+          ],
+          "medianMs": 0.7506999999999758,
+          "processSpread": 1.1049917975158394
+        },
+        "currentOverUpstream": 16.932515337420465,
+        "currentOverBaseline": 0.12255228453441788
+      },
+      {
+        "name": "value-fallback-32",
+        "scope": "already parsed Config objects; typed reads or immutable operations; result serialization outside timing",
+        "upstream": {
+          "processMedians": [
+            0.35036666666666666,
+            0.34226666666666666,
+            0.3512,
+            0.36693333333333333,
+            0.3266
+          ],
+          "medianMs": 0.35036666666666666,
+          "processSpread": 1.1234945907328027
+        },
+        "current": {
+          "processMedians": [
+            1.2673999999999903,
+            1.2094666666666474,
+            1.238233333333331,
+            1.242966666666651,
+            1.2660666666666884
+          ],
+          "medianMs": 1.242966666666651,
+          "processSpread": 1.0478999007827228
+        },
+        "baseline": {
+          "processMedians": [
+            1.2122999999999895,
+            1.252266666666704,
+            1.2514666666666774,
+            1.3353000000000368,
+            1.2703333333333073
+          ],
+          "medianMs": 1.252266666666704,
+          "processSpread": 1.1014600346449297
+        },
+        "currentOverUpstream": 3.547616782418374,
+        "currentOverBaseline": 0.9925734667801964
+      }
+    ]
+  },
+  "remaining": [
+    "All container identity/sharing, complete ConfigValueFactory/JVM integration and Config.entrySet value views; unresolved rendering, origin/comments and precise exceptions",
+    "HTTP proxy/305 and authentication; JAR/classloader and application/reference/system-property default loading",
+    "Complete upstream semantic/version coverage; high-collision tree bins and retained-capacity collection iteration; other JDK Unicode versions",
+    "First hash, value reads, comparison/search and other measured performance gaps; large configuration, peak memory, sustained load, cross-platform and full performance parity"
+  ],
+  "sourceGitBlobSHA256": {
+    ".gitattributes": "968aed8752f58f3554e38c1db0b611ba4663668909552d8d17c2874ff5966312",
+    ".github/workflows/ci.yml": "44845384667d6b2a8ee274e73108f83adae9e69390009a5b6f1ca6c38ad0a273",
+    ".gitignore": "30491d9520128a4172c7fab325bc552a309133db8bd21b4a699668e2a551e609",
+    "CHANGELOG.md": "7a231f249bae761e2bbc4e09f59dc80322ba1e988f3dc74c9de1a4834d52be26",
+    "CONTRIBUTING.md": "e066713924ff8db789960bf03122a64cea6904cf4dc7666b9747802f3b50d491",
+    "DUPLICATION.md": "516b3f5fe7f8c6c5817efafab22011ab63fdd6232af9702d4b04d6461d6e6397",
+    "FEATURES.md": "2c78fbe6b9f4d505299486cf77cdd4941d77c2a53c370ce6076d0ab6bc2e7cec",
+    "LICENSE": "a2ae469f92ac7fd70592f338c7c43657c7e9510be802cfb3db880fff11df3807",
+    "MANIFEST.sha256.json.baseline": "8e6d5bb967a9e93c83d1b406ee350146e33ebc78c3292f2ee64bde7e6b210737",
+    "README.mbt.md": "989930fd21c3e1483f2598cc2af4539d6c61fe711725e82a9db10991e5c3b621",
+    "README.md": "de93707eb5ee059d39b92e94878368e0059d6f81dd2897740a9130acbd36094e",
+    "ROADMAP.md": "2ce55e042569e0a1b05a481395c7fdaa8b280dbf9832367263b04aaa72880839",
+    "TESTING.md": "6fe62912eb298aa24e2304c5e90ad32d5c4d4ada7f5900cbae36e32d3da1cdb3",
+    "accessor_reference_test.mbt": "ef0cea69ffc47506f3c8a54352b8bda45617aca06af288d99676092a662fa3e0",
+    "accessors.mbt": "cd1d648bb382d5a88ef32ef32d475dd35b5d15fce9f42134d1bda90067be8474",
+    "cmd/main/main.mbt": "24f2645d844804ee1241fd560f5fe895d55d0ee59010b00f8c121b9f70bdbc19",
+    "cmd/main/moon.pkg": "943ab64eded434a3d516e50e98dec859f7815536ed2f4d9265837e266e59b667",
+    "cmd/main/pkg.generated.mbti": "e1b35d99c6ff7a6f9f6bc1fbc0e785be06ee9d96b117867741f0e54465766d7e",
+    "cmd/web/config_handle.mbt": "d2876170e439272fbbcf34db5cc4428b8ae4e6e58c648d8cc17148b1d4c9257f",
+    "cmd/web/config_transfer.mbt": "715e9fe3f6b48e0886185afce8d1fdfe15c5786651fa41077b28a9e112c5c548",
+    "cmd/web/document.mbt": "22ce5dde00a09913b216c5e032ac4e1b6a5315777f6b4424e3dbdf07fb511a25",
+    "cmd/web/enum.mbt": "8ca6815f136edee152636affa040eba31b68d88f34ac4412a6737623b09961c0",
+    "cmd/web/errors.mbt": "d034aac77088e8c29003aac38c7a68854825da9a25ee9e5daf81f9d90bfb5b37",
+    "cmd/web/getters.mbt": "809236d833d4c5137428c38ef0e5a1141fa1c6374132a30b0fefc91f5c8efa01",
+    "cmd/web/inspect.mbt": "a77b51b39c231bacaedaafa2256c6a9da34dbbf42c5638b698a82a616e113a35",
+    "cmd/web/load.mbt": "08e62c5e881ae7a06b76bbf667a8a47c3a935b443143c4c4d5e3fe3df3cbfa0b",
+    "cmd/web/main.mbt": "90bbc8c9b43abb8be74aaaa0cd561e9858613d1f17d60556e2108400b62c8f41",
+    "cmd/web/moon.pkg": "fd4b2a7431ce0ad70543ee335c0bd74c09d2b5988a77f4b11740fc93421098ea",
+    "cmd/web/native_read.mbt": "127fc2bf2d7973231266d74d93df3332d711fdc4e12531ff66cd2702175fc382",
+    "cmd/web/time_unit.mbt": "017e20430dc90486acb4ffda9ddda5ac49b1f1533d03acbbc7a09a3483562cce",
+    "cmd/web/value_handle.mbt": "b0839fa321655835ffaa0e9f00b343d0bd734e8233c18913fa551272b2e08717",
+    "collection_reference_test.mbt": "bf099a46b21de5188967512b9708010d1827b30b062b79d75f0a50edea2bbf81",
+    "config.mbt": "3fc096579fa25d1d23f9b1fc10ec8d0eb9b0866de876397f630a25d9fcf1cc44",
+    "configuration_test.mbt": "399842f9283153ffa5b840351aa32e20f685df6d42d1358db8b2d787cceed36b",
+    "core_test.mbt": "e196afcb6febabb2211a8d0666928f89dbbc9921f4824fc94a8a796cd05ba188",
+    "document.mbt": "9aeb584921bdb83183336945ecedaf9d882d0ede030627c138af44e58de3fdd6",
+    "document_reference_test.mbt": "b129b0d00de2fa463db5e2c2b2c29f11b4ba9c018333f878adfbc35aa8559145",
+    "document_test.mbt": "d0dd16abf08eba904896b62f5af6729968492a295caabc7cb5f1e39dcde86de5",
+    "examples/document-steps.json": "26cc65e2c33f930dd7b87a058ba21d24310ac79d55aaae53157b24ee88e490f8",
+    "extended_accessors.mbt": "b6bdf9941d63a4150b063440a0cd96a0d74f82c99b0f6998947e6d8877c5cb6a",
+    "extended_accessors_test.mbt": "da6219409d59dda890c9a4d349b3a344672a093b6f4719d0d91b91d8a9906552",
+    "fallback_state.mbt": "b424a7147fca3c2741d72582e1f9b46295d1d6f120220b705a2efd23049dfae5",
+    "http_json_reference_test.mbt": "f12bdb7c98ae971d3f2ca1b4ce6117f6aa7672637c2063e4c7dd3ab7f873c03c",
+    "json_sources.mbt": "7a08058d67347a295d558e8d455931618cca8979895efa8318872d8bf567a716",
+    "lexer.mbt": "96b0e9bd2a07e4bdaff1207b11e6db2387825bf91fbb465b616e28b8564b0402",
+    "moon.mod": "79c787c67d6c0cd66a548e7c60da4dff6e805a4fdb8cb77bee6ee7040dc8b750",
+    "moon.pkg": "47ae82639a3ee30e82b00254cd8b7a12f39ba4f2d798cd84cade63220b449d5c",
+    "numbers.mbt": "0286ce67528f76e85b715bda1a0afac5298f860917dfb5ebb0ef403a6504679d",
+    "numeric_characters.mbt": "b4dd1ed1fa730e96e197d7e31f168be64d1b9e52c06576204af4eac64f972fd6",
+    "object_order.mbt": "774705a2fe28cd76f82325d38f86dc8de09ee9f98632d4a99de4b1379fa23ea9",
+    "path_characters.mbt": "d1728d6c6d868b078fe9d8ee1b1376ee57db4deae44c6cf46c0399b94895d3d9",
+    "path_limits_test.mbt": "055231467e4265386dc0b52a36221838be9c8196d62d781942c814cd64a472a0",
+    "path_reference_test.mbt": "ea18e468156a52bf56a3666ea1774d3950710eaafdc493838cca1b615e8175a5",
+    "persistent_core_reference_test.mbt": "994c3e85f0861027ef4ff3cd9b19877d1c40e41fbf75abf5e23ca65c37c6787d",
+    "persistent_core_test.mbt": "0cb8572ea60dadee6628dd4daeb176fa5fb7ef5e9bf476373063d91f46637d74",
+    "pkg.generated.mbti": "c4f68664da313facb97c5a077c152a98e5b07e3016ea27da23f39880cab1481f",
+    "resolver.mbt": "f2c54f3184031fbcd2de6735edd7382347b389a7e52d3f1eab6c22cdfd906b7f",
+    "sample.txt": "782f7385849b19280c03bac21b355f54d67273eed7179ac3295c14b55dbfab93",
+    "source_roots_test.mbt": "9b2aa032bcabbdbe89d2da08cd1c350b0758586dee899727d8d842cd51c5485a",
+    "start-review.ps1": "d505b81c37f229e6ea8fd35384cd3e08006befc219b6e0768565210cfd2bfe66",
+    "temporal.mbt": "58c2711e6086e0b9790fab2f1340d365bdeaad0d21aa72dc409e53499ec1406c",
+    "temporal_reference_test.mbt": "95021126e59a6b59a3c7d7e9ec03da3503a59ef93011c9cfaffaf0dff46e49ac",
+    "temporal_test.mbt": "d023ab21d9bddb95f05afa3171b3622eb46fa8f210174e62308f989b551d9c6c",
+    "tools/HoconOracle.java": "6007c7d48a66e0a1f3979adfd3224e906d92794f515e8001a969a5cc1a4c9915",
+    "tools/HoconReference.java": "c19e62ab9d5ea29b1917564651319634d659c82f9f67af2bbee1e39604d87bc7",
+    "tools/NumericCharacters.java": "246db7e1d47f40084c8660bda6389b2ae4aa2a48b6387748b7b094538100cfe0",
+    "tools/PathCharacters.java": "ddbe4b484ee298f8a3f2920bd8294e324378150a18ff7f0fc7ef345b89f9aa3b",
+    "tools/PathOracle.java": "07dd3f31a0e71332f19548ba1755bdb038ad1397123a46606eeb2a714c64a34e",
+    "tools/ValueOracle.java": "ecc68caf3c0d3e114482da1ad58a5ef997d1a9aea7f790e92fd8e9e648d8bbd9",
+    "tools/benchmark-accessor.mjs": "8d97a5aa4e35cb21d4214ae565585b24fdad1d85a4540a92e4d513c2edc8fd51",
+    "tools/benchmark-collections.mjs": "f2da03ec622a9a1eadd8f639f11638fef7f63125a814de27c88f56436a44aa84",
+    "tools/benchmark-document.mjs": "40ce2b4dbec134971306ae88b4b8b3c2ce5d1f89dc63514e6eb7ea2787dc3b1a",
+    "tools/benchmark-http.mjs": "0e5e1181197c923ac80129632a62ffa525f9c675c94865631a3b34e6d3fa1f91",
+    "tools/benchmark-native-read.mjs": "f247ae0c1a188312436e077143f0a2d3bd6a86823871bce1cdfe352975fe6aad",
+    "tools/benchmark-persistent.mjs": "d25beee8af7f1a76a0b5a63dfa8515ac5ec59845b1086131ecb5e8e3a47d101b",
+    "tools/benchmark-temporal.mjs": "274a6264119d5fb99be410d2d7eea5c6a3c8c0a85a2e7c5231eea898d37a070d",
+    "tools/benchmark-tree.mjs": "2fd3e904f516f044772e0b8379b116cadea2d8751374b1a3aee9dc90a221ccac",
+    "tools/benchmark-value-walk.mjs": "92615f8ccc9485cd7a5035be17bdaf495f97c6b46c03545a685f2ebbd90281ca",
+    "tools/benchmark-value.mjs": "44b6069e2a2896613162e4e6937fa66656a0ca066f073a15035d67835950ec8e",
+    "tools/benchmark.mjs": "53ac611536ba7cb3732017d22976ff8f38dbd9e7aa579c2469eab75b0cdc7216",
+    "tools/check-accessor-generation.py": "8ed5b6e021dc736d8ac9220619a5aebc81f7c64d26619cc998e4f4be761b8bcf",
+    "tools/check-accessor-proof.py": "880a5b80ea431eb78d7c10ed08ca3512f43115707b4d870ae9a960f203d96ba1",
+    "tools/check-collection-generation.py": "ac6f68893d1207741c7f1f8e5aedf227403d820c2d074f6be6bf859357c5c428",
+    "tools/check-collection-proof.py": "62e05030fb57a09b8be13b6871c99b8179caf517abe07a458ce8477aca546636",
+    "tools/check-document-generation.py": "dc63c2ee1fbb2c546be70a4dc74a0f4b7545d3bf5ee6a19c7f39f3de3c20d9d8",
+    "tools/check-document-proof.py": "473e545e57d325d6fad75c85f6de96f9c5ffdff59906c3d0c978733e102cca24",
+    "tools/check-http-generation.py": "4308fcba1eed75c60eaa0c2a62fb58ea2ec3ac0e0d42136e13d99ffcc696de4f",
+    "tools/check-http-proof.py": "bfd1fd0df511bb95e4e0c5b73abb82bb50225f756a8d8c1f379f61ad411de3d0",
+    "tools/check-native-read-generation.py": "f1c125c278d4daaefe0b79cf4ae2fe9f2c5146dcd0d03b2901e39f9bd2e95843",
+    "tools/check-native-read-proof.py": "8265838ce8ab5cb836c581201021ffcadc4a7b51cad5609b4c0204ace969d000",
+    "tools/check-persistent-generation.py": "9ab4536cfb8bc67c5f3cad6988adf0379e1e8f6dcb2efd41453030895d579ceb",
+    "tools/check-persistent-proof.py": "9cdc772efd245c164a6d09837ed1193d451b5e35e8a4dfe1b5ecff7ab02ad0a8",
+    "tools/check-temporal-generation.py": "cab1072b1ff999151dbe28b695b7d38fc896e8092b1e7055077bc0ec61023260",
+    "tools/check-temporal-proof.py": "b2ca353ee449167691ae5d631693b25f852e118623822f8f34abf1aa49ed2587",
+    "tools/check-tree-generation.py": "e1abb609d603c8bbed9c95a5ed848b213b7d82b676b5343c3719b69200004bde",
+    "tools/check-tree-proof.py": "4fc84fbdf6f6855c2a7b40b311ac06b035c25da7d7782c575910fbac82e0ec54",
+    "tools/check-value-generation.py": "53c947ab92efe559fe0ac03909bf3af21c69b2934cc82896a17dade767d89ec2",
+    "tools/check-value-proof.py": "4223c4766efbe58a1d51bf687ad26f74638d28e2596dfe43b16a1b92f2cb648c",
+    "tools/check-value-walk-generation.py": "46f463a15651def3efa5b84c84bf3033cf3541b529515dc9d54adadee8329e72",
+    "tools/check-value-walk-proof.py": "40bf0ec7576f0644a16cfd930d522dee7b2416f2672ec80e0723c8f942744ea7",
+    "tools/cli.mjs": "73d0555a96d744a4cb631f07c396c3bb51df8c1184a702403f161629df5e8aac",
+    "tools/config-async-worker.mjs": "8bd0aaf82be9fb18222a2faf2c011e2b8c175ce85156900679425d1f26b741ec",
+    "tools/config-async.mjs": "2f41f1102915ad1d010a912b4c29e0b616cff950f7ef5127bcbe13431bebfcad",
+    "tools/config-error.mjs": "8227651d5b271c7ced6263388f5230748c7dfb1f4fd989ba2e1c6c0fc1c9960a",
+    "tools/config-host.mjs": "c88bc5bbf76eb9379bc9daf909ac83a4e4281cc30c85e0223a72caa461ad0185",
+    "tools/config-object.mjs": "f25f6183887c0b073bb697e8067068cc1f12b6a59709cbab02979433bf1a7e66",
+    "tools/config.mjs": "dc61ccd8ea2c220047e2588cdd5cf05a2a39005a27480cb50b692e7ef4a78893",
+    "tools/evidence.mjs": "44dbf357815228150dc25be1a3d910a405f9ab53518dd54ff727d0a3ae063ea6",
+    "tools/fixtures/README.md": "dbdf5d982a80682edbd8fe171f3651b5dcee32cf322e577652c5992113f49ab4",
+    "tools/fixtures/http-cert.pem": "dc65e1e3f0ea554ac10141a5e6b76629f9a97599e7e0c899c7c4353288891f6a",
+    "tools/fixtures/http-key.pem": "d536405308c7ab59eebb526c68334de5037bcf3dc64926b049b7119c7a1d000c",
+    "tools/generate-accessor-tests.mjs": "d0a81b6c0043ac2fd0db3d363a404e228c052cb1c3296a4bde3bfb6702d6e972",
+    "tools/generate-collection-tests.mjs": "d289577cfb4b39aaa6146ec907c72f614e7699eca8c70258f7da61b24c96d3e4",
+    "tools/generate-document-tests.mjs": "7853da78fae10af269009598f8a2d42f6a03e788e9fc78a37ae1c6df4369e891",
+    "tools/generate-http-json-tests.mjs": "a47fd1922a3517db97986878ecc22036ba1ded805c7bd92846587f26ca14eb4f",
+    "tools/generate-numeric-characters.mjs": "709b7e2202f4adbd19a7bd762447a771d9e4ac615bf7a2412824366bb2de0b04",
+    "tools/generate-path-characters.mjs": "7944e42ac50357f24957fa3fa9c48dc2f1e425ec346ed8872bcfd264d49f43c1",
+    "tools/generate-path-tests.mjs": "9c6fdd9f6f93fb951e69279ae1acfa9429247db0bc13ee451d4a726580f6d59b",
+    "tools/generate-persistent-core-tests.mjs": "d7edf66b380d239283bcfabcbf801c671ccc6da4e2a1594a9a38c438fb0564db",
+    "tools/generate-temporal-tests.mjs": "61ecbe5905396e91d04f9346291ae13cdf3b4d804d3641df7957e36cb0980b16",
+    "tools/generate-tree-tests.mjs": "f75919e3937bc4906ec9fd2e9f4ecb7bfb1c4b7a2860d2afd40be21752a76404",
+    "tools/generate-value-tests.mjs": "5805b13ab3066d90a085f22c301427f0f6f42613558e5051b3581f82f4dfc509",
+    "tools/generate-value-walk-tests.mjs": "e26005f2bab47db50f5bda1bc8590b08c591e5a5a1a0bdfea512f5b699ef2526",
+    "tools/http-client.mjs": "d962f3e27b8cbf4b3e652d5d2bf4d232d552bea214f2355855e7ddef24cf2dbc",
+    "tools/http-test-server.mjs": "b306856077bfd36c34e9db08bba215608fed3cffb0d6b0ef53362665b3f2fbd7",
+    "tools/http-worker.mjs": "bb5d8929d1362a75c00a09e1ab4a4fe8d98dda825a4eb4a0a98f61e7ded6ee69",
+    "tools/invalid-input.txt": "64a49c61207045d9c43ad3088b224c85e210975887fed59fabdb625e5fb66801",
+    "tools/path-cases.mjs": "910fcc5c64d29c863be452fa2d97acc3415f96401829259f2e72e7bdd41c9359",
+    "tools/persistent-cases.mjs": "85632b920d781564303c8ea178d686b736ce3175d2c3361cb7ac0ed52a3183b2",
+    "tools/robustness.mjs": "24964a078897dccc448ba3d5db4c08f6446d38008424987bf26b4b6f042a21d6",
+    "tools/serve.py": "77361b08fc65d9c6a3d89bda03949d9e1a9754f76e8cc32b20ca11aa9bf1ff5e",
+    "tools/test-accessor-host.mjs": "2040f2c6c4797dee9ea0787825d604c20b0bb4b613a426d1792357195c6130c8",
+    "tools/test-accessor-reference.mjs": "1cbfa4f23a76e52ef183e63996e9bf72dcfdf8b50968b02530dadde29afd74ac",
+    "tools/test-cli.mjs": "b1acaf8992e16d37e1527fd60beeea275ce0df574a9622ab3b44d86dcaf08b03",
+    "tools/test-collection-host.mjs": "0362f5257edfdad1552c1f3e87e288fe71ce4cd5a3d0c117e6f617c81d6f68e5",
+    "tools/test-collections.mjs": "8ce6ea9916a54f5e0ba83a6cbcab90349fff66d2f3b02eb8f952cb338b509f76",
+    "tools/test-config-reference.mjs": "7ddeba0046022a6d659418e5271b38f1d55efeb3c57a987a8445dcb88adf71ae",
+    "tools/test-demo.mjs": "02ec6337b9c72c299450db6f0d2b024fd4fd96193d17e5cd501c3a8e6eb87188",
+    "tools/test-document-host.mjs": "5cfcfee6e44dae1d566c98b8b743a7d659b3de62ab3a0bc7ffae306f3ab2d890",
+    "tools/test-document-reference.mjs": "4713ba1ca751a487457930648f358e600e7ceb950e67227d7f01c8c094fa8b49",
+    "tools/test-file-reference.mjs": "eeed35f31f749e5ab391f65862b3741a67979f6f22dd29a7c55892badf04b998",
+    "tools/test-host.mjs": "a498825c200a8d6f2f486d74d6102f7880740d8bdb12cb8b9f58ce152ad03f0a",
+    "tools/test-http-host.mjs": "5f1232af3a5ddb672c73ae5cdab590ab569e4287cb70e8461ef595fc2c528b1e",
+    "tools/test-http-reference.mjs": "4c13d95373b655c2dc8b3a1874f341a35c2b13b8a23de91b346a9b7ff10bd149",
+    "tools/test-native-read-host.mjs": "48fc4a00371ec2da5a51739a52b728baee5755dea98231806587d24a25f04a55",
+    "tools/test-native-read-reference.mjs": "0e4546f2e3917420dffe976f31fb96f24060ae3a843fd6707e935b58a2a474d3",
+    "tools/test-path-reference.mjs": "58db77dde77a920ac2a80a215fc5baec7eb5c9ad98c953fa672a805c475022f7",
+    "tools/test-persistent-async.mjs": "b9f6c655fb491c0a017654aa7598c2d87d899fb41b2bc0e560465558b85e2ff1",
+    "tools/test-persistent-host.mjs": "b637e7edcb9bbce4a31919a20fce53bcd135b0760b8fb4ae19ae6c189c2ab9ad",
+    "tools/test-persistent-memory.mjs": "117de1a111a968e6b41efd95fc7e015f796ea4bb49a058df321344ad01050d46",
+    "tools/test-persistent-reference.mjs": "9d9646ecd50e0737e6a1c34d9f0f27e36cf2a5f65bb7e0748f051a6f5f1f1b02",
+    "tools/test-reference.mjs": "13fe50483a9fa2708bca2003c7ecd9f6adac4032b0c6a13ae1885923d84dd89f",
+    "tools/test-temporal-host.mjs": "e7532b4dfd8f9a7f4b7853f1f7311d1ac7ba0b16ed4898f1ff00df78250e4b4c",
+    "tools/test-temporal-reference.mjs": "3d391fe29f8cafd219e53908ee9fa4dc53bec2c41844c6a8eb4fc216c4a99790",
+    "tools/test-tree-host.mjs": "8f2ea00626b570f21dd314736ab63381da15a96cf672b5871c0b7f862977adce",
+    "tools/test-tree-reference.mjs": "374f81855c2fe5bcf90fb97f690e2ece2bce1b7b241c0879000a953a700ca32e",
+    "tools/test-value-async.mjs": "e55c3465f4ebf9cc6d6ec43416579e187116e4ed5931a4adbe37ecc81b2e749b",
+    "tools/test-value-host.mjs": "796c4969b0ae5830cddc808088c2f92a3b569c4c4a3ed5cdaea293207f833ffc",
+    "tools/test-value-reference.mjs": "39e05c3e57c23d0fe2be6e0024cbb021dd1988f8a689a51444aa41db1a62693e",
+    "tools/test-value-walk-host.mjs": "8383b096c67a3a2ba527fbcbfc545e8a80be89be9b1a389899396c85529bcdbf",
+    "tools/test-value-walk-reference.mjs": "3f8578338c96e6f7d78dec8408fe1bf2109ecc4dd786b2c49f43031a57184c6c",
+    "tools/value-cases.mjs": "99916859c21a6767f69021d9b79f021f0fe39a97e99e362a0d0c3829ac608811",
+    "tools/value-walk-cases.mjs": "c59e988a19e65e633a2d04543a51deaf058ce3a241f9cbdcf702bbef7770d135",
+    "tree_operations.mbt": "606bc5a1f7a7843067c1b13453f7a46eca31b1af3bb54b818d308b24b0374881",
+    "tree_operations_test.mbt": "8f43200c95e404c26d695c2d87ed6a2d9126a77ed32e426b7206d33535a31b33",
+    "tree_reference_test.mbt": "8177a8b32582253af16b9d2a8bb1a0b3969f8af0dc6d44f0e21c950be3cb3122",
+    "typed_collections.mbt": "fabe03d23d01bc3fb5d93afdb38213eafc32f6187e9807b8250d2fb9c466162b",
+    "typed_test.mbt": "bb4ae7dda24fab3040122820a0bdc079f6858efa36916d594a9ace7595b40016",
+    "usability.mbt": "0f6e9ed0452e9b989b0d3320ab06085c8b71d436fe06e58dd23e0c4fdf75e68e",
+    "validation.mbt": "20a4a4dbe49c998e58b992f8ef74566fd60ebc69831e85dd62ffe5024ab95eae",
+    "value_containers.mbt": "48e6659d9e205e213db614a87ef12be0f4ecf6a607945209cd91c5c02c6439ae",
+    "value_containers_test.mbt": "6c3b037d8129c17969e4e33ea2d2a480495ff95360957075f6a1b254c7895a98",
+    "value_reference_test.mbt": "a87f0903a233f083fc308ae637f8f237fd3675b3e58a4b8142467e27efe825b2",
+    "value_semantics.mbt": "ec351f8ac88009b042db497c68a3349be1106ae32c418be9e67fcad1136e4e05",
+    "value_walk_reference_test.mbt": "08de33c8a2492fbd4b67b06b9d8a5b40ce45c42d1f08e5c7c283a4ef0eb24f11",
+    "value_walk_test.mbt": "71cd62b5eec2556da9498d4e1a7a4ee9fc9019ad34e3ce3d4cfbe297d525be0f",
+    "verify.ps1": "4f0327801313c3de7c337431d01462a46b625c99f6c69ab8439ec3ef4566a2f8",
+    "web/app.mjs": "12a0cf3565b6298e2e3760355ec5da3fed88870be604b7f6e1a2f57d7334578d",
+    "web/config.mjs": "6cc7edbdb551db766b27f268521f323981c578a2e4878ce9f0bd391c1057ccd4",
+    "web/engine.mjs": "b2bcd7ddc93403ef2b4fa22c9cf3805edca1de86dd788c2efdcdbd06b821eaa1",
+    "web/index.html": "cdcbb5d9f2d455d4335bfd7fdcd30bac065fc0b90843d4fe616ef9726fc7aeb8"
+  },
+  "evidenceGitBlobSHA256": {
+    "evidence/accessor-generation.json": "5391931e51d44dab24436505d98eb092d6cd56e433678007c5140c60052376ef",
+    "evidence/accessor-host.json": "fcbb1f1acec9b5c1d5a05149661a7e1cfe9b8ec231c7630e55969691fcb6afb8",
+    "evidence/accessor-performance-ascii.json": "1fa8d61545ba0bd3a658087bfdbf492aec5be8259f6edefffe14c5d5a2f00f03",
+    "evidence/accessor-performance-enum.json": "e176e38c98041b4df73bce9b38f59c17b32c48b1ce94a76af71ec010fa49bc75",
+    "evidence/accessor-performance-initial.json": "985ed3ad03a9115f626d45a831c43d4fa8839dc4308dba8cb3cadb4e0af48bab",
+    "evidence/accessor-performance.json": "5014c75a3a8a991776fc5da59531d101b04b4cd77a1166b9bc8618342fedb939",
+    "evidence/accessor-reference-validation.json": "622bdeea6ff18ecb230915cad579f30ab74a5d6a17418de25340b48cd1e240f0",
+    "evidence/accessor-reference-vectors.json": "c2262e9c2984d984fe245174d861f74568be40ac7043c023e49e437d3d75130e",
+    "evidence/accessor-upgrade.json": "6874bc2dbd813b3f5dd13cd1061094fb0142f49579eec414bfcb26b0ce04bd03",
+    "evidence/accessor-verify.log": "edc2d58164d349a650b224390387c9abe25b14d6e990efd97b6360e57374a570",
+    "evidence/benchmark.json": "0410ddf07064847cef89c2c629e21f7b601d0fb74886ca8505050e63290cc313",
+    "evidence/collection-generation.json": "cba2b27b8b028f5cb823bb5499e3dfe00cddfc4c8efc6c227bdcd6adbbb538ce",
+    "evidence/collection-host.json": "29d39783faa149d74758f3b3b0e702f52a9f9e42481730228fe6c366ab2f4a03",
+    "evidence/collection-performance.json": "1fdf451786f7baab411276cc225e8b86ef384a536a4f04b314dac16d1823e46f",
+    "evidence/collection-reference-validation.json": "7618f30761517b4e446adb1a4358198c4890c96a57548c32e73b2701742123b8",
+    "evidence/collection-reference-vectors.json": "042a52571088c66d1268d3b19eee205de1b451b84765a0fd8a396fd03ca2fbe3",
+    "evidence/collection-upgrade.json": "04cc9371122f75dcab343e95eef9d867210407e649fd6623045858deebeeef49",
+    "evidence/collection-verify.log": "e4fd6d616d9c972bc0e6c530a60371dd07960dc2c6b2de14cdcb5d72cd4e085d",
+    "evidence/config-reference-validation.json": "32fccadf32639a0c5e4dce98fb31e421a42cd651cb2e403598acd2a1ce6804dd",
+    "evidence/config-reference-vectors.json": "c3a9bfd59b39dc6f162a95fbd67f3df65bff10e4bc8d90fc7ced5c366b6d5f5b",
+    "evidence/config-upgrade.json": "243a0186e0881dc7c818d16f9018b070d07f116d7e592ba625bbfa392722f580",
+    "evidence/document-generation.json": "e9864aed5361426c940ced62e48ee6c16196ab68c704afb8e72a6c849a4246d3",
+    "evidence/document-host.json": "7a3919cd5a7d24fa102082db9e50bff79e1dc4aabc69c6e75ee6c8e24a899e5e",
+    "evidence/document-performance.json": "b48459116a97aeb578f95d8d0b784cb2d7cdf305792f81b3adddefadad585f77",
+    "evidence/document-reference-validation.json": "902d2b16ff73f214b6d1ee6b005c5da828519610147c2c6fd4629d83f5ff2853",
+    "evidence/document-reference-vectors.json": "70169b07c558b5b9f5b9a3269eba2d53575747a6b688a9019bacd11b9531af95",
+    "evidence/document-upgrade.json": "bc8065ef0858912886f9e820afcc63c009e8dfa5d8f9c8c55bbadbea6abbac2b",
+    "evidence/document-verify.log": "25c1767d31a42a807a052a271933ae6e8f7e5ae9c6bc65afd574b4d0028b0772",
+    "evidence/duplication.json": "cc8ed3b5b06515bd9aad9cfdd46a3f0182767eb4091862cd3cb2505ef04f641a",
+    "evidence/file-reference-validation.json": "00752d4471e538eb2b0388fa815ebddf2e5f2ed72b22a4a0589e6db39f40ff27",
+    "evidence/file-reference-vectors.json": "a644cf0d2672331c1f111dd81d5cdc8f0c660265addac3c5aa85a3022276c093",
+    "evidence/http-generation.json": "557be60dca45261c0cae5be0d482b8595aa909e05fb82096116e1eefc7ef4e80",
+    "evidence/http-host.json": "2cd80689c9adbe56046f24a2ee6dda5ff86e175a3ab23da74dcbab38473aac97",
+    "evidence/http-performance.json": "d84d976059949218a6c5a8a0b665d53c5d8c935e5320071b557766ee3674658c",
+    "evidence/http-reference-validation.json": "38dfa861b25446f545102183f3e322200dbfc4f8449059d4a179a70a2e3e66a0",
+    "evidence/http-reference-vectors.json": "d995131c302ebd824206dfa2866e72cd80f284246093746c0be43b4c64ee02f7",
+    "evidence/http-upgrade.json": "0472b7799138051e98a6fdd0a448b32dc1643817b21da808efe6e188be83fc87",
+    "evidence/http-verify.log": "411931bab1fd3dc0d4b651adc14bfa5ec983a9aae4ceaa54e54c496941df6910",
+    "evidence/native-read-generation.json": "16a6d89abe5ea97c3d9e60e34f83df68fba03814b374a648db343b3a025d9846",
+    "evidence/native-read-host.json": "2172814d0ad6cdb2f9dd3ad62d10743a7251b25f41e5c5c6d63f0260a4a52ff2",
+    "evidence/native-read-performance-initial.json": "ae1ba7d72053da15011ccbcb2c375ebe0c41cb815ee8f57ad47c5e750df94030",
+    "evidence/native-read-performance-json-root.json": "203dd1d8377646a40d0307966e693cfa307e5239f5f0b85be642a6e2609128e9",
+    "evidence/native-read-performance.json": "a99e8f6898c00a0c55cbc72525ba4be04c5f8cb8a6d046352bd99e83afc33b3f",
+    "evidence/native-read-reference-validation.json": "e8e2239595f08bb1a8343588f4ede34c53c0fec9fe5c823cc02c07a2486ac613",
+    "evidence/native-read-reference-vectors.json": "7b9c784004cf3c0030f1d29d7a24e45e79a49040785118d57d5a7ed573137590",
+    "evidence/native-read-upgrade.json": "22b4020c2501577082719fdf3b015da78b0da905b4434325ea8311b4530306f7",
+    "evidence/native-read-verify.log": "89f73d12e2bdf51cc70798992e13b7429cd1a3c45f54000c1f0e1444e859bf8c",
+    "evidence/numeric-characters.json": "f301f4bd339ba3b17d44a27fde0659b5e7dee68aaf4a91ba9c2f6e08da24916b",
+    "evidence/path-characters.json": "568742a7473703d44ef179fc5125be04530337c36344754768aa9d6beacaa0c2",
+    "evidence/path-reference-initial.json": "6cdc739e779bde0be9c6e205561bf31c45756e3027ff710ca5e04687962deb26",
+    "evidence/path-reference-validation.json": "ca7b951eebdd9614e1542e80558590be87f2d5b9845d699543ad5b26b1016978",
+    "evidence/path-reference-vectors.json": "1839c695f89f9625813d2f183e6d1a11b1312755a92b161eecc47851135b1bb6",
+    "evidence/persistent-async.json": "8c636d622f929f333296216c261c72cbe8e7dc319ee163a9b581f36b0a0e9cae",
+    "evidence/persistent-generation.json": "cc0ba0e5799f74265add04bee6d3ef3e93107bcf2797732171c538afa2e83554",
+    "evidence/persistent-host.json": "2b763dcca283c669037b1ec6913c9da53163323a48eb9d9c51ecd128da251845",
+    "evidence/persistent-memory.json": "01fd8f5be4725a067e1a0640572f2f4dc2e91479212c79d8192809cbfbf6324a",
+    "evidence/persistent-performance-initial.json": "fee0ed41a1ecf2a3ae947442e06a9cd4268fd0f90efdc95c312fe01b4ae5f7b2",
+    "evidence/persistent-performance-read-fields.json": "41e593c74f6f3622ee571ea35cfb01f24cb053944407622d744e2e82e9ff889c",
+    "evidence/persistent-performance.json": "989c26582e9b476cd03a47c2ff1d5e608b23af89790a80ea40c57bdfcb2953ac",
+    "evidence/persistent-reference-validation.json": "a7b3737c8022e51b867027b097308f6bda40f14e97f1eb67ac7b52e678cce687",
+    "evidence/persistent-reference-vectors.json": "f51e0c889e8aced6d5af45f66606a59c5ad7e2959795d3685861d4cf326379bc",
+    "evidence/persistent-upgrade.json": "a75ad24b2bf473d4428ecf73c27a23611f20c86e40c54e1135e4f7a13ff2dd73",
+    "evidence/persistent-verify.log": "3920efa147979c1f587eb4b5c639a3dcc019de8fec48102b1e34088894bed076",
+    "evidence/quality-review.json": "b2c33ae55ce0d45d661969a6de563aebc297acbf42027348aed7bdebf04c0c45",
+    "evidence/robustness.json": "12839d23b65911df4e385d1a4f1df5da7bc719ebfdcb490f56fe1d3b1adc9e3a",
+    "evidence/temporal-generation.json": "2b7bdb588a6229d9ee349c2289f8fb0e74e0b1a3e2d6eccd9a06530333dc1108",
+    "evidence/temporal-host.json": "c0ca80174804b4dbdb49ace35113cdc861ce353b64a8675d381770bafe8b989d",
+    "evidence/temporal-performance-initial.json": "7553c48eeb5ae89c7024bd6defed0f88f8fccdf04cbf55571af3975b50c55c60",
+    "evidence/temporal-performance.json": "51e36af4897d1c041654e1985781400bb39c7eb0a82aa90554da2555d613e48e",
+    "evidence/temporal-reference-validation.json": "340c4c956a3358deea242076ea22eaffc926e58b1df6d955f90c28a8d47b6ee3",
+    "evidence/temporal-reference-vectors.json": "6f89da7be7c45b3bb5c5f6f556905d61cb38d90d907cd535a2fcfc513f9dd4f9",
+    "evidence/temporal-upgrade.json": "8ed8e13793c53d7aa128027f8496445024b098de8e92d33d23490a59564d335c",
+    "evidence/temporal-verify.log": "637452809d0ba695da624252c1c6ed7e9059454cefe040b2a9068291335c2e4e",
+    "evidence/tree-generation.json": "bf9a7faafd266776297c2ef41d88cbfc86289127041ba482fbbe8b6f60974162",
+    "evidence/tree-host.json": "a2f0faaa81ec0f1c57078b5b52c548efbca42d31755903614a600e294e47bbba",
+    "evidence/tree-performance.json": "39f877a15fe68f87d76ec47d445702eade9ef88d6e5a64d0fcc73157627f5e70",
+    "evidence/tree-reference-validation.json": "d40169c915ba88546533365034c54585479a2385019c9543a48deeceaef5cde2",
+    "evidence/tree-reference-vectors.json": "6bc4e2192866c850bfc72f7c55f17dd10d9196d72dc242e07ab19f366d906007",
+    "evidence/tree-upgrade.json": "8eea7b03d9dec4fff5c7703dbafc175a1e8375a9ac047e9b62b28fcdf05c9d68",
+    "evidence/tree-verify.log": "2f51a99b33c77da9241d1f9cf8687820f0bff84fc846e48163131723291f80b6",
+    "evidence/typed-focused-validation.json": "bf0e2ef8e9056fa57985b3f3925c981ad02d99deaa9e1c78829c43e2b2da188e",
+    "evidence/typed-reference-validation.json": "37ca9296b7030e720b2784333e71abd035581c06d5511ad33a26eda5505f3275",
+    "evidence/value-async.json": "329bb5db3478cbec746a93538245c0584259e901f23d617d776adf74e985216b",
+    "evidence/value-generation.json": "a3fc7034179bf2967deda5c0b0261b1a1c7aa90a944828a848469d37efed2913",
+    "evidence/value-host.json": "cec368dcad9ffce5690334713392316cb10ecc3b7054633a1d1534e924823abc",
+    "evidence/value-performance.json": "05ef06f5f03521fa01119b7a0c119e2dbc1b24bcad15565d2547b2e34aacd550",
+    "evidence/value-reference-validation.json": "245b79738ee77bcaf8897de6c07e2079b68d916f3c0bfcc26c3f5f8200e94999",
+    "evidence/value-reference-vectors.json": "dddbdde7e9983d763dd33b322757c285691e18a0e0b072ad99da27c1f02086ef",
+    "evidence/value-upgrade.json": "ee3516fb75f291c88ecf2255a33f021e1ab863c9a4d5dd46414da6d339d09e09",
+    "evidence/value-verify.log": "666bd92e184b2255aedb358525366c8ff19b7cd104e4c20ba2154dca2f8ae225",
+    "evidence/value-walk-generation.json": "1ff3659dc2e4a533caaadf329308d33d31867c72d495970b0a70274f968c32fd",
+    "evidence/value-walk-host.json": "35d946bd0d40f8a633b19ac5a9cdb2e1ee4f8cb5d3ae533038cd3e914f82e1b7",
+    "evidence/value-walk-performance-initial.json": "b35fee69ae119be93bc1095ac7cb4ca151aa711efaef45459140e6edee913e63",
+    "evidence/value-walk-performance.json": "83bdc2dc894e158a7e4e5b18427b5a4c49132d80e4281e194acf3b500aad78df",
+    "evidence/value-walk-reference-validation.json": "1a04a3fc559aff1b22778492dfe8a77067d23a43bb87aeac35e965b50eae9849",
+    "evidence/value-walk-reference-vectors.json": "203be86e79cc30c4805b49eb848a3c92ce3eb151267f7d3b3f768f67a944df4b",
+    "evidence/value-walk-verify.log": "732377bfd3388099f321ce0b65b9f3b0cafec42fc30c526544e0d90e718ecacd",
+    "evidence/verification.json": "87b4279b73d88fa5e230474b93a9def1a9db9acd07692f8119803b443025477f"
+  }
+}

@@ -63,13 +63,88 @@ pub fn value_read_native(handle : ConfigHandle, op : String) -> NativeValue {
     let value = handle_value(handle)
     let result = match op {
       "type" => native_string(@lib.value_type(value))
-      "unwrap" => native_json(@lib.value_unwrapped(value).to_json_string())
+      "unwrap" => native_json(value.to_json_string())
       "size" => native_number(@lib.value_size(value).to_double())
       "hash" => native_number(@lib.value_hash(value).to_double())
       "keys" => json_native(@lib.object_keys(value).to_json())
       _ => raise BadOperation
     }
     native_success(result)
+  } catch {
+    e => json_native(bridge_error(e))
+  }
+}
+
+///|
+pub fn value_lookup(
+  handle : ConfigHandle,
+  op : String,
+  key : String,
+  index : Int,
+) -> ConfigHandle {
+  try {
+    let value = handle_value(handle)
+    match op {
+      "get-key" => {
+        guard value is (@lib.Object(fields) | @lib.SealedObject(fields)) else {
+          raise BadOperation
+        }
+        { value: fields.get(key), error: "", }
+      }
+      _ =>
+        make_handle(() => {
+          match op {
+            "get-index" => {
+              guard value is @lib.List(items) else { raise BadOperation }
+              items.get(index).unwrap_or_else(() => raise BadOperation)
+            }
+            "get-value" =>
+              match @lib.get(value, key) {
+                Some(node) => {
+                  if @lib.value_type(node) == "NULL" {
+                    raise BadGetter
+                  }
+                  node
+                }
+                None => @lib.get_value(value, key)
+              }
+            "get-object" => immutable_child(value, key)
+            "get-list" =>
+              match @lib.get(value, key) {
+                Some(@lib.List(_) as node) => node
+                _ => @lib.List(@lib.get_as_list(value, key))
+              }
+            _ => raise BadOperation
+          }
+        })
+    }
+  } catch {
+    e => { value: None, error: bridge_error(e).stringify(), }
+  }
+}
+
+///|
+pub fn value_search_native(
+  handle : ConfigHandle,
+  needle : ConfigHandle,
+  op : String,
+) -> NativeValue {
+  try {
+    let value = handle_value(handle)
+    let needle = handle_value(needle)
+    native_success(
+      match op {
+        "contains-value" =>
+          native_bool(@lib.object_contains_value(value, needle))
+        "index-of" =>
+          native_number(@lib.list_index_of(value, needle).to_double())
+        "last-index-of" =>
+          native_number(
+            @lib.list_index_of(value, needle, last=true).to_double(),
+          )
+        _ => raise BadOperation
+      },
+    )
   } catch {
     e => json_native(bridge_error(e))
   }

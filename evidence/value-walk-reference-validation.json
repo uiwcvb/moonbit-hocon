@@ -1,14 +1,14 @@
 {
-  "utc": "2026-09-18T21:32:04.469Z",
+  "utc": "2026-09-18T21:32:06.629Z",
   "mode": "live official library",
   "reference": {
     "library": "unmodified Lightbend Config 1.4.9",
     "jarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37"
   },
-  "total": 2810,
-  "passed": 2810,
+  "total": 936,
+  "passed": 936,
   "failed": 0,
-  "scope": "Raw/resolved ConfigValue, object and list reads; literal keys/null; immutable edits; arbitrary-value fallback barriers across embedding and continued operations. Exact type/data/acceptance; errors/origins/rendering and high-collision iteration are outside scope.",
+  "scope": "Direct traversal: numeric width/float boundaries, object key-set prechecks and native short-circuit order, unresolved directional equality, early/late/absent list searches through 512 entries, varied-size object equality/hash. Exact values and acceptance; diagnostic text and tree-bin iteration remain out of scope.",
   "sourceHashes": {
     "accessor_reference_test.mbt": "ef0cea69ffc47506f3c8a54352b8bda45617aca06af288d99676092a662fa3e0",
     "accessors.mbt": "cd1d648bb382d5a88ef32ef32d475dd35b5d15fce9f42134d1bda90067be8474",

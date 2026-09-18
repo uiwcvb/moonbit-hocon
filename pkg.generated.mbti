@@ -114,6 +114,10 @@ pub fn join_path(Array[String]) -> String raise ParseError
 
 pub fn list_get(Value, Int) -> Value raise ParseError
 
+pub fn list_index_of(Value, Value, last? : Bool) -> Int raise ParseError
+
+pub fn object_contains_value(Value, Value) -> Bool raise ParseError
+
 pub fn object_get(Value, String) -> Value? raise ParseError
 
 pub fn object_keys(Value) -> Array[String] raise ParseError
