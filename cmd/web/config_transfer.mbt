@@ -42,7 +42,7 @@ fn pack_value(
         "list".to_json(),
         items.map(v => pack_value(v, work, depth + 1)).to_json(),
       ])
-    @lib.Object(fields) => {
+    @lib.Object(fields) | @lib.SealedObject(fields) => {
       let entries = []
       for key, child in fields {
         transfer_spend(work, key.length(), depth)
@@ -50,7 +50,10 @@ fn pack_value(
           Json::array([key.to_json(), pack_value(child, work, depth + 1)]),
         )
       }
-      Json::array(["object".to_json(), entries.to_json()])
+      Json::array([
+        (if value is @lib.SealedObject(_) { "sealed-object" } else { "object" }).to_json(),
+        entries.to_json(),
+      ])
     }
     @lib.PathReference(path, optional) =>
       Json::array(["path".to_json(), path.to_json(), optional.to_json()])
@@ -151,7 +154,7 @@ fn unpack_value(
     Array([String("boolean"), b]) => @lib.Boolean(transfer_bool(b))
     Array([String("list"), Array(items)]) =>
       @lib.List(items.map(v => unpack_value(v, work, depth + 1)))
-    Array([String("object"), Array(entries)]) => {
+    Array([String("object" | "sealed-object" as tag), Array(entries)]) => {
       let fields : Map[String, @lib.Value] = Map([])
       for entry in entries {
         guard entry is Array([String(key), value]) else { raise BadSource }
@@ -161,7 +164,11 @@ fn unpack_value(
         }
         fields[key] = unpack_value(value, work, depth + 1)
       }
-      @lib.Object(fields)
+      if tag == "sealed-object" {
+        @lib.SealedObject(fields)
+      } else {
+        @lib.Object(fields)
+      }
     }
     Array([String("path"), path, optional]) =>
       @lib.PathReference(
@@ -228,7 +235,7 @@ pub fn config_unpack(input : String) -> ConfigHandle {
 ///|
 fn transferable_config(value : @lib.Value) -> Bool {
   match value {
-    @lib.Object(_) => true
+    @lib.Object(_) | @lib.SealedObject(_) => true
     @lib.Bound(_, _, body) => transferable_config(body)
     @lib.DelayedMerge(_, high) => transferable_config(high)
     _ => false

@@ -160,7 +160,7 @@ pub fn get_as_list(
 ) -> Array[Value] raise ParseError {
   match required(config, key) {
     List(xs) => xs.copy()
-    Object(m) => {
+    Object(m) | SealedObject(m) => {
       let indexed : Map[Int, Value] = Map([])
       for name in object_iteration_keys(m) {
         let n = numeric_index(name)

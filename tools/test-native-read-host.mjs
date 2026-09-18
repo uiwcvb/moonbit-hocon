@@ -8,14 +8,14 @@ async function check(name,run){await run();checks.push(name);}
 const obj=JSON.parse('{"__proto__":{"x":[1]},"constructor":2,"prototype":3,"toJSON":"data","__hocon_output_probe__":[1,2],"astral":"😀","control":"a\\nb\\u0000c","quote":"\\\""}');
 for(const factory of ['load','loadAsync'])await check(factory+' native objects preserve own data keys and isolation',async()=>{
  const config=await Config[factory]('obj='+JSON.stringify(obj));
- const value=config.getObject('obj');assert.deepEqual(value,obj);assert.equal(Object.getPrototypeOf(value),Object.prototype);
+ const value=config.getObjectData('obj');assert.deepEqual(value,obj);assert.equal(Object.getPrototypeOf(value),Object.prototype);
  for(const key of Object.keys(obj)){const d=Object.getOwnPropertyDescriptor(value,key);assert(d&&d.enumerable&&d.writable&&d.configurable&&!d.get&&!d.set);}
- value.__proto__.x.push(9);value.__hocon_output_probe__.clear='external';assert.deepEqual(config.getObject('obj'),obj);
+ value.__proto__.x.push(9);value.__hocon_output_probe__.clear='external';assert.deepEqual(config.getObjectData('obj'),obj);
 });
 await check('native object conversion defines properties without invoking inherited setters',()=>{
  const config=Config.load('obj='+JSON.stringify(obj));let called=0;
  const old=Object.getOwnPropertyDescriptor(Object.prototype,'__hocon_output_probe__');
- try{Object.defineProperty(Object.prototype,'__hocon_output_probe__',{set(){called++;},configurable:true});assert.deepEqual(config.getObject('obj'),obj);assert.equal(called,0);}
+ try{Object.defineProperty(Object.prototype,'__hocon_output_probe__',{set(){called++;},configurable:true});assert.deepEqual(config.getObjectData('obj'),obj);assert.equal(called,0);}
  finally{if(old)Object.defineProperty(Object.prototype,'__hocon_output_probe__',old);else delete Object.prototype.__hocon_output_probe__;}
 });
 await check('native double values preserve signed zero and explicit nonfinite strings',()=>{
@@ -26,7 +26,7 @@ await check('complex scalar and list values are detached in every native read',(
  const config=Config.load('p=12months\nps=[{a=1},{a=[2]}]\nn=9223372036854775807');
  const period=config.getPeriod('p');period.months=0;assert.equal(config.getPeriod('p').months,12);
  const numbers=config.getNumber('n');numbers.value='0';assert.equal(config.getNumber('n').value,'9223372036854775807');
- const objects=config.getObjectList('ps');objects[1].a.length=0;assert.deepEqual(config.getObjectList('ps'),[{a:1},{a:[2]}]);
+ const objects=config.getObjectListData('ps');objects[1].a.length=0;assert.deepEqual(config.getObjectListData('ps'),[{a:1},{a:[2]}]);
 });
 const handle=config_create(JSON.stringify({source:'x=1\ny=true\np=2months\nz="-0.0"\nl=[1,2]'}),()=>'{"ok":true,"sources":[]}');
 for(const [getter,path,extras] of [['int','x',''],['boolean','y',''],['period','p',''],['int-list','l',''],['no-such-type','x',''],['int','absent',''],['int','a..b',''],['enum','y','{"enumChoices":["true"]}'],['duration-in','x','{"unit":"milliseconds"}']])await check('native/text transport equality '+getter+' '+path,()=>{

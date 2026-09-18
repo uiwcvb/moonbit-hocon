@@ -72,7 +72,7 @@ fn render(v : Value, depth : Int, work : Work) -> String raise ParseError {
     Null => "null"
     List(items) =>
       "[" + items.map(x => render(x, depth + 1, work)).join(",") + "]"
-    Object(m) => {
+    Object(m) | SealedObject(m) => {
       let keys = m.keys().collect()
       keys.sort()
       "{" +

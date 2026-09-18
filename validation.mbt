@@ -17,7 +17,7 @@ fn type_name(value : Value) -> String {
     Text(_) | Bare(_) => "string"
     Number(_) => "number"
     Boolean(_) => "boolean"
-    Object(_) => "object"
+    Object(_) | SealedObject(_) => "object"
     List(_) => "list"
     Null => "null"
     _ => "unresolved"
@@ -29,9 +29,9 @@ fn validation_compatible(reference : Value, value : Value) -> Bool {
   match (reference, value) {
     (Null | Text("null") | Bare("null"), _)
     | (_, Null | Text("null") | Bare("null")) => true
-    (Object(_), Object(_)) => true
-    (Object(_), _) => false
-    (List(_), List(_) | Object(_)) => true
+    (Object(_) | SealedObject(_), Object(_) | SealedObject(_)) => true
+    (Object(_) | SealedObject(_), _) => false
+    (List(_), List(_) | Object(_) | SealedObject(_)) => true
     (List(_), _) => false
     (Text(_) | Bare(_), _) | (_, Text(_) | Bare(_)) => true
     _ => type_name(reference) == type_name(value)
@@ -64,7 +64,12 @@ fn validate_pair(
     return
   }
   match (reference, value) {
-    (Object(expected), Object(actual)) =>
+    (
+      Object(expected)
+      | SealedObject(expected),
+      Object(actual)
+      | SealedObject(actual),
+    ) =>
       for key, child in expected {
         let next = parts.copy()
         next.push(key)
@@ -74,7 +79,7 @@ fn validate_pair(
           Some(v) => validate_pair(child, v, next, problems, work)
         }
       }
-    (List(expected), List(_) | Object(_)) => {
+    (List(expected), List(_) | Object(_) | SealedObject(_)) => {
       let actual = get_as_list(Object({ "value": value }), "value") catch {
         _ => {
           problems.push(

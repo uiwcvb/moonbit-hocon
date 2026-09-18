@@ -132,7 +132,7 @@ pub fn get_object(
   key : String,
 ) -> Map[String, Value] raise ParseError {
   match copy_value(required(config, key)) {
-    Object(fields) => fields
+    Object(fields) | SealedObject(fields) => fields
     _ => raise Invalid("expected object-compatible value")
   }
 }
@@ -155,7 +155,7 @@ fn unwrapped_tree(
   match value {
     Bare(text) => Text(text)
     Text(_) | Number(_) | Boolean(_) | Null => value
-    Object(fields) => {
+    Object(fields) | SealedObject(fields) => {
       let out = Map([])
       for key, child in fields {
         work.spend(key.length())

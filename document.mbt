@@ -8,7 +8,7 @@ fn reindex_document(
 ) -> Value raise ParseError {
   tree_step(value, depth, work)
   match value {
-    Object(fields) => {
+    Object(fields) | SealedObject(fields) => {
       let result = Map([])
       for key, child in fields {
         work.spend(key.length())
@@ -19,7 +19,7 @@ fn reindex_document(
           depth + 1,
         )
       }
-      Object(result)
+      rebuild_object(value, result)
     }
     List(items) =>
       List(items.map(v => reindex_document(v, owner, work, depth + 1)))
@@ -69,7 +69,8 @@ pub fn resolve_with(
   ignore(object_fields(source))
   let same = physical_equal(config, source) ||
     (match (config, source) {
-      (Object(a), Object(b)) => physical_equal(a, b)
+      (Object(a) | SealedObject(a), Object(b) | SealedObject(b)) =>
+        physical_equal(a, b)
       _ => false
     })
   if same {
@@ -84,7 +85,7 @@ pub fn resolve_with(
 ///|
 fn known_object(value : Value) -> Bool {
   match value {
-    Object(_) => true
+    Object(_) | SealedObject(_) => true
     Bound(_, _, body) => known_object(body)
     DelayedMerge(_, high) => known_object(high)
     _ => false
@@ -100,7 +101,7 @@ fn peek_document_child(
 ) -> Value? raise ParseError {
   tree_step(value, depth, work)
   match value {
-    Object(fields) => fields.get(key)
+    Object(fields) | SealedObject(fields) => fields.get(key)
     Bound(_, _, body) => peek_document_child(body, key, depth + 1, work)
     DelayedMerge(low, high) => {
       if !known_object(high) {
@@ -138,7 +139,7 @@ fn peek_document_path(config : Value, path : String) -> Value? raise ParseError 
   let mut current = config
   for part in parts {
     let child = match current {
-      Object(fields) => fields.get(part)
+      Object(fields) | SealedObject(fields) => fields.get(part)
       _ => peek_document_child(current, part, 0, tree_work())
     }
     match child {
@@ -168,7 +169,14 @@ fn required_document_value(
 
 ///|
 pub fn get_value(config : Value, path : String) -> Value raise ParseError {
-  copy_value(required_document_value(config, path))
+  let value = peek_document_path(config, path).unwrap_or_else(() => {
+    raise Invalid("missing path: " + path)
+  })
+  if value is Null {
+    raise Invalid("null path: " + path)
+  }
+  ignore(value_type(value))
+  copy_value(value)
 }
 
 ///|
@@ -179,10 +187,11 @@ fn check_edit_descent(
   let mut current = config
   for i = 0; i + 1 < parts.length(); i = i + 1 {
     match current {
-      Object(fields) => current = fields.get(parts[i]).unwrap_or(Null)
+      Object(fields) | SealedObject(fields) =>
+        current = fields.get(parts[i]).unwrap_or(Null)
       _ => return
     }
-    if !(current is Object(_)) && known_object(current) {
+    if !(current is (Object(_) | SealedObject(_))) && known_object(current) {
       raise Invalid("cannot edit inside an unresolved merged object")
     }
   }

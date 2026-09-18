@@ -1,11 +1,17 @@
-import {config_create,config_error,config_read_native,config_derive,config_child,config_children,config_validate,config_pack,config_unpack} from '../web/engine.mjs';
+import {config_create,config_error,config_read_native,config_derive,config_child,config_children,config_validate,config_pack,config_unpack,value_kind,value_select,value_read_native,value_equal_native} from '../web/engine.mjs';
 import {prepare} from './config-host.mjs';
 import {ConfigError} from './config-error.mjs';
 import {executeAsync} from './config-async.mjs';
 
-const token=Symbol('Config constructor'),states=new WeakMap();
+const token=Symbol('Config constructor'),states=new WeakMap(),valueStates=new WeakMap();
 function result(text){const value=JSON.parse(text);if(!value.accepted)throw new ConfigError(value);return value.value;}
 function state(config){const stored=states.get(config);if(!stored)throw new TypeError('Expected a Config object');return stored;}
+function valueState(value){const stored=valueStates.get(value);if(!stored)throw new TypeError('Expected a ConfigValue');return stored;}
+function mergeable(value){return states.get(value)??valueState(value);}
+function readValue(value,op){const result=value_read_native(valueState(value).handle,op);if(!result.accepted)throw new ConfigError(result);return result.value;}
+function wrapValue(handle,env){const error=config_error(handle);if(error)result(error);const kind=value_kind(handle);if(kind==='MISSING')return null;const Type=kind==='OBJECT'?ConfigObject:kind==='LIST'?ConfigList:ConfigValue;return new Type(token,handle,env);}
+function selectValue(value,op,other=value){const stored=mergeable(value);return wrapValue(value_select(stored.handle,JSON.stringify(op),mergeable(other).handle),stored.environment);}
+function asConfig(value){const stored=valueState(value);if(!(value instanceof ConfigObject))throw new TypeError('Expected a ConfigObject');return stored.config??=new Config(token,stored.handle,stored.environment);}
 function path(value){if(typeof value!=='string')throw new TypeError('Configuration path must be a string');return value;}
 function environment(value={}){
  if(value===null||typeof value!=='object'||Array.isArray(value))throw new TypeError('environment must be a string map');
@@ -67,6 +73,11 @@ export class Config {
  get(key,{type='any-ref',...options}={}){if(typeof type!=='string')throw new TypeError('Getter type must be a string');for(const name of Object.keys(options))if(!['unit','enumChoices'].includes(name))throw new TypeError('Unknown getter option: '+name);return query(this,type,path(key),options);}
  getConfig(key){const stored=state(this);return new Config(token,config_child(stored.handle,path(key)),stored.environment);}
  getConfigList(key){return config_children(state(this).handle,path(key)).map(handle=>new Config(token,handle,state(this).environment));}
+ root(){const stored=state(this);if(!stored.root){stored.root=wrapValue(stored.handle,stored.environment);valueState(stored.root).config=this;}return stored.root;}
+ getValue(key){return selectValue(this,{op:'get-value',key:path(key)});}
+ getObject(key){return selectValue(this,{op:'get-object',key:path(key)});}
+ getList(key){return selectValue(this,{op:'get-list',key:path(key)});}
+ getObjectList(key){return config_children(state(this).handle,path(key)).map(handle=>wrapValue(handle,state(this).environment));}
  getEnum(key,choices){return query(this,'enum',path(key),{enumChoices:choices});}
  getEnumList(key,choices){return query(this,'enum-list',path(key),{enumChoices:choices});}
  getDuration(key,unit){return query(this,unit===undefined?'duration':'duration-in',path(key),{unit});}
@@ -78,8 +89,8 @@ export class Config {
  render(){return query(this,'json-text');}
  resolve(options={}){const checked=resolveOptions(this,options);return derive(this,{op:'resolve',...checked},this,checked.environment);}
  resolveWith(other,options={}){const checked=resolveOptions(this,options);return derive(this,{op:'resolve-with',...checked},other,checked.environment);}
- withFallback(other){return derive(this,{op:'with-fallback'},other);}
- withValue(key,value){return derive(this,{op:'with-value',path:path(key),value:jsonValue(value)});}
+ withFallback(other){return asConfig(selectValue(this,{op:'fallback'},other));}
+ withValue(key,value){return valueStates.has(value)?asConfig(selectValue(this,{op:'with-path-value',key:path(key)},value)):derive(this,{op:'with-value',path:path(key),value:jsonValue(value)});}
  withValueSource(key,source){if(typeof source!=='string')throw new TypeError('Value source must be a string');return derive(this,{op:'with-value-source',path:path(key),source});}
  withValueFrom(key,other,valuePath){return derive(this,{op:'with-value-from',path:path(key),valuePath:path(valuePath)},other);}
  withoutPath(key){return derive(this,{op:'without-path',path:path(key)});}
@@ -93,11 +104,57 @@ export class Config {
 }
 const getters={
  getString:'string',getBoolean:'boolean',getInt:'int',getLong:'long',getDouble:'double',getNumber:'number',
- getObject:'object',getAnyRef:'any-ref',getList:'list',getPeriod:'period',getTemporal:'temporal',getBytes:'bytes',getMemorySize:'memory',getMilliseconds:'milliseconds',getNanoseconds:'nanoseconds',
- getStringList:'string-list',getBooleanList:'boolean-list',getIntList:'int-list',getLongList:'long-list',getDoubleList:'double-list',getNumberList:'number-list',getObjectList:'object-list',getAnyRefList:'any-ref-list',getBytesList:'bytes-list',getMemorySizeList:'memory-list',getMillisecondsList:'milliseconds-list',getNanosecondsList:'nanoseconds-list',
+ getObjectData:'object',getAnyRef:'any-ref',getListData:'list',getPeriod:'period',getTemporal:'temporal',getBytes:'bytes',getMemorySize:'memory',getMilliseconds:'milliseconds',getNanoseconds:'nanoseconds',
+ getStringList:'string-list',getBooleanList:'boolean-list',getIntList:'int-list',getLongList:'long-list',getDoubleList:'double-list',getNumberList:'number-list',getObjectListData:'object-list',getAnyRefList:'any-ref-list',getBytesList:'bytes-list',getMemorySizeList:'memory-list',getMillisecondsList:'milliseconds-list',getNanosecondsList:'nanoseconds-list',
  hasPath:'has',hasPathOrNull:'has-or-null',getIsNull:'null',
 };
 for(const [method,getter] of Object.entries(getters))Object.defineProperty(Config.prototype,method,{value:function(key){return query(this,getter,path(key));}});
+
+/** Immutable views of the retained MoonBit value tree. */
+export class ConfigValue {
+ constructor(key,handle,env){if(key!==token)throw new TypeError('Use ConfigValue.parse/fromAnyRef or Config accessors');valueStates.set(this,{handle,environment:env});Object.freeze(this);}
+ static parse(source,{resolved=false,...options}={}){if(typeof source!=='string')throw new TypeError('Value source must be a string');const value=Config[resolved?'load':'parse']('v='+source,options).root().get('v');if(value===null)throw new ConfigError({error:'Value disappeared during resolution'});return value;}
+ static fromAnyRef(value){return Config.fromObject({v:jsonValue(value)}).root().get('v');}
+ valueType(){return readValue(this,'type');}
+ unwrapped(){return readValue(this,'unwrap');}
+ toJSON(){return this.unwrapped();}
+ equals(other){if(!valueStates.has(other))return false;const result=value_equal_native(valueState(this).handle,valueState(other).handle);if(!result.accepted)throw new ConfigError(result);return result.value;}
+ hashCode(){return readValue(this,'hash');}
+ withFallback(other){return selectValue(this,{op:'fallback'},other);}
+ atKey(key){return asConfig(selectValue(this,{op:'at-key',key:path(key)}));}
+ atPath(key){return asConfig(selectValue(this,{op:'at-path',key:path(key)}));}
+}
+export class ConfigObject extends ConfigValue {
+ toConfig(){return asConfig(this);}
+ get(key){return selectValue(this,{op:'get-key',key:path(key)});}
+ containsKey(key){return this.get(key)!==null;}
+ size(){return readValue(this,'size');}
+ isEmpty(){return this.size()===0;}
+ keySet(){return Object.freeze(readValue(this,'keys'));}
+ values(){
+  const keys=this.keySet(),unique=[];let capacity=16;while(capacity<Math.max(16,Math.floor(keys.length/.75)+1))capacity*=2;
+  for(const key of keys){const value=this.get(key),h=value.hashCode();if(!unique.some(entry=>entry.h===h&&value.equals(entry.value)))unique.push({value,h,bucket:(h^(h>>>16))&(capacity-1),position:unique.length});}
+  unique.sort((a,b)=>a.bucket-b.bucket||a.position-b.position);return Object.freeze(unique.map(entry=>entry.value));
+ }
+ containsValue(value){const keys=this.keySet();return valueStates.has(value)&&keys.some(key=>value.equals(this.get(key)));}
+ entrySet(){return Object.freeze(this.keySet().map(key=>Object.freeze([key,this.get(key)])));}
+ [Symbol.iterator](){return this.entrySet()[Symbol.iterator]();}
+ withValue(key,value){valueState(value);return selectValue(this,{op:'with-value',key:path(key)},value);}
+ withOnlyKey(key){return selectValue(this,{op:'only-key',key:path(key)});}
+ withoutKey(key){return selectValue(this,{op:'without-key',key:path(key)});}
+}
+export class ConfigList extends ConfigValue {
+ get(index){if(!Number.isInteger(index)||index<0||index>2147483647)throw new RangeError('List index out of bounds');return selectValue(this,{op:'get-index',index});}
+ size(){return readValue(this,'size');}
+ isEmpty(){return this.size()===0;}
+ contains(value){return this.indexOf(value)!==-1;}
+ indexOf(value){if(!valueStates.has(value))return -1;for(let i=0,n=this.size();i<n;i++)if(value.equals(this.get(i)))return i;return -1;}
+ lastIndexOf(value){if(!valueStates.has(value))return -1;for(let i=this.size()-1;i>=0;i--)if(value.equals(this.get(i)))return i;return -1;}
+ values(){return Object.freeze(Array.from({length:this.size()},(_,i)=>this.get(i)));}
+ [Symbol.iterator](){return this.values()[Symbol.iterator]();}
+ subList(from,to){const size=this.size();if(!Number.isInteger(from)||!Number.isInteger(to)||from<0||to>size||from>to)throw new RangeError('Invalid subList range');return Object.freeze(Array.from({length:to-from},(_,i)=>this.get(from+i)));}
+}
+for(const Type of [ConfigObject,ConfigList])for(const method of ['clear','put','putAll','remove','replace','replaceAll','compute','computeIfAbsent','computeIfPresent','merge','add','addAll','set','removeAll','retainAll','removeIf','sort'])Object.defineProperty(Type.prototype,method,{value(){throw new TypeError('Configuration containers are immutable');}});
 
 // Internal worker transfer: reconstruct MoonBit values, not generated JS prototypes.
 export function _packConfig(config){return JSON.stringify(result(config_pack(state(config).handle)));}

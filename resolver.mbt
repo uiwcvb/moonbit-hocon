@@ -8,6 +8,7 @@ priv struct Resolver {
   work : Work
   allow_unresolved : Bool
   blocked_paths : Array[Array[String]]
+  delayed_object_root : Bool
 }
 
 ///|
@@ -21,7 +22,7 @@ fn replacement(
     return value.unwrap_or(Object(Map([])))
   }
   match root {
-    Object(fields) => {
+    Object(fields) | SealedObject(fields) => {
       let out = fields.copy()
       let key = path[index]
       if index == path.length() - 1 {
@@ -32,7 +33,7 @@ fn replacement(
       } else if out.get(key) is Some(child) {
         out[key] = replacement(child, path, index + 1, value)
       }
-      Object(out)
+      rebuild_object(root, out)
     }
     _ => root
   }
@@ -72,7 +73,7 @@ fn lookup_resolved(
   for part in keys {
     let head = evaluate(r, current, root, path, depth + 1, false, None, true)
     match head {
-      Some(Object(fields)) =>
+      Some(Object(fields) | SealedObject(fields)) =>
         match fields.get(part) {
           Some(v) => {
             current = v
@@ -230,6 +231,17 @@ fn evaluate(
         r.blocked_paths.push(path)
       }
       defer (if blocked { ignore(r.blocked_paths.pop()) })
+      if source_node && path.is_empty() && r.delayed_object_root {
+        match lower {
+          Some(replacement) =>
+            if !known_object(replacement) {
+              raise Invalid(
+                "cannot replace delayed object root with non-object resolution source",
+              )
+            }
+          None => raise Invalid("cannot remove delayed object resolution root")
+        }
+      }
       let view = if source_node {
         replacement(root, path, 0, lower)
       } else {
@@ -278,7 +290,7 @@ fn evaluate(
         deep,
         source_node,
       )
-    Object(fields) =>
+    Object(fields) | SealedObject(fields) =>
       if !deep {
         Some(v)
       } else {
@@ -305,7 +317,7 @@ fn evaluate(
             out[key] = value
           }
         }
-        Some(Object(out))
+        Some(rebuild_object(v, out))
       }
     List(items) =>
       if !deep {
@@ -342,6 +354,7 @@ fn evaluate(
         source_node,
       )
       match high {
+        Some(SealedObject(_)) => high
         Some(Object(fields)) => {
           let view = replacement(root, location, 0, Some(old))
           match
@@ -360,7 +373,7 @@ fn evaluate(
           }
         }
         Some(value) =>
-          if uncertain(value) && r.allow_unresolved {
+          if !ignores_fallbacks(value) && r.allow_unresolved {
             Some(DelayedMerge(old, value))
           } else {
             high
@@ -404,14 +417,15 @@ fn evaluate(
       for i in 1..<values.length() {
         let next = values[i]
         out = match (out, next) {
-          (Bare(space), Object(_)) | (Bare(space), List(_)) =>
+          (Bare(space), Object(_) | SealedObject(_)) | (Bare(space), List(_)) =>
             if space.iter().all(whitespace) {
               next
             } else {
               raise Invalid("incompatible value concatenation")
             }
-          (Object(_), Bare(_)) | (List(_), Bare(_)) => out
-          (Object(_), Object(_)) => merge(out, next)
+          (Object(_) | SealedObject(_), Bare(_)) | (List(_), Bare(_)) => out
+          (Object(_) | SealedObject(_), Object(_) | SealedObject(_)) =>
+            merge(out, next)
           (List(a), List(b)) => {
             let result = a.copy()
             for x in b {
@@ -420,8 +434,10 @@ fn evaluate(
             r.work.spend(result.length())
             List(result)
           }
-          (Object(_), _) | (List(_), _) | (_, Object(_)) | (_, List(_)) =>
-            raise Invalid("incompatible value concatenation")
+          (Object(_) | SealedObject(_), _)
+          | (List(_), _)
+          | (_, Object(_) | SealedObject(_))
+          | (_, List(_)) => raise Invalid("incompatible value concatenation")
           _ => {
             let text = scalar_text(out) + scalar_text(next)
             r.work.spend(text.length())
@@ -459,6 +475,7 @@ fn resolve_against(
     work: { remaining: 200000, next_id: 0, },
     allow_unresolved,
     blocked_paths: [],
+    delayed_object_root: uncertain(root) && known_object(root),
   }
   normalize_value(
     evaluate(r, root, source, [], 0, true, None, source_node).unwrap_or(
@@ -472,12 +489,12 @@ fn normalize_value(value : Value) -> Value {
   match value {
     Bare(s) => Text(s)
     List(xs) => List(xs.map(normalize_value))
-    Object(m) => {
+    Object(m) | SealedObject(m) => {
       let out = Map([])
       for k, v in m {
         out[k] = normalize_value(v)
       }
-      Object(out)
+      rebuild_object(value, out)
     }
     _ => value
   }

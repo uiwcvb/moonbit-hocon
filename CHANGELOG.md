@@ -1,5 +1,13 @@
 # Changes
 
+## 0.13.0
+
+- Add immutable ConfigValue, ConfigObject and ConfigList views, raw/null-aware reads, literal-key edits, value equality/hash, list search/ranges and arbitrary-value fallbacks.
+- Preserve scalar fallback barriers in SealedObject through copies, path edits, resolution and worker transfer.
+- Allow getValue to retain known delayed objects while their unresolved Map operations still reject.
+- Breaking 0.x change: getObject/getList/getObjectList return wrappers; the former ordinary-data getters are available with a Data suffix. Update exhaustive MoonBit Value matches for SealedObject.
+- Add independent value/container programs, portable core groups and host/async regressions; retain shared-identity, rendering/origin, full factory/ecosystem and performance gaps.
+
 ## 0.7.0
 
 - Add detached path/key tree edits, filtering, wrapping, fallback, copying and entry enumeration.

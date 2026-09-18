@@ -9,6 +9,7 @@ pub(all) enum Value {
   Reference(String)
   PathReference(Array[String], Bool)
   Object(Map[String, Value])
+  SealedObject(Map[String, Value])
   Concat(Array[(String, Value)])
   DelayedMerge(Value, Value)
   Bound(Array[String], Int, Value)
@@ -72,14 +73,14 @@ fn uncertain(v : Value) -> Bool {
 
 ///|
 fn merge(a : Value, b : Value) -> Value {
-  if !uncertain(b) && !(b is Object(_)) {
+  if ignores_fallbacks(b) {
     return b
   }
   if uncertain(a) || uncertain(b) {
     return DelayedMerge(a, b)
   }
   match (a, b) {
-    (Object(x), Object(y)) => {
+    (Object(x) | SealedObject(x), Object(y)) => {
       let combined = x.copy()
       for k, v in y {
         combined[k] = match combined.get(k) {
@@ -88,7 +89,7 @@ fn merge(a : Value, b : Value) -> Value {
         }
       }
       if !has_index_aliases(combined) {
-        return Object(combined)
+        return rebuild_object(a, combined)
       }
       let keys = Map([])
       for k in object_iteration_keys(y) {
@@ -101,9 +102,15 @@ fn merge(a : Value, b : Value) -> Value {
       for k in object_iteration_keys(keys) {
         out[k] = combined[k]
       }
-      Object(out)
+      rebuild_object(a, out)
     }
-    _ => b
+    (_, Object(fields)) =>
+      if completely_resolved(b) {
+        SealedObject(fields)
+      } else {
+        DelayedMerge(a, b)
+      }
+    _ => DelayedMerge(a, b)
   }
 }
 
@@ -409,7 +416,7 @@ fn object(
         next.push(source.name)
         let inc = parse_source(source, context, next, prefix, prefix, depth + 1)
         match inc {
-          Object(fields) =>
+          Object(fields) | SealedObject(fields) =>
             for k, v in fields {
               out[k] = match out.get(k) {
                 Some(old) => merge(old, v)
@@ -598,7 +605,7 @@ fn lookup_parts(root : Value, keys : Array[String]) -> Value? {
   let mut current = root
   for key in keys {
     match current {
-      Object(m) =>
+      Object(m) | SealedObject(m) =>
         match m.get(key) {
           Some(v) => current = v
           None => return None
@@ -684,7 +691,7 @@ pub fn parse_sources_unresolved(
   }
   if object_only {
     for layer in layers {
-      if !(layer is Object(_)) {
+      if !(layer is (Object(_) | SealedObject(_))) {
         raise Invalid("configuration source root must be an object")
       }
     }
@@ -728,14 +735,15 @@ fn simplify_concat(
       !uncertain(v) {
       let a = result[result.length() - 1]
       result[result.length() - 1] = match (a, v) {
-        (Bare(space), Object(_)) | (Bare(space), List(_)) =>
+        (Bare(space), Object(_) | SealedObject(_)) | (Bare(space), List(_)) =>
           if space.iter().all(whitespace) {
             v
           } else {
             raise Invalid("incompatible value concatenation")
           }
-        (Object(_), Bare(_)) | (List(_), Bare(_)) => a
-        (Object(_), Object(_)) => merge(a, v)
+        (Object(_) | SealedObject(_), Bare(_)) | (List(_), Bare(_)) => a
+        (Object(_) | SealedObject(_), Object(_) | SealedObject(_)) =>
+          merge(a, v)
         (List(xs), List(ys)) => {
           let out = xs.copy()
           for y in ys {
@@ -744,8 +752,10 @@ fn simplify_concat(
           work.spend(out.length())
           List(out)
         }
-        (Object(_), _) | (List(_), _) | (_, Object(_)) | (_, List(_)) =>
-          raise Invalid("incompatible value concatenation")
+        (Object(_) | SealedObject(_), _)
+        | (List(_), _)
+        | (_, Object(_) | SealedObject(_))
+        | (_, List(_)) => raise Invalid("incompatible value concatenation")
         _ => {
           let text = scalar_text(a) + scalar_text(v)
           work.spend(text.length())

@@ -22,14 +22,16 @@ Lightbend 特定的裸文本接数组、启发式已知扩展名继承 HOCON、J
 
 0.12.0 配置读取直接返回独立的 JavaScript 值，普通 ASCII 点路径免除词法 token 分配；精确数字、错误结构和所有权语义保留。修正 API 路径注释拒绝及简单路径首尾换行行为，1,898 个原生路径案例进入双后端回归，另有输出对象/属性/错误与路径边界检查。完整目标仍未完成。
 
+0.13.0 新增 ConfigValue / ConfigObject / ConfigList 包装、字面键/null/列表操作、值相等与原生哈希、任意值回退及状态保留；getObject/getList/getObjectList 的普通数据行为迁至 Data 后缀别名。2,810 组原版程序覆盖连续使用，其中 1,827 组进入双后端核心回归。完整目标仍未完成。
+
 尚未追平：
 
 - HTTP 代理与 305 代理重定向、认证协商、更多运行平台/协议栈；本轮已覆盖普通 HTTP(S) 及 file: URL。
 - JAR/自定义 JVM classloader、默认 application/reference 配置与 Java system properties；目录 classpath、显式 fallback/environment 已实现。
-- 完整未解析 ConfigObject 容器操作/共享身份、未解析 render 与注释/来源保真；已实现分阶段解析、resolveWith 和持久化不可变 JavaScript Config；现有 getObject 返回普通值，尚非完整 ConfigObject/ConfigValue 包装。
+- 全部容器共享身份、未解析 render 与注释/来源保真、完整 ConfigValueFactory/JVM 类型集成；已实现 ConfigValue/Object/List、常用不可变容器操作、分阶段解析和持久化 Config。Config.entrySet 仍使用既有普通叶值数据接口。
 - 全部错误的精确位置、错误种类与多错误诊断；词法/语法有位置，部分语义错误只有消息。
 - 数字索引对象的高碰撞树桶、删除后容量历史、其他 JDK Unicode 版本、所有拼接转换角落、格式/值的完整上游边界与多版本覆盖。固定 JDK 的 BMP 数字键已有逐块独立对照。
-- 独立大配置性能、内存/吞吐、多平台及持续负载。0.12 八项持久化负载当前/原版耗时比为 0.596–3.595；普通整数和子配置读取较 0.11 耗时减少 69.3%、68.6%，批量修改相对 0.11 为 0.682。改进并未建立完整性能追平，受控 GC 也不代表生产内存验证。
+- 独立大配置性能、内存/吞吐、多平台及持续负载。0.13 五项值/容器负载当前/原版耗时比为 3.499–69.916；列表查找约 69.9 倍、对象相等比较约 17.5 倍，尚有明显性能差距。十项既有负载相对 0.12 为 0.941–1.052。受控 GC 也不代表生产内存验证。
 
 每源/深度/求值/输出及宿主文件限额详见 README。Number 保留文本，但普通 JS JSON 对象里的数值受双精度限制；long/bytes/memory 使用字符串传输。
 编译后的引擎、CLI、API 与证据在本地提交；CI 文件已配置但没有远端运行，独立增量 ZIP/bundle 绑定相应提交；旧 20 项目合集保持历史版本。

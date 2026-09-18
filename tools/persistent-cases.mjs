@@ -3,6 +3,8 @@ export const getterMethods={string:'getString',boolean:'getBoolean',int:'getInt'
 const choices=['RED','GREEN','BLUE','on','yes','NaN','Infinity','蓝色','Α','_foo','$dollar'];
 export function read(config,call){
  const {getter,path,unit}=call;
+ if(getter==='object-list')return config.getObjectList(path).map(value=>value.unwrapped());
+ if(getter==='object'||getter==='list')return config[getterMethods[getter]](path).unwrapped();
  if(getterMethods[getter])return config[getterMethods[getter]](path);
  if(getter==='enum')return config.getEnum(path,choices);
  if(getter==='enum-list')return config.getEnumList(path,choices);

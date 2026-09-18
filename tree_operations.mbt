@@ -23,13 +23,13 @@ fn clone_tree(
 ) -> Value raise ParseError {
   tree_step(value, depth, work)
   match value {
-    Object(fields) => {
+    Object(fields) | SealedObject(fields) => {
       let copied = Map([])
       for key, child in fields {
         work.spend(key.length())
         copied[key] = clone_tree(child, depth + 1, work)
       }
-      Object(copied)
+      rebuild_object(value, copied)
     }
     List(items) => List(items.map(v => clone_tree(v, depth + 1, work)))
     PathReference(parts, optional) => PathReference(parts.copy(), optional)
@@ -51,7 +51,7 @@ fn clone_tree(
 ///|
 fn object_fields(config : Value) -> Map[String, Value] raise ParseError {
   match config {
-    Object(fields) => fields
+    Object(fields) | SealedObject(fields) => fields
     _ => raise Invalid("configuration root must be an object")
   }
 }
@@ -116,11 +116,11 @@ fn set_parts(
     fields[key] = value
   } else {
     let child = match fields.get(key) {
-      Some(Object(m)) => m
+      Some(Object(m) | SealedObject(m)) => m
       _ => Map([])
     }
     set_parts(child, parts, at + 1, value)
-    fields[key] = Object(child)
+    fields[key] = rebuild_object(fields.get(key).unwrap_or(Null), child)
   }
 }
 
@@ -136,7 +136,7 @@ pub fn with_value(
   let fields = object_fields(clone_tree(config, 0, work))
   let value = clone_tree(value, parts.length(), work)
   set_parts(fields, parts, 0, value)
-  Object(fields)
+  rebuild_object(config, fields)
 }
 
 ///|
@@ -145,8 +145,8 @@ pub fn with_only_path(config : Value, path : String) -> Value raise ParseError {
   let parts = split_path(path)
   check_edit_descent(config, parts)
   match get_path(config, parts) {
-    Some(value) => clone_tree(wrap_path(value, parts), 0, tree_work())
-    None => Object(Map([]))
+    Some(_) => copy_value(only_path(config, parts, 0))
+    None => rebuild_object(config, Map([]))
   }
 }
 
@@ -158,7 +158,7 @@ pub fn without_path(config : Value, path : String) -> Value raise ParseError {
   let mut fields = object_fields(result)
   for i = 0; i + 1 < parts.length(); i = i + 1 {
     match fields.get(parts[i]) {
-      Some(Object(child)) => fields = child
+      Some(Object(child) | SealedObject(child)) => fields = child
       _ => return result
     }
   }
@@ -169,8 +169,8 @@ pub fn without_path(config : Value, path : String) -> Value raise ParseError {
 ///|
 pub fn with_only_key(config : Value, key : String) -> Value raise ParseError {
   match object_fields(config).get(key) {
-    Some(value) => at_key(value, key)
-    None => Object(Map([]))
+    Some(value) => copy_value(rebuild_object(config, Map([(key, value)])))
+    None => rebuild_object(config, Map([]))
   }
 }
 
@@ -200,8 +200,9 @@ pub fn with_fallback(
   config : Value,
   fallback : Value,
 ) -> Value raise ParseError {
-  ignore(object_fields(config))
-  ignore(object_fields(fallback))
+  if !known_object(config) {
+    raise Invalid("configuration root must be an object")
+  }
   // Copy before merging so retained input branches cannot be mutated by callers.
   let work = tree_work()
   let high = clone_tree(config, 0, work)
@@ -227,7 +228,7 @@ fn resolved_tree(
 ) -> Bool raise ParseError {
   tree_step(value, depth, work)
   match value {
-    Object(fields) => {
+    Object(fields) | SealedObject(fields) => {
       for _, child in fields {
         if !resolved_tree(child, depth + 1, work) {
           return false
@@ -263,7 +264,7 @@ fn collect_entries(
 ) -> Unit raise ParseError {
   tree_step(value, depth, work)
   match value {
-    Object(fields) =>
+    Object(fields) | SealedObject(fields) =>
       for key, child in fields {
         let next = parts.copy()
         next.push(key)

@@ -227,7 +227,7 @@ pub fn config_validate(
 // exposed to JavaScript. Core get_config retains its defensive-copy contract.
 fn immutable_child(config : @lib.Value, path : String) -> @lib.Value raise {
   match @lib.get(config, path) {
-    Some(@lib.Object(_) as value) => value
+    Some(@lib.Object(_) | @lib.SealedObject(_) as value) => value
     _ => @lib.get_config(config, path)
   }
 }
@@ -235,7 +235,7 @@ fn immutable_child(config : @lib.Value, path : String) -> @lib.Value raise {
 ///|
 fn immutable_object(value : @lib.Value) -> @lib.Value raise {
   match value {
-    @lib.Object(_) => value
+    @lib.Object(_) | @lib.SealedObject(_) => value
     _ => @lib.get_config(@lib.Object({ "child": value }), "child")
   }
 }

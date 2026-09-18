@@ -112,6 +112,12 @@ pub fn is_resolved(Value) -> Bool raise ParseError
 
 pub fn join_path(Array[String]) -> String raise ParseError
 
+pub fn list_get(Value, Int) -> Value raise ParseError
+
+pub fn object_get(Value, String) -> Value? raise ParseError
+
+pub fn object_keys(Value) -> Array[String] raise ParseError
+
 pub fn parse(String, includes? : Map[String, String], loader? : ((IncludeRequest) -> Result[Array[IncludeSource], String])?, source_name? : String, fallbacks? : Array[String], environment? : Map[String, String]) -> Value raise ParseError
 
 pub fn parse_sources(IncludeSource, includes? : Map[String, String], loader? : ((IncludeRequest) -> Result[Array[IncludeSource], String])?, fallbacks? : Array[IncludeSource], environment? : Map[String, String], object_only? : Bool) -> Value raise ParseError
@@ -127,6 +133,18 @@ pub fn resolve_with(Value, Value, environment? : Map[String, String], allow_unre
 pub fn split_path(String) -> Array[String] raise ParseError
 
 pub fn validation_problems(Value, Value, paths? : Array[String]) -> Array[ValidationProblem] raise ParseError
+
+pub fn value_equals(Value, Value) -> Bool raise ParseError
+
+pub fn value_hash(Value) -> Int raise ParseError
+
+pub fn value_size(Value) -> Int raise ParseError
+
+pub fn value_type(Value) -> String raise ParseError
+
+pub fn value_unwrapped(Value) -> Value raise ParseError
+
+pub fn value_with_fallback(Value, Value) -> Value raise ParseError
 
 pub fn with_fallback(Value, Value) -> Value raise ParseError
 
@@ -219,6 +237,7 @@ pub(all) enum Value {
   Reference(String)
   PathReference(Array[String], Bool)
   Object(Map[String, Value])
+  SealedObject(Map[String, Value])
   Concat(Array[(String, Value)])
   DelayedMerge(Value, Value)
   Bound(Array[String], Int, Value)

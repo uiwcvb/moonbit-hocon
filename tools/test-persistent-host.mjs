@@ -26,9 +26,9 @@ try{
  const original=Config.loadFile('main.conf',{cwd:temp,fallbacks:['missing=1']});
  await check('file deletion does not invalidate retained configuration',()=>{fs.unlinkSync(path.join(temp,'base.conf'));fs.unlinkSync(path.join(temp,'main.conf'));for(let i=0;i<300;i++)assert.equal(original.getInt('known'),7);});
  await check('getter results and returned config arrays cannot mutate parent',()=>{
-  original.getObject('object').x.push(9);original.getAnyRef('objects')[0].x=99;
+  original.getObjectData('object').x.push(9);original.getAnyRef('objects')[0].x=99;
   const children=original.getConfigList('objects');const changed=children[0].withValue('x',99);children.length=0;
-  assert.deepEqual(original.getObject('object'),{x:[1],v:'bare'});assert.equal(original.getConfigList('objects')[0].getInt('x'),1);assert.equal(changed.getInt('x'),99);
+  assert.deepEqual(original.getObjectData('object'),{x:[1],v:'bare'});assert.equal(original.getConfigList('objects')[0].getInt('x'),1);assert.equal(changed.getInt('x'),99);
  });
  await check('withValue copies caller data and branches preserve old state',()=>{
   const value={a:[1]},derived=original.withValue('new',value);value.a.push(2);assert.deepEqual(derived.getAnyRef('new'),{a:[1]});assert(!original.hasPath('new'));assert(Object.isFrozen(derived));assert.throws(()=>{derived.extra=1;},TypeError);
