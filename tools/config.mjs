@@ -6,7 +6,7 @@ import {executeAsync as dispatchAsync} from './config-async.mjs';
 import {networkOptions,readHttp} from './http-client.mjs';
 
 export class ConfigError extends Error {
-  constructor(result) { super(result.error); this.name='ConfigError'; this.position=result.position; }
+  constructor(result) { super(result.error); this.name='ConfigError'; this.position=result.position; this.problems=result.problems; }
 }
 
 // Java Properties logical lines, escaping and the HOCON object-wins conversion.
@@ -118,7 +118,7 @@ function execute(source,options,kind) {
   const fallbackSources=(options.fallbacks??[]).map((content,i)=>typeof content==='string'?{name:`<fallback ${i}>`,content,format:'hocon'}:content);
   for(const name of options.fallbackFiles??[])fallbackSources.push(host.read(path.resolve(options.cwd??process.cwd(),name)));
   for(const name of options.fallbackURLs??[])fallbackSources.push(host.url(name,false)[0]);
-  const request={primary,fallbackSources,environment:options.environment??{},getter:options.getter,path:options.path};
+  const request={primary,fallbackSources,environment:options.environment??{},getter:options.getter,path:options.path,operations:options.operations,checkValid:options.checkValid,referenceSource:options.referenceSource,validationPaths:options.validationPaths};
   const result=JSON.parse(load_json(JSON.stringify(request),input=>{
     try{return JSON.stringify(host.include(JSON.parse(input)));}catch(e){return JSON.stringify({error:e.message});}
   }));
@@ -134,7 +134,7 @@ export function loadFile(filename,options={}) { return execute(filename,options,
 export function loadURL(url,options={}) { return execute(url,options,'url'); }
 
 function executeAsync(source,options,kind){
-  return dispatchAsync(source,options,kind,result=>result.name==='ConfigError'?new ConfigError({error:result.message,position:result.position}):new Error(result.message));
+  return dispatchAsync(source,options,kind,result=>result.name==='ConfigError'?new ConfigError({error:result.message,position:result.position,problems:result.problems}):new Error(result.message));
 }
 
 /** Async variants keep the calling event loop responsive and accept AbortSignal. */

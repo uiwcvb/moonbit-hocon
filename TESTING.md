@@ -1,6 +1,6 @@
 # Validation contract
 
-`./verify.ps1 -MoonPath /absolute/path/to/moon` runs formatting/API generation, deny-warn checks, explicit Wasm-GC and JS public API tests, build/example, compiled browser engine, old CLI contracts, file-host integration, all four saved reference suites, 72 typed-collection checks and the HTTP/HTTPS/async host suite, 307 bounded malformed inputs and the local example benchmark.
+`./verify.ps1 -MoonPath /absolute/path/to/moon` runs formatting/API generation, deny-warn checks, explicit Wasm-GC and JS public API tests, build/example, compiled browser engine, old CLI contracts, file-host integration, all five saved reference suites, 72 typed-collection checks and the HTTP/HTTPS/async and tree/validation host suites, 307 bounded malformed inputs and the local example benchmark.
 
 Live independent comparison (Java 11+; the tested host used Java 22.0.1):
 
@@ -47,3 +47,17 @@ The matrix includes status codes, optional/required failures, content type/exten
 The HTTP performance harness uses five processes per variant and loopback-only fixtures. Synchronous variants use 30 warmup executions and 15 samples of three calls per process; async uses three warmups and seven single-call samples through the reusable worker pool. It compares two old local workloads against the fixed 0.5 commit and four network workloads against the native library. Raw process variation is retained; noisy ratios do not establish performance parity. WAN latency, long-running memory, production load and other platforms remain unverified.
 
 The completed 0.6 verifier passed 1,347 tests on each backend, all 2,228 saved reference cases and the existing host/robustness checks. Fresh live independent runs cover 714 configuration, 58 file, 1,300 collection and 156 HTTP cases. Host suites contain 72 collection and 58 HTTP/async/CLI checks. The final five-process campaign reports current/native ratios 0.852–1.180 for network workloads and current/0.5 ratios 0.995 and 1.149 for local workloads. Several current network process-median spreads exceed 2, so `unstableMeasurements` is true and `performanceParityEstablished` is false. Warm async medians are 2.106 ms and 5.632 ms; these loopback observations are not stable performance guarantees.
+
+## 0.7 tree and validation evidence
+
+`node tools/test-tree-reference.mjs` runs 4,380 independently authored cases against the pinned, unmodified JAR. It compares exact resolved outputs/acceptance, and the sorted multiset of validation path/kind (including duplicate restrictions). Diagnostic message wording, origins and enumeration order are not asserted. Matrices cover path vs literal key edits, scalar replacement, nulls, empty parents, object/list validation, numeric-index conversion, Unicode path rendering and chained operations. `generate-tree-tests.mjs` translates saved native results into public API tests on both backends. Three additional groups check deep detachment, typed validation exceptions, unresolved input and cycle/resource rejection.
+
+`PathCharacters.java` is an original JDK Character adapter, not copied upstream code. `generate-path-characters.mjs --live` captures BMP letter/digit ranges from the tested JDK 22.0.1; without --live it regenerates the checked-in table from saved data. Native entry-set tests cover every range boundary and neighbor. Other JDK Unicode versions remain a compatibility boundary.
+
+`test-tree-host.mjs` checks 39 real sync/async string/file and CLI flows, option validation, exact long transport, preserved structured errors, ordering and reference-file includes. Both saved native replay and host tests are mandatory in verify/CI. Current full verifier count is 5,730 per backend; the total live reference count is 6,608 (714 config + 58 file + 1,300 collection + 156 HTTP + 4,380 tree).
+
+`benchmark-tree.mjs` compares two old loads to the fixed 0.6 commit and five new workloads to native Java, using five processes, 30 warmups and 15 samples of three requests. Request JSON decoding, parse/resolve/edit/validation and response rendering are included; process startup, I/O, sustained load and memory peaks are excluded. Every process result must match. Independent process spreads are retained, and full performance parity remains unproven.
+
+`evidence/tree-upgrade.json` is the 0.7 manifest; earlier manifests and performance campaigns remain historical. Generation and proof checks use `check-tree-generation.py /absolute/path/to/moon` and `check-tree-proof.py --index`.
+
+Final 0.7 five-process ratios: new workloads/current-native 0.416–0.722; existing/current-0.6 1.027 and 1.052 (about 2.7% and 5.2% slower). No process-median max/min spread exceeds 2 in this campaign. Raw samples are retained; no full performance parity is claimed.

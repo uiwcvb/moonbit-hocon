@@ -44,6 +44,10 @@ try {
   if ($LASTEXITCODE -ne 0) {throw 'HTTP reference replay failed'}
   node tools/test-http-host.mjs
   if ($LASTEXITCODE -ne 0) {throw 'HTTP host/async/CLI tests failed'}
+  node tools/test-tree-reference.mjs --golden
+  if ($LASTEXITCODE -ne 0) {throw 'tree reference replay failed'}
+  node tools/test-tree-host.mjs
+  if ($LASTEXITCODE -ne 0) {throw 'tree host/async/CLI tests failed'}
   node tools/robustness.mjs
   if ($LASTEXITCODE -ne 0) {throw 'robustness failed'}
   node tools/benchmark.mjs

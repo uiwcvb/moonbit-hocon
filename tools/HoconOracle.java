@@ -30,7 +30,7 @@ class HoconOracle {
   static Map<String,String> strings(Config c,String key){Map<String,String> out=new HashMap<>();if(c.hasPath(key))for(var e:c.getObject(key).entrySet())out.put(e.getKey(),String.valueOf(e.getValue().unwrapped()));return out;}
   static Config fromURL(String url,ConfigParseOptions options){try{return ConfigFactory.parseURL(new URL(url),options);}catch(java.net.MalformedURLException e){throw new IllegalArgumentException(e);}}
   static Object getter(Config config,Config req){
-    String kind=req.getString("getter"),path=req.getString("path");
+    String kind=req.getString("getter"),path=req.hasPath("path")?req.getString("path"):"";
     return switch(kind){
       case "string" -> config.getString(path);
       case "boolean" -> config.getBoolean(path);
@@ -53,6 +53,11 @@ class HoconOracle {
       case "list" -> config.getAnyRefList(path);
       case "has" -> config.hasPath(path);
       case "null" -> config.getIsNull(path);
+      case "has-or-null" -> config.hasPathOrNull(path);
+      case "empty" -> config.isEmpty();
+      case "resolved" -> config.isResolved();
+      case "entries" -> {var entries=new TreeMap<String,Object>();for(var e:config.entrySet())entries.put(e.getKey(),e.getValue().unwrapped());yield entries;}
+      case "validation" -> validation(config,ConfigFactory.parseString(req.getString("referenceSource")).resolve(ConfigResolveOptions.noSystem()),req.hasPath("validationPaths")?req.getStringList("validationPaths"):List.of());
       default -> throw new IllegalArgumentException("unknown getter");
     };
   }
@@ -71,8 +76,39 @@ class HoconOracle {
     if(req.hasPath("systemEnvironment")&&req.getBoolean("systemEnvironment"))resolve=resolve.setUseSystemEnvironment(true);
     if(req.hasPath("environment"))resolve=resolve.appendResolver(new Environment(strings(req,"environment"),null));
     config=config.resolve(resolve);
+    if(req.hasPath("operations"))for(Config op:req.getConfigList("operations"))config=operation(config,op);
+    if(req.hasPath("checkValid")){Config check=req.getConfig("checkValid");config.checkValid(ConfigFactory.parseString(check.getString("source")).resolve(ConfigResolveOptions.noSystem()),(check.hasPath("paths")?check.getStringList("paths"):List.<String>of()).toArray(new String[0]));}
     Object result=req.hasPath("getter")?getter(config,req):config.root().unwrapped();
     Map<String,Object> out=new LinkedHashMap<>();out.put("accepted",true);out.put("value",result);return out;
+  }
+  static List<Map<String,Object>> validationProblems(ConfigException.ValidationFailed failure){
+    var problems=new ArrayList<Map<String,Object>>();
+    for(var p:failure.problems()){
+      String text=p.problem(),kind=text.startsWith("No setting")?"missing":text.startsWith("List at")?"list-element":"wrong-type";
+      problems.add(Map.of("path",p.path(),"kind",kind));
+    }
+    return problems;
+  }
+  static Object validation(Config config,Config reference,List<String> paths){
+    try{config.checkValid(reference,paths.toArray(new String[0]));return List.of();}
+    catch(ConfigException.ValidationFailed failure){return validationProblems(failure);}
+  }
+  static Config operation(Config config,Config op){
+    String kind=op.getString("op"),path=op.hasPath("path")?op.getString("path"):"";
+    return switch(kind){
+      case "without-path" -> config.withoutPath(path);
+      case "with-only-path" -> config.withOnlyPath(path);
+      case "at-path" -> config.atPath(path);
+      case "at-key" -> config.atKey(path);
+      case "without-key" -> config.root().withoutKey(path).toConfig();
+      case "with-only-key" -> config.root().withOnlyKey(path).toConfig();
+      case "with-value", "with-key-value" -> {
+        ConfigValue value=op.hasPath("valueSource")?ConfigFactory.parseString("value="+op.getString("valueSource")).resolve(ConfigResolveOptions.noSystem()).root().get("value"):op.root().get("value");
+        yield kind.equals("with-value")?config.withValue(path,value):config.root().withValue(path,value).toConfig();
+      }
+      case "with-fallback" -> config.withFallback(ConfigFactory.parseString(op.getString("source")).resolve(ConfigResolveOptions.noSystem()));
+      default -> throw new IllegalArgumentException("unknown operation");
+    };
   }
   public static void main(String[] args)throws Exception{
     var output=new PrintWriter(new OutputStreamWriter(System.out,StandardCharsets.UTF_8),true);
@@ -90,7 +126,7 @@ class HoconOracle {
         }
         Map<String,Object> result;
         try{result=handle(ConfigFactory.parseString(line,ConfigParseOptions.defaults().setSyntax(ConfigSyntax.JSON)));}
-        catch(ConfigException|IllegalArgumentException|ArithmeticException e){result=new LinkedHashMap<>();result.put("accepted",false);result.put("error",e.getClass().getSimpleName());}
+        catch(ConfigException|IllegalArgumentException|ArithmeticException e){result=new LinkedHashMap<>();result.put("accepted",false);result.put("error",e.getClass().getSimpleName());if(e instanceof ConfigException.ValidationFailed failure)result.put("problems",validationProblems(failure));}
         output.println(ConfigValueFactory.fromMap(result).render(RENDER));
       }
     }

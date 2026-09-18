@@ -1,5 +1,13 @@
 # Changes
 
+## 0.7.0
+
+- Add detached path/key tree edits, filtering, wrapping, fallback, copying and entry enumeration.
+- Add structural validation with complete structured problem lists, restricted paths and async error preservation.
+- Add ordered CLI edits, file-reference validation and flattened entries without overwriting inputs.
+- Match JDK 22 BMP path character rendering, with 4,372 new independent native cases and both-backend regressions.
+- Keep unresolved document/resolveWith, remaining getters, diagnostic fidelity and full performance parity open.
+
 ## 0.6.0
 
 - Add real HTTP/HTTPS URL sources and includes, content negotiation, request-order/relative-origin handling, redirects and trusted TLS.

@@ -26,6 +26,7 @@ suberror BridgeError {
   BadSource
   BadGetter
   MissingValue
+  BadOperation
 }
 
 ///|
@@ -61,8 +62,19 @@ fn inspect_request(input : String, callback : ((String) -> String)?) -> String {
         })
       _ => []
     }
-    let config = match callback {
-      None => @lib.parse(source, includes~, environment~, fallbacks~)
+    let mut config = match callback {
+      None =>
+        @lib.parse_sources(
+          { name: "<string>", content: source, format: "hocon", },
+          includes~,
+          environment~,
+          object_only=true,
+          fallbacks=fallbacks.mapi((i, content) => {
+            name: "<fallback " + i.to_string() + ">",
+            content,
+            format: "hocon",
+          }),
+        )
       Some(host) => {
         let loader = fn(
           req : @lib.IncludeRequest,
@@ -100,6 +112,26 @@ fn inspect_request(input : String, callback : ((String) -> String)?) -> String {
           object_only=true,
         )
       }
+    }
+    if request is { "operations": Array(operations), .. } {
+      if operations.length() > 256 {
+        raise BadOperation
+      }
+      for operation in operations {
+        config = tree_operation(config, operation)
+      }
+    } else if request is Object(fields) && fields.contains("operations") {
+      raise BadOperation
+    }
+    if request
+      is { "checkValid": { "source": String(reference), .. } as check, .. } {
+      @lib.check_valid(
+        config,
+        @lib.parse(reference),
+        paths=string_array(check, "paths"),
+      )
+    } else if request is Object(fields) && fields.contains("checkValid") {
+      raise BadOperation
     }
     let path = match request {
       { "path": String(s), .. } => s
@@ -161,6 +193,22 @@ fn inspect_request(input : String, callback : ((String) -> String)?) -> String {
             )
           "has" => @lib.has_path(config, path).to_json()
           "null" => @lib.get_is_null(config, path).to_json()
+          "has-or-null" => @lib.has_path_or_null(config, path).to_json()
+          "empty" => @lib.is_empty(config).to_json()
+          "json-text" => config.to_json_string().to_json()
+          "resolved" => @lib.is_resolved(config).to_json()
+          "entries" =>
+            @json.parse(@lib.Object(@lib.entry_set(config)).to_json_string())
+          "validation" =>
+            match request {
+              { "referenceSource": String(reference), .. } =>
+                @lib.validation_problems(
+                  config,
+                  @lib.parse(reference),
+                  paths=string_array(request, "validationPaths"),
+                ).to_json()
+              _ => raise BadSource
+            }
           "debug" => Repr(config).to_string().to_json()
           "value" =>
             match @lib.get(config, path) {
@@ -173,6 +221,12 @@ fn inspect_request(input : String, callback : ((String) -> String)?) -> String {
     }
     Json::object({ "accepted": true, "value": value }).stringify()
   } catch {
+    @lib.ValidationFailed(problems) =>
+      Json::object({
+        "accepted": false,
+        "error": "configuration validation failed",
+        "problems": problems.to_json(),
+      }).stringify()
     @lib.Located(message, position) =>
       Json::object({
         "accepted": false,
@@ -181,5 +235,61 @@ fn inspect_request(input : String, callback : ((String) -> String)?) -> String {
       }).stringify()
     e =>
       Json::object({ "accepted": false, "error": Repr(e).to_string() }).stringify()
+  }
+}
+
+///|
+fn string_array(input : Json, key : String) -> Array[String] raise BridgeError {
+  match input {
+    Object(fields) =>
+      match fields.get(key) {
+        None => []
+        Some(Array(items)) =>
+          items.map(item => {
+            match item {
+              String(s) => s
+              _ => raise BadOperation
+            }
+          })
+        _ => raise BadOperation
+      }
+    _ => raise BadOperation
+  }
+}
+
+///|
+fn tree_operation(config : @lib.Value, operation : Json) -> @lib.Value raise {
+  match operation {
+    { "op": String("with-fallback"), "source": String(source), .. } =>
+      @lib.with_fallback(config, @lib.parse(source))
+    { "op": String(op), "path": String(path), .. } =>
+      match op {
+        "without-path" => @lib.without_path(config, path)
+        "with-only-path" => @lib.with_only_path(config, path)
+        "at-path" => @lib.at_path(config, path)
+        "at-key" => @lib.at_key(config, path)
+        "without-key" => @lib.without_key(config, path)
+        "with-only-key" => @lib.with_only_key(config, path)
+        "with-value" | "with-key-value" => {
+          let value = match operation {
+            { "valueSource": String(source), .. } =>
+              @lib.get_path(@lib.parse("value=" + source), ["value"])
+            { "value": value, .. } =>
+              @lib.get_path(@lib.parse("value=" + value.stringify()), ["value"])
+            _ => raise BadOperation
+          }
+          match value {
+            Some(value) =>
+              if op == "with-value" {
+                @lib.with_value(config, path, value)
+              } else {
+                @lib.with_key_value(config, path, value)
+              }
+            None => raise BadOperation
+          }
+        }
+        _ => raise BadOperation
+      }
+    _ => raise BadOperation
   }
 }
