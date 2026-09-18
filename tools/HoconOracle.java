@@ -28,6 +28,7 @@ class HoconOracle {
     public ConfigResolver withFallback(ConfigResolver r){return new Environment(values,r);}
   }
   static Map<String,String> strings(Config c,String key){Map<String,String> out=new HashMap<>();if(c.hasPath(key))for(var e:c.getObject(key).entrySet())out.put(e.getKey(),String.valueOf(e.getValue().unwrapped()));return out;}
+  static Config fromURL(String url,ConfigParseOptions options){try{return ConfigFactory.parseURL(new URL(url),options);}catch(java.net.MalformedURLException e){throw new IllegalArgumentException(e);}}
   static Object getter(Config config,Config req){
     String kind=req.getString("getter"),path=req.getString("path");
     return switch(kind){
@@ -62,9 +63,10 @@ class HoconOracle {
       catch(java.net.MalformedURLException e){throw new IllegalArgumentException(e);}
     }
     if(req.hasPath("includes"))options=options.setIncluder(new MemoryIncludes(strings(req,"includes")));
-    Config config=req.hasPath("file")?ConfigFactory.parseFile(new File(req.getString("file")),options):ConfigFactory.parseString(req.hasPath("source")?req.getString("source"):"",options);
+    Config config=req.hasPath("url")?fromURL(req.getString("url"),options):req.hasPath("file")?ConfigFactory.parseFile(new File(req.getString("file")),options):ConfigFactory.parseString(req.hasPath("source")?req.getString("source"):"",options);
     if(req.hasPath("fallbacks"))for(String s:req.getStringList("fallbacks"))config=config.withFallback(ConfigFactory.parseString(s,options));
     if(req.hasPath("fallbackFiles"))for(String s:req.getStringList("fallbackFiles"))config=config.withFallback(ConfigFactory.parseFile(new File(s),options));
+    if(req.hasPath("fallbackURLs"))for(String s:req.getStringList("fallbackURLs"))config=config.withFallback(fromURL(s,options));
     var resolve=ConfigResolveOptions.noSystem();
     if(req.hasPath("systemEnvironment")&&req.getBoolean("systemEnvironment"))resolve=resolve.setUseSystemEnvironment(true);
     if(req.hasPath("environment"))resolve=resolve.appendResolver(new Environment(strings(req,"environment"),null));

@@ -1,12 +1,13 @@
 # HOCON 配置解析器
 
-MoonBit 本地 0.5.0：类型化配置、历史值自引用、`+=`、include 重定位、显式回退与环境替换、单位与类型化列表读取、配置子对象，以及真实文件加载和 CLI。
+MoonBit 本地 0.6.0：类型化配置、历史值自引用、`+=`、include 重定位、显式回退与环境替换、单位与类型化列表读取、配置子对象、文件/HTTP(S) 加载、可取消异步入口和 CLI。
 解析和求值均由 MoonBit 实现；Node 仅提供文件、properties 和命令行宿主。Java 只用于独立参考测试。
 
 ## 命令行与文件
 
 ```powershell
 node tools/cli.mjs --input 'port=8080' --resolved-json
+node tools/cli.mjs --url https://config.example/app.conf --http-timeout-ms 5000 --resolved-json
 node tools/cli.mjs --file app.conf --fallback defaults.conf --env --resolved-json
 node tools/cli.mjs --file app.conf --get service.timeout --type duration
 node tools/cli.mjs --file app.conf --classpath ./resources --resolved-json --json
@@ -30,7 +31,7 @@ const config = loadFile('app.conf', {
 const bytes = load('limit=2 KiB', {getter: 'bytes', path: 'limit'}); // "2048"
 ```
 
-宿主支持本地文件、file: URL、目录 classpath；普通缺失 include 为空，required 缺失时报错。
+宿主支持本地文件、file:/HTTP(S) URL、目录 classpath；普通缺失 include 为空，required 缺失时报错。
 不带已知扩展名的 include 搜索 `.properties`、`.json`、`.conf`，依此顺序合并。
 `file(...)` 相对 cwd，`classpath(...)` 相对资源根；普通 `include "..."` 相对来源。
 properties 支持转义、续行、点路径及冲突时对象优先，所有值保持字符串。JSON 来源的键是字面键，不解释替换。
@@ -38,6 +39,30 @@ properties 支持转义、续行、点路径及冲突时对象优先，所有值
 兼容性细节：Lightbend 1.4.9 的普通启发式 include 在直接指定 `.json`/`.properties` 文件时会继承 HOCON 语法；本宿主复现此行为。
 需要按扩展名读取其原格式时，使用不带扩展名的搜索、显式 `file(...)`，或把该文件作为加载入口。
 文件语法/优先级的实际参考结果保存在 `evidence/file-reference-vectors.json`，不是只根据扩展名推断。
+
+## HTTP(S) 与异步读取
+
+```javascript
+import {loadURL, loadURLAsync} from './tools/config.mjs';
+const config = loadURL('https://config.example/app.conf', {
+  network: {timeoutMs: 5000, totalTimeoutMs: 30000},
+});
+const cancellable = await loadURLAsync('https://config.example/app.conf', {
+  signal: AbortSignal.timeout(10000),
+});
+```
+
+现有 `load`/`loadFile` 同步支持 HTTP(S) include；新增 `loadURL` 读取精确 URL。`loadAsync`/`loadFileAsync`/`loadURLAsync` 保持调用方事件循环响应，支持取消运行中或排队中的请求。异步池最多 4 个执行 Worker、128 个排队任务；队列超限会拒绝。空闲 Worker 不阻止进程退出；失败/取消的 Worker 会被替换。
+
+`fallbackURLs` 在 `fallbacks`、`fallbackFiles` 之后作为较低优先级配置；CLI 对应 `--fallback-url`。URL 内的相对 include 以请求 URL 为来源，即使发生重定向也保留原始来源。没有已知扩展名的相对 include 按 conf/json/properties 的顺序请求，再按 conf 最高的优先级合并。
+
+响应 Content-Type 中的 application/json、application/hocon、text/x-java-properties 可覆盖扩展名，匹配区分大小写；字符集参数不改变 UTF-8 读取。请求发送对应 Accept。支持同协议 300/301/302/303/307 重定向，默认最多跟随 19 次，与参考库第 20 次重定向报错的行为一致；308 和跨协议重定向读取响应体，305 代理重定向明确拒绝。
+
+可选 include 只将 HTTP 404/410 视为缺失；500 等状态、TLS 错误、超时和配置语法错误仍失败。TLS 始终验证证书；`network.ca` 或可重复 `--ca FILE` 提供 PEM 信任集合，显式 CA 集合取代默认集合。未实现代理、HTTP 认证协商及 JAR 协议。
+
+默认单次请求总超时 5 秒，整次加载的网络期限 30 秒；`network.timeoutMs`/`totalTimeoutMs` 与 CLI `--http-timeout-ms`/`--http-total-timeout-ms` 可调整。`maxRedirects`/`--http-max-redirects` 最大 64；`maxResponseBytes`/`--http-max-bytes` 只能降低 400,000 字节响应上限。累计文件/响应仍限 4,000,000 字节、512 次读取（包括重定向），每源 100,000 UTF-16 单元。失效 Worker 另有最多 2 秒的唤醒看门狗余量。`network:false`/`--no-network` 可禁用 HTTP(S)。无效 UTF-8、截断响应和超限输入明确拒绝，这些是本地约束，不作为上游全范围行为一致的声明。
+
+同步接口会阻塞调用线程；在需要同时服务网络请求的事件循环中使用异步接口。HTTP(S) 是 Node 宿主能力，浏览器演示页没有新增跨域网络控制界面。
 
 ## MoonBit API
 
@@ -52,7 +77,8 @@ let json = config.to_json_string()
 ```
 
 `parse` 接受 `includes : Map[String,String]`、`fallbacks : Array[String]`、`environment` 和 `source_name`。
-`parse_sources` 接受带 name/content/format 的主源与回退源。format 为 hocon 或 json。
+`parse_sources` 接受带 name/content/format 的主源与回退源。format 为 hocon 或 json。新增 `object_only=true` 可要求所有主源/回退源的根都是对象；默认 false 保留核心数组解析能力。Node/CLI 配置入口总是要求对象根。
+JSON 来源处理 BOM/Unicode 空白，拒绝包括转义等价名称在内的重复对象键，字符串内空白保持原值。
 两者都可接入同步 `loader : (IncludeRequest) -> Result[Array[IncludeSource],String]`；请求包含 name/kind/from/required。
 loader 返回的源按低优先级到高优先级合并，规范化的 name 用于 include 循环检测。核心不自行访问磁盘和网络。
 
@@ -97,15 +123,19 @@ include 中的引用优先查包含位置，再回退根路径。环境替换显
 实时参考运行与证据范围见 [TESTING.md](TESTING.md)。源代码、API、编译引擎与报告 SHA256 一起保存。
 这些用例证明覆盖范围内的结果一致，不代表全部 Lightbend Config API 或生产性能已经追平。
 
+0.6 当前验证：JS/Wasm-GC 各 1,347 项通过；官方库实时对照 2,228/2,228（714 配置、58 文件、1,300 集合、156 HTTP），72 项集合宿主/CLI 与 58 项 HTTP/异步/CLI 检查通过。22 个独立 JSON 来源案例同时进入双后端回归。
+
+五进程性能结果保存在 `evidence/http-performance.json`。四项网络负载的当前/官方耗时比为 0.852–1.180，两个旧本地负载相对 0.5 为 0.995 与 1.149；若干当前网络负载的进程中位数最大/最小比超过 2，已标为不稳定测量。异步预热后的两个负载中位数为 2.106 和 5.632 毫秒。这些本机回环结果没有建立性能追平，也不用于宣称稳定加速。
+
 资源上限：每源 100,000 UTF-16 单元；源展开预算 1,000,000；对象/数组/include 深度 32；求值深度 128、工作预算 200,000；输出深度 64、累计输出预算 1,000,000。
-Node 宿主另限制单文件 400,000 字节、读取累计 4,000,000 字节及 512 次文件读取，并拒绝无效 UTF-8。
+Node 宿主另限制单文件/响应 400,000 字节、读取累计 4,000,000 字节及 512 次文件/网络读取（含重定向），并拒绝无效 UTF-8。
 数值转换文本限 10,000 单元，任意精度单位指数限 ±4096。这些限制可能拒绝上游能处理的超大输入。
 
-仍缺 HTTP(S) include、JAR/classloader、JVM application/reference/system-properties 默认加载，剩余 number/object/enum 集合和 checkValid/编辑/来源注释 API、保留注释的渲染与端到端性能对照。
+仍缺 HTTP 代理/305/认证集成、JAR/classloader、JVM application/reference/system-properties 默认加载，剩余 number/object/enum 集合和 checkValid/编辑/来源注释 API、保留注释的渲染与端到端性能对照。
 更多参考版本、平台、大配置和持续负载尚未完成；详细边界见 [FEATURES.md](FEATURES.md)。
 
 依据 [HOCON 官方规格](https://github.com/lightbend/config/blob/main/HOCON.md)独立实现；参考库采用 [Lightbend Config 1.4.9](https://github.com/lightbend/config/releases/tag/v1.4.9)。
 原创代码 MIT；Java 适配器与测试用例自行编写，上游 JAR 不在本仓库分发。没有复制上游实现或测试集。
-0.5 增量验证：JS/Wasm-GC 各 1,323 项；1,300 新集合对照与既有 772 配置/文件对照、72 新宿主/CLI 检查。固定五进程计时中四项既有负载相对 0.4 的耗时比为 0.977–1.019；七项 JSON 请求到结果的负载相对官方库为 0.520–1.094，时长列表仍约慢 9.4%。这不代表全部性能已追平。
+0.5 历史增量验证：JS/Wasm-GC 各 1,323 项；1,300 新集合对照与既有 772 配置/文件对照、72 新宿主/CLI 检查。固定五进程计时中四项既有负载相对 0.4 的耗时比为 0.977–1.019；七项 JSON 请求到结果的负载相对官方库为 0.520–1.094，时长列表仍约慢 9.4%。这不代表全部性能已追平。
 
-全部留在本地，未上传或发布；旧 20 项目合集仍为历史快照，0.5 独立 ZIP/bundle 绑定新的本地提交。
+全部留在本地，未上传或发布；旧 20 项目合集仍为历史快照，0.6 独立 ZIP/bundle 绑定新的本地提交。

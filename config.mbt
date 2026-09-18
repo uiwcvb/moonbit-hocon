@@ -283,9 +283,7 @@ fn parse_source(
         nesting -= 1
       }
     }
-    let json = @json.parse(source.content) catch {
-      _ => raise Invalid("invalid JSON source: " + source.name)
-    }
+    let json = configuration_json(source.content, source.name)
     return from_json(json)
   }
   if source.format != "hocon" {
@@ -583,6 +581,7 @@ pub fn parse_sources(
   loader? : ((IncludeRequest) -> Result[Array[IncludeSource], String])? = None,
   fallbacks? : Array[IncludeSource] = [],
   environment? : Map[String, String] = Map([]),
+  object_only? : Bool = false,
 ) -> Value raise ParseError {
   let context : ParseContext = {
     sources: includes,
@@ -592,6 +591,13 @@ pub fn parse_sources(
   let layers = [parse_source(source, context, [source.name], [], [], 0)]
   for source in fallbacks {
     layers.push(parse_source(source, context, [source.name], [], [], 0))
+  }
+  if object_only {
+    for layer in layers {
+      if !(layer is Object(_)) {
+        raise Invalid("configuration source root must be an object")
+      }
+    }
   }
   let mut root = layers[layers.length() - 1]
   for i = layers.length() - 2; i >= 0; i = i - 1 {

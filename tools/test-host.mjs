@@ -23,7 +23,7 @@ try {
  fs.writeFileSync(path.join(dir,'bad.conf'),'x=1\ny="unterminated');
  try{loadFile(path.join(dir,'bad.conf'));assert.fail('accepted malformed input');}catch(e){assert(e instanceof ConfigError);assert.equal(e.position.source,path.join(dir,'bad.conf'));assert.equal(e.position.line,2);assert.equal(e.position.column,3);}
  fs.writeFileSync(path.join(dir,'bad-utf8.conf'),Buffer.from([0xff,0xfe]));assert.throws(()=>loadFile(path.join(dir,'bad-utf8.conf')),/encoded data/);
- assert.throws(()=>load('include url("https://example.invalid/config")'),/Unsupported include URL protocol/);
+ assert.throws(()=>load('include url("https://example.invalid/config")',{network:false}),/loading is disabled/);
  assert.throws(()=>load('include required("missing")',{cwd:dir}),/missing required/);
  fs.writeFileSync(path.join(dir,'huge.conf'),'x='+ 'a'.repeat(100001));assert.throws(()=>loadFile(path.join(dir,'huge.conf')),/100000/);
  assert.deepEqual(load('__proto__=safe\nconstructor=also-safe'),JSON.parse('{"__proto__":"safe","constructor":"also-safe"}'));

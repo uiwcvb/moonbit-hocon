@@ -40,6 +40,10 @@ try {
   if ($LASTEXITCODE -ne 0) {throw 'collection reference replay failed'}
   node tools/test-collection-host.mjs
   if ($LASTEXITCODE -ne 0) {throw 'collection CLI/host tests failed'}
+  node tools/test-http-reference.mjs --golden
+  if ($LASTEXITCODE -ne 0) {throw 'HTTP reference replay failed'}
+  node tools/test-http-host.mjs
+  if ($LASTEXITCODE -ne 0) {throw 'HTTP host/async/CLI tests failed'}
   node tools/robustness.mjs
   if ($LASTEXITCODE -ne 0) {throw 'robustness failed'}
   node tools/benchmark.mjs

@@ -62,7 +62,7 @@ pub fn has_path(Value, String, include_null? : Bool) -> Bool
 
 pub fn parse(String, includes? : Map[String, String], loader? : ((IncludeRequest) -> Result[Array[IncludeSource], String])?, source_name? : String, fallbacks? : Array[String], environment? : Map[String, String]) -> Value raise ParseError
 
-pub fn parse_sources(IncludeSource, includes? : Map[String, String], loader? : ((IncludeRequest) -> Result[Array[IncludeSource], String])?, fallbacks? : Array[IncludeSource], environment? : Map[String, String]) -> Value raise ParseError
+pub fn parse_sources(IncludeSource, includes? : Map[String, String], loader? : ((IncludeRequest) -> Result[Array[IncludeSource], String])?, fallbacks? : Array[IncludeSource], environment? : Map[String, String], object_only? : Bool) -> Value raise ParseError
 
 pub fn split_path(String) -> Array[String] raise ParseError
 

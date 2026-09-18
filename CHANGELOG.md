@@ -1,5 +1,13 @@
 # Changes
 
+## 0.6.0
+
+- Add real HTTP/HTTPS URL sources and includes, content negotiation, request-order/relative-origin handling, redirects and trusted TLS.
+- Add bounded reusable async workers, queued/running cancellation, network deadlines/byte/read limits, and URL/CA/network CLI options.
+- Require object roots in Node/CLI configurations (including fallback sources); keep the core parse_sources default compatible and add object_only.
+- Match JSON configuration BOM/Unicode whitespace and reject duplicate/escaped-equivalent member names.
+- Add independent live HTTP/HTTPS comparisons, both-backend JSON vectors, host/async/CLI regressions and five-process performance evidence. Proxy/305, remaining APIs, source preservation and full performance/platform parity remain open.
+
 ## 0.5.0
 
 - Add eight typed-list getters and config/config-list access, with Node bridge and CLI selection.

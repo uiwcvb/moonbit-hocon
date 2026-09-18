@@ -1,11 +1,18 @@
 {
-  "utc": "2026-09-18T16:32:40.853Z",
-  "mode": "live Lightbend Config",
-  "reference": "config-1.4.9.jar",
-  "jarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37",
-  "total": 714,
-  "passed": 714,
+  "utc": "2026-09-18T16:32:49.672Z",
+  "mode": "live official library and live HTTP/HTTPS fixtures",
+  "reference": {
+    "library": "unmodified Lightbend Config 1.4.9",
+    "jarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37",
+    "javaTimeoutMs": 1000,
+    "platform": "win32",
+    "customTrust": "test-only self-signed fixture certificate"
+  },
+  "total": 156,
+  "passed": 156,
   "failed": 0,
+  "skipped": [],
+  "scope": "Exact resolved JSON and acceptance; custom trusted HTTPS, status/missing/error handling, content type/extension/Accept, relative includes, basename search, redirects, cycles, timeouts and chunked bodies. Error wording not compared.",
   "sourceHashes": {
     "accessors.mbt": "b5b4ee7e9154aad1c2fc43bb2c51f9f622056ff119ba94b1c55e3cfbb3fa172b",
     "cmd/main/main.mbt": "24f2645d844804ee1241fd560f5fe895d55d0ee59010b00f8c121b9f70bdbc19",

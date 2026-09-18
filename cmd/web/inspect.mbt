@@ -97,6 +97,7 @@ fn inspect_request(input : String, callback : ((String) -> String)?) -> String {
           includes~,
           environment~,
           fallbacks=sources,
+          object_only=true,
         )
       }
     }

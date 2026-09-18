@@ -1,0 +1,2193 @@
+{
+  "reference": {
+    "library": "unmodified Lightbend Config 1.4.9",
+    "jarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37",
+    "javaTimeoutMs": 1000,
+    "platform": "win32",
+    "customTrust": "test-only self-signed fixture certificate"
+  },
+  "cases": [
+    {
+      "url": "@HTTP@/base.conf"
+    },
+    {
+      "url": "@HTTP@/typed.json"
+    },
+    {
+      "url": "@HTTP@/props.properties"
+    },
+    {
+      "url": "@HTTP@/ct-json.conf"
+    },
+    {
+      "url": "@HTTP@/ct-props.conf"
+    },
+    {
+      "url": "@HTTP@/ct-hocon.json"
+    },
+    {
+      "url": "@HTTP@/ct-unknown.json"
+    },
+    {
+      "url": "@HTTP@/ct-case.conf"
+    },
+    {
+      "url": "@HTTP@/charset.conf"
+    },
+    {
+      "url": "@HTTP@/ct-space.json"
+    },
+    {
+      "url": "@HTTP@/dir/main.conf"
+    },
+    {
+      "url": "@HTTP@/dir/basename.conf"
+    },
+    {
+      "url": "@HTTP@/dir/json.conf"
+    },
+    {
+      "url": "@HTTP@/dir/query.conf"
+    },
+    {
+      "url": "@HTTP@/red/origin.conf"
+    },
+    {
+      "url": "@HTTP@/bad.conf"
+    },
+    {
+      "url": "@HTTP@/array.json"
+    },
+    {
+      "url": "@HTTP@/chunked.conf"
+    },
+    {
+      "url": "@HTTP@/accept.conf"
+    },
+    {
+      "url": "@HTTP@/accept.json"
+    },
+    {
+      "url": "@HTTP@/accept.properties"
+    },
+    {
+      "url": "@HTTPS@/base.conf"
+    },
+    {
+      "url": "@HTTPS@/typed.json"
+    },
+    {
+      "url": "@HTTPS@/props.properties"
+    },
+    {
+      "url": "@HTTPS@/ct-json.conf"
+    },
+    {
+      "url": "@HTTPS@/ct-props.conf"
+    },
+    {
+      "url": "@HTTPS@/ct-hocon.json"
+    },
+    {
+      "url": "@HTTPS@/ct-unknown.json"
+    },
+    {
+      "url": "@HTTPS@/ct-case.conf"
+    },
+    {
+      "url": "@HTTPS@/charset.conf"
+    },
+    {
+      "url": "@HTTPS@/ct-space.json"
+    },
+    {
+      "url": "@HTTPS@/dir/main.conf"
+    },
+    {
+      "url": "@HTTPS@/dir/basename.conf"
+    },
+    {
+      "url": "@HTTPS@/dir/json.conf"
+    },
+    {
+      "url": "@HTTPS@/dir/query.conf"
+    },
+    {
+      "url": "@HTTPS@/red/origin.conf"
+    },
+    {
+      "url": "@HTTPS@/bad.conf"
+    },
+    {
+      "url": "@HTTPS@/array.json"
+    },
+    {
+      "url": "@HTTPS@/chunked.conf"
+    },
+    {
+      "url": "@HTTPS@/accept.conf"
+    },
+    {
+      "url": "@HTTPS@/accept.json"
+    },
+    {
+      "url": "@HTTPS@/accept.properties"
+    },
+    {
+      "source": "nested {include url(\"@HTTP@/base.conf\")}\nx=9"
+    },
+    {
+      "source": "nested {include required(url(\"@HTTP@/base.conf\"))}\nx=9"
+    },
+    {
+      "source": "nested {include url(\"@HTTP@/typed.json\")}\nx=9"
+    },
+    {
+      "source": "nested {include required(url(\"@HTTP@/typed.json\"))}\nx=9"
+    },
+    {
+      "source": "nested {include url(\"@HTTP@/props.properties\")}\nx=9"
+    },
+    {
+      "source": "nested {include required(url(\"@HTTP@/props.properties\"))}\nx=9"
+    },
+    {
+      "source": "nested {include url(\"@HTTP@/ct-json.conf\")}\nx=9"
+    },
+    {
+      "source": "nested {include required(url(\"@HTTP@/ct-json.conf\"))}\nx=9"
+    },
+    {
+      "source": "nested {include url(\"@HTTP@/dir/main.conf\")}\nx=9"
+    },
+    {
+      "source": "nested {include required(url(\"@HTTP@/dir/main.conf\"))}\nx=9"
+    },
+    {
+      "source": "nested {include url(\"@HTTP@/dir/basename.conf\")}\nx=9"
+    },
+    {
+      "source": "nested {include required(url(\"@HTTP@/dir/basename.conf\"))}\nx=9"
+    },
+    {
+      "source": "nested {include url(\"@HTTP@/bad.conf\")}\nx=9"
+    },
+    {
+      "source": "nested {include required(url(\"@HTTP@/bad.conf\"))}\nx=9"
+    },
+    {
+      "source": "nested {include url(\"@HTTP@/array.json\")}\nx=9"
+    },
+    {
+      "source": "nested {include required(url(\"@HTTP@/array.json\"))}\nx=9"
+    },
+    {
+      "source": "nested {include url(\"@HTTP@/cycle-a.conf\")}\nx=9"
+    },
+    {
+      "source": "nested {include required(url(\"@HTTP@/cycle-a.conf\"))}\nx=9"
+    },
+    {
+      "source": "nested {include url(\"@HTTP@/missing.conf\")}\nx=9"
+    },
+    {
+      "source": "nested {include required(url(\"@HTTP@/missing.conf\"))}\nx=9"
+    },
+    {
+      "source": "nested {include url(\"@HTTP@/drop.conf\")}\nx=9"
+    },
+    {
+      "source": "nested {include required(url(\"@HTTP@/drop.conf\"))}\nx=9"
+    },
+    {
+      "source": "nested {include url(\"@HTTP@/hang.conf\")}\nx=9"
+    },
+    {
+      "source": "nested {include required(url(\"@HTTP@/hang.conf\"))}\nx=9"
+    },
+    {
+      "source": "include url(\"@HTTP@/status/200.conf\")"
+    },
+    {
+      "source": "include required(url(\"@HTTP@/status/200.conf\"))"
+    },
+    {
+      "source": "include url(\"@HTTP@/status/201.conf\")"
+    },
+    {
+      "source": "include required(url(\"@HTTP@/status/201.conf\"))"
+    },
+    {
+      "source": "include url(\"@HTTP@/status/204.conf\")"
+    },
+    {
+      "source": "include required(url(\"@HTTP@/status/204.conf\"))"
+    },
+    {
+      "source": "include url(\"@HTTP@/status/300.conf\")"
+    },
+    {
+      "source": "include required(url(\"@HTTP@/status/300.conf\"))"
+    },
+    {
+      "source": "include url(\"@HTTP@/status/301.conf\")"
+    },
+    {
+      "source": "include required(url(\"@HTTP@/status/301.conf\"))"
+    },
+    {
+      "source": "include url(\"@HTTP@/status/302.conf\")"
+    },
+    {
+      "source": "include required(url(\"@HTTP@/status/302.conf\"))"
+    },
+    {
+      "source": "include url(\"@HTTP@/status/303.conf\")"
+    },
+    {
+      "source": "include required(url(\"@HTTP@/status/303.conf\"))"
+    },
+    {
+      "source": "include url(\"@HTTP@/status/304.conf\")"
+    },
+    {
+      "source": "include required(url(\"@HTTP@/status/304.conf\"))"
+    },
+    {
+      "source": "include url(\"@HTTP@/status/305.conf\")"
+    },
+    {
+      "source": "include required(url(\"@HTTP@/status/305.conf\"))"
+    },
+    {
+      "source": "include url(\"@HTTP@/status/306.conf\")"
+    },
+    {
+      "source": "include required(url(\"@HTTP@/status/306.conf\"))"
+    },
+    {
+      "source": "include url(\"@HTTP@/status/307.conf\")"
+    },
+    {
+      "source": "include required(url(\"@HTTP@/status/307.conf\"))"
+    },
+    {
+      "source": "include url(\"@HTTP@/status/308.conf\")"
+    },
+    {
+      "source": "include required(url(\"@HTTP@/status/308.conf\"))"
+    },
+    {
+      "source": "include url(\"@HTTP@/status/400.conf\")"
+    },
+    {
+      "source": "include required(url(\"@HTTP@/status/400.conf\"))"
+    },
+    {
+      "source": "include url(\"@HTTP@/status/401.conf\")"
+    },
+    {
+      "source": "include required(url(\"@HTTP@/status/401.conf\"))"
+    },
+    {
+      "source": "include url(\"@HTTP@/status/403.conf\")"
+    },
+    {
+      "source": "include required(url(\"@HTTP@/status/403.conf\"))"
+    },
+    {
+      "source": "include url(\"@HTTP@/status/404.conf\")"
+    },
+    {
+      "source": "include required(url(\"@HTTP@/status/404.conf\"))"
+    },
+    {
+      "source": "include url(\"@HTTP@/status/410.conf\")"
+    },
+    {
+      "source": "include required(url(\"@HTTP@/status/410.conf\"))"
+    },
+    {
+      "source": "include url(\"@HTTP@/status/429.conf\")"
+    },
+    {
+      "source": "include required(url(\"@HTTP@/status/429.conf\"))"
+    },
+    {
+      "source": "include url(\"@HTTP@/status/500.conf\")"
+    },
+    {
+      "source": "include required(url(\"@HTTP@/status/500.conf\"))"
+    },
+    {
+      "source": "include url(\"@HTTP@/status/503.conf\")"
+    },
+    {
+      "source": "include required(url(\"@HTTP@/status/503.conf\"))"
+    },
+    {
+      "url": "@HTTP@/redirect/300.conf"
+    },
+    {
+      "url": "@HTTP@/redirect/301.conf"
+    },
+    {
+      "url": "@HTTP@/redirect/302.conf"
+    },
+    {
+      "url": "@HTTP@/redirect/303.conf"
+    },
+    {
+      "url": "@HTTP@/redirect/304.conf"
+    },
+    {
+      "url": "@HTTP@/redirect/305.conf"
+    },
+    {
+      "url": "@HTTP@/redirect/306.conf"
+    },
+    {
+      "url": "@HTTP@/redirect/307.conf"
+    },
+    {
+      "url": "@HTTP@/redirect/308.conf"
+    },
+    {
+      "url": "@HTTP@/redirect-loop.conf"
+    },
+    {
+      "url": "@HTTP@/cross.conf"
+    },
+    {
+      "source": "include \"@HTTP@/base.conf\"\nx=7"
+    },
+    {
+      "url": "@HTTP@/base.conf",
+      "fallbacks": [
+        "x=3\nz=4"
+      ]
+    },
+    {
+      "source": "x=7",
+      "fallbackURLs": [
+        "@HTTP@/base.conf"
+      ]
+    },
+    {
+      "url": "@HTTP@/chain/1/0.conf"
+    },
+    {
+      "url": "@HTTP@/chain/19/0.conf"
+    },
+    {
+      "url": "@HTTP@/chain/20/0.conf"
+    },
+    {
+      "url": "@HTTP@/chain/21/0.conf"
+    },
+    {
+      "source": "[]"
+    },
+    {
+      "source": "{}",
+      "fallbacks": [
+        "[]"
+      ]
+    },
+    {
+      "source": "{}",
+      "fallbackURLs": [
+        "@HTTP@/array.json"
+      ]
+    },
+    {
+      "url": "@HTTP@/array.json",
+      "getter": "has",
+      "path": "x"
+    },
+    {
+      "url": "@HTTP@/ct-prototype.conf"
+    },
+    {
+      "url": "@HTTP@/ct-prototype2.conf"
+    },
+    {
+      "url": "@HTTP@/ct-prototype3.conf"
+    },
+    {
+      "url": "@HTTP@/dir/root.conf"
+    },
+    {
+      "url": "@HTTP@/empty.json"
+    },
+    {
+      "url": "@HTTP@/bom.json"
+    },
+    {
+      "url": "@HTTP@/duplicate.json"
+    },
+    {
+      "url": "@HTTP@/nested-duplicate.json"
+    },
+    {
+      "url": "@HTTP@/ordering/main.conf"
+    },
+    {
+      "url": "@HTTPS@/ordering/main.conf"
+    },
+    {
+      "url": "@HTTP@/json-space-0-0.json"
+    },
+    {
+      "url": "@HTTP@/json-space-0-1.json"
+    },
+    {
+      "url": "@HTTP@/json-space-0-2.json"
+    },
+    {
+      "url": "@HTTP@/json-space-1-0.json"
+    },
+    {
+      "url": "@HTTP@/json-space-1-1.json"
+    },
+    {
+      "url": "@HTTP@/json-space-1-2.json"
+    },
+    {
+      "url": "@HTTP@/json-space-2-0.json"
+    },
+    {
+      "url": "@HTTP@/json-space-2-1.json"
+    },
+    {
+      "url": "@HTTP@/json-space-2-2.json"
+    },
+    {
+      "url": "@HTTP@/json-space-3-0.json"
+    },
+    {
+      "url": "@HTTP@/json-space-3-1.json"
+    },
+    {
+      "url": "@HTTP@/json-space-3-2.json"
+    },
+    {
+      "url": "@HTTP@/json-space-4-0.json"
+    },
+    {
+      "url": "@HTTP@/json-space-4-1.json"
+    },
+    {
+      "url": "@HTTP@/json-space-4-2.json"
+    },
+    {
+      "url": "@HTTP@/json-space-5-0.json"
+    },
+    {
+      "url": "@HTTP@/json-space-5-1.json"
+    },
+    {
+      "url": "@HTTP@/json-space-5-2.json"
+    }
+  ],
+  "fixtures": {
+    "/base.conf": {
+      "body": "x=1\ny=${x}"
+    },
+    "/typed.json": {
+      "body": "{\"a.b\":1,\"literal\":\"${missing}\"}"
+    },
+    "/props.properties": {
+      "body": "a.b=text\nx=one"
+    },
+    "/ct-json.conf": {
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": "{\"a.b\":1,\"literal\":\"${missing}\"}"
+    },
+    "/ct-props.conf": {
+      "headers": {
+        "Content-Type": "text/x-java-properties; charset=UTF-8"
+      },
+      "body": "a.b=text\nx=1"
+    },
+    "/ct-hocon.json": {
+      "headers": {
+        "Content-Type": "application/hocon"
+      },
+      "body": "x=1\ny=${x}"
+    },
+    "/ct-unknown.json": {
+      "headers": {
+        "Content-Type": "text/plain"
+      },
+      "body": "x=1"
+    },
+    "/ct-case.conf": {
+      "headers": {
+        "Content-Type": "Application/JSON"
+      },
+      "body": "{\"literal\":\"${missing}\"}"
+    },
+    "/charset.conf": {
+      "headers": {
+        "Content-Type": "application/json;charset=UTF-16"
+      },
+      "body": "{\"text\":\"中文😀\"}"
+    },
+    "/ct-space.json": {
+      "headers": {
+        "Content-Type": "application/hocon ; charset=UTF-8"
+      },
+      "body": "x=1"
+    },
+    "/ct-prototype.conf": {
+      "headers": {
+        "Content-Type": "constructor"
+      },
+      "body": "x=1"
+    },
+    "/ct-prototype2.conf": {
+      "headers": {
+        "Content-Type": "__proto__"
+      },
+      "body": "x=1"
+    },
+    "/ct-prototype3.conf": {
+      "headers": {
+        "Content-Type": "toString"
+      },
+      "body": "x=1"
+    },
+    "/empty.json": {
+      "body": ""
+    },
+    "/bom.json": {
+      "body": "﻿{\"x\":1}"
+    },
+    "/duplicate.json": {
+      "body": "{\"x\":1,\"x\":2}"
+    },
+    "/nested-duplicate.json": {
+      "body": "{\"n\":{\"x\":1,\"\\u0078\":2}}"
+    },
+    "/dir/main.conf": {
+      "body": "include \"child.conf\"\nx=2"
+    },
+    "/dir/child.conf": {
+      "body": "x=1\ny=${x}"
+    },
+    "/dir/basename.conf": {
+      "body": "include \"part\""
+    },
+    "/dir/part.conf": {
+      "body": "x=conf\nc=1"
+    },
+    "/dir/part.json": {
+      "body": "{\"x\":\"json\",\"j\":2}"
+    },
+    "/dir/part.properties": {
+      "body": "x=props\np=3"
+    },
+    "/dir/json.conf": {
+      "body": "include \"part.json\""
+    },
+    "/dir/root.conf": {
+      "body": "include \"/root.conf\""
+    },
+    "/root.conf": {
+      "body": "root=1"
+    },
+    "/dir/query.conf": {
+      "body": "include \"part.conf?q=1\""
+    },
+    "/dir/part.conf?q=1.conf": {
+      "body": "query=conf"
+    },
+    "/dir/part.conf?q=1.json": {
+      "body": "{\"query\":\"json\"}"
+    },
+    "/dir/part.conf?q=1.properties": {
+      "body": "query=props"
+    },
+    "/red/origin.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/new/target.conf"
+      }
+    },
+    "/new/target.conf": {
+      "body": "include \"child.conf\""
+    },
+    "/red/child.conf": {
+      "body": "origin=requested"
+    },
+    "/new/child.conf": {
+      "body": "origin=redirected"
+    },
+    "/redirect-loop.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/redirect-loop.conf"
+      }
+    },
+    "/cross.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "@HTTPS@/base.conf"
+      },
+      "body": "redirectBody=1"
+    },
+    "/bad.conf": {
+      "body": "x=[1,,2]"
+    },
+    "/array.json": {
+      "body": "[1,2]"
+    },
+    "/cycle-a.conf": {
+      "body": "include \"cycle-b.conf\""
+    },
+    "/cycle-b.conf": {
+      "body": "include \"cycle-a.conf\""
+    },
+    "/drop.conf": {
+      "drop": true
+    },
+    "/hang.conf": {
+      "hang": true
+    },
+    "/chunked.conf": {
+      "body": "x=1\ny=2",
+      "chunked": true
+    },
+    "/accept.conf": {
+      "echoAccept": true,
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    },
+    "/accept.json": {
+      "echoAccept": true,
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    },
+    "/accept.properties": {
+      "echoAccept": true,
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    },
+    "/ordering/main.conf": {
+      "body": "include \"part\""
+    },
+    "/ordering/part.conf": {
+      "body": "order=@SEQUENCE@",
+      "sequenceGroup": "order"
+    },
+    "/ordering/part.json": {
+      "body": "{\"order\":@SEQUENCE@}",
+      "sequenceGroup": "order"
+    },
+    "/ordering/part.properties": {
+      "body": "order=@SEQUENCE@",
+      "sequenceGroup": "order"
+    },
+    "/status/200.conf": {
+      "status": 200,
+      "body": "x=1"
+    },
+    "/status/201.conf": {
+      "status": 201,
+      "body": "x=1"
+    },
+    "/status/204.conf": {
+      "status": 204,
+      "body": ""
+    },
+    "/status/300.conf": {
+      "status": 300,
+      "body": "x=1"
+    },
+    "/status/301.conf": {
+      "status": 301,
+      "body": "x=1"
+    },
+    "/status/302.conf": {
+      "status": 302,
+      "body": "x=1"
+    },
+    "/status/303.conf": {
+      "status": 303,
+      "body": "x=1"
+    },
+    "/status/304.conf": {
+      "status": 304,
+      "body": ""
+    },
+    "/status/305.conf": {
+      "status": 305,
+      "body": "x=1"
+    },
+    "/status/306.conf": {
+      "status": 306,
+      "body": "x=1"
+    },
+    "/status/307.conf": {
+      "status": 307,
+      "body": "x=1"
+    },
+    "/status/308.conf": {
+      "status": 308,
+      "body": "x=1"
+    },
+    "/status/400.conf": {
+      "status": 400,
+      "body": "x=1"
+    },
+    "/status/401.conf": {
+      "status": 401,
+      "body": "x=1"
+    },
+    "/status/403.conf": {
+      "status": 403,
+      "body": "x=1"
+    },
+    "/status/404.conf": {
+      "status": 404,
+      "body": "x=1"
+    },
+    "/status/410.conf": {
+      "status": 410,
+      "body": "x=1"
+    },
+    "/status/429.conf": {
+      "status": 429,
+      "body": "x=1"
+    },
+    "/status/500.conf": {
+      "status": 500,
+      "body": "x=1"
+    },
+    "/status/503.conf": {
+      "status": 503,
+      "body": "x=1"
+    },
+    "/redirect/300.conf": {
+      "status": 300,
+      "headers": {
+        "Location": "/base.conf"
+      },
+      "body": "redirectBody=1"
+    },
+    "/redirect/301.conf": {
+      "status": 301,
+      "headers": {
+        "Location": "/base.conf"
+      },
+      "body": "redirectBody=1"
+    },
+    "/redirect/302.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/base.conf"
+      },
+      "body": "redirectBody=1"
+    },
+    "/redirect/303.conf": {
+      "status": 303,
+      "headers": {
+        "Location": "/base.conf"
+      },
+      "body": "redirectBody=1"
+    },
+    "/redirect/304.conf": {
+      "status": 304,
+      "headers": {
+        "Location": "/base.conf"
+      },
+      "body": ""
+    },
+    "/redirect/305.conf": {
+      "status": 305,
+      "headers": {
+        "Location": "/base.conf"
+      },
+      "body": "redirectBody=1"
+    },
+    "/redirect/306.conf": {
+      "status": 306,
+      "headers": {
+        "Location": "/base.conf"
+      },
+      "body": "redirectBody=1"
+    },
+    "/redirect/307.conf": {
+      "status": 307,
+      "headers": {
+        "Location": "/base.conf"
+      },
+      "body": "redirectBody=1"
+    },
+    "/redirect/308.conf": {
+      "status": 308,
+      "headers": {
+        "Location": "/base.conf"
+      },
+      "body": "redirectBody=1"
+    },
+    "/chain/1/0.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/base.conf"
+      }
+    },
+    "/chain/19/0.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/19/1.conf"
+      }
+    },
+    "/chain/19/1.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/19/2.conf"
+      }
+    },
+    "/chain/19/2.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/19/3.conf"
+      }
+    },
+    "/chain/19/3.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/19/4.conf"
+      }
+    },
+    "/chain/19/4.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/19/5.conf"
+      }
+    },
+    "/chain/19/5.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/19/6.conf"
+      }
+    },
+    "/chain/19/6.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/19/7.conf"
+      }
+    },
+    "/chain/19/7.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/19/8.conf"
+      }
+    },
+    "/chain/19/8.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/19/9.conf"
+      }
+    },
+    "/chain/19/9.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/19/10.conf"
+      }
+    },
+    "/chain/19/10.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/19/11.conf"
+      }
+    },
+    "/chain/19/11.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/19/12.conf"
+      }
+    },
+    "/chain/19/12.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/19/13.conf"
+      }
+    },
+    "/chain/19/13.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/19/14.conf"
+      }
+    },
+    "/chain/19/14.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/19/15.conf"
+      }
+    },
+    "/chain/19/15.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/19/16.conf"
+      }
+    },
+    "/chain/19/16.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/19/17.conf"
+      }
+    },
+    "/chain/19/17.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/19/18.conf"
+      }
+    },
+    "/chain/19/18.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/base.conf"
+      }
+    },
+    "/chain/20/0.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/20/1.conf"
+      }
+    },
+    "/chain/20/1.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/20/2.conf"
+      }
+    },
+    "/chain/20/2.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/20/3.conf"
+      }
+    },
+    "/chain/20/3.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/20/4.conf"
+      }
+    },
+    "/chain/20/4.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/20/5.conf"
+      }
+    },
+    "/chain/20/5.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/20/6.conf"
+      }
+    },
+    "/chain/20/6.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/20/7.conf"
+      }
+    },
+    "/chain/20/7.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/20/8.conf"
+      }
+    },
+    "/chain/20/8.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/20/9.conf"
+      }
+    },
+    "/chain/20/9.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/20/10.conf"
+      }
+    },
+    "/chain/20/10.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/20/11.conf"
+      }
+    },
+    "/chain/20/11.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/20/12.conf"
+      }
+    },
+    "/chain/20/12.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/20/13.conf"
+      }
+    },
+    "/chain/20/13.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/20/14.conf"
+      }
+    },
+    "/chain/20/14.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/20/15.conf"
+      }
+    },
+    "/chain/20/15.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/20/16.conf"
+      }
+    },
+    "/chain/20/16.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/20/17.conf"
+      }
+    },
+    "/chain/20/17.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/20/18.conf"
+      }
+    },
+    "/chain/20/18.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/20/19.conf"
+      }
+    },
+    "/chain/20/19.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/base.conf"
+      }
+    },
+    "/chain/21/0.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/21/1.conf"
+      }
+    },
+    "/chain/21/1.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/21/2.conf"
+      }
+    },
+    "/chain/21/2.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/21/3.conf"
+      }
+    },
+    "/chain/21/3.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/21/4.conf"
+      }
+    },
+    "/chain/21/4.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/21/5.conf"
+      }
+    },
+    "/chain/21/5.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/21/6.conf"
+      }
+    },
+    "/chain/21/6.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/21/7.conf"
+      }
+    },
+    "/chain/21/7.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/21/8.conf"
+      }
+    },
+    "/chain/21/8.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/21/9.conf"
+      }
+    },
+    "/chain/21/9.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/21/10.conf"
+      }
+    },
+    "/chain/21/10.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/21/11.conf"
+      }
+    },
+    "/chain/21/11.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/21/12.conf"
+      }
+    },
+    "/chain/21/12.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/21/13.conf"
+      }
+    },
+    "/chain/21/13.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/21/14.conf"
+      }
+    },
+    "/chain/21/14.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/21/15.conf"
+      }
+    },
+    "/chain/21/15.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/21/16.conf"
+      }
+    },
+    "/chain/21/16.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/21/17.conf"
+      }
+    },
+    "/chain/21/17.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/21/18.conf"
+      }
+    },
+    "/chain/21/18.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/21/19.conf"
+      }
+    },
+    "/chain/21/19.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/chain/21/20.conf"
+      }
+    },
+    "/chain/21/20.conf": {
+      "status": 302,
+      "headers": {
+        "Location": "/base.conf"
+      }
+    },
+    "/json-space-0-0.json": {
+      "body": "﻿{\"x\":1}"
+    },
+    "/json-space-0-1.json": {
+      "body": "{\"x\"﻿:1}"
+    },
+    "/json-space-0-2.json": {
+      "body": "{\"x\":\"﻿\"}"
+    },
+    "/json-space-1-0.json": {
+      "body": " {\"x\":1}"
+    },
+    "/json-space-1-1.json": {
+      "body": "{\"x\" :1}"
+    },
+    "/json-space-1-2.json": {
+      "body": "{\"x\":\" \"}"
+    },
+    "/json-space-2-0.json": {
+      "body": " {\"x\":1}"
+    },
+    "/json-space-2-1.json": {
+      "body": "{\"x\" :1}"
+    },
+    "/json-space-2-2.json": {
+      "body": "{\"x\":\" \"}"
+    },
+    "/json-space-3-0.json": {
+      "body": "　{\"x\":1}"
+    },
+    "/json-space-3-1.json": {
+      "body": "{\"x\"　:1}"
+    },
+    "/json-space-3-2.json": {
+      "body": "{\"x\":\"　\"}"
+    },
+    "/json-space-4-0.json": {
+      "body": "\u000b{\"x\":1}"
+    },
+    "/json-space-4-1.json": {
+      "body": "{\"x\"\u000b:1}"
+    },
+    "/json-space-4-2.json": {
+      "body": "{\"x\":\"\u000b\"}"
+    },
+    "/json-space-5-0.json": {
+      "body": "\f{\"x\":1}"
+    },
+    "/json-space-5-1.json": {
+      "body": "{\"x\"\f:1}"
+    },
+    "/json-space-5-2.json": {
+      "body": "{\"x\":\"\f\"}"
+    }
+  },
+  "references": [
+    {
+      "accepted": true,
+      "value": {
+        "x": 1,
+        "y": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a.b": 1,
+        "literal": "${missing}"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "b": "text"
+        },
+        "x": "one"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a.b": 1,
+        "literal": "${missing}"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "b": "text"
+        },
+        "x": "1"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1,
+        "y": 1
+      }
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "literal": "${missing}"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "text": "中文😀"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 2,
+        "y": 2
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "c": 1,
+        "j": 2,
+        "p": "3",
+        "x": "conf"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "j": 2,
+        "x": "json"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "query": "conf"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "origin": "requested"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1,
+        "y": 2
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "accept": "application/hocon"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "accept": "application/json"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "accept": "text/x-java-properties"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1,
+        "y": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a.b": 1,
+        "literal": "${missing}"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "b": "text"
+        },
+        "x": "one"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a.b": 1,
+        "literal": "${missing}"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "b": "text"
+        },
+        "x": "1"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1,
+        "y": 1
+      }
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "literal": "${missing}"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "text": "中文😀"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 2,
+        "y": 2
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "c": 1,
+        "j": 2,
+        "p": "3",
+        "x": "conf"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "j": 2,
+        "x": "json"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "query": "conf"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "origin": "requested"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1,
+        "y": 2
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "accept": "application/hocon"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "accept": "application/json"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "accept": "text/x-java-properties"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "nested": {
+          "x": 1,
+          "y": 1
+        },
+        "x": 9
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "nested": {
+          "x": 1,
+          "y": 1
+        },
+        "x": 9
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "nested": {
+          "a.b": 1,
+          "literal": "${missing}"
+        },
+        "x": 9
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "nested": {
+          "a.b": 1,
+          "literal": "${missing}"
+        },
+        "x": 9
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "nested": {
+          "a": {
+            "b": "text"
+          },
+          "x": "one"
+        },
+        "x": 9
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "nested": {
+          "a": {
+            "b": "text"
+          },
+          "x": "one"
+        },
+        "x": 9
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "nested": {
+          "a.b": 1,
+          "literal": "${missing}"
+        },
+        "x": 9
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "nested": {
+          "a.b": 1,
+          "literal": "${missing}"
+        },
+        "x": 9
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "nested": {
+          "x": 2,
+          "y": 2
+        },
+        "x": 9
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "nested": {
+          "x": 2,
+          "y": 2
+        },
+        "x": 9
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "nested": {
+          "c": 1,
+          "j": 2,
+          "p": "3",
+          "x": "conf"
+        },
+        "x": 9
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "nested": {
+          "c": 1,
+          "j": 2,
+          "p": "3",
+          "x": "conf"
+        },
+        "x": 9
+      }
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "nested": {},
+        "x": 9
+      }
+    },
+    {
+      "accepted": false,
+      "error": "IO"
+    },
+    {
+      "accepted": false,
+      "error": "BugOrBroken"
+    },
+    {
+      "accepted": false,
+      "error": "BugOrBroken"
+    },
+    {
+      "accepted": false,
+      "error": "BugOrBroken"
+    },
+    {
+      "accepted": false,
+      "error": "BugOrBroken"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {}
+    },
+    {
+      "accepted": true,
+      "value": {}
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {}
+    },
+    {
+      "accepted": true,
+      "value": {}
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": false,
+      "error": "BugOrBroken"
+    },
+    {
+      "accepted": false,
+      "error": "BugOrBroken"
+    },
+    {
+      "accepted": false,
+      "error": "BugOrBroken"
+    },
+    {
+      "accepted": false,
+      "error": "BugOrBroken"
+    },
+    {
+      "accepted": false,
+      "error": "BugOrBroken"
+    },
+    {
+      "accepted": false,
+      "error": "BugOrBroken"
+    },
+    {
+      "accepted": true,
+      "value": {}
+    },
+    {
+      "accepted": false,
+      "error": "IO"
+    },
+    {
+      "accepted": true,
+      "value": {}
+    },
+    {
+      "accepted": false,
+      "error": "IO"
+    },
+    {
+      "accepted": false,
+      "error": "BugOrBroken"
+    },
+    {
+      "accepted": false,
+      "error": "BugOrBroken"
+    },
+    {
+      "accepted": false,
+      "error": "BugOrBroken"
+    },
+    {
+      "accepted": false,
+      "error": "BugOrBroken"
+    },
+    {
+      "accepted": false,
+      "error": "BugOrBroken"
+    },
+    {
+      "accepted": false,
+      "error": "BugOrBroken"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1,
+        "y": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1,
+        "y": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1,
+        "y": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1,
+        "y": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {}
+    },
+    {
+      "accepted": false,
+      "error": "BugOrBroken"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "redirectBody": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1,
+        "y": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "redirectBody": 1
+      }
+    },
+    {
+      "accepted": false,
+      "error": "BugOrBroken"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "redirectBody": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 7,
+        "y": 7
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1,
+        "y": 1,
+        "z": 4
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 7,
+        "y": 7
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1,
+        "y": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1,
+        "y": 1
+      }
+    },
+    {
+      "accepted": false,
+      "error": "BugOrBroken"
+    },
+    {
+      "accepted": false,
+      "error": "BugOrBroken"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "root": 1
+      }
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "order": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "order": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": "﻿"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": " "
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": " "
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": "　"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    }
+  ]
+}

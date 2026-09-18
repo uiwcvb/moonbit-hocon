@@ -2,6 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {load_json} from '../web/engine.mjs';
+import {executeAsync as dispatchAsync} from './config-async.mjs';
+import {networkOptions,readHttp} from './http-client.mjs';
 
 export class ConfigError extends Error {
   constructor(result) { super(result.error); this.name='ConfigError'; this.position=result.position; }
@@ -40,6 +42,7 @@ function createHost(options) {
   const cwd=path.resolve(options.cwd??process.cwd());
   const roots=(options.classpath??[]).map(p=>path.resolve(cwd,p));
   const metadata=new Map();let bytes=0, count=0;
+  const network=networkOptions(options.network),started=Date.now();
   function read(name,optional=false,resource,forceHocon=false) {
     let real;
     try{real=fs.realpathSync(name);}catch(e){if(optional&&['ENOENT','ENOTDIR'].includes(e.code))return null;throw e;}
@@ -63,30 +66,58 @@ function createHost(options) {
     }
     return out;
   }
-  function url(name){
+  function url(name,optional=true,syntax){
     const parsed=new URL(name);
-    if(parsed.protocol!=='file:')throw new Error('Unsupported include URL protocol: '+parsed.protocol);
-    const source=read(fileURLToPath(parsed),true);return source?[source]:[];
+    if(parsed.protocol==='file:'){
+      const source=read(fileURLToPath(parsed),optional);return source?[source]:[];
+    }
+    if(!['http:','https:'].includes(parsed.protocol))throw new Error('Unsupported include URL protocol: '+parsed.protocol);
+    if(network===false)throw new Error('HTTP(S) configuration loading is disabled');
+    const remaining=network.totalTimeoutMs-(Date.now()-started);
+    if(remaining<=0)throw new Error('Configuration network total timeout');
+    if(++count>512)throw new Error('Configuration file resource limit');
+    let format=syntax??(parsed.pathname.endsWith('.json')?'json':parsed.pathname.endsWith('.properties')?'properties':'hocon');
+    if(!['hocon','json','properties'].includes(format))throw new Error('Unknown configuration URL syntax: '+format);
+    const response=readHttp(parsed.href,{...network,timeoutMs:Math.min(network.timeoutMs,remaining),maxRedirects:Math.min(network.maxRedirects,512-count),maxResponseBytes:Math.min(network.maxResponseBytes,4000000-bytes)},({json:'application/json',properties:'text/x-java-properties',hocon:'application/hocon'})[format]);
+    count+=response.requests-1;bytes+=response.bytes;
+    if(count>512||bytes>4000000)throw new Error('Configuration file resource limit');
+    if(response.missing){if(optional)return [];throw new Error('Missing configuration URL: '+parsed.href);}
+    const type=response.contentType.trim().split(';')[0];
+    if(type==='application/json')format='json';
+    else if(type==='text/x-java-properties')format='properties';
+    else if(type==='application/hocon')format='hocon';
+    // Relative includes retain the requested origin, including across redirects.
+    return [{name:parsed.href,content:format==='properties'?JSON.stringify(parseProperties(response.content)):response.content,format:format==='properties'?'json':format}];
   }
   function include(req){
     if(req.kind==='url')return url(req.name);
     if(req.kind==='classpath')return resources(req.name);
     if(req.kind==='file')return files(path.resolve(cwd,req.name));
-    if(/^file:/i.test(req.name))return url(req.name);
+    if(/^(file|https?):/i.test(req.name))return url(req.name);
     if(/^[a-z][a-z0-9+.-]*:\/\//i.test(req.name))throw new Error('Unsupported include URL: '+req.name);
+    if(/^https?:/i.test(req.from)){
+      // Java File.isAbsolute differs for root-relative Windows paths.
+      if((process.platform!=='win32'&&path.isAbsolute(req.name))||/^[A-Za-z]:[\\/]/.test(req.name))return [];
+      if(/\s|[\\<>"{}|^`]/.test(req.name))return [];
+      const known=/\.(conf|json|properties)$/.test(req.name);
+      const names=known?[req.name]:[req.name+'.conf',req.name+'.json',req.name+'.properties'];
+      const sources=names.flatMap(name=>url(new URL(name,req.from).href,true,known?'hocon':name.endsWith('.properties')?'properties':name.endsWith('.json')?'json':'hocon'));
+      return known?sources:sources.reverse();
+    }
     if(metadata.has(req.from))return resources(req.name.startsWith('/')?req.name:path.posix.join(path.posix.dirname(metadata.get(req.from)),req.name));
     const base=path.isAbsolute(req.from)?path.dirname(req.from):cwd;
     // Lightbend's explicit heuristic suffix inherits CONF; extension search selects each format.
     const found=files(path.resolve(base,req.name),true);return found.length?found:resources(req.name);
   }
-  return {read,include};
+  return {read,include,url};
 }
 
-function execute(source,options,file) {
+function execute(source,options,kind) {
   const host=createHost(options);
-  const primary=file?host.read(path.resolve(options.cwd??process.cwd(),source)):{name:options.sourceName??'<string>',content:source,format:options.format??'hocon'};
+  const primary=kind==='url'?host.url(source,false,options.format)[0]:kind==='file'?host.read(path.resolve(options.cwd??process.cwd(),source)):{name:options.sourceName??'<string>',content:source,format:options.format??'hocon'};
   const fallbackSources=(options.fallbacks??[]).map((content,i)=>typeof content==='string'?{name:`<fallback ${i}>`,content,format:'hocon'}:content);
   for(const name of options.fallbackFiles??[])fallbackSources.push(host.read(path.resolve(options.cwd??process.cwd(),name)));
+  for(const name of options.fallbackURLs??[])fallbackSources.push(host.url(name,false)[0]);
   const request={primary,fallbackSources,environment:options.environment??{},getter:options.getter,path:options.path};
   const result=JSON.parse(load_json(JSON.stringify(request),input=>{
     try{return JSON.stringify(host.include(JSON.parse(input)));}catch(e){return JSON.stringify({error:e.message});}
@@ -96,6 +127,17 @@ function execute(source,options,file) {
 }
 
 /** Resolve a string. Includes use sourceName (if absolute) or cwd. Environment is opt-in. */
-export function load(source,options={}) { return execute(source,options,false); }
+export function load(source,options={}) { return execute(source,options,'string'); }
 /** Resolve an exact UTF-8 file, with per-file origins retained for all fallback files. */
-export function loadFile(filename,options={}) { return execute(filename,options,true); }
+export function loadFile(filename,options={}) { return execute(filename,options,'file'); }
+/** Resolve an exact HTTP(S) or file URL; Content-Type can override its extension. */
+export function loadURL(url,options={}) { return execute(url,options,'url'); }
+
+function executeAsync(source,options,kind){
+  return dispatchAsync(source,options,kind,result=>result.name==='ConfigError'?new ConfigError({error:result.message,position:result.position}):new Error(result.message));
+}
+
+/** Async variants keep the calling event loop responsive and accept AbortSignal. */
+export function loadAsync(source,options={}){return executeAsync(source,options,'string');}
+export function loadFileAsync(filename,options={}){return executeAsync(filename,options,'file');}
+export function loadURLAsync(url,options={}){return executeAsync(url,options,'url');}

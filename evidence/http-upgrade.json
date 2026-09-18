@@ -1,0 +1,362 @@
+{
+  "utc": "2026-09-18T16:34:41.934415+00:00",
+  "version": "0.6.0",
+  "baselineCommit": "97d7be6f64e67571b4aa1b0ab5905b1d1a9f61e6",
+  "localOnly": true,
+  "fullParity": false,
+  "reference": {
+    "library": "unmodified Lightbend Config 1.4.9",
+    "jarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37",
+    "javaTimeoutMs": 1000,
+    "platform": "win32",
+    "customTrust": "test-only self-signed fixture certificate"
+  },
+  "engineSha256": "796ca4a8b622f9cbbeb2169520602158ef21f5dfece84f09f8a1b4ff645bb34c",
+  "verified": {
+    "js": 1347,
+    "wasmGC": 1347,
+    "liveConfiguration": 714,
+    "liveFiles": 58,
+    "liveCollections": 1300,
+    "liveHTTP": 156,
+    "totalLiveReference": 2228,
+    "collectionHostCliChecks": 72,
+    "newHTTPHostAsyncCliChecks": 58,
+    "independentJSONBackendCases": 22,
+    "boundedMalformedInputs": 307,
+    "fullVerify": true,
+    "generationFiles": 58,
+    "generationUnchanged": true,
+    "compiledEngineMatches": true,
+    "api": "add optional object_only to parse_sources; add Node sync/async URL loading"
+  },
+  "performance": {
+    "processesPerVariant": 5,
+    "scope": "Loopback HTTP/HTTPS fixture; request JSON decoding, configuration source fetch/parse/resolve and response JSON encoding. Sync: 30 warmups, 15 samples of three executions per process; async: three warmups, seven single-call samples using the reusable bounded worker pool. Java default keep-alive and bounded Node agent reuse. Startup of each benchmark process excluded; a process-median max/min spread above 2 is flagged as unstable. No WAN, sustained load, peak memory or cross-platform claim.",
+    "unstableMeasurements": true,
+    "performanceParityEstablished": false,
+    "summaries": [
+      {
+        "name": "local-flat-128",
+        "current": {
+          "processMedians": [
+            0.821233333333339,
+            0.7973666666666664,
+            1.12766666666667,
+            1.0242666666666669,
+            1.3520666666666632
+          ],
+          "medianMs": 1.0242666666666669,
+          "processSpread": 1.6956648969524646
+        },
+        "upstream": {
+          "processMedians": [
+            1.0644333333333333,
+            1.0532333333333332,
+            1.0237333333333334,
+            1.1774,
+            1.4448333333333334
+          ],
+          "medianMs": 1.0644333333333333,
+          "processSpread": 1.4113375879135193
+        },
+        "baseline": {
+          "processMedians": [
+            0.949133333333331,
+            0.7375000000000019,
+            1.3647666666666585,
+            1.0297333333333352,
+            1.3071333333333353
+          ],
+          "medianMs": 1.0297333333333352,
+          "processSpread": 1.8505310734463116
+        },
+        "currentOverUpstream": 0.9622647418031506,
+        "currentOverBaseline": 0.9946911821830879
+      },
+      {
+        "name": "local-fallback-64",
+        "current": {
+          "processMedians": [
+            0.8890333333333255,
+            0.891399999999995,
+            1.3769333333333407,
+            1.2463666666666693,
+            1.2980000000000018
+          ],
+          "medianMs": 1.2463666666666693,
+          "processSpread": 1.5487983202729776
+        },
+        "upstream": {
+          "processMedians": [
+            1.5617,
+            1.6436666666666666,
+            1.7852,
+            2.2809666666666666,
+            2.046666666666667
+          ],
+          "medianMs": 1.7852,
+          "processSpread": 1.4605664767027384
+        },
+        "baseline": {
+          "processMedians": [
+            0.8489666666666645,
+            0.8803666666666743,
+            1.250033333333325,
+            1.084633333333348,
+            1.2686333333333362
+          ],
+          "medianMs": 1.084633333333348,
+          "processSpread": 1.4943264360595305
+        },
+        "currentOverUpstream": 0.6981664052580492,
+        "currentOverBaseline": 1.1491133716463189
+      },
+      {
+        "name": "http-small",
+        "current": {
+          "processMedians": [
+            0.8631999999999872,
+            0.7493333333333302,
+            1.5019333333333407,
+            1.2247000000000032,
+            1.405999999999987
+          ],
+          "medianMs": 1.2247000000000032,
+          "processSpread": 2.0043594306050005
+        },
+        "upstream": {
+          "processMedians": [
+            0.9180333333333334,
+            0.9100666666666667,
+            1.0608666666666666,
+            1.0894,
+            1.3733
+          ],
+          "medianMs": 1.0608666666666666,
+          "processSpread": 1.5090103289136325
+        },
+        "async": {
+          "processMedians": [
+            1.4659000000000049,
+            1.8051000000000101,
+            2.723700000000008,
+            2.3163000000000125,
+            2.1060000000000514
+          ],
+          "medianMs": 2.1060000000000514,
+          "processSpread": 1.858039429701889
+        },
+        "currentOverUpstream": 1.1544334820586972,
+        "asyncOverSync": 1.7196048011758356
+      },
+      {
+        "name": "http-tree",
+        "current": {
+          "processMedians": [
+            2.4957000000000185,
+            2.165133333333339,
+            5.118433333333314,
+            3.806100000000015,
+            6.328800000000001
+          ],
+          "medianMs": 3.806100000000015,
+          "processSpread": 2.9230532376758864
+        },
+        "upstream": {
+          "processMedians": [
+            2.949333333333333,
+            2.989,
+            3.2825,
+            3.6580666666666666,
+            4.897033333333333
+          ],
+          "medianMs": 3.2825,
+          "processSpread": 1.6603865280289332
+        },
+        "async": {
+          "processMedians": [
+            3.2982000000000085,
+            3.9273000000000025,
+            6.174599999999998,
+            5.687399999999968,
+            5.631600000000049
+          ],
+          "medianMs": 5.631600000000049,
+          "processSpread": 1.872112061124244
+        },
+        "currentOverUpstream": 1.159512566641284,
+        "asyncOverSync": 1.4796248128005114
+      },
+      {
+        "name": "https-small",
+        "current": {
+          "processMedians": [
+            0.6894000000000157,
+            0.6526333333333317,
+            1.34693333333333,
+            1.0548000000000002,
+            1.8410333333332953
+          ],
+          "medianMs": 1.0548000000000002,
+          "processSpread": 2.820930588896215
+        },
+        "upstream": {
+          "processMedians": [
+            0.9639666666666666,
+            0.9647,
+            1.5738333333333334,
+            1.2544,
+            1.2374
+          ],
+          "medianMs": 1.2374,
+          "processSpread": 1.6326636467374391
+        },
+        "currentOverUpstream": 0.8524325197995799
+      },
+      {
+        "name": "http-json-256",
+        "current": {
+          "processMedians": [
+            1.612100000000017,
+            1.6591999999999796,
+            2.317733333333384,
+            2.1468999999999974,
+            2.7444666666666913
+          ],
+          "medianMs": 2.1468999999999974,
+          "processSpread": 1.7024171370675902
+        },
+        "upstream": {
+          "processMedians": [
+            1.3064666666666667,
+            1.2992666666666666,
+            2.2940666666666667,
+            2.0412666666666666,
+            1.8189333333333333
+          ],
+          "medianMs": 1.8189333333333333,
+          "processSpread": 1.7656626815126484
+        },
+        "currentOverUpstream": 1.1803071397155829
+      }
+    ]
+  },
+  "remaining": [
+    "HTTP proxy/305 and authentication integration; more platforms and network resource/performance coverage",
+    "JAR/classloader and JVM application/reference/system-properties default loading",
+    "Remaining number/object/enum collection APIs, checkValid, resolveWith and editing",
+    "High-collision tree-bin and retained-capacity object iteration; complete Unicode numeric indices",
+    "Complete source/comment preservation, diagnostic classes and locations",
+    "Large-config, memory, sustained-load, cross-platform and upstream-version coverage",
+    "Performance parity is not established: final loopback campaign has unstable process variation and slower workloads"
+  ],
+  "sourceGitBlobSHA256": {
+    ".gitattributes": "968aed8752f58f3554e38c1db0b611ba4663668909552d8d17c2874ff5966312",
+    ".github/workflows/ci.yml": "f422f808006ac0c0656509247cd7e95fae5873cd8cf08c221ddad27504f5009c",
+    ".gitignore": "30491d9520128a4172c7fab325bc552a309133db8bd21b4a699668e2a551e609",
+    "CHANGELOG.md": "1a2a6618451522912c0c5e1622eb6c4e738a8a62f507f31f3cbf2bb38cc750d2",
+    "CONTRIBUTING.md": "e066713924ff8db789960bf03122a64cea6904cf4dc7666b9747802f3b50d491",
+    "DUPLICATION.md": "516b3f5fe7f8c6c5817efafab22011ab63fdd6232af9702d4b04d6461d6e6397",
+    "FEATURES.md": "190e1790b7442890b102477e114046243ce5d4204fdd01edc29f1dcfdda16668",
+    "LICENSE": "a2ae469f92ac7fd70592f338c7c43657c7e9510be802cfb3db880fff11df3807",
+    "MANIFEST.sha256.json.baseline": "8e6d5bb967a9e93c83d1b406ee350146e33ebc78c3292f2ee64bde7e6b210737",
+    "README.mbt.md": "989930fd21c3e1483f2598cc2af4539d6c61fe711725e82a9db10991e5c3b621",
+    "README.md": "302849d7b424a6da611173ead980b9a1b7b4a3310dc678a05c8c4e761d06ecbd",
+    "ROADMAP.md": "29352c86d96cc56e5e5e093d188cd9377a2d4158a22e9b1ba4659876574eba24",
+    "TESTING.md": "483a7c0acbd73dde537437ebbb5a190955d81c345336b27209c5999996368c12",
+    "accessors.mbt": "b5b4ee7e9154aad1c2fc43bb2c51f9f622056ff119ba94b1c55e3cfbb3fa172b",
+    "cmd/main/main.mbt": "24f2645d844804ee1241fd560f5fe895d55d0ee59010b00f8c121b9f70bdbc19",
+    "cmd/main/moon.pkg": "943ab64eded434a3d516e50e98dec859f7815536ed2f4d9265837e266e59b667",
+    "cmd/main/pkg.generated.mbti": "e1b35d99c6ff7a6f9f6bc1fbc0e785be06ee9d96b117867741f0e54465766d7e",
+    "cmd/web/inspect.mbt": "d5e9731b74de06b61058c0e838adf9e5bf8a22171a07223d41ae2531290aa85d",
+    "cmd/web/main.mbt": "90bbc8c9b43abb8be74aaaa0cd561e9858613d1f17d60556e2108400b62c8f41",
+    "cmd/web/moon.pkg": "c5baa999f1dd8c612a0754b0ceb85fac2629e70e3ca99d23f77f7e7a78215552",
+    "collection_reference_test.mbt": "bf099a46b21de5188967512b9708010d1827b30b062b79d75f0a50edea2bbf81",
+    "config.mbt": "02e845ed337918005eea7562d18adf2b74a99597ff3a976a5a1e8dd9baa05ffc",
+    "configuration_test.mbt": "399842f9283153ffa5b840351aa32e20f685df6d42d1358db8b2d787cceed36b",
+    "core_test.mbt": "e196afcb6febabb2211a8d0666928f89dbbc9921f4824fc94a8a796cd05ba188",
+    "http_json_reference_test.mbt": "f12bdb7c98ae971d3f2ca1b4ce6117f6aa7672637c2063e4c7dd3ab7f873c03c",
+    "json_sources.mbt": "4acc8d2f1f09473f461caecd4782a7b9a65e6b1838f2293f29f4d99950e7fe5f",
+    "lexer.mbt": "f02a3f071dc1a8a8e68d7e95c3b3c816acfbc70a4aa55cf35707f5aac1a9d786",
+    "moon.mod": "5d7cbe2dc40871edd06debd11a446afbedcee641f2698d4911aabe5607016ed8",
+    "moon.pkg": "47ae82639a3ee30e82b00254cd8b7a12f39ba4f2d798cd84cade63220b449d5c",
+    "numbers.mbt": "0286ce67528f76e85b715bda1a0afac5298f860917dfb5ebb0ef403a6504679d",
+    "object_order.mbt": "42c2914f915e019a8c1cc291758a441dfa3208e0465e87177fa284bc375a392d",
+    "pkg.generated.mbti": "62a70bc8cc78b4c55911bc4713329404f3dc9b005ce14b9033142527509f934c",
+    "resolver.mbt": "67e6fbc44766e0e2a704ccd7f8fb5baad59e1cca9c6f22f37aa120a4c9fbf113",
+    "sample.txt": "782f7385849b19280c03bac21b355f54d67273eed7179ac3295c14b55dbfab93",
+    "source_roots_test.mbt": "9b2aa032bcabbdbe89d2da08cd1c350b0758586dee899727d8d842cd51c5485a",
+    "start-review.ps1": "d505b81c37f229e6ea8fd35384cd3e08006befc219b6e0768565210cfd2bfe66",
+    "tools/HoconOracle.java": "4da39c1c1adaf596dbd19aa7e3859632df3225eae68da66862ed1302d0cb2269",
+    "tools/HoconReference.java": "c19e62ab9d5ea29b1917564651319634d659c82f9f67af2bbee1e39604d87bc7",
+    "tools/benchmark-collections.mjs": "f2da03ec622a9a1eadd8f639f11638fef7f63125a814de27c88f56436a44aa84",
+    "tools/benchmark-http.mjs": "0e5e1181197c923ac80129632a62ffa525f9c675c94865631a3b34e6d3fa1f91",
+    "tools/benchmark.mjs": "53ac611536ba7cb3732017d22976ff8f38dbd9e7aa579c2469eab75b0cdc7216",
+    "tools/check-collection-generation.py": "ac6f68893d1207741c7f1f8e5aedf227403d820c2d074f6be6bf859357c5c428",
+    "tools/check-collection-proof.py": "62e05030fb57a09b8be13b6871c99b8179caf517abe07a458ce8477aca546636",
+    "tools/check-http-generation.py": "4308fcba1eed75c60eaa0c2a62fb58ea2ec3ac0e0d42136e13d99ffcc696de4f",
+    "tools/check-http-proof.py": "bfd1fd0df511bb95e4e0c5b73abb82bb50225f756a8d8c1f379f61ad411de3d0",
+    "tools/cli.mjs": "43aa3f310b78aef4845ca0ffcc28e3df36303ca1321ab1338ad50c19fdcc5dd6",
+    "tools/config-async-worker.mjs": "2273cdc1b1da5f2b627e088be32edca80c30081f21199821cdc26a26e064282f",
+    "tools/config-async.mjs": "2f41f1102915ad1d010a912b4c29e0b616cff950f7ef5127bcbe13431bebfcad",
+    "tools/config.mjs": "1c8d0095c76672b49ad4c51d6019ed010a778b21bd6ece9161fe7d8b2f3c961c",
+    "tools/evidence.mjs": "44dbf357815228150dc25be1a3d910a405f9ab53518dd54ff727d0a3ae063ea6",
+    "tools/fixtures/README.md": "dbdf5d982a80682edbd8fe171f3651b5dcee32cf322e577652c5992113f49ab4",
+    "tools/fixtures/http-cert.pem": "dc65e1e3f0ea554ac10141a5e6b76629f9a97599e7e0c899c7c4353288891f6a",
+    "tools/fixtures/http-key.pem": "d536405308c7ab59eebb526c68334de5037bcf3dc64926b049b7119c7a1d000c",
+    "tools/generate-collection-tests.mjs": "d289577cfb4b39aaa6146ec907c72f614e7699eca8c70258f7da61b24c96d3e4",
+    "tools/generate-http-json-tests.mjs": "a47fd1922a3517db97986878ecc22036ba1ded805c7bd92846587f26ca14eb4f",
+    "tools/http-client.mjs": "d962f3e27b8cbf4b3e652d5d2bf4d232d552bea214f2355855e7ddef24cf2dbc",
+    "tools/http-test-server.mjs": "b306856077bfd36c34e9db08bba215608fed3cffb0d6b0ef53362665b3f2fbd7",
+    "tools/http-worker.mjs": "bb5d8929d1362a75c00a09e1ab4a4fe8d98dda825a4eb4a0a98f61e7ded6ee69",
+    "tools/invalid-input.txt": "64a49c61207045d9c43ad3088b224c85e210975887fed59fabdb625e5fb66801",
+    "tools/robustness.mjs": "24964a078897dccc448ba3d5db4c08f6446d38008424987bf26b4b6f042a21d6",
+    "tools/serve.py": "77361b08fc65d9c6a3d89bda03949d9e1a9754f76e8cc32b20ca11aa9bf1ff5e",
+    "tools/test-cli.mjs": "b1acaf8992e16d37e1527fd60beeea275ce0df574a9622ab3b44d86dcaf08b03",
+    "tools/test-collection-host.mjs": "0362f5257edfdad1552c1f3e87e288fe71ce4cd5a3d0c117e6f617c81d6f68e5",
+    "tools/test-collections.mjs": "8ce6ea9916a54f5e0ba83a6cbcab90349fff66d2f3b02eb8f952cb338b509f76",
+    "tools/test-config-reference.mjs": "7ddeba0046022a6d659418e5271b38f1d55efeb3c57a987a8445dcb88adf71ae",
+    "tools/test-demo.mjs": "02ec6337b9c72c299450db6f0d2b024fd4fd96193d17e5cd501c3a8e6eb87188",
+    "tools/test-file-reference.mjs": "eeed35f31f749e5ab391f65862b3741a67979f6f22dd29a7c55892badf04b998",
+    "tools/test-host.mjs": "a498825c200a8d6f2f486d74d6102f7880740d8bdb12cb8b9f58ce152ad03f0a",
+    "tools/test-http-host.mjs": "5f1232af3a5ddb672c73ae5cdab590ab569e4287cb70e8461ef595fc2c528b1e",
+    "tools/test-http-reference.mjs": "4c13d95373b655c2dc8b3a1874f341a35c2b13b8a23de91b346a9b7ff10bd149",
+    "tools/test-reference.mjs": "13fe50483a9fa2708bca2003c7ecd9f6adac4032b0c6a13ae1885923d84dd89f",
+    "typed_collections.mbt": "81d04d07adc4ac318565982cc475343b0cdc87e4d738e640947701f12f6bbb5c",
+    "typed_test.mbt": "bb4ae7dda24fab3040122820a0bdc079f6858efa36916d594a9ace7595b40016",
+    "usability.mbt": "342475b870b4f60f97806abd3bd30c44052423ad4ea042e1d0b2ef5f33e917aa",
+    "verify.ps1": "2ccab254b66106e893b9ed6ae29740f8a21508be57140ed0717ca3d20a1a9fae",
+    "web/app.mjs": "12a0cf3565b6298e2e3760355ec5da3fed88870be604b7f6e1a2f57d7334578d",
+    "web/config.mjs": "ad6e49225c5826fedd187c5791c4eb3cfcb684c731789f57f7c53561fad12e5d",
+    "web/engine.mjs": "796ca4a8b622f9cbbeb2169520602158ef21f5dfece84f09f8a1b4ff645bb34c",
+    "web/index.html": "cdcbb5d9f2d455d4335bfd7fdcd30bac065fc0b90843d4fe616ef9726fc7aeb8"
+  },
+  "evidenceGitBlobSHA256": {
+    "evidence/benchmark.json": "3167b03113ab6d83d19b1fc59d814c3c2685c56ad4ce1b309cfe1ba350817148",
+    "evidence/collection-generation.json": "cba2b27b8b028f5cb823bb5499e3dfe00cddfc4c8efc6c227bdcd6adbbb538ce",
+    "evidence/collection-host.json": "3677d103dc9a43b6412938a4adefb149716b96c5e156f93793238f45160228d8",
+    "evidence/collection-performance.json": "1fdf451786f7baab411276cc225e8b86ef384a536a4f04b314dac16d1823e46f",
+    "evidence/collection-reference-validation.json": "1b5754d0791b511c54ca54db328be8ce8f1e1318908fd2b8daf41a3a09a8d47a",
+    "evidence/collection-reference-vectors.json": "042a52571088c66d1268d3b19eee205de1b451b84765a0fd8a396fd03ca2fbe3",
+    "evidence/collection-upgrade.json": "04cc9371122f75dcab343e95eef9d867210407e649fd6623045858deebeeef49",
+    "evidence/collection-verify.log": "e4fd6d616d9c972bc0e6c530a60371dd07960dc2c6b2de14cdcb5d72cd4e085d",
+    "evidence/config-reference-validation.json": "da89062c8e3125bc34ddf0c0da10ff680a1760e53bb29dd0b3ace6194e247c53",
+    "evidence/config-reference-vectors.json": "c3a9bfd59b39dc6f162a95fbd67f3df65bff10e4bc8d90fc7ced5c366b6d5f5b",
+    "evidence/config-upgrade.json": "243a0186e0881dc7c818d16f9018b070d07f116d7e592ba625bbfa392722f580",
+    "evidence/duplication.json": "cc8ed3b5b06515bd9aad9cfdd46a3f0182767eb4091862cd3cb2505ef04f641a",
+    "evidence/file-reference-validation.json": "6275f35e16b408af24a1b4da52dc65608140de8ab593e826117049172581ad4d",
+    "evidence/file-reference-vectors.json": "a644cf0d2672331c1f111dd81d5cdc8f0c660265addac3c5aa85a3022276c093",
+    "evidence/http-generation.json": "557be60dca45261c0cae5be0d482b8595aa909e05fb82096116e1eefc7ef4e80",
+    "evidence/http-host.json": "16f04f3f0639e072fb89fee5c33bd005be1ddd91be02e72cdd372924fb8c4cdb",
+    "evidence/http-performance.json": "d84d976059949218a6c5a8a0b665d53c5d8c935e5320071b557766ee3674658c",
+    "evidence/http-reference-validation.json": "506e984607fd30644dec489ab7d29bab389ce64ae1d8179b5c649b713fd26b48",
+    "evidence/http-reference-vectors.json": "d995131c302ebd824206dfa2866e72cd80f284246093746c0be43b4c64ee02f7",
+    "evidence/http-verify.log": "411931bab1fd3dc0d4b651adc14bfa5ec983a9aae4ceaa54e54c496941df6910",
+    "evidence/quality-review.json": "b2c33ae55ce0d45d661969a6de563aebc297acbf42027348aed7bdebf04c0c45",
+    "evidence/robustness.json": "12839d23b65911df4e385d1a4f1df5da7bc719ebfdcb490f56fe1d3b1adc9e3a",
+    "evidence/typed-focused-validation.json": "bf0e2ef8e9056fa57985b3f3925c981ad02d99deaa9e1c78829c43e2b2da188e",
+    "evidence/typed-reference-validation.json": "37ca9296b7030e720b2784333e71abd035581c06d5511ad33a26eda5505f3275",
+    "evidence/verification.json": "87b4279b73d88fa5e230474b93a9def1a9db9acd07692f8119803b443025477f"
+  }
+}
