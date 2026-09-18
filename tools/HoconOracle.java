@@ -103,6 +103,7 @@ class HoconOracle {
     var resolve=ConfigResolveOptions.noSystem();
     if(req.hasPath("systemEnvironment")&&req.getBoolean("systemEnvironment"))resolve=resolve.setUseSystemEnvironment(true);
     if(req.hasPath("environment"))resolve=resolve.appendResolver(new Environment(strings(req,"environment"),null));
+    if(req.hasPath("persistent")&&req.getBoolean("persistent"))return persistent(config,req,options,resolve);
     if(req.hasPath("document")&&req.getBoolean("document")){
       var states=new ArrayList<Object>();states.add(documentState(config,req));
       if(req.hasPath("steps"))for(Config step:req.getConfigList("steps")){
@@ -125,6 +126,46 @@ class HoconOracle {
     if(req.hasPath("checkValid")){Config check=req.getConfig("checkValid");config.checkValid(ConfigFactory.parseString(check.getString("source")).resolve(ConfigResolveOptions.noSystem()),(check.hasPath("paths")?check.getStringList("paths"):List.<String>of()).toArray(new String[0]));}
     Object result=req.hasPath("getter")?getter(config,req):config.root().unwrapped();
     Map<String,Object> out=new LinkedHashMap<>();out.put("accepted",true);out.put("value",result);return out;
+  }
+  static Map<String,Object> persistent(Config initial,Config req,ConfigParseOptions options,ConfigResolveOptions resolve){
+    if(req.hasPath("resolved")&&req.getBoolean("resolved"))initial=initial.resolve(resolve);
+    var configs=new ArrayList<Config>();configs.add(initial);
+    var results=new ArrayList<Object>();var first=documentState(initial,req);
+    for(Config step:req.getConfigList("calls")){
+      try{
+        Config config=configs.get(step.hasPath("target")?step.getInt("target"):0);
+        String action=step.getString("action");Object value;
+        if(action.equals("read"))value=getter(config,step);
+        else if(action.equals("validate")){
+          Config reference=configs.get(step.getInt("other"));var paths=step.hasPath("paths")?step.getStringList("paths"):List.<String>of();
+          if(step.hasPath("problems")&&step.getBoolean("problems"))value=validation(config,reference,paths);
+          else {config.checkValid(reference,paths.toArray(new String[0]));value=null;}
+        } else if(action.equals("children")){
+          var ids=new ArrayList<Integer>();for(Config child:config.getConfigList(step.getString("path"))){ids.add(configs.size());configs.add(child);}value=ids;
+        } else {
+          Config next;
+          if(action.equals("create")){
+            next=ConfigFactory.parseString(step.getString("source"),options);
+            if(step.hasPath("resolved")&&step.getBoolean("resolved"))next=next.resolve(resolve);
+          }else{
+            String op=step.getString("op");
+            var selected=resolve.setAllowUnresolved(step.hasPath("allowUnresolved")&&step.getBoolean("allowUnresolved"));
+            next=switch(op){
+              case "resolve" -> config.resolve(selected);
+              case "resolve-with" -> config.resolveWith(configs.get(step.getInt("other")),selected);
+              case "with-fallback" -> config.withFallback(configs.get(step.getInt("other")));
+              case "get-config" -> config.getConfig(step.getString("path"));
+              case "with-value-source" -> config.withValue(step.getString("path"),ConfigFactory.parseString("value="+step.getString("source"),options).root().get("value"));
+              case "with-value-from" -> config.withValue(step.getString("path"),configs.get(step.getInt("other")).getValue(step.getString("valuePath")));
+              default -> operation(config,step);
+            };
+          }
+          value=configs.size();configs.add(next);
+        }
+        var success=new LinkedHashMap<String,Object>();success.put("accepted",true);success.put("value",value);results.add(success);
+      }catch(ConfigException|IllegalArgumentException|ArithmeticException|IndexOutOfBoundsException e){results.add(Map.of("accepted",false));}
+    }
+    return Map.of("accepted",true,"value",Map.of("initial",first,"results",results,"final",configs.stream().map(c->documentState(c,req)).toList()));
   }
   static Object documentState(Config config,Config req){
     var state=new LinkedHashMap<String,Object>();state.put("resolved",config.isResolved());
@@ -165,10 +206,39 @@ class HoconOracle {
       default -> throw new IllegalArgumentException("unknown operation");
     };
   }
+  static Object retainedBenchmark(Config req){
+    String mode=req.getString("mode"),source=req.getString("source");
+    Config initial=ConfigFactory.parseString(source);
+    Config config=mode.equals("resolve")?initial:initial.resolve(ConfigResolveOptions.noSystem());
+    List<String> paths=req.hasPath("paths")?req.getStringList("paths"):List.of();
+    int repeats=req.getInt("repeats");
+    java.util.function.Supplier<Object> work=()->{
+      var values=new ArrayList<Object>();
+      switch(mode){
+        case "int":for(String path:paths)values.add(config.getInt(path));break;
+        case "number":for(String path:paths)values.add(numeric(config.getNumber(path)));break;
+        case "child":for(int i=0;i<repeats;i++)values.add(config.getConfig("child").getInt("port"));break;
+        case "period":for(int i=0;i<repeats;i++)values.add(period(config.getPeriod("period")));break;
+        case "edits":for(int i=0;i<repeats;i++)values.add(config.withValue("counter",ConfigValueFactory.fromAnyRef(i)).root().unwrapped());break;
+        case "resolve":for(int i=0;i<repeats;i++)values.add(config.resolve(ConfigResolveOptions.noSystem()).root().unwrapped());break;
+        default:throw new IllegalArgumentException("unknown retained benchmark");
+      }
+      return values;
+    };
+    Object result=null;double[] samples=new double[15];
+    for(int i=-10;i<samples.length;i++){
+      long start=System.nanoTime();for(int repeat=0;repeat<3;repeat++)result=work.get();
+      if(i>=0)samples[i]=(System.nanoTime()-start)/3000000.0;
+    }
+    return Map.of("samplesMs",Arrays.stream(samples).boxed().toList(),"result",ConfigValueFactory.fromAnyRef(result).render(RENDER),"java",System.getProperty("java.version"));
+  }
   public static void main(String[] args)throws Exception{
     var output=new PrintWriter(new OutputStreamWriter(System.out,StandardCharsets.UTF_8),true);
     try(var input=new BufferedReader(new InputStreamReader(System.in,StandardCharsets.UTF_8))){
       for(String line;(line=input.readLine())!=null;){
+        if(args.length==1&&args[0].equals("--retained-benchmark")){
+          output.println(ConfigValueFactory.fromAnyRef(retainedBenchmark(ConfigFactory.parseString(line,ConfigParseOptions.defaults().setSyntax(ConfigSyntax.JSON)))).render(RENDER));continue;
+        }
         if(args.length==1&&args[0].equals("--benchmark")){
           String result="";double[] samples=new double[15];
           for(int i=-10;i<samples.length;i++){

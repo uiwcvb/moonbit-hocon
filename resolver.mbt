@@ -131,7 +131,10 @@ fn resolve_reference(
     let mut result : Value? = None
     let mut found = false
     for keys in paths {
-      if source_node && ancestor(keys, owner) {
+      // A binding with no lower value cannot include its enclosing object.
+      // With merge history, the enclosing lookup uses the replacement view
+      // containing that lower value and is finite (including after atPath).
+      if source_node && ancestor(keys, owner) && r.blocked_paths.contains(owner) {
         if optional {
           found = true
           break

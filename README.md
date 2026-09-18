@@ -1,6 +1,6 @@
 # HOCON 配置解析器
 
-MoonBit 本地 0.10.0：类型化配置、历史值自引用、`+=`、include 重定位、显式回退与环境替换、未解析文档/分阶段解析、数字/对象/通用值/枚举及类型化列表读取、日历周期和指定时间单位、配置树修改与校验、文件/HTTP(S) 加载、可取消异步入口和 CLI。
+MoonBit 本地 0.11.0：持久化不可变 JavaScript Config、类型化配置、历史值自引用、`+=`、include 重定位、显式回退与环境替换、未解析文档/分阶段解析、数字/对象/通用值/枚举及类型化列表读取、日历周期和指定时间单位、配置树修改与校验、文件/HTTP(S) 加载、可取消异步入口和 CLI。
 解析和求值均由 MoonBit 实现；Node 提供文件、HTTP(S)、properties 和命令行宿主。Java 只用于独立参考测试及路径字符数据生成。
 
 ## 命令行与文件
@@ -110,6 +110,32 @@ node tools/cli.mjs --input 'timeout=1.5s' --get timeout --type duration-in --tim
 
 Node getter 名为 period、temporal、duration-in、duration-list-in、milliseconds、nanoseconds、milliseconds-list、nanoseconds-list。指定单位的两个 getter 必须提供 `unit`，名称为上述七个枚举名字的全小写形式；CLI 使用 `--time-unit`。新接口共用既有数量字符串 10,000 单元上限，不提供日历运算、日期时区或完整 Java 时间对象。
 
+## 持久化 JavaScript Config
+
+0.11 的 `Config` 保存实际 MoonBit 配置树；构造后可反复读取、派生和解析，不重新读取源文件。`parse` 保留未解析节点，`load` 立即解析；`parseFile`/`loadFile`、`parseURL`/`loadURL` 及六个对应 `Async` 工厂返回相同的不可变接口。工厂沿用显式环境、include、fallback 和文件／网络预算。
+
+```javascript
+import {Config} from './tools/config.mjs';
+const raw = Config.parse('service.port=${PORT}');
+const ready = raw.withFallback(Config.parse('PORT=8080')).resolve();
+const service = ready.getConfig('service');
+console.log(service.getInt('port')); // 8080
+console.log(raw.isResolved()); // false，原配置保持不变
+const remote = await Config.loadURLAsync('https://config.example/app.conf', {
+  signal: AbortSignal.timeout(10000),
+});
+```
+
+支持现有标量／列表类型读取、`getConfig`/`getConfigList`、`getEnum(path, choices)`、`getDuration(path, unit?)`、`hasPath`/`hasPathOrNull`、`getIsNull`、`entrySet`、`isEmpty` 和 `isResolved`。`get(path, {type, unit?, enumChoices?})` 提供通用入口；指定时间单位使用全小写名称。Long、时长、内存量通过十进制字符串保持精确，`getNumber` 保留类型及位模式；`getDouble`/`getDoubleList` 保留 JavaScript 负零，非有限值使用字符串。普通 JSON 数字仍有双精度限制。
+
+`resolve`/`resolveWith`、`withFallback`、`withValue`、`withoutPath`/`withOnlyPath`、`atPath`/`atKey` 和字面键筛选返回新对象。`withValue` 接受 JSON 值，`withValueSource` 接受精确 HOCON 值文本，`withValueFrom(path, other, valuePath)` 从另一配置转移值。`checkValid(reference, ...paths)` 成功返回自身；`validationProblems` 返回问题数组。环境在工厂或显式 resolve 时取快照，不会隐式读取进程环境。
+
+实例冻结，返回的普通对象／数组可独立修改；子配置只能经不可变接口访问，内部可安全共享只读节点。核心 MoonBit `get_config` 返回防御性深复制，避免暴露可变 Map/Array。没有必须手工释放的全局句柄表，废弃实例由垃圾回收器管理。
+
+异步工厂通过内部带标签的树编码跨 Worker，重建未解析替换、绑定、延迟合并和数字拼写；传输限 4,000,000 单元／编码字符及 64 层。该编码是版本化内部协议，不承诺跨版本存档兼容。Config 派生链不受旧批处理的 64 步上限限制，仍受解析、树深度、求值和输出预算约束。
+
+`toJSON` 和 `render` 仅输出已解析值／JSON 文本。尚未提供完整 ConfigObject/ConfigValue 包装、未解析渲染、注释／来源 API，或原生 Java 的全部共享身份语义。原有 `load` 和 `document:true` 批处理入口继续可用。
+
 ## 未解析文档和分阶段解析
 
 ```moonbit
@@ -141,7 +167,7 @@ const states = await loadFileAsync('app.conf', {
 console.log(states.at(-1));
 ```
 
-所有同步/异步 load 入口支持 `document:true`。返回初始状态及每步状态：`resolved`、解析完成时的 `value`，以及每条 probe 的 `{accepted,value?}`。这是一批操作的状态记录；尚未提供持久化 JavaScript Config 对象。JSON 数值遵循 JavaScript 双精度；精确数值应使用 MoonBit Value 或原有类型化读取。
+所有同步/异步 load 入口支持 `document:true`。返回初始状态及每步状态：`resolved`、解析完成时的 `value`，以及每条 probe 的 `{accepted,value?}`。这是一批操作的状态记录；需要持续读取和派生时使用上面的 Config 接口。JSON 数值遵循 JavaScript 双精度；精确数值应使用 MoonBit Value 或原有类型化读取。
 
 步骤支持 `resolve`、`resolve-with`、`resolve-with-self`、`with-fallback`，以及现有路径/字面键编辑和包裹操作。`with-value`/`with-key-value` 可接受 JSON `value` 或未解析 HOCON `valueSource`。source 内的 include 使用主输入的文件/URL 来源；实际宿主读取共用整次加载的限额。不能同时指定普通 getters、operations 或 validation。每次最多 64 步、64 条 probe；状态 JSON 累计最多 1,000,000 UTF-16 单元。
 
@@ -242,7 +268,9 @@ include 中的引用优先查包含位置，再回退根路径。环境替换显
 实时参考运行与证据范围见 [TESTING.md](TESTING.md)。源代码、API、编译引擎与报告 SHA256 一起保存。
 这些用例证明覆盖范围内的结果一致，不代表全部 Lightbend Config API 或生产性能已经追平。
 
-0.10 当前验证：JS/Wasm-GC 各 14,001 项；八组官方实时对照 14,861/14,861（新增 2,171 个时间接口案例）；57 项新文件/HTTP/异步/CLI 检查及既有门禁通过，104 文件再生一致。最终五进程计时中新负载当前/官方中位耗时比为 0.271–1.267，两个旧负载相对 0.9 为 1.007 与 1.021。大整数毫秒列表仍比官方慢约 26.7%；进程中位数最大/最小比最高 1.783，本轮未触发两倍波动标记。初测保存在 `evidence/temporal-performance-initial.json`，最终结果及完整清单见 `evidence/temporal-performance.json` 和 `evidence/temporal-upgrade.json`；完整性能仍未追平。
+0.11 当前验证：JS/Wasm-GC 各 14,244 项；九组官方实时对照 15,703/15,703（含 842 组持久化程序）；842 组异步回放、54 项新宿主检查及既有门禁通过，123 文件再生一致。受控 GC 检查回收 2399/2,400 个废弃实例，保留实例仍可读取，最大回收后堆增长约 0.73 MiB；不代表峰值或长期内存追平。五进程计时中六项新负载当前/官方耗时比为 1.003–8.576，两个旧负载相对 0.10 为 0.986、0.978。进程中位数最大/最小比最高 1.415，未触发两倍波动标记；完整性能仍未追平。最终结果及清单见 `evidence/persistent-performance.json` 和 `evidence/persistent-upgrade.json`。
+
+0.10 历史验证：JS/Wasm-GC 各 14,001 项；八组官方实时对照 14,861/14,861（新增 2,171 个时间接口案例）；57 项新文件/HTTP/异步/CLI 检查及既有门禁通过，104 文件再生一致。最终五进程计时中新负载当前/官方中位耗时比为 0.271–1.267，两个旧负载相对 0.9 为 1.007 与 1.021。大整数毫秒列表仍比官方慢约 26.7%；进程中位数最大/最小比最高 1.783，本轮未触发两倍波动标记。初测保存在 `evidence/temporal-performance-initial.json`，最终结果及完整清单见 `evidence/temporal-performance.json` 和 `evidence/temporal-upgrade.json`；完整性能仍未追平。
 
 0.9 历史验证：JS/Wasm-GC 各 11,827 项，七组官方实时对照 12,690/12,690（新增 3,562 扩展读取案例），55 项新文件/HTTP/异步/CLI 检查及既有门禁通过；94 文件再生一致。最终固定五进程计时中，六项新负载当前/官方中位耗时比为 0.372–0.907，两个旧负载相对 0.8 为 1.057 与 1.048（约慢 5.7% 和 4.8%）。进程中位数最大/最小比最高 2.636，报告标记测量不稳定；不据此建立完整性能追平。开发阶段的三份计时结果也保留，最终代码使用 `evidence/accessor-performance.json`，完整清单见 `evidence/accessor-upgrade.json`。
 

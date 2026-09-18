@@ -108,10 +108,13 @@ pub fn get_memory_size_list(
 
 ///|
 pub fn get_config(config : Value, key : String) -> Value raise ParseError {
-  match required(config, key) {
-    Object(fields) => Object(fields.copy())
-    _ => raise Invalid("expected object-compatible value")
+  let value = peek_document_path(config, key).unwrap_or_else(() => {
+    raise Invalid("missing path: " + key)
+  })
+  if !known_object(value) {
+    raise Invalid("expected object-compatible value")
   }
+  copy_value(value)
 }
 
 ///|

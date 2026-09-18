@@ -1,14 +1,14 @@
 {
   "project": "hocon",
-  "utc": "2026-09-18T18:41:21.870Z",
+  "utc": "2026-09-18T19:39:28.619Z",
   "runtime": "v24.11.0",
   "platform": "win32",
   "cpu": "Intel(R) Core(TM) i7-14700HX",
   "input_utf8_bytes": 90,
   "samples": 30,
   "warmup": 5,
-  "median_ms": 0.31389999999998963,
-  "p95_ms": 0.8763000000000005,
-  "max_ms": 0.9736000000000047,
+  "median_ms": 0.2511999999999972,
+  "p95_ms": 0.4013999999999953,
+  "max_ms": 0.8468999999999909,
   "scope": "JS warm execution of documented example; no cross-project or upstream performance claim"
 }

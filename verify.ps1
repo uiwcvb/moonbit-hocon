@@ -60,6 +60,14 @@ try {
   if ($LASTEXITCODE -ne 0) {throw 'temporal reference replay failed'}
   node tools/test-temporal-host.mjs
   if ($LASTEXITCODE -ne 0) {throw 'temporal file/HTTP/async/CLI tests failed'}
+  node tools/test-persistent-reference.mjs --golden
+  if ($LASTEXITCODE -ne 0) {throw 'persistent reference replay failed'}
+  node tools/test-persistent-async.mjs
+  if ($LASTEXITCODE -ne 0) {throw 'persistent async native replay failed'}
+  node tools/test-persistent-host.mjs
+  if ($LASTEXITCODE -ne 0) {throw 'persistent file/HTTP/ownership failed'}
+  node tools/test-persistent-memory.mjs
+  if ($LASTEXITCODE -ne 0) {throw 'persistent bounded collection failed'}
   node tools/robustness.mjs
   if ($LASTEXITCODE -ne 0) {throw 'robustness failed'}
   node tools/benchmark.mjs

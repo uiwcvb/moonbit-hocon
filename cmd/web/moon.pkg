@@ -10,7 +10,23 @@ pkgtype(kind: "executable")
 options(
   link: {
     "js": {
-      "exports": [ "run", "json", "inspect_json", "load_json" ],
+      "exports": [
+        "run",
+        "json",
+        "inspect_json",
+        "load_json",
+        "config_create",
+        "config_error",
+        "config_read",
+        "config_status",
+        "config_query",
+        "config_derive",
+        "config_child",
+        "config_children",
+        "config_validate",
+        "config_pack",
+        "config_unpack",
+      ],
       "format": "esm",
     },
   },
