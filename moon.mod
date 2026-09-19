@@ -1,4 +1,4 @@
-name = "localreview/hocon"
+name = "wang-chen89/hocon"
 
 version = "0.23.0"
 
