@@ -72,12 +72,24 @@ fn decimal_double(text : String) -> Double raise ParseError {
     let power = exponent - fraction + trailing
     // A discarded suffix lies between consecutive prefix integers. Equal
     // rounded endpoints prove the full input has that same binary64 result.
-    // Increase the prefix if it crosses a rounding boundary; ambiguous long
-    // inputs keep the runtime's exact conversion.
+    // If 32 digits straddle a boundary, 768 suffice for an exact decision:
+    // prefix_power = magnitude - 767 <= -1075. Every binary64 midpoint is
+    // an integer multiple of 2^-1075, hence of this decimal grid spacing.
+    // No midpoint is strictly inside the discarded suffix's open interval.
+    // A nonzero suffix therefore only changes an exact lower-endpoint tie.
     for keep in [32, 768] {
       let count = keep.min(significant_count)
       let prefix = decimal_coefficient(text, mantissa_end, leading, count)
       let prefix_power = power + significant_count - count
+      if keep == 768 {
+        // significant_count excludes trailing zeros, so a truncated suffix
+        // is strictly positive. Exact inputs retain round-to-nearest-even.
+        return tiny_decimal_text(
+          prefix,
+          prefix_power,
+          sticky=count < significant_count,
+        )
+      }
       let lower = tiny_decimal_text(prefix, prefix_power)
       if count == significant_count {
         return lower
@@ -118,7 +130,11 @@ fn decimal_coefficient(
 }
 
 ///|
-fn tiny_decimal_text(coefficient : String, power : Int) -> Double {
+fn tiny_decimal_text(
+  coefficient : String,
+  power : Int,
+  sticky? : Bool = false,
+) -> Double {
   let mut end = coefficient.length()
   while end > 1 && coefficient[end - 1] == 48 {
     end -= 1
@@ -126,6 +142,7 @@ fn tiny_decimal_text(coefficient : String, power : Int) -> Double {
   tiny_decimal_ratio(
     @bigint.BigInt::from_string(coefficient.view(end_offset=end).to_owned()),
     power + coefficient.length() - end,
+    sticky~,
   )
 }
 
@@ -133,7 +150,13 @@ fn tiny_decimal_text(coefficient : String, power : Int) -> Double {
 // For N * 10^p, p < 0, write the exact value as N / 5^-p * 2^p.
 // Locate its binary exponent, divide at the required binary64 spacing, then
 // round the exact quotient/remainder once, with midpoint ties to even.
-fn tiny_decimal_ratio(numerator : @bigint.BigInt, power : Int) -> Double {
+// sticky is permitted only when the caller proves that a strictly positive
+// discarded suffix cannot cross another midpoint; it moves a tie upward.
+fn tiny_decimal_ratio(
+  numerator : @bigint.BigInt,
+  power : Int,
+  sticky? : Bool = false,
+) -> Double {
   let denominator = @bigint.BigInt::from_int(5).pow(
     @bigint.BigInt::from_int(-power),
   )
@@ -158,7 +181,8 @@ fn tiny_decimal_ratio(numerator : @bigint.BigInt, power : Int) -> Double {
   let remainder = numerator - quotient * denominator
   let twice = remainder << 1
   let mut rounded = quotient.to_int64()
-  if twice > denominator || (twice == denominator && rounded % 2L == 1L) {
+  if twice > denominator ||
+    (twice == denominator && (sticky || rounded % 2L == 1L)) {
     rounded += 1L
   }
   if subnormal {

@@ -29,12 +29,42 @@ for(let i=0;i<1024;i++){
  add((i%2?'-':'+')+text+['','f','D'][i%3]);
 }
 // Long nonzero suffixes exercise conclusive prefix intervals; the midpoint
-// neighbors above exercise intervals that must expand or retain exact fallback.
+// neighbors above exercise intervals that must expand for an exact decision.
 for(let i=0;i<128;i++){
  let digits=String(draw()%9+1),count=769+draw()%1024;
  for(let j=1;j<count;j++)digits+=draw()%10;
  if(digits.endsWith('0'))digits=digits.slice(0,-1)+'1';
  signed(digits+'e-'+(count+307+draw()%17));
+}
+// Independent binary64 midpoint construction, including both tie parities,
+// subnormal/normal transitions and the upper end of the tiny decimal range.
+// The JDK oracle supplies expected bits; no parser helper is used here.
+const boundaryBits=new Set([0n,1n,2n,3n]);
+for(let field=1n;field<=4n;field++)for(const delta of [-2n,-1n,0n,1n,2n])boundaryBits.add((field<<52n)+delta);
+const floatBuffer=new ArrayBuffer(8),floatView=new DataView(floatBuffer);
+floatView.setFloat64(0,1e-307);
+const upperBits=floatView.getBigUint64(0);
+for(const delta of [-2n,-1n,0n,1n,2n])boundaryBits.add(upperBits+delta);
+for(let i=0;i<24;i++)boundaryBits.add((BigInt(draw())<<32n|BigInt(draw()))%upperBits);
+const subnormalUnits=bits=>{
+ const field=bits>>52n,fraction=bits&((1n<<52n)-1n);
+ return field===0n?fraction:((1n<<52n)+fraction)<<(field-1n);
+};
+for(const bits of boundaryBits){
+ const coefficient=(subnormalUnits(bits)+subnormalUnits(bits+1n))*five1075;
+ const length=String(coefficient).length;
+ const extensions=new Set([0,Math.max(0,767-length),Math.max(0,768-length),Math.max(0,769-length),1024,4096]);
+ for(const extra of extensions){
+  const midpoint=coefficient*10n**BigInt(extra),power=1075+extra;
+  for(const delta of [-1n,0n,1n]){
+   const digits=String(midpoint+delta);
+   signed(digits+'e-'+power);
+   if(extra<=2){
+    // Leading and trailing zero removal must not erase a sticky suffix.
+    signed('000'+digits.slice(0,1)+'.'+digits.slice(1)+'00e'+(digits.length-1-power));
+   }
+  }
+ }
 }
 for(let c=0;c<=33;c++)for(const text of ['1e-323','-0.0','NaN','Infinity'])add(String.fromCharCode(c)+text+String.fromCharCode(c));
 for(const text of ['', '.', '+', '-', '+.', '-.', 'e1','1e','1e+','1e-','1e1e1','1..0','--1','+-1','1_0','nan','inf','1 0','\u00a01\u00a0','１２.３','1dD','0x','0x1','0x1p','0x1.8p-1074','-0x1p-1075','0x0.fffffffffffffp-1022','0x1.00000000000008p-1022','0x1p1024','+NaN','-NaN','NaNf','Infinityd'])add(text);

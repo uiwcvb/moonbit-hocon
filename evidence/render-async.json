@@ -1,5 +1,5 @@
 {
-  "utc": "2026-09-19T00:15:55.809Z",
+  "utc": "2026-09-19T00:34:53.793Z",
   "total": 2140,
   "passed": 2140,
   "failed": 0,
@@ -28,11 +28,11 @@
     "config.mbt": "98cc433979effd01b9fb7c9be8432cbbbe7e7037942108a583613a7e91b5143e",
     "configuration_test.mbt": "794436877f3ab92c613401229125c326050772af050f2948e1bebfdd20ced04c",
     "core_test.mbt": "e196afcb6febabb2211a8d0666928f89dbbc9921f4824fc94a8a796cd05ba188",
-    "decimal_double.mbt": "598173c8e703b4492abdcbb699e66c8d7f8158525abf10a9343b949171cddf61",
+    "decimal_double.mbt": "5e8dff167f6682ab610bd8d62922187fb00743265251f3d85a98e752017ab778",
     "document.mbt": "9aeb584921bdb83183336945ecedaf9d882d0ede030627c138af44e58de3fdd6",
     "document_reference_test.mbt": "b129b0d00de2fa463db5e2c2b2c29f11b4ba9c018333f878adfbc35aa8559145",
     "document_test.mbt": "d0dd16abf08eba904896b62f5af6729968492a295caabc7cb5f1e39dcde86de5",
-    "double_parse_wbtest.mbt": "d798bdc25cb42dcdf346972bd7765a47d3bd7f5814bae2bf6553d62ed7195aee",
+    "double_parse_wbtest.mbt": "7fa5a7221ace8802992943b7ebdc51d00f9b3f7d27d1f38549a3a33a40fcbf0c",
     "double_render_wbtest.mbt": "75874848d3150224c5cd57194fc8501504b8aa43657a363b20d3674ed47dc1a7",
     "entry_ownership_test.mbt": "a87c096f02a949cae61ff81c3f3809024641ede7e2c67e2bd7e9e798b472247d",
     "entry_reference_test.mbt": "abf965819ea52dbb5cd6e60653ebbbe227539425ec8cb6f27f674eb9abe2d290",
@@ -42,7 +42,7 @@
     "http_json_reference_test.mbt": "f12bdb7c98ae971d3f2ca1b4ce6117f6aa7672637c2063e4c7dd3ab7f873c03c",
     "json_sources.mbt": "7a08058d67347a295d558e8d455931618cca8979895efa8318872d8bf567a716",
     "lexer.mbt": "96b0e9bd2a07e4bdaff1207b11e6db2387825bf91fbb465b616e28b8564b0402",
-    "moon.mod": "46185815b8fc40d7895dedb9ab90501d39e3fef8141c99cf60a12573535183b9",
+    "moon.mod": "59586a3f488bfdca36192b72c11ea0dae28bd739b352396d4ad9d901aeed89f4",
     "moon.pkg": "47ae82639a3ee30e82b00254cd8b7a12f39ba4f2d798cd84cade63220b449d5c",
     "numbers.mbt": "89204add58c4010462ba6bb5f86cfc5c0c532ae1708ba8c366736e48b207f7dd",
     "numeric_characters.mbt": "b4dd1ed1fa730e96e197d7e31f168be64d1b9e52c06576204af4eac64f972fd6",
@@ -78,6 +78,7 @@
     "tools/ValueOracle.java": "ecc68caf3c0d3e114482da1ad58a5ef997d1a9aea7f790e92fd8e9e648d8bbd9",
     "tools/benchmark-accessor.mjs": "8d97a5aa4e35cb21d4214ae565585b24fdad1d85a4540a92e4d513c2edc8fd51",
     "tools/benchmark-collections.mjs": "f2da03ec622a9a1eadd8f639f11638fef7f63125a814de27c88f56436a44aa84",
+    "tools/benchmark-decimal-bound.mjs": "f45752131560d7584fd2b77819d723355f8f827e0f4f261bb32aeaa894712d82",
     "tools/benchmark-document.mjs": "40ce2b4dbec134971306ae88b4b8b3c2ce5d1f89dc63514e6eb7ea2787dc3b1a",
     "tools/benchmark-double-parse.mjs": "312f44c91a8f46dbfb6f36a969f9f1f32f38a8feb9a6bceecf6ebf7c87064f65",
     "tools/benchmark-double-render.mjs": "afeaf0d262230f1188ee710cfcb20b95b2921511647fac99eb43b4260efa3da3",
@@ -101,7 +102,7 @@
     "tools/config-host.mjs": "c88bc5bbf76eb9379bc9daf909ac83a4e4281cc30c85e0223a72caa461ad0185",
     "tools/config-object.mjs": "f95d0e988a4c85477c6df7f60873f08f4c2f8f3fbbf77e07b8187e6aed683e48",
     "tools/config.mjs": "047129f395d672cad3bdb97c0c1038cca6e000e11cfc828a9ed3a475c47376e1",
-    "tools/double-parse-cases.mjs": "541766d9cce444f610c3b7b48a939f889120e7d7dc2667fbe808b1926b02d07c",
+    "tools/double-parse-cases.mjs": "7e7904caec420672ba1bd899af64d101cfc06f279b1bffd12fb0f4a6424a9d35",
     "tools/double-render-cases.mjs": "97c3b8b3f951233c31387ab4a2661fe79b1db9b48d6b1841677cc604195b7558",
     "tools/entry-cases.mjs": "97f833e83cd6f1c958a1b6b6934a5d3c6201e54358aa66ae4263af6ba89f7af7",
     "tools/evidence.mjs": "44dbf357815228150dc25be1a3d910a405f9ab53518dd54ff727d0a3ae063ea6",
@@ -185,7 +186,7 @@
     "verify.ps1": "8cbbf4a2605d6964823c8b1b029ac784cbdd263f26022e0dd58148d0c90419cb",
     "web/app.mjs": "12a0cf3565b6298e2e3760355ec5da3fed88870be604b7f6e1a2f57d7334578d",
     "web/config.mjs": "6cc7edbdb551db766b27f268521f323981c578a2e4878ce9f0bd391c1057ccd4",
-    "web/engine.mjs": "bee3509fa7a1825d7d103532e1f6f71e74c68ea62b29906d28335cc9bccc4b33"
+    "web/engine.mjs": "55ff8b25b410671e1e2b07bcf47072c16b457903c87cee5fd7ee1bdca6650381"
   },
   "failures": []
 }
