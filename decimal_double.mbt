@@ -9,6 +9,7 @@ fn decimal_double(text : String) -> Double raise ParseError {
   let mut trailing = 0
   let mut fraction = 0
   let mut dotted = false
+  let mut coefficient = 0.0
   while i < text.length() {
     let c = text[i].to_int()
     if c >= 48 && c <= 57 {
@@ -21,6 +22,9 @@ fn decimal_double(text : String) -> Double raise ParseError {
         trailing = 0
       }
       digits += 1
+      if digits - leading <= 16 {
+        coefficient = coefficient * 10.0 + (c - 48).to_double()
+      }
       if dotted {
         fraction += 1
       }
@@ -67,6 +71,21 @@ fn decimal_double(text : String) -> Double raise ParseError {
   if magnitude > 308 {
     return 1.0 / 0.0
   }
+  let power = exponent - fraction
+  // Each accumulated integer up to 2^53-1 and each 10^k, 0 <= k <= 22,
+  // is exactly representable. A single multiply/divide therefore gives the
+  // correctly rounded decimal value. The strict bound excludes integers
+  // above 2^53 that the accumulation itself might already have rounded.
+  if digits - leading <= 16 &&
+    coefficient < 9007199254740992.0 &&
+    power >= -22 &&
+    power <= 22 {
+    return if power < 0 {
+      coefficient / decimal_exact_powers[-power]
+    } else {
+      coefficient * decimal_exact_powers[power]
+    }
+  }
   let significant_count = digits - leading - trailing
   if magnitude <= -308 {
     let power = exponent - fraction + trailing
@@ -108,6 +127,15 @@ fn decimal_double(text : String) -> Double raise ParseError {
     _ => raise Invalid("invalid decimal number")
   }
 }
+
+///|
+let decimal_exact_powers : ReadOnlyArray[Double] = [
+  1.0, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, 10000000.0, 100000000.0,
+  1000000000.0, 10000000000.0, 100000000000.0, 1000000000000.0, 10000000000000.0,
+  100000000000000.0, 1000000000000000.0, 10000000000000000.0, 100000000000000000.0,
+  1000000000000000000.0, 10000000000000000000.0, 100000000000000000000.0, 1000000000000000000000.0,
+  10000000000000000000000.0,
+]
 
 ///|
 fn decimal_coefficient(

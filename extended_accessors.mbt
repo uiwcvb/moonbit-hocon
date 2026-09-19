@@ -143,7 +143,7 @@ pub fn get_number_list(
   config : Value,
   key : String,
 ) -> Array[ConfigNumber] raise ParseError {
-  typed_list(config, key, get_number)
+  typed_list(config, key, value => number_value(required_list_value(value)))
 }
 
 ///|
@@ -151,7 +151,12 @@ pub fn get_object(
   config : Value,
   key : String,
 ) -> Map[String, Value] raise ParseError {
-  match copy_value(required(config, key)) {
+  object_value(required(config, key))
+}
+
+///|
+fn object_value(value : Value) -> Map[String, Value] raise ParseError {
+  match copy_value(value) {
     Object(fields) | SealedObject(fields) => fields
     _ => raise Invalid("expected object-compatible value")
   }
@@ -162,7 +167,7 @@ pub fn get_object_list(
   config : Value,
   key : String,
 ) -> Array[Map[String, Value]] raise ParseError {
-  typed_list(config, key, get_object)
+  typed_list(config, key, value => object_value(required_list_value(value)))
 }
 
 ///|

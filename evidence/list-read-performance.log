@@ -1,0 +1,39 @@
+Completed rendering performance campaign 1/5
+Completed rendering performance campaign 2/5
+Completed rendering performance campaign 3/5
+Completed rendering performance campaign 4/5
+Completed rendering performance campaign 5/5
+{"name":"legacy-parse-64","baselineRatio":1.0666855310318824,"upstreamRatio":0.7979256332463214}
+{"name":"legacy-fallback-32","baselineRatio":0.9938517779993438,"upstreamRatio":0.5691041438698343}
+{"name":"retained-nested-int-32","baselineRatio":0.966857871255565,"upstreamRatio":0.5213058419244168}
+{"name":"retained-quoted-int-32","baselineRatio":1.0216216216216478,"upstreamRatio":1.3409010287336443}
+{"name":"retained-int-32","baselineRatio":1.0111111111109037,"upstreamRatio":0.8905693950177725}
+{"name":"retained-number-32","baselineRatio":0.9940476190475517,"upstreamRatio":1.3854499042756085}
+{"name":"retained-child-32","baselineRatio":1.0151757188498927,"upstreamRatio":2.319343065693147}
+{"name":"retained-period-32","baselineRatio":1.018072289156656,"upstreamRatio":1.8342981186686145}
+{"name":"immutable-edits-16","baselineRatio":1.0102887648628802,"upstreamRatio":4.0288368492355575}
+{"name":"retained-resolve-16","baselineRatio":1.001583844783264,"upstreamRatio":0.7009837882776734}
+{"name":"value-read-32","baselineRatio":1.0003681110643343,"upstreamRatio":4.886462882095988}
+{"name":"value-hash-32","baselineRatio":0.9662921348334701,"upstreamRatio":0.008879710893135027}
+{"name":"value-cold-hash-32","baselineRatio":1.0166364186327392,"upstreamRatio":1.3574313408723249}
+{"name":"value-equals-32","baselineRatio":1.08537479829837,"upstreamRatio":3.1391599490878477}
+{"name":"value-search-32","baselineRatio":1.0172711571680983,"upstreamRatio":3.051813471505234}
+{"name":"value-fallback-32","baselineRatio":1.0098129691153144,"upstreamRatio":3.259233518665698}
+{"name":"render-json-object","baselineRatio":0.9878640776699773,"upstreamRatio":2.128318584070909}
+{"name":"render-hocon-formatted","baselineRatio":0.9813359528483873,"upstreamRatio":1.869036482693938}
+{"name":"render-json-unresolved","baselineRatio":0.9562737642587112,"upstreamRatio":1.4229137199432222}
+{"name":"render-hocon-merge","baselineRatio":1.0450522928405033,"upstreamRatio":1.7649456521741924}
+{"name":"render-json-floats","baselineRatio":1.0109466057647147,"upstreamRatio":5.888532110092051}
+{"name":"render-json-list","baselineRatio":0.9974761959388861,"upstreamRatio":4.461262185736067}
+{"name":"render-json-subnormals","baselineRatio":1.0151372794654956,"upstreamRatio":18.55725190839682}
+{"name":"render-json-decimal-powers","baselineRatio":0.8306021341461969,"upstreamRatio":8.987628865978287}
+{"name":"render-json-long-tiny","baselineRatio":0.9738305528298088,"upstreamRatio":18.606249999997715}
+{"name":"render-json-midpoint-long","baselineRatio":1.03954396874746,"upstreamRatio":79.99386503067477}
+{"name":"render-json-midpoint-normal","baselineRatio":0.9972882323557014,"upstreamRatio":67.51207729468776}
+{"name":"render-json-midpoint-upper-tiny","baselineRatio":0.9835168738898942,"upstreamRatio":70.2690355329976}
+{"name":"retained-double-tiny-list","baselineRatio":0.8702656383892456,"upstreamRatio":3.431081081081678}
+{"name":"retained-double-ordinary-list","baselineRatio":0.6203771736466667,"upstreamRatio":12.477832512313668}
+{"name":"retained-double-long-text-list","baselineRatio":1.0093336579823164,"upstreamRatio":1.197496389022643}
+{"name":"retained-double-mixed-64","baselineRatio":0.5716770465127975,"upstreamRatio":7.480910425842901}
+{"name":"retained-double-mixed-512","baselineRatio":0.4072750953577049,"upstreamRatio":7.1415986949428705}
+{"name":"retained-double-exact-16","baselineRatio":0.3394109396915128,"upstreamRatio":2.789625360231418}

@@ -1,0 +1,23 @@
+import fs from 'node:fs';
+import inspector from 'node:inspector';
+import {spawnSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
+import {Config} from './config-object.mjs';
+import {sourceHashes} from './evidence.mjs';
+const git=spawnSync('git',['rev-parse','HEAD'],{encoding:'utf8',windowsHide:true});
+if(git.status!==0)throw Error(git.stderr);
+const config=Config.load('values=[0.1,1.25,3.141592653589793,1e-22,1e23,1e100,-1.5,-1e200]');
+for(let i=0;i<1000;i++)config.getDoubleList('values');
+const session=new inspector.Session();session.connect();
+const post=(method,params={})=>new Promise((resolve,reject)=>session.post(method,params,(error,result)=>error?reject(error):resolve(result)));
+await post('Profiler.enable');await post('Profiler.setSamplingInterval',{interval:100});await post('Profiler.start');
+const start=performance.now();let calls=0,last;
+while(performance.now()-start<3000){last=config.getDoubleList('values');calls++;}
+const {profile}=await post('Profiler.stop');session.disconnect();
+const prefix=process.argv[2]??'double-read-baseline';
+fs.writeFileSync(new URL('../evidence/'+prefix+'.cpuprofile',import.meta.url),JSON.stringify(profile)+'\n');
+const total=profile.samples?.length??0;
+const frames=profile.nodes.filter(n=>n.hitCount).map(n=>({name:n.callFrame.functionName,url:n.callFrame.url,line:n.callFrame.lineNumber+1,samples:n.hitCount,percent:100*n.hitCount/total})).sort((a,b)=>b.samples-a.samples);
+const report={scope:'Diagnostic V8 CPU sampling of warmed getDoubleList on a retained Config; not a timing or allocation benchmark.',commit:git.stdout.trim(),node:process.version,calls,last,totalSamples:total,engineSha256:createHash('sha256').update(fs.readFileSync(new URL('../web/engine.mjs',import.meta.url))).digest('hex'),sourceHashes:sourceHashes(),frames};
+fs.writeFileSync(new URL('../evidence/'+prefix+'-profile.json',import.meta.url),JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify({calls,total,frames:frames.slice(0,16)},null,2));

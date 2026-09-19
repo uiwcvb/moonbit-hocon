@@ -50,7 +50,12 @@ fn string_value(value : Value) -> String raise ParseError {
 
 ///|
 pub fn get_as_bool(config : Value, key : String) -> Bool raise ParseError {
-  match required(config, key) {
+  bool_value(required(config, key))
+}
+
+///|
+fn bool_value(value : Value) -> Bool raise ParseError {
+  match value {
     Boolean(b) => b
     Text("true" | "yes" | "on") => true
     Text("false" | "no" | "off") => false
@@ -118,7 +123,12 @@ fn double_value(text : String) -> Double raise ParseError {
 
 ///|
 pub fn get_double(config : Value, key : String) -> Double raise ParseError {
-  match get_number(config, key) {
+  number_double(required(config, key))
+}
+
+///|
+fn number_double(value : Value) -> Double raise ParseError {
+  match number_value(value) {
     Integer(n) => n.to_double()
     Long(n) => n.to_double()
     Floating(n) => n
@@ -164,6 +174,16 @@ pub fn get_as_list(
 ) -> Array[Value] raise ParseError {
   match required(config, key) {
     List(xs) => xs.copy()
+    value => collection_values(value)
+  }
+}
+
+///|
+// Internal readers only borrow the input array while constructing a fresh
+// converted result. The public get_as_list API still returns a copied array.
+fn collection_values(value : Value) -> Array[Value] raise ParseError {
+  match value {
+    List(xs) => xs
     Object(m) | SealedObject(m) => {
       let indexed : Map[Int, Value] = Map([])
       for name in object_iteration_keys(m) {

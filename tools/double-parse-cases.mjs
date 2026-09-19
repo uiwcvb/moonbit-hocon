@@ -66,6 +66,20 @@ for(const bits of boundaryBits){
   }
  }
 }
+// Exact-operation shortcut boundary: integer mantissas around 2^53, 15/16/17
+// significant digits, and the endpoints of exactly representable powers of ten.
+const exactMantissas=new Set([0n,1n,9n,999999999999999n,1000000000000000n,9999999999999999n,10000000000000000n]);
+for(let delta=-12n;delta<=12n;delta++)exactMantissas.add((1n<<53n)+delta);
+for(const coefficient of exactMantissas)for(const power of [-23,-22,-21,-1,0,1,21,22,23]){
+ const digits=String(coefficient);
+ signed(digits+'e'+power);
+ signed('000'+digits.slice(0,1)+'.'+digits.slice(1)+'e'+(power+digits.length-1));
+}
+for(let i=0;i<192;i++){
+ let digits=String(draw()%9+1);for(let j=1,n=15+i%3;j<n;j++)digits+=draw()%10;
+ const point=draw()%(digits.length+1),power=Number(draw()%47)-23;
+ signed(digits.slice(0,point)+'.'+digits.slice(point)+'e'+(power+digits.length-point));
+}
 for(let c=0;c<=33;c++)for(const text of ['1e-323','-0.0','NaN','Infinity'])add(String.fromCharCode(c)+text+String.fromCharCode(c));
 for(const text of ['', '.', '+', '-', '+.', '-.', 'e1','1e','1e+','1e-','1e1e1','1..0','--1','+-1','1_0','nan','inf','1 0','\u00a01\u00a0','１２.３','1dD','0x','0x1','0x1p','0x1.8p-1074','-0x1p-1075','0x0.fffffffffffffp-1022','0x1.00000000000008p-1022','0x1p1024','+NaN','-NaN','NaNf','Infinityd'])add(text);
 export const texts=[...unique];

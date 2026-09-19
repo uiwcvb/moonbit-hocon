@@ -158,6 +158,11 @@ fn required_document_value(
   let current = peek_document_path(config, path).unwrap_or_else(() => {
     raise Invalid("missing path: " + path)
   })
+  required_leaf(current, path)
+}
+
+///|
+fn required_leaf(current : Value, path : String) -> Value raise ParseError {
   if current is Null {
     raise Invalid("null path: " + path)
   }
