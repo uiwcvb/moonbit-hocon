@@ -3,7 +3,9 @@ import {prepare} from './config-host.mjs';
 import {ConfigError} from './config-error.mjs';
 import {executeAsync} from './config-async.mjs';
 
-const token=Symbol('Config constructor'),states=new WeakMap(),valueStates=new WeakMap();
+const token=Symbol('Config constructor'),states=new WeakMap();
+let valueStates,entryStates;
+const objectLike=value=>value!==null&&(typeof value==='object'||typeof value==='function');
 function result(text){const value=JSON.parse(text);if(!value.accepted)throw new ConfigError(value);return value.value;}
 function state(config){const stored=states.get(config);if(!stored)throw new TypeError('Expected a Config object');return stored;}
 function valueState(value){const stored=valueStates.get(value);if(!stored)throw new TypeError('Expected a ConfigValue');return stored;}
@@ -114,7 +116,9 @@ for(const [method,getter] of Object.entries(getters))Object.defineProperty(Confi
 
 /** Immutable views of the retained MoonBit value tree. */
 export class ConfigValue {
- constructor(key,handle,env){if(key!==token)throw new TypeError('Use ConfigValue.parse/fromAnyRef or Config accessors');valueStates.set(this,{handle,environment:env});Object.freeze(this);}
+ #stored;
+ static {valueStates={get:value=>objectLike(value)&&#stored in value?value.#stored:undefined,has:value=>objectLike(value)&&#stored in value};}
+ constructor(key,handle,env){if(key!==token)throw new TypeError('Use ConfigValue.parse/fromAnyRef or Config accessors');this.#stored={handle,environment:env};Object.freeze(this);}
  static parse(source,{resolved=false,...options}={}){if(typeof source!=='string')throw new TypeError('Value source must be a string');const value=Config[resolved?'load':'parse']('v='+source,options).root().get('v');if(value===null)throw new ConfigError({error:'Value disappeared during resolution'});return value;}
  static fromAnyRef(value){return Config.fromObject({v:jsonValue(value)}).root().get('v');}
  valueType(){return readValue(this,'type');}
@@ -129,7 +133,7 @@ export class ConfigValue {
  }
  toJSON(){return this.unwrapped();}
  equals(other){if(!valueStates.has(other))return false;const result=value_equal_native(valueState(this).handle,valueState(other).handle);if(!result.accepted)throw new ConfigError(result);return result.value;}
- hashCode(){return valueState(this).hash??=readValue(this,'hash');}
+ hashCode(){return this.#stored.hash??=readValue(this,'hash');}
  withFallback(other){return selectValue(this,{op:'fallback'},other);}
  atKey(key){return asConfig(selectValue(this,{op:'at-key',key:path(key)}));}
  atPath(key){return asConfig(selectValue(this,{op:'at-path',key:path(key)}));}
@@ -165,7 +169,7 @@ export class ConfigList extends ConfigValue {
  subList(from,to){const size=this.size();if(!Number.isInteger(from)||!Number.isInteger(to)||from<0||to>size||from>to)throw new RangeError('Invalid subList range');return Object.freeze(Array.from({length:to-from},(_,i)=>this.get(from+i)));}
 }
 
-const entryStates=new WeakMap(),setStates=new WeakMap();
+const setStates=new WeakMap();
 function entryState(entry){const stored=entryStates.get(entry);if(!stored)throw new TypeError('Expected a ConfigEntry');return stored;}
 function setState(set){const stored=setStates.get(set);if(!stored)throw new TypeError('Expected a ConfigEntrySet');return stored;}
 function entryHash(entry){return entry===null?0:entry.hashCode();}
@@ -173,18 +177,20 @@ function entryEqual(needle,entry){return needle===entry||(needle!==null&&needle.
 function collectionValues(collection){if(collection===null||collection===undefined||typeof collection[Symbol.iterator]!=='function')throw new TypeError('Expected an iterable collection');return setStates.has(collection)||Array.isArray(collection)||collection instanceof Set?collection:Array.from(collection);}
 function collectionContains(collection,entry){if(setStates.has(collection))return collection.contains(entry);for(const other of collection)if(entryEqual(entry,other))return true;return false;}
 function collectionSize(collection){return setStates.has(collection)?collection.size():collection.length??collection.size;}
-function setFind(stored,entry){if(entry!==null&&!entryStates.has(entry))return undefined;return stored.buckets.get(entryHash(entry))?.find(cell=>entryEqual(entry,cell.entry));}
+function setFind(stored,entry,hash){if(entry!==null&&!entryStates.has(entry))return undefined;return stored.buckets.get(hash??entryHash(entry))?.find(cell=>entryEqual(entry,cell.entry));}
 function deleteCell(stored,cell){const bucket=stored.buckets.get(cell.hash);bucket.splice(bucket.indexOf(cell),1);if(!bucket.length)stored.buckets.delete(cell.hash);stored.cells.delete(cell);stored.version++;}
 function iteratorError(name){const error=new Error(name);error.name=name;return error;}
 
 /** Immutable path/value pair. A set may also contain manually created null pairs. */
 export class ConfigEntry {
- constructor(key,value){if(key!==null&&typeof key!=='string')throw new TypeError('Entry key must be a string or null');if(value!==null)valueState(value);entryStates.set(this,{key,value});Object.freeze(this);}
- getKey(){return entryState(this).key;}
- getValue(){return entryState(this).value;}
+ #stored;
+ static {entryStates={get:entry=>objectLike(entry)&&#stored in entry?entry.#stored:undefined,has:entry=>objectLike(entry)&&#stored in entry};}
+ constructor(key,value){if(key!==null&&typeof key!=='string')throw new TypeError('Entry key must be a string or null');if(value!==null)valueState(value);this.#stored={key,value};Object.freeze(this);}
+ getKey(){return this.#stored.key;}
+ getValue(){return this.#stored.value;}
  setValue(){throw new TypeError('Configuration entries are immutable');}
  equals(other){if(!entryStates.has(other))return false;const a=entryState(this),b=entryState(other);return a.key===b.key&&(a.value===b.value||(a.value!==null&&a.value.equals(b.value)));}
- hashCode(){const {key,value}=entryState(this);let hash=0;if(key!==null)for(let i=0;i<key.length;i++)hash=(Math.imul(hash,31)+key.charCodeAt(i))|0;return hash^(value===null?0:value.hashCode());}
+ hashCode(){const {key,value}=this.#stored;let hash=0;if(key!==null)for(let i=0;i<key.length;i++)hash=(Math.imul(hash,31)+key.charCodeAt(i))|0;return hash^(value===null?0:value.hashCode());}
  *[Symbol.iterator](){yield this.getKey();yield this.getValue();}
 }
 
@@ -195,7 +201,7 @@ export class ConfigEntrySet {
  isEmpty(){return this.size()===0;}
  contains(entry){return setFind(setState(this),entry)!==undefined;}
  containsAll(entries){for(const entry of collectionValues(entries))if(!this.contains(entry))return false;return true;}
- add(entry){if(entry!==null)entryState(entry);const stored=setState(this);if(setFind(stored,entry))return false;const hash=entryHash(entry),cell={entry,hash};let bucket=stored.buckets.get(hash);if(!bucket)stored.buckets.set(hash,bucket=[]);bucket.push(cell);stored.cells.add(cell);stored.version++;return true;}
+ add(entry){if(entry!==null)entryState(entry);const stored=setState(this),hash=entryHash(entry);if(setFind(stored,entry,hash))return false;const cell={entry,hash};let bucket=stored.buckets.get(hash);if(!bucket)stored.buckets.set(hash,bucket=[]);bucket.push(cell);stored.cells.add(cell);stored.version++;return true;}
  addAll(entries){let changed=false;for(const entry of collectionValues(entries))changed=this.add(entry)||changed;return changed;}
  remove(entry){const stored=setState(this),cell=setFind(stored,entry);if(!cell)return false;deleteCell(stored,cell);return true;}
  removeAll(entries){entries=collectionValues(entries);let changed=false;if(this.size()>collectionSize(entries)){for(const entry of entries)changed=this.remove(entry)||changed;}else{const cursor=this.iterator();while(cursor.hasNext())if(collectionContains(entries,cursor.next())){cursor.remove();changed=true;}}return changed;}
@@ -203,7 +209,7 @@ export class ConfigEntrySet {
  clear(){const stored=setState(this);stored.cells.clear();stored.buckets.clear();stored.version++;}
  toArray(){return Array.from(setState(this).cells,cell=>cell.entry);}
  equals(other){return other===this||(setStates.has(other)&&this.size()===other.size()&&this.containsAll(other));}
- hashCode(){let hash=0;for(const entry of this)hash=(hash+entryHash(entry))|0;return hash;}
+ hashCode(){let hash=0;for(const cell of setState(this).cells)hash=(hash+entryHash(cell.entry))|0;return hash;}
  iterator(){const stored=setState(this),cells=Array.from(stored.cells);let version=stored.version,index=0,last=null;return Object.freeze({
   hasNext:()=>index<cells.length,
   next:()=>{if(version!==stored.version)throw iteratorError('ConcurrentModificationException');if(index===cells.length)throw iteratorError('NoSuchElementException');last=cells[index++];return last.entry;},

@@ -1,5 +1,12 @@
 # Changes
 
+## 0.20.0
+
+- Store ConfigValue and ConfigEntry private state in native private fields; keep frozen public objects and brand validation.
+- Enumerate private retained leaves directly without a temporary map or cloned values, preserving the public core copying contract and depth/work validation. Compute insertion hashes once and walk set storage directly for aggregate hashes.
+- Scan small signed integers and path segments directly without character arrays or generic integer parsing; preserve boundary/fallback and Unicode path behavior.
+- Add 2,342 independent JDK integer vectors in 19 backend groups, three host checks and a bounded wrapper collection check. Compare twelve typed entry workloads and twenty-nine earlier workloads against fixed 0.19 and native Config. Full parity remains open.
+
 ## 0.19.0
 
 - Return detached mutable ConfigEntrySet collections with immutable typed ConfigEntry values; preserve the old plain-data API as entrySetData. Keep unresolved references opaque, omit null/empty objects, reject unresolved delayed-object traversal.

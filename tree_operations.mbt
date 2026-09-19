@@ -63,20 +63,52 @@ pub fn copy_value(value : Value) -> Value raise ParseError {
 }
 
 ///|
+fn unquoted_path_part(part : String) -> Bool {
+  if part.is_empty() {
+    return false
+  }
+  for i = 0; i < part.length(); i = i + 1 {
+    let cp = part[i].to_int()
+    if cp < 128 {
+      if !((cp >= 48 && cp <= 57) ||
+        (cp >= 65 && cp <= 90) ||
+        (cp >= 97 && cp <= 122) ||
+        cp == 45 ||
+        cp == 95) {
+        return false
+      }
+    } else if (cp >= 0xD800 && cp <= 0xDFFF) ||
+      !path_character(cp.unsafe_to_char()) {
+      return false
+    }
+  }
+  true
+}
+
+///|
 /// Canonical path expression. A literal key can always be expressed by quoting it.
 pub fn join_path(parts : Array[String]) -> String raise ParseError {
   if parts.is_empty() || parts.length() > 32 {
     raise Invalid("path depth limit")
   }
-  let result = parts
-    .map(part => {
-      if !part.is_empty() && part.to_array().iter().all(path_character) {
-        part
-      } else {
-        part.to_json().stringify()
+  let result = if parts.length() == 1 && unquoted_path_part(parts[0]) {
+    parts[0]
+  } else {
+    let output = StringBuilder()
+    for i, part in parts {
+      if i > 0 {
+        output.write_string(".")
       }
-    })
-    .join(".")
+      output.write_string(
+        if unquoted_path_part(part) {
+          part
+        } else {
+          part.to_json().stringify()
+        },
+      )
+    }
+    output.to_string()
+  }
   if result.length() > 100000 {
     raise Invalid("path length limit")
   }

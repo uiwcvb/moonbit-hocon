@@ -258,3 +258,23 @@ Implementation semantics were checked against pinned primary sources: [Config en
 JS/Wasm-GC 各 16,652 项；新增 1,226 个实时原版程序通过，含 406 个核心程序/13 分组，另有 2 个核心所有权/限额测试。17 项新宿主检查及同组 1,226 次异步回放通过。文档/值/渲染也重新实时比较，共 8,696 次；15 个保存原版套件回放共 31,776 次，包含原有重叠，不能计为全部新独立案例。205 文件再生一致；编译引擎与交付引擎相同；307 项有界异常输入通过；受控 GC 回收 2,399/2,400 个丢弃配置。
 
 五进程枚举计时中，64 字段计数、哈希当前/原版耗时比为 7.058、7.921；512 字段哈希为 30.204。64 字段计数相对旧 0.18 普通数据接口为 2.234，旧接口展开数据，新接口构造类型化集合，内部工作量不同。最大进程中位数波动比 3.032，不稳定标记 true。该功能升级仍有明显性能差距。 最终清单见 `evidence/entry-upgrade.json`，原始五进程样本见 `evidence/entry-performance.json`。完整目标仍未完成。
+
+## 0.20 allocation and scan reduction
+
+The initial CPU sample on fixed 0.19 attributed most sampled time to ConfigEntry/ConfigValue construction and GC, followed by generic integer parsing and path generation. This motivated native private fields, direct immutable-leaf enumeration, a small integer scan, and direct path-segment validation. Profiling is diagnostic; final timings come from separate uninstrumented fresh processes.
+
+`SmallIntegerOracle.java` uses unmodified JDK Integer.valueOf on 2,342 distinct bounded inputs. The generator covers signed int32 boundaries and neighbors, leading zeros, plus/minus, fixed random int32 strings and malformed ASCII. Inputs are <=11 UTF-16 units; the matrix is for the helper's bounded domain, not all numeric strings or Unicode integer rules. Nineteen whitebox groups verify the independent results on both backends. `--live --check` recaptures JDK results and checks generated tokens while preserving quoted-string contents.
+
+Existing live entry/value/value-walk/tree/render comparisons cover public semantics. The 4,380 tree programs include BMP character-range boundary enumeration, supplementing quoted/unquoted key tests. Twenty entry host checks include the three new private-brand, detached-derivation and core-versus-bridge error checks. `test-entry-memory.mjs` uses six explicit-GC rounds with 2,400 objects of each of four kinds and a retained readable leaf. It bounds accidental retention; it does not measure production peak or full native memory parity.
+
+The direct bridge still validates leaf descendants using the original copy traversal's resource costs, then returns opaque handles to immutable retained values. The public core continues to copy leaves. Collection order remains outside parity claims. The twelve entry workloads now compare identical typed API behavior against fixed 0.19, including raw values and hash calls. No enumeration result cache is added. A separate five-process run of the existing 29 workloads covers earlier parse/read/edit/value/render behavior and detects regressions. Both runs retain raw per-process samples and result agreement checks.
+
+## 0.20 最终验证
+
+JS/Wasm-GC 各 16,671 项通过；2,342 个新增 JDK 整数输入进入 19 个分组，20 项条目宿主检查通过；四类包装分别回收 2,399/2,400 个。相关五个原版套件重新实时运行共 11,492 次，15 个保存原版套件回放共 31,776 次，包含历史重叠，不作为全部新独立案例。213 个源码/生成文件再生一致，编译引擎与交付引擎相同；既有异步、资源限额与其他强制检查通过。
+
+最终五进程计时中，64 字段枚举、512 字段枚举哈希相对 0.19 耗时减少 63.7%、86.1%，当前/原版仍为 2.192、3.753。新枚举最大进程中位数波动比 2.581，不稳定标记 true。
+
+既有 29 类负载均与原版输出一致。缓存哈希、冷哈希、值比较、列表搜索的当前/0.19 耗时比分别为 0.946、0.527、0.461、0.329；旧负载最大当前/0.19 耗时比为 1.107（legacy-fallback-32）。回归计时最大进程中位数波动比 2.338，不稳定标记 true。长中点渲染当前/原版仍为 517.804，完整性能尚未追平。
+
+初测观察到缓存哈希热调用回退，随后改为方法内部直接访问私有字段。初测的两份 `*-performance-initial.json` 保留原始样本和当时的源码指纹；最终结果以 `entry-scan-performance.json`、`entry-scan-regression-performance.json` 和 `entry-scan-upgrade.json` 为准。CPU 采样仅用于定位问题，最终计时未启用采样器。

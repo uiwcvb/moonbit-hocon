@@ -1,0 +1,4535 @@
+{
+  "utc": "2026-09-19T00:10:20.944Z",
+  "baselineCommit": "926655aa15f60e5fb321d557cbe07d65f6489702",
+  "baselineEngineSha256": "9f8f1419c06c69e8270721b4c9a562e3eedd5024b081dd4abfdf30762d95a610",
+  "engineSha256": "bee3509fa7a1825d7d103532e1f6f71e74c68ea62b29906d28335cc9bccc4b33",
+  "jarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37",
+  "java": "22.0.1",
+  "node": "v24.11.0",
+  "processesPerWorkload": 5,
+  "warmupCalls": 30,
+  "samplesPerProcess": 15,
+  "callsPerSample": 3,
+  "scope": "Twelve typed retained-config enumeration/count and enumeration/hash workloads compare current, fixed 0.19 and native Config. Sixteen enumerations per call; construction and output validation outside timing. All variants exercise the same public behavior. Each call constructs a fresh detached mutable set; no set/result cache is used",
+  "unstableMeasurements": true,
+  "performanceParityEstablished": false,
+  "sourceHashes": {
+    "accessor_reference_test.mbt": "ef0cea69ffc47506f3c8a54352b8bda45617aca06af288d99676092a662fa3e0",
+    "accessors.mbt": "d257c562b827f465a74d8e49bce2df375738688950efb00b0f03280b22d65fed",
+    "cmd/main/main.mbt": "24f2645d844804ee1241fd560f5fe895d55d0ee59010b00f8c121b9f70bdbc19",
+    "cmd/main/moon.pkg": "943ab64eded434a3d516e50e98dec859f7815536ed2f4d9265837e266e59b667",
+    "cmd/main/pkg.generated.mbti": "e1b35d99c6ff7a6f9f6bc1fbc0e785be06ee9d96b117867741f0e54465766d7e",
+    "cmd/web/config_handle.mbt": "d2876170e439272fbbcf34db5cc4428b8ae4e6e58c648d8cc17148b1d4c9257f",
+    "cmd/web/config_transfer.mbt": "715e9fe3f6b48e0886185afce8d1fdfe15c5786651fa41077b28a9e112c5c548",
+    "cmd/web/document.mbt": "22ce5dde00a09913b216c5e032ac4e1b6a5315777f6b4424e3dbdf07fb511a25",
+    "cmd/web/entry_handle.mbt": "6943ad79ec0e400aa184ebc410f908762f076d60019c10ed3369f05dd500094f",
+    "cmd/web/enum.mbt": "8ca6815f136edee152636affa040eba31b68d88f34ac4412a6737623b09961c0",
+    "cmd/web/errors.mbt": "d034aac77088e8c29003aac38c7a68854825da9a25ee9e5daf81f9d90bfb5b37",
+    "cmd/web/getters.mbt": "809236d833d4c5137428c38ef0e5a1141fa1c6374132a30b0fefc91f5c8efa01",
+    "cmd/web/inspect.mbt": "a77b51b39c231bacaedaafa2256c6a9da34dbbf42c5638b698a82a616e113a35",
+    "cmd/web/load.mbt": "08e62c5e881ae7a06b76bbf667a8a47c3a935b443143c4c4d5e3fe3df3cbfa0b",
+    "cmd/web/main.mbt": "90bbc8c9b43abb8be74aaaa0cd561e9858613d1f17d60556e2108400b62c8f41",
+    "cmd/web/moon.pkg": "e0ca25708d355f563380fd031721f5c3e98ecdd5acfbeb895e2af4452003e31b",
+    "cmd/web/native_read.mbt": "127fc2bf2d7973231266d74d93df3332d711fdc4e12531ff66cd2702175fc382",
+    "cmd/web/time_unit.mbt": "017e20430dc90486acb4ffda9ddda5ac49b1f1533d03acbbc7a09a3483562cce",
+    "cmd/web/value_handle.mbt": "0d19ed61496a9ac8dec5f0f27320c770e963b3a47c841ac982cd6d5b5638f77d",
+    "collection_reference_test.mbt": "bf099a46b21de5188967512b9708010d1827b30b062b79d75f0a50edea2bbf81",
+    "config.mbt": "98cc433979effd01b9fb7c9be8432cbbbe7e7037942108a583613a7e91b5143e",
+    "configuration_test.mbt": "794436877f3ab92c613401229125c326050772af050f2948e1bebfdd20ced04c",
+    "core_test.mbt": "e196afcb6febabb2211a8d0666928f89dbbc9921f4824fc94a8a796cd05ba188",
+    "decimal_double.mbt": "598173c8e703b4492abdcbb699e66c8d7f8158525abf10a9343b949171cddf61",
+    "document.mbt": "9aeb584921bdb83183336945ecedaf9d882d0ede030627c138af44e58de3fdd6",
+    "document_reference_test.mbt": "b129b0d00de2fa463db5e2c2b2c29f11b4ba9c018333f878adfbc35aa8559145",
+    "document_test.mbt": "d0dd16abf08eba904896b62f5af6729968492a295caabc7cb5f1e39dcde86de5",
+    "double_parse_wbtest.mbt": "d798bdc25cb42dcdf346972bd7765a47d3bd7f5814bae2bf6553d62ed7195aee",
+    "double_render_wbtest.mbt": "75874848d3150224c5cd57194fc8501504b8aa43657a363b20d3674ed47dc1a7",
+    "entry_ownership_test.mbt": "a87c096f02a949cae61ff81c3f3809024641ede7e2c67e2bd7e9e798b472247d",
+    "entry_reference_test.mbt": "abf965819ea52dbb5cd6e60653ebbbe227539425ec8cb6f27f674eb9abe2d290",
+    "extended_accessors.mbt": "daab3538720986cc8388d8069110d0214ac6978a14f562f9a853f189c1bc9db2",
+    "extended_accessors_test.mbt": "da6219409d59dda890c9a4d349b3a344672a093b6f4719d0d91b91d8a9906552",
+    "fallback_state.mbt": "852d56a67b15c3f3e7081a4198132068cbb0926df29c3bef5f895853c17cff10",
+    "http_json_reference_test.mbt": "f12bdb7c98ae971d3f2ca1b4ce6117f6aa7672637c2063e4c7dd3ab7f873c03c",
+    "json_sources.mbt": "7a08058d67347a295d558e8d455931618cca8979895efa8318872d8bf567a716",
+    "lexer.mbt": "96b0e9bd2a07e4bdaff1207b11e6db2387825bf91fbb465b616e28b8564b0402",
+    "moon.mod": "46185815b8fc40d7895dedb9ab90501d39e3fef8141c99cf60a12573535183b9",
+    "moon.pkg": "47ae82639a3ee30e82b00254cd8b7a12f39ba4f2d798cd84cade63220b449d5c",
+    "numbers.mbt": "89204add58c4010462ba6bb5f86cfc5c0c532ae1708ba8c366736e48b207f7dd",
+    "numeric_characters.mbt": "b4dd1ed1fa730e96e197d7e31f168be64d1b9e52c06576204af4eac64f972fd6",
+    "object_order.mbt": "774705a2fe28cd76f82325d38f86dc8de09ee9f98632d4a99de4b1379fa23ea9",
+    "path_characters.mbt": "d1728d6c6d868b078fe9d8ee1b1376ee57db4deae44c6cf46c0399b94895d3d9",
+    "path_limits_test.mbt": "055231467e4265386dc0b52a36221838be9c8196d62d781942c814cd64a472a0",
+    "path_reference_test.mbt": "ea18e468156a52bf56a3666ea1774d3950710eaafdc493838cca1b615e8175a5",
+    "persistent_core_reference_test.mbt": "994c3e85f0861027ef4ff3cd9b19877d1c40e41fbf75abf5e23ca65c37c6787d",
+    "persistent_core_test.mbt": "0cb8572ea60dadee6628dd4daeb176fa5fb7ef5e9bf476373063d91f46637d74",
+    "pkg.generated.mbti": "712f65bc4d0fa2837e20b810e630488e30c44da5ce995bfb789f9b27b3019d68",
+    "render_number.mbt": "d6a179d8431c132facd7c8867bc1b6e1d650da787d88b83449493b59b0fd2ca1",
+    "render_number_wbtest.mbt": "dacc5877b9a41ac73a478a28a79f39a54d14914d99b5ff250e7795a61dbf4624",
+    "render_reference_test.mbt": "a44301c290ed4ef15c20f2a0a0facedcbad5b0dc4ada6bcb04ea63f2716bf74d",
+    "render_test.mbt": "cfd71f855ac8e13ae2d0547e674307319f3d213b528a452314f8b1d947d4c6e2",
+    "resolver.mbt": "8fc15462d64b03863762937158eb0e2f2338ede5866973285a4983de21222695",
+    "small_integer_wbtest.mbt": "87eb3a06d00e2420f8cc9db971e6df3b6c3a53093b9f7af06268323913148b4e",
+    "source_roots_test.mbt": "9b2aa032bcabbdbe89d2da08cd1c350b0758586dee899727d8d842cd51c5485a",
+    "temporal.mbt": "58c2711e6086e0b9790fab2f1340d365bdeaad0d21aa72dc409e53499ec1406c",
+    "temporal_reference_test.mbt": "95021126e59a6b59a3c7d7e9ec03da3503a59ef93011c9cfaffaf0dff46e49ac",
+    "temporal_test.mbt": "d023ab21d9bddb95f05afa3171b3622eb46fa8f210174e62308f989b551d9c6c",
+    "tools/DoubleParseOracle.java": "c41e431b6c5f52b6a83be8c2a567cd319cc58af79a15d90c99ea9c841aa7e18a",
+    "tools/DoubleReadOracle.java": "213c20f2cafccd9bbed4fa70796f6f6b5b249e0221e4f85a6131262dd757ca55",
+    "tools/DoubleRenderOracle.java": "7b3e8f8248ae0a10515f97e06c79509ee1bd7230180e8496e23bfbd364979638",
+    "tools/EntryBenchmark.java": "706017d3a5402b6c2a98b59ef8d790aa2a37b67bff280f37146553003bc6f02c",
+    "tools/EntryOracle.java": "3e9e3c2d8f087fe3c154ebe227659ca92ee6a19d9bf1b9000244db353bba45d7",
+    "tools/HoconOracle.java": "6007c7d48a66e0a1f3979adfd3224e906d92794f515e8001a969a5cc1a4c9915",
+    "tools/HoconReference.java": "c19e62ab9d5ea29b1917564651319634d659c82f9f67af2bbee1e39604d87bc7",
+    "tools/NumericCharacters.java": "246db7e1d47f40084c8660bda6389b2ae4aa2a48b6387748b7b094538100cfe0",
+    "tools/PathCharacters.java": "ddbe4b484ee298f8a3f2920bd8294e324378150a18ff7f0fc7ef345b89f9aa3b",
+    "tools/PathOracle.java": "07dd3f31a0e71332f19548ba1755bdb038ad1397123a46606eeb2a714c64a34e",
+    "tools/RenderOracle.java": "fd80004f748203420ec66df065fd196c89b9a735fd8cce04ace0183b8f46874b",
+    "tools/SmallIntegerOracle.java": "62b7e5a2ff2449172999585d732b8b9feeff4b639e613779886b4d4483f78d60",
+    "tools/ValueOracle.java": "ecc68caf3c0d3e114482da1ad58a5ef997d1a9aea7f790e92fd8e9e648d8bbd9",
+    "tools/benchmark-accessor.mjs": "8d97a5aa4e35cb21d4214ae565585b24fdad1d85a4540a92e4d513c2edc8fd51",
+    "tools/benchmark-collections.mjs": "f2da03ec622a9a1eadd8f639f11638fef7f63125a814de27c88f56436a44aa84",
+    "tools/benchmark-document.mjs": "40ce2b4dbec134971306ae88b4b8b3c2ce5d1f89dc63514e6eb7ea2787dc3b1a",
+    "tools/benchmark-double-parse.mjs": "312f44c91a8f46dbfb6f36a969f9f1f32f38a8feb9a6bceecf6ebf7c87064f65",
+    "tools/benchmark-double-render.mjs": "afeaf0d262230f1188ee710cfcb20b95b2921511647fac99eb43b4260efa3da3",
+    "tools/benchmark-entries.mjs": "0fc5b06f52e24523544982a75633ee947d32cc14154bcb15d675ee7a08c6c83e",
+    "tools/benchmark-entry-scan-regression.mjs": "aeac0ced1bf44ad0a4e495ecaca0c85ea7819cb446429114fad1049a133bbbb5",
+    "tools/benchmark-entry-scan.mjs": "77a63694ab59f6d72e6601e69b7207e9da01e24bb381904f01f623ad571dda74",
+    "tools/benchmark-http.mjs": "f34c69547b6d6b2ee11f7afedd5e2d34fcf2b54935841dcb3a7bd2eb3f2302c9",
+    "tools/benchmark-native-read.mjs": "f247ae0c1a188312436e077143f0a2d3bd6a86823871bce1cdfe352975fe6aad",
+    "tools/benchmark-numeric-scan.mjs": "77cedd2b9d5b92109a0b822828d8b700f7c8951bf2af1f4ddf4601e099882abb",
+    "tools/benchmark-persistent.mjs": "d25beee8af7f1a76a0b5a63dfa8515ac5ec59845b1086131ecb5e8e3a47d101b",
+    "tools/benchmark-render.mjs": "d5c5b9dfb73efba9cb7a3c8da0884b156dc9f6aec507f60dc7a9046b6ca50e9c",
+    "tools/benchmark-temporal.mjs": "274a6264119d5fb99be410d2d7eea5c6a3c8c0a85a2e7c5231eea898d37a070d",
+    "tools/benchmark-tree.mjs": "2fd3e904f516f044772e0b8379b116cadea2d8751374b1a3aee9dc90a221ccac",
+    "tools/benchmark-value-walk.mjs": "92615f8ccc9485cd7a5035be17bdaf495f97c6b46c03545a685f2ebbd90281ca",
+    "tools/benchmark-value.mjs": "44b6069e2a2896613162e4e6937fa66656a0ca066f073a15035d67835950ec8e",
+    "tools/benchmark.mjs": "53ac611536ba7cb3732017d22976ff8f38dbd9e7aa579c2469eab75b0cdc7216",
+    "tools/cli.mjs": "73d0555a96d744a4cb631f07c396c3bb51df8c1184a702403f161629df5e8aac",
+    "tools/config-async-worker.mjs": "8bd0aaf82be9fb18222a2faf2c011e2b8c175ce85156900679425d1f26b741ec",
+    "tools/config-async.mjs": "2f41f1102915ad1d010a912b4c29e0b616cff950f7ef5127bcbe13431bebfcad",
+    "tools/config-error.mjs": "8227651d5b271c7ced6263388f5230748c7dfb1f4fd989ba2e1c6c0fc1c9960a",
+    "tools/config-host.mjs": "c88bc5bbf76eb9379bc9daf909ac83a4e4281cc30c85e0223a72caa461ad0185",
+    "tools/config-object.mjs": "6be2647e8e6827975c6516a353c230a0c878f46f022e7f0802e7476b6cb93231",
+    "tools/config.mjs": "047129f395d672cad3bdb97c0c1038cca6e000e11cfc828a9ed3a475c47376e1",
+    "tools/double-parse-cases.mjs": "541766d9cce444f610c3b7b48a939f889120e7d7dc2667fbe808b1926b02d07c",
+    "tools/double-render-cases.mjs": "97c3b8b3f951233c31387ab4a2661fe79b1db9b48d6b1841677cc604195b7558",
+    "tools/entry-cases.mjs": "97f833e83cd6f1c958a1b6b6934a5d3c6201e54358aa66ae4263af6ba89f7af7",
+    "tools/evidence.mjs": "44dbf357815228150dc25be1a3d910a405f9ab53518dd54ff727d0a3ae063ea6",
+    "tools/generate-accessor-tests.mjs": "d0a81b6c0043ac2fd0db3d363a404e228c052cb1c3296a4bde3bfb6702d6e972",
+    "tools/generate-collection-tests.mjs": "d289577cfb4b39aaa6146ec907c72f614e7699eca8c70258f7da61b24c96d3e4",
+    "tools/generate-document-tests.mjs": "7853da78fae10af269009598f8a2d42f6a03e788e9fc78a37ae1c6df4369e891",
+    "tools/generate-double-parse-tests.mjs": "113f3328de1844a8e5b768ec2aa4afc0b234f9875fa4768ade8d3c073a49ebd4",
+    "tools/generate-double-render-tests.mjs": "58a23e1d7c33b911c6060e3fb25e4cc36b04cdaf5b4d28b20f7b246baf9a94a6",
+    "tools/generate-entry-tests.mjs": "9362d6d95abf49b82c8e0772f4a36a98980340600efd7b345826c5a1589f1d02",
+    "tools/generate-http-json-tests.mjs": "a47fd1922a3517db97986878ecc22036ba1ded805c7bd92846587f26ca14eb4f",
+    "tools/generate-numeric-characters.mjs": "709b7e2202f4adbd19a7bd762447a771d9e4ac615bf7a2412824366bb2de0b04",
+    "tools/generate-path-characters.mjs": "7944e42ac50357f24957fa3fa9c48dc2f1e425ec346ed8872bcfd264d49f43c1",
+    "tools/generate-path-tests.mjs": "9c6fdd9f6f93fb951e69279ae1acfa9429247db0bc13ee451d4a726580f6d59b",
+    "tools/generate-persistent-core-tests.mjs": "d7edf66b380d239283bcfabcbf801c671ccc6da4e2a1594a9a38c438fb0564db",
+    "tools/generate-render-tests.mjs": "2d978830d396bd807ec2931bc1ae931cf2ba5f3e415ad0c315ef19d09dac1166",
+    "tools/generate-small-integer-tests.mjs": "4340a0e214c1c1edd51c0be21838d773858372524092c3ef409d2b0868e4d391",
+    "tools/generate-temporal-tests.mjs": "61ecbe5905396e91d04f9346291ae13cdf3b4d804d3641df7957e36cb0980b16",
+    "tools/generate-tree-tests.mjs": "f75919e3937bc4906ec9fd2e9f4ecb7bfb1c4b7a2860d2afd40be21752a76404",
+    "tools/generate-value-tests.mjs": "5805b13ab3066d90a085f22c301427f0f6f42613558e5051b3581f82f4dfc509",
+    "tools/generate-value-walk-tests.mjs": "e26005f2bab47db50f5bda1bc8590b08c591e5a5a1a0bdfea512f5b699ef2526",
+    "tools/http-client.mjs": "d962f3e27b8cbf4b3e652d5d2bf4d232d552bea214f2355855e7ddef24cf2dbc",
+    "tools/http-test-server.mjs": "b306856077bfd36c34e9db08bba215608fed3cffb0d6b0ef53362665b3f2fbd7",
+    "tools/http-worker.mjs": "bb5d8929d1362a75c00a09e1ab4a4fe8d98dda825a4eb4a0a98f61e7ded6ee69",
+    "tools/path-cases.mjs": "910fcc5c64d29c863be452fa2d97acc3415f96401829259f2e72e7bdd41c9359",
+    "tools/persistent-cases.mjs": "8c02e4481dbcb46150e7899aae82e99868bbae135a4e821bf6973ea406657535",
+    "tools/render-cases.mjs": "c35993534794bcfb9d0eb745bd409cb3b7bf5e3a68aaf4d0c81313cb89fd94b3",
+    "tools/robustness.mjs": "24964a078897dccc448ba3d5db4c08f6446d38008424987bf26b4b6f042a21d6",
+    "tools/test-accessor-host.mjs": "2040f2c6c4797dee9ea0787825d604c20b0bb4b613a426d1792357195c6130c8",
+    "tools/test-accessor-reference.mjs": "1cbfa4f23a76e52ef183e63996e9bf72dcfdf8b50968b02530dadde29afd74ac",
+    "tools/test-cli.mjs": "b1acaf8992e16d37e1527fd60beeea275ce0df574a9622ab3b44d86dcaf08b03",
+    "tools/test-collection-host.mjs": "0362f5257edfdad1552c1f3e87e288fe71ce4cd5a3d0c117e6f617c81d6f68e5",
+    "tools/test-collections.mjs": "8ce6ea9916a54f5e0ba83a6cbcab90349fff66d2f3b02eb8f952cb338b509f76",
+    "tools/test-config-reference.mjs": "7ddeba0046022a6d659418e5271b38f1d55efeb3c57a987a8445dcb88adf71ae",
+    "tools/test-demo.mjs": "02ec6337b9c72c299450db6f0d2b024fd4fd96193d17e5cd501c3a8e6eb87188",
+    "tools/test-document-host.mjs": "5cfcfee6e44dae1d566c98b8b743a7d659b3de62ab3a0bc7ffae306f3ab2d890",
+    "tools/test-document-reference.mjs": "4713ba1ca751a487457930648f358e600e7ceb950e67227d7f01c8c094fa8b49",
+    "tools/test-entry-async.mjs": "679b172f05995f37f3414883f732ab58cbfb063bd45f2c76c928a0a19654c24a",
+    "tools/test-entry-host.mjs": "20628561e27e07294741b3d57b2f9e9dca0dd71bfb07f6ecde2602b891d683cf",
+    "tools/test-entry-memory.mjs": "c442c41bb2ef617dee7e3bc5e21b2487422194c49405f0c2ddf061428d340ad2",
+    "tools/test-entry-reference.mjs": "0e0ec2017ad7f9652b505ff0f782f1330abfdbec4aa27c1058871e77c8a6fc9c",
+    "tools/test-file-reference.mjs": "eeed35f31f749e5ab391f65862b3741a67979f6f22dd29a7c55892badf04b998",
+    "tools/test-host.mjs": "a498825c200a8d6f2f486d74d6102f7880740d8bdb12cb8b9f58ce152ad03f0a",
+    "tools/test-http-host.mjs": "5f1232af3a5ddb672c73ae5cdab590ab569e4287cb70e8461ef595fc2c528b1e",
+    "tools/test-http-reference.mjs": "4c13d95373b655c2dc8b3a1874f341a35c2b13b8a23de91b346a9b7ff10bd149",
+    "tools/test-native-read-host.mjs": "ae19dd831784fb62eedb5d0246d69ee6612f63abc0dfa357c2552fb6aadbd721",
+    "tools/test-native-read-reference.mjs": "0e4546f2e3917420dffe976f31fb96f24060ae3a843fd6707e935b58a2a474d3",
+    "tools/test-path-reference.mjs": "58db77dde77a920ac2a80a215fc5baec7eb5c9ad98c953fa672a805c475022f7",
+    "tools/test-persistent-async.mjs": "b9f6c655fb491c0a017654aa7598c2d87d899fb41b2bc0e560465558b85e2ff1",
+    "tools/test-persistent-host.mjs": "a3609a9b87fa85e529b0d0ac1506abb45e369d3a182235da9dc5005a67a1b536",
+    "tools/test-persistent-memory.mjs": "117de1a111a968e6b41efd95fc7e015f796ea4bb49a058df321344ad01050d46",
+    "tools/test-persistent-reference.mjs": "9d9646ecd50e0737e6a1c34d9f0f27e36cf2a5f65bb7e0748f051a6f5f1f1b02",
+    "tools/test-reference.mjs": "13fe50483a9fa2708bca2003c7ecd9f6adac4032b0c6a13ae1885923d84dd89f",
+    "tools/test-render-async.mjs": "03c99f9cb7cae52d4f072be946e5ec6d16d48261854c0328d4c72d63875b6c18",
+    "tools/test-render-host.mjs": "44181f43438f4ec334378362312735f33ab74deb5ae53602bbe353a149678598",
+    "tools/test-render-reference.mjs": "33074aedebcf1f361947b6f716c3291f280538c5812a5907dbfe4d7c4ec08ff3",
+    "tools/test-temporal-host.mjs": "e7532b4dfd8f9a7f4b7853f1f7311d1ac7ba0b16ed4898f1ff00df78250e4b4c",
+    "tools/test-temporal-reference.mjs": "3d391fe29f8cafd219e53908ee9fa4dc53bec2c41844c6a8eb4fc216c4a99790",
+    "tools/test-tree-host.mjs": "8f2ea00626b570f21dd314736ab63381da15a96cf672b5871c0b7f862977adce",
+    "tools/test-tree-reference.mjs": "374f81855c2fe5bcf90fb97f690e2ece2bce1b7b241c0879000a953a700ca32e",
+    "tools/test-value-async.mjs": "e55c3465f4ebf9cc6d6ec43416579e187116e4ed5931a4adbe37ecc81b2e749b",
+    "tools/test-value-host.mjs": "796c4969b0ae5830cddc808088c2f92a3b569c4c4a3ed5cdaea293207f833ffc",
+    "tools/test-value-reference.mjs": "39e05c3e57c23d0fe2be6e0024cbb021dd1988f8a689a51444aa41db1a62693e",
+    "tools/test-value-walk-host.mjs": "8383b096c67a3a2ba527fbcbfc545e8a80be89be9b1a389899396c85529bcdbf",
+    "tools/test-value-walk-reference.mjs": "3f8578338c96e6f7d78dec8408fe1bf2109ecc4dd786b2c49f43031a57184c6c",
+    "tools/value-cases.mjs": "99916859c21a6767f69021d9b79f021f0fe39a97e99e362a0d0c3829ac608811",
+    "tools/value-walk-cases.mjs": "c59e988a19e65e633a2d04543a51deaf058ce3a241f9cbdcf702bbef7770d135",
+    "tree_operations.mbt": "7bcfc702ccab9879dc6bb3de41b1a02b708eeadb0121967df9cf609149318041",
+    "tree_operations_test.mbt": "8f43200c95e404c26d695c2d87ed6a2d9126a77ed32e426b7206d33535a31b33",
+    "tree_reference_test.mbt": "8177a8b32582253af16b9d2a8bb1a0b3969f8af0dc6d44f0e21c950be3cb3122",
+    "typed_collections.mbt": "fabe03d23d01bc3fb5d93afdb38213eafc32f6187e9807b8250d2fb9c466162b",
+    "typed_test.mbt": "bb4ae7dda24fab3040122820a0bdc079f6858efa36916d594a9ace7595b40016",
+    "usability.mbt": "0f6e9ed0452e9b989b0d3320ab06085c8b71d436fe06e58dd23e0c4fdf75e68e",
+    "validation.mbt": "20a4a4dbe49c998e58b992f8ef74566fd60ebc69831e85dd62ffe5024ab95eae",
+    "value_containers.mbt": "48e6659d9e205e213db614a87ef12be0f4ecf6a607945209cd91c5c02c6439ae",
+    "value_containers_test.mbt": "6c3b037d8129c17969e4e33ea2d2a480495ff95360957075f6a1b254c7895a98",
+    "value_reference_test.mbt": "a87f0903a233f083fc308ae637f8f237fd3675b3e58a4b8142467e27efe825b2",
+    "value_render.mbt": "47551a7f3009f7f464520d8daa6ee5c805bbf2e6fc0d77dc3a4bed1bafa5db5b",
+    "value_semantics.mbt": "f2f24b5000bc364113ae3e1710d42e36944856c035d6d76c34407c29494e768d",
+    "value_walk_reference_test.mbt": "08de33c8a2492fbd4b67b06b9d8a5b40ce45c42d1f08e5c7c283a4ef0eb24f11",
+    "value_walk_test.mbt": "71cd62b5eec2556da9498d4e1a7a4ee9fc9019ad34e3ce3d4cfbe297d525be0f",
+    "verify.ps1": "8cbbf4a2605d6964823c8b1b029ac784cbdd263f26022e0dd58148d0c90419cb",
+    "web/app.mjs": "12a0cf3565b6298e2e3760355ec5da3fed88870be604b7f6e1a2f57d7334578d",
+    "web/config.mjs": "6cc7edbdb551db766b27f268521f323981c578a2e4878ce9f0bd391c1057ccd4",
+    "web/engine.mjs": "bee3509fa7a1825d7d103532e1f6f71e74c68ea62b29906d28335cc9bccc4b33"
+  },
+  "summaries": [
+    {
+      "name": "empty-count",
+      "current": {
+        "medianMs": 0.01566666666666568,
+        "processMedians": [
+          0.01566666666666568,
+          0.015600000000001538,
+          0.020433333333334264,
+          0.016600000000001575,
+          0.014433333333334039
+        ],
+        "processSpread": 1.4157043879907574
+      },
+      "baseline": {
+        "medianMs": 0.017933333333331802,
+        "processMedians": [
+          0.018666666666665794,
+          0.01783333333333322,
+          0.016466666666668555,
+          0.017933333333331802,
+          0.01846666666666863
+        ],
+        "processSpread": 1.1336032388662138
+      },
+      "upstream": {
+        "medianMs": 0.0033333333333333335,
+        "processMedians": [
+          0.0035,
+          0.0032,
+          0.0034,
+          0.0033333333333333335,
+          0.0027333333333333333
+        ],
+        "processSpread": 1.2804878048780488
+      },
+      "currentOverUpstream": 4.6999999999997035,
+      "currentOverBaseline": 0.8736059479554099
+    },
+    {
+      "name": "empty-hash",
+      "current": {
+        "medianMs": 0.00953333333333243,
+        "processMedians": [
+          0.00953333333333243,
+          0.009399999999999409,
+          0.009466666666663551,
+          0.012033333333330157,
+          0.009966666666665938
+        ],
+        "processSpread": 1.2801418439713739
+      },
+      "baseline": {
+        "medianMs": 0.020966666666666356,
+        "processMedians": [
+          0.020966666666666356,
+          0.021000000000000796,
+          0.020433333333334264,
+          0.023700000000000426,
+          0.01900000000000072
+        ],
+        "processSpread": 1.2473684210526066
+      },
+      "upstream": {
+        "medianMs": 0.006866666666666667,
+        "processMedians": [
+          0.006966666666666667,
+          0.006733333333333333,
+          0.006966666666666667,
+          0.006866666666666667,
+          0.006833333333333334
+        ],
+        "processSpread": 1.0346534653465347
+      },
+      "currentOverUpstream": 1.3883495145629754,
+      "currentOverBaseline": 0.4546899841017125
+    },
+    {
+      "name": "flat64-count",
+      "current": {
+        "medianMs": 0.7277666666666676,
+        "processMedians": [
+          0.6703666666666663,
+          0.7436333333333304,
+          0.8457000000000031,
+          0.7277666666666676,
+          0.656566666666663
+        ],
+        "processSpread": 1.2880641722089778
+      },
+      "baseline": {
+        "medianMs": 2.742200000000006,
+        "processMedians": [
+          2.742200000000006,
+          2.0032666666666614,
+          2.890733333333325,
+          2.9162000000000035,
+          2.5654666666666706
+        ],
+        "processSpread": 1.4557223202103287
+      },
+      "upstream": {
+        "medianMs": 0.4626,
+        "processMedians": [
+          0.4626,
+          0.4645666666666667,
+          0.5014,
+          0.4095666666666667,
+          0.43553333333333333
+        ],
+        "processSpread": 1.224220721087328
+      },
+      "currentOverUpstream": 1.5732093961665965,
+      "currentOverBaseline": 0.2653951814844526
+    },
+    {
+      "name": "flat64-hash",
+      "current": {
+        "medianMs": 0.6164666666666676,
+        "processMedians": [
+          0.7857666666666697,
+          0.6164666666666676,
+          0.5911999999999958,
+          0.6386666666666656,
+          0.5939666666666691
+        ],
+        "processSpread": 1.3291046459179217
+      },
+      "baseline": {
+        "medianMs": 2.0492333333333286,
+        "processMedians": [
+          2.0472666666666632,
+          1.7629666666666708,
+          2.269133333333343,
+          2.054333333333337,
+          2.0492333333333286
+        ],
+        "processSpread": 1.2871107413639913
+      },
+      "upstream": {
+        "medianMs": 0.28763333333333335,
+        "processMedians": [
+          0.34846666666666665,
+          0.2901,
+          0.2814333333333333,
+          0.28763333333333335,
+          0.28683333333333333
+        ],
+        "processSpread": 1.2381854790951083
+      },
+      "currentOverUpstream": 2.143237918646428,
+      "currentOverBaseline": 0.30082795191697825
+    },
+    {
+      "name": "flat512-count",
+      "current": {
+        "medianMs": 3.310933333333329,
+        "processMedians": [
+          3.310933333333329,
+          3.3484000000000074,
+          3.3937999999999797,
+          3.1696333333333278,
+          3.163100000000005
+        ],
+        "processSpread": 1.072934779172323
+      },
+      "baseline": {
+        "medianMs": 24.304099999999988,
+        "processMedians": [
+          23.281933333333352,
+          16.645366666666632,
+          24.879533333333256,
+          24.91096666666681,
+          24.304099999999988
+        ],
+        "processSpread": 1.4965706172488558
+      },
+      "upstream": {
+        "medianMs": 1.5027666666666666,
+        "processMedians": [
+          1.5438666666666667,
+          1.4896333333333334,
+          1.5198666666666667,
+          1.5027666666666666,
+          1.4922
+        ],
+        "processSpread": 1.0364071695495536
+      },
+      "currentOverUpstream": 2.203225162478093,
+      "currentOverBaseline": 0.1362294153387013
+    },
+    {
+      "name": "flat512-hash",
+      "current": {
+        "medianMs": 3.269366666666656,
+        "processMedians": [
+          3.2153666666666822,
+          4.037700000000011,
+          3.121466666666682,
+          3.367399999999975,
+          3.269366666666656
+        ],
+        "processSpread": 1.2935265473495337
+      },
+      "baseline": {
+        "medianMs": 26.083466666666634,
+        "processMedians": [
+          25.701633333333273,
+          19.48739999999998,
+          26.083466666666634,
+          26.265000000000025,
+          26.247833333333347
+        ],
+        "processSpread": 1.3477939591736225
+      },
+      "upstream": {
+        "medianMs": 0.8656333333333334,
+        "processMedians": [
+          0.8531333333333333,
+          0.8656333333333334,
+          0.8772666666666666,
+          0.8688333333333333,
+          0.8597333333333333
+        ],
+        "processSpread": 1.0282878799718684
+      },
+      "currentOverUpstream": 3.776849320343474,
+      "currentOverBaseline": 0.12534249026203034
+    },
+    {
+      "name": "nested128-count",
+      "current": {
+        "medianMs": 1.353433333333366,
+        "processMedians": [
+          1.353433333333366,
+          1.3186999999999973,
+          1.369100000000003,
+          1.4056999999999864,
+          1.3374000000000024
+        ],
+        "processSpread": 1.0659740653673992
+      },
+      "baseline": {
+        "medianMs": 5.903899999999946,
+        "processMedians": [
+          5.903899999999946,
+          5.588833333333241,
+          6.062533333333097,
+          6.64486666666653,
+          5.856300000000071
+        ],
+        "processSpread": 1.188954164554315
+      },
+      "upstream": {
+        "medianMs": 1.1180666666666668,
+        "processMedians": [
+          1.1008666666666667,
+          1.1225,
+          1.0482,
+          1.1443333333333334,
+          1.1180666666666668
+        ],
+        "processSpread": 1.0917127774597724
+      },
+      "currentOverUpstream": 1.2105121936676695,
+      "currentOverBaseline": 0.2292439460921388
+    },
+    {
+      "name": "nested128-hash",
+      "current": {
+        "medianMs": 1.4828666666666475,
+        "processMedians": [
+          1.4592666666666598,
+          1.4828666666666475,
+          1.4565000000000055,
+          1.4887666666666821,
+          1.5349000000000312
+        ],
+        "processSpread": 1.053827669069705
+      },
+      "baseline": {
+        "medianMs": 6.521066666666532,
+        "processMedians": [
+          5.847633333333458,
+          7.2280000000000655,
+          6.521066666666532,
+          7.4491000000001195,
+          6.1298000000000075
+        ],
+        "processSpread": 1.2738657804581843
+      },
+      "upstream": {
+        "medianMs": 0.7692,
+        "processMedians": [
+          0.7692,
+          0.7676,
+          0.7503666666666666,
+          0.7902333333333333,
+          0.7825
+        ],
+        "processSpread": 1.0531295810936876
+      },
+      "currentOverUpstream": 1.9278037788177944,
+      "currentOverBaseline": 0.2273963359777559
+    },
+    {
+      "name": "lists16-count",
+      "current": {
+        "medianMs": 0.4362999999999981,
+        "processMedians": [
+          0.4424333333333834,
+          0.43576666666664704,
+          0.4410000000000309,
+          0.4215666666666493,
+          0.4362999999999981
+        ],
+        "processSpread": 1.0494979046415789
+      },
+      "baseline": {
+        "medianMs": 2.1535333333331437,
+        "processMedians": [
+          1.8150666666667046,
+          2.266566666666828,
+          1.8944333333335333,
+          2.1816333333335933,
+          2.1535333333331437
+        ],
+        "processSpread": 1.248751193711956
+      },
+      "upstream": {
+        "medianMs": 0.08683333333333333,
+        "processMedians": [
+          0.0878,
+          0.08796666666666667,
+          0.08683333333333333,
+          0.08596666666666666,
+          0.08556666666666667
+        ],
+        "processSpread": 1.0280483054148812
+      },
+      "currentOverUpstream": 5.024568138195756,
+      "currentOverBaseline": 0.2025972819862102
+    },
+    {
+      "name": "lists16-hash",
+      "current": {
+        "medianMs": 0.4021333333333435,
+        "processMedians": [
+          0.4021333333333435,
+          0.38239999999996144,
+          0.40266666666669454,
+          0.3947333333333063,
+          0.4265666666666827
+        ],
+        "processSpread": 1.1154986053000149
+      },
+      "baseline": {
+        "medianMs": 1.9831999999999728,
+        "processMedians": [
+          1.9831999999999728,
+          2.0233666666666372,
+          1.8131999999999,
+          2.1063000000000707,
+          1.9714666666665532
+        ],
+        "processSpread": 1.161647915287992
+      },
+      "upstream": {
+        "medianMs": 0.1099,
+        "processMedians": [
+          0.1099,
+          0.10866666666666666,
+          0.11003333333333333,
+          0.1107,
+          0.10913333333333333
+        ],
+        "processSpread": 1.0187116564417178
+      },
+      "currentOverUpstream": 3.6590840157720064,
+      "currentOverBaseline": 0.2027699341132256
+    },
+    {
+      "name": "raw64-count",
+      "current": {
+        "medianMs": 0.5767666666667234,
+        "processMedians": [
+          0.6304999999999836,
+          0.4985666666667233,
+          0.7462666666666943,
+          0.5567333333333409,
+          0.5767666666667234
+        ],
+        "processSpread": 1.4968242294576644
+      },
+      "baseline": {
+        "medianMs": 1.8724666666666963,
+        "processMedians": [
+          1.7611000000000179,
+          2.2295000000000678,
+          1.8724666666666963,
+          1.8312999999998283,
+          1.8762666666668035
+        ],
+        "processSpread": 1.2659701323036994
+      },
+      "upstream": {
+        "medianMs": 0.2063,
+        "processMedians": [
+          0.2063,
+          0.20733333333333334,
+          0.2061,
+          0.2079,
+          0.2014
+        ],
+        "processSpread": 1.03227408142999
+      },
+      "currentOverUpstream": 2.7957666828246404,
+      "currentOverBaseline": 0.308025064976705
+    },
+    {
+      "name": "raw64-hash",
+      "current": {
+        "medianMs": 0.5913666666666207,
+        "processMedians": [
+          0.5913666666666207,
+          0.517599999999978,
+          0.5521000000000337,
+          0.6215333333332941,
+          0.6186333333332641
+        ],
+        "processSpread": 1.2007985574445914
+      },
+      "baseline": {
+        "medianMs": 1.7921666666664653,
+        "processMedians": [
+          1.7921666666664653,
+          2.216699999999946,
+          1.9985999999998967,
+          1.7721000000001368,
+          1.7542999999999058
+        ],
+        "processSpread": 1.263580915464895
+      },
+      "upstream": {
+        "medianMs": 0.21343333333333334,
+        "processMedians": [
+          0.21456666666666666,
+          0.2165,
+          0.21343333333333334,
+          0.12676666666666667,
+          0.08366666666666667
+        ],
+        "processSpread": 2.587649402390438
+      },
+      "currentOverUpstream": 2.7707324691548685,
+      "currentOverBaseline": 0.32997303078211876
+    }
+  ],
+  "records": {
+    "current": [
+      [
+        {
+          "name": "empty-count",
+          "samplesMs": [
+            0.18019999999999925,
+            0.0334666666666692,
+            0.034400000000000354,
+            0.012933333333331612,
+            0.025933333333336844,
+            0.015366666666665196,
+            0.018900000000002137,
+            0.019733333333334713,
+            0.012133333333333477,
+            0.011266666666666461,
+            0.014766666666664227,
+            0.01566666666666568,
+            0.01156666666666221,
+            0.01116666666666788,
+            0.22209999999999752
+          ],
+          "result": 0
+        },
+        {
+          "name": "empty-hash",
+          "samplesMs": [
+            0.02296666666666643,
+            0.007533333333332355,
+            0.008300000000000788,
+            0.008399999999999372,
+            0.013033333333334932,
+            0.014799999999998667,
+            0.011933333333331575,
+            0.00879999999999844,
+            0.00953333333333243,
+            0.012599999999996689,
+            0.014000000000000531,
+            0.008066666666664446,
+            0.2987333333333311,
+            0.009066666666664483,
+            0.009300000000000827
+          ],
+          "result": 0
+        },
+        {
+          "name": "flat64-count",
+          "samplesMs": [
+            0.38796666666666607,
+            0.9799666666666695,
+            0.6172666666666705,
+            0.7660666666666694,
+            0.6537666666666647,
+            1.3112000000000041,
+            0.8559333333333351,
+            1.068999999999998,
+            0.6703666666666663,
+            1.6231666666666722,
+            0.5143666666666699,
+            0.49373333333333375,
+            0.5022333333333412,
+            0.5403666666666709,
+            1.103933333333335
+          ],
+          "result": 1024
+        },
+        {
+          "name": "flat64-hash",
+          "samplesMs": [
+            0.6865333333333391,
+            0.8719333333333262,
+            1.0981666666666665,
+            0.9792000000000011,
+            0.9336333333333376,
+            1.3427999999999922,
+            0.4096666666666617,
+            0.4098666666666683,
+            0.611333333333325,
+            0.9003333333333406,
+            0.7857666666666697,
+            0.7428666666666667,
+            0.7801333333333389,
+            0.7083666666666678,
+            3.8605666666666614
+          ],
+          "result": 90802688
+        },
+        {
+          "name": "flat512-count",
+          "samplesMs": [
+            3.254566666666657,
+            5.579666666666678,
+            2.9705333333333406,
+            3.183566666666669,
+            5.581133333333336,
+            2.929300000000012,
+            5.728566666666666,
+            2.977733333333333,
+            5.609433333333338,
+            3.310933333333329,
+            3.2693999999999996,
+            6.38730000000002,
+            4.885299999999991,
+            3.3220999999999776,
+            2.7468000000000075
+          ],
+          "result": 8192
+        },
+        {
+          "name": "flat512-hash",
+          "samplesMs": [
+            3.1367666666666687,
+            3.1492666666666764,
+            6.830400000000016,
+            3.213233333333354,
+            5.825666666666659,
+            2.8266000000000226,
+            5.572433333333341,
+            3.2153666666666822,
+            4.265066666666674,
+            3.1597666666666555,
+            3.0095666666666525,
+            5.546066666666661,
+            3.41536666666669,
+            6.189366666666653,
+            3.0098000000000034
+          ],
+          "result": 20390208
+        },
+        {
+          "name": "nested128-count",
+          "samplesMs": [
+            4.0454000000000105,
+            1.353433333333366,
+            1.2671666666666397,
+            1.3186000000000224,
+            1.3515333333333501,
+            1.2839333333333418,
+            1.2789666666666715,
+            3.132099999999999,
+            3.467433333333323,
+            2.4601000000000113,
+            1.8751000000000129,
+            1.6291666666666818,
+            1.4600666666666864,
+            1.241866666666662,
+            1.2293000000000422
+          ],
+          "result": 2048
+        },
+        {
+          "name": "nested128-hash",
+          "samplesMs": [
+            1.4442666666667112,
+            1.4535999999999756,
+            1.4365000000000236,
+            4.022699999999986,
+            1.4891333333333325,
+            1.4592666666666598,
+            1.4676666666666733,
+            1.4326999999999923,
+            1.4610333333333376,
+            1.4817666666666203,
+            4.307666666666667,
+            1.4871999999999541,
+            1.4288999999999608,
+            1.4352333333333718,
+            1.402466666666669
+          ],
+          "result": -258641568
+        },
+        {
+          "name": "lists16-count",
+          "samplesMs": [
+            0.4214333333333495,
+            0.5386666666666619,
+            0.4196666666666715,
+            1.9997666666667253,
+            0.4424333333333834,
+            0.4223333333332751,
+            0.630833333333309,
+            0.538500000000037,
+            0.5389666666666623,
+            0.45363333333330047,
+            0.48840000000003175,
+            0.4232000000000274,
+            0.39673333333333477,
+            0.39049999999997453,
+            0.39366666666668
+          ],
+          "result": 256
+        },
+        {
+          "name": "lists16-hash",
+          "samplesMs": [
+            0.41563333333328956,
+            0.9998333333333752,
+            0.39613333333333384,
+            0.4053333333332982,
+            0.3973000000000108,
+            0.45376666666667614,
+            0.45126666666669735,
+            0.394266666666681,
+            0.40123333333334205,
+            0.3990666666666887,
+            0.4059333333332991,
+            0.4021333333333435,
+            1.016333333333326,
+            0.39493333333333186,
+            0.40039999999999054
+          ],
+          "result": 531986080
+        },
+        {
+          "name": "raw64-count",
+          "samplesMs": [
+            2.1049333333333684,
+            0.6374999999999696,
+            0.6304999999999836,
+            0.5973333333333054,
+            0.5775666666666742,
+            0.6433333333332788,
+            0.5936666666666497,
+            0.5557666666666895,
+            1.9704666666667283,
+            0.6908999999999802,
+            0.694566666666636,
+            0.7241666666666333,
+            0.6129333333333307,
+            0.6058000000000447,
+            0.5892333333332923
+          ],
+          "result": 1024
+        },
+        {
+          "name": "raw64-hash",
+          "samplesMs": [
+            0.6398333333333236,
+            0.6384666666666968,
+            0.722533333333331,
+            0.61566666666666,
+            0.5918333333333218,
+            0.5837999999999587,
+            1.7275666666666893,
+            0.5809666666667302,
+            0.5834000000000591,
+            0.584233333333259,
+            0.5793666666666771,
+            0.5842000000000098,
+            0.5866000000000137,
+            0.6035333333333407,
+            0.5913666666666207
+          ],
+          "result": 753646080
+        }
+      ],
+      [
+        {
+          "name": "empty-count",
+          "samplesMs": [
+            0.17936666666666667,
+            0.033799999999999386,
+            0.027499999999998675,
+            0.015600000000001538,
+            0.021899999999997515,
+            0.014900000000001986,
+            0.01896666666666628,
+            0.017466666666663855,
+            0.011533333333332507,
+            0.011266666666666461,
+            0.014066666666664673,
+            0.014399999999999599,
+            0.011399999999999485,
+            0.011066666666669297,
+            0.1752333333333335
+          ],
+          "result": 0
+        },
+        {
+          "name": "empty-hash",
+          "samplesMs": [
+            0.02489999999999763,
+            0.011033333333334857,
+            0.009099999999998923,
+            0.009399999999999409,
+            0.010500000000002766,
+            0.013433333333329264,
+            0.013866666666662772,
+            0.008566666666666833,
+            0.007600000000001235,
+            0.02300000000000087,
+            0.006300000000000712,
+            0.008466666666663514,
+            0.007666666666665378,
+            0.27319999999999806,
+            0.008866666666667319
+          ],
+          "result": 0
+        },
+        {
+          "name": "flat64-count",
+          "samplesMs": [
+            0.6145333333333364,
+            0.9259666666666675,
+            0.7581999999999974,
+            0.7436333333333304,
+            0.6128666666666712,
+            1.3222666666666594,
+            0.8335666666666649,
+            0.9743666666666589,
+            0.6545333333333284,
+            0.9068666666666635,
+            0.48236666666666866,
+            0.471666666666664,
+            0.5090000000000051,
+            0.5797999999999964,
+            1.0172666666666714
+          ],
+          "result": 1024
+        },
+        {
+          "name": "flat64-hash",
+          "samplesMs": [
+            0.45429999999999876,
+            0.7244999999999967,
+            0.44693333333333385,
+            1.5180666666666696,
+            0.4656999999999982,
+            0.4819999999999993,
+            0.47846666666667187,
+            0.5053999999999993,
+            0.7755999999999972,
+            0.6845999999999984,
+            0.6164666666666676,
+            0.6175333333333318,
+            0.625533333333332,
+            1.8321333333333314,
+            0.489166666666667
+          ],
+          "result": 90802688
+        },
+        {
+          "name": "flat512-count",
+          "samplesMs": [
+            2.9652666666666505,
+            5.736400000000003,
+            3.3041333333333305,
+            5.933966666666682,
+            3.3484000000000074,
+            3.1465333333333283,
+            8.800599999999994,
+            3.317066666666657,
+            5.14700000000001,
+            4.971733333333343,
+            6.735133333333333,
+            3.112666666666693,
+            2.955766666666667,
+            7.094600000000014,
+            3.102133333333351
+          ],
+          "result": 8192
+        },
+        {
+          "name": "flat512-hash",
+          "samplesMs": [
+            5.197833333333354,
+            4.037700000000011,
+            4.233566666666661,
+            2.9946666666666792,
+            3.162999999999973,
+            5.471733333333343,
+            3.015833333333338,
+            5.8219333333333525,
+            2.992600000000001,
+            2.9284666666666985,
+            5.620366666666693,
+            2.963799999999992,
+            5.546533333333362,
+            2.975599999999986,
+            4.585433333333337
+          ],
+          "result": 20390208
+        },
+        {
+          "name": "nested128-count",
+          "samplesMs": [
+            1.3753999999999753,
+            1.3058000000000145,
+            2.5190000000000055,
+            1.3046000000000124,
+            1.2976666666666763,
+            1.3010666666666566,
+            1.3186999999999973,
+            1.431600000000003,
+            1.3777666666666921,
+            1.300800000000019,
+            3.686899999999999,
+            1.3591666666666622,
+            1.3277666666666619,
+            1.3139333333333525,
+            1.307133333333392
+          ],
+          "result": 2048
+        },
+        {
+          "name": "nested128-hash",
+          "samplesMs": [
+            4.26279999999997,
+            1.491333333333311,
+            1.464399999999993,
+            1.5235999999999876,
+            1.4305000000000139,
+            1.4761666666666617,
+            1.4221666666666504,
+            4.1951666666667125,
+            1.4637333333332663,
+            1.4916000000000622,
+            1.4828666666666475,
+            1.4779999999999898,
+            1.4786333333333157,
+            2.870833333333318,
+            1.5588999999999942
+          ],
+          "result": -258641568
+        },
+        {
+          "name": "lists16-count",
+          "samplesMs": [
+            0.43576666666664704,
+            0.4362666666666731,
+            0.4234999999999521,
+            0.4083333333333788,
+            0.45700000000003155,
+            0.4118999999999839,
+            0.3939666666666047,
+            0.4103333333333315,
+            0.4157999999999902,
+            1.0454999999999472,
+            0.43599999999999756,
+            0.4374000000000251,
+            0.45650000000000546,
+            0.44316666666668425,
+            0.43173333333334085
+          ],
+          "result": 256
+        },
+        {
+          "name": "lists16-hash",
+          "samplesMs": [
+            0.3841666666667152,
+            0.38216666666661087,
+            0.3842000000000401,
+            0.382633333333312,
+            0.38600000000004303,
+            0.38829999999999626,
+            0.8892333333333227,
+            0.3831000000000131,
+            0.37836666666665525,
+            0.3815999999999349,
+            0.3774000000000039,
+            0.3811666666666345,
+            0.3823666666666365,
+            0.3797666666666828,
+            0.38239999999996144
+          ],
+          "result": 531986080
+        },
+        {
+          "name": "raw64-count",
+          "samplesMs": [
+            0.5222333333333609,
+            0.5084666666666635,
+            0.502333333333354,
+            0.5430333333332934,
+            0.4976333333333211,
+            0.533333333333303,
+            2.6615333333333333,
+            0.4821666666666715,
+            0.48746666666670535,
+            0.4794333333333422,
+            0.474866666666685,
+            0.47686666666671346,
+            0.4985666666667233,
+            0.4862333333333784,
+            0.4993000000000241
+          ],
+          "result": 1024
+        },
+        {
+          "name": "raw64-hash",
+          "samplesMs": [
+            0.4986666666666224,
+            0.5061999999999595,
+            0.5098000000000411,
+            0.5087999999999889,
+            0.5130666666667215,
+            2.849800000000035,
+            0.517599999999978,
+            0.5289333333333465,
+            0.515866666666625,
+            0.5132999999999962,
+            0.5273666666666182,
+            0.519266666666681,
+            0.5227333333333869,
+            0.5214333333333343,
+            0.5220999999999852
+          ],
+          "result": 753646080
+        }
+      ],
+      [
+        {
+          "name": "empty-count",
+          "samplesMs": [
+            0.14866666666666598,
+            0.06456666666666422,
+            0.029666666666666213,
+            0.024266666666666954,
+            0.025266666666666993,
+            0.01850000000000307,
+            0.02183333333333337,
+            0.020433333333334264,
+            0.015966666666666168,
+            0.014499999999998181,
+            0.016399999999999675,
+            0.012066666666669335,
+            0.01163333333333109,
+            0.011699999999999969,
+            0.1957333333333319
+          ],
+          "result": 0
+        },
+        {
+          "name": "empty-hash",
+          "samplesMs": [
+            0.018599999999996914,
+            0.012333333333330643,
+            0.008666666666665416,
+            0.00883333333333288,
+            0.009699999999999894,
+            0.013066666666664636,
+            0.015000000000000568,
+            0.007566666666666795,
+            0.009000000000000341,
+            0.01779999999999878,
+            0.009099999999998923,
+            0.007766666666668698,
+            0.0072666666666663104,
+            0.35556666666666575,
+            0.009466666666663551
+          ],
+          "result": 0
+        },
+        {
+          "name": "flat64-count",
+          "samplesMs": [
+            0.4767666666666628,
+            1.556966666666663,
+            0.6262999999999957,
+            0.7098000000000013,
+            0.6373999999999947,
+            1.4642666666666646,
+            0.8457000000000031,
+            1.0399333333333327,
+            1.2462333333333315,
+            0.9278666666666595,
+            0.497666666666665,
+            0.48569999999999897,
+            0.5162666666666667,
+            1.1826999999999923,
+            1.0652333333333388
+          ],
+          "result": 1024
+        },
+        {
+          "name": "flat64-hash",
+          "samplesMs": [
+            0.663233333333333,
+            0.6755999999999934,
+            0.6639999999999967,
+            0.6344666666666683,
+            2.0442000000000085,
+            0.46160000000000423,
+            0.4160000000000063,
+            0.3927666666666596,
+            0.5824666666666664,
+            0.5745999999999943,
+            0.585033333333333,
+            0.6040999999999977,
+            0.5911999999999958,
+            0.5836666666666682,
+            1.9262999999999881
+          ],
+          "result": 90802688
+        },
+        {
+          "name": "flat512-count",
+          "samplesMs": [
+            3.6065666666666707,
+            4.905233333333324,
+            2.7626999999999953,
+            5.202666666666668,
+            2.7292666666666796,
+            2.779733333333335,
+            5.52176666666666,
+            2.797700000000001,
+            6.547833333333339,
+            3.1363999999999805,
+            3.0218333333333476,
+            5.902366666666656,
+            4.7138666666666795,
+            3.3937999999999797,
+            2.4610000000000127
+          ],
+          "result": 8192
+        },
+        {
+          "name": "flat512-hash",
+          "samplesMs": [
+            2.8459000000000287,
+            2.8285333333333633,
+            5.734666666666688,
+            3.1702333333333477,
+            5.679366666666662,
+            2.7195000000000014,
+            5.196133333333326,
+            3.121466666666682,
+            4.283333333333341,
+            2.95150000000001,
+            2.8304999999999914,
+            5.483766666666686,
+            2.8706000000000054,
+            5.8596,
+            2.9513999999999974
+          ],
+          "result": 20390208
+        },
+        {
+          "name": "nested128-count",
+          "samplesMs": [
+            1.368666666666665,
+            4.4613333333333385,
+            1.369100000000003,
+            1.3660999999999983,
+            1.3568333333333082,
+            1.3928666666666913,
+            2.821233333333339,
+            2.5551333333333255,
+            2.021100000000009,
+            1.5842666666666598,
+            1.4897999999999836,
+            1.3681333333333516,
+            1.2188666666666752,
+            1.255866666666672,
+            1.216133333333346
+          ],
+          "result": 2048
+        },
+        {
+          "name": "nested128-hash",
+          "samplesMs": [
+            1.4051666666666733,
+            1.4395666666666784,
+            1.5951000000000022,
+            3.94676666666669,
+            1.445866666666613,
+            1.4746666666666595,
+            1.4758999999999862,
+            1.4838999999999487,
+            1.430400000000039,
+            1.4366666666667243,
+            1.4226666666666006,
+            6.5200666666667075,
+            1.4565000000000055,
+            1.4714333333333798,
+            1.4534666666666756
+          ],
+          "result": -258641568
+        },
+        {
+          "name": "lists16-count",
+          "samplesMs": [
+            0.4410000000000309,
+            0.4506666666666206,
+            0.4201333333333726,
+            0.4542666666666264,
+            2.6155666666666852,
+            0.471399999999979,
+            0.47529999999998535,
+            0.5310000000000249,
+            0.4628666666666656,
+            0.41456666666666325,
+            0.39299999999995333,
+            0.39753333333328555,
+            0.39600000000003394,
+            0.3909666666666756,
+            0.3951333333333575
+          ],
+          "result": 256
+        },
+        {
+          "name": "lists16-hash",
+          "samplesMs": [
+            0.411200000000008,
+            1.096300000000004,
+            0.39866666666671335,
+            0.3921666666666776,
+            0.39553333333333285,
+            0.40080000000004173,
+            0.4078666666666777,
+            0.3950333333333826,
+            0.40493333333332276,
+            0.3976333333333362,
+            0.40266666666669454,
+            0.3934666666666544,
+            0.43476666666659486,
+            0.9433000000000599,
+            0.42440000000002936
+          ],
+          "result": 531986080
+        },
+        {
+          "name": "raw64-count",
+          "samplesMs": [
+            3.5036666666666556,
+            0.567799999999958,
+            0.6165333333333365,
+            0.5780333333332995,
+            0.5996333333333345,
+            0.582800000000058,
+            1.7778333333333194,
+            2.635433333333367,
+            1.2164666666666715,
+            0.907799999999952,
+            0.7913999999999911,
+            0.6250666666666499,
+            0.8094333333333452,
+            0.7462666666666943,
+            0.6184333333333901
+          ],
+          "result": 1024
+        },
+        {
+          "name": "raw64-hash",
+          "samplesMs": [
+            0.6785333333333105,
+            0.6455333333333328,
+            0.5609333333332719,
+            0.5745666666666693,
+            1.6902000000000044,
+            0.5443333333333461,
+            0.5521000000000337,
+            0.5481666666666266,
+            0.5464666666666744,
+            0.5424333333332925,
+            0.5432999999999689,
+            0.5460666666666233,
+            0.5764333333333221,
+            0.5483000000000023,
+            0.5631333333333259
+          ],
+          "result": 753646080
+        }
+      ],
+      [
+        {
+          "name": "empty-count",
+          "samplesMs": [
+            0.19329999999999833,
+            0.04449999999999932,
+            0.026333333333331172,
+            0.016866666666667623,
+            0.020899999999997476,
+            0.016033333333335047,
+            0.016600000000001575,
+            0.016333333333330795,
+            0.011766666666668849,
+            0.011099999999999,
+            0.0167333333333346,
+            0.011366666666665045,
+            0.011266666666666461,
+            0.014399999999999599,
+            0.21040000000000228
+          ],
+          "result": 0
+        },
+        {
+          "name": "empty-hash",
+          "samplesMs": [
+            0.102800000000002,
+            0.010266666666666424,
+            0.008733333333334295,
+            0.008366666666669667,
+            0.013133333333333516,
+            0.012633333333331128,
+            0.012033333333330157,
+            0.008533333333332394,
+            0.014966666666666129,
+            0.013866666666667507,
+            0.012000000000000455,
+            0.012133333333333477,
+            0.006533333333332318,
+            0.32750000000000057,
+            0.010200000000002282
+          ],
+          "result": 0
+        },
+        {
+          "name": "flat64-count",
+          "samplesMs": [
+            0.621199999999997,
+            0.8603666666666688,
+            0.7216666666666688,
+            0.7277666666666676,
+            0.643999999999996,
+            1.2251000000000072,
+            0.8614000000000033,
+            1.073599999999999,
+            0.7431666666666672,
+            0.887300000000001,
+            0.47399999999999903,
+            0.4856333333333301,
+            0.4942666666666658,
+            0.506166666666663,
+            1.1144666666666676
+          ],
+          "result": 1024
+        },
+        {
+          "name": "flat64-hash",
+          "samplesMs": [
+            0.5686666666666724,
+            0.7428333333333322,
+            0.4482333333333391,
+            2.016233333333332,
+            0.4943666666666597,
+            0.5287999999999992,
+            0.67816666666666,
+            0.4632666666666694,
+            0.5584999999999999,
+            0.6761000000000005,
+            0.6576999999999961,
+            0.6564333333333346,
+            0.6386666666666656,
+            1.7090333333333376,
+            0.4232333333333334
+          ],
+          "result": 90802688
+        },
+        {
+          "name": "flat512-count",
+          "samplesMs": [
+            2.8584333333333425,
+            5.915999999999997,
+            3.1696333333333278,
+            6.207299999999994,
+            3.1450333333333256,
+            3.1514333333333298,
+            8.437766666666656,
+            2.888433333333334,
+            5.309799999999996,
+            3.5266000000000113,
+            4.183366666666681,
+            3.121699999999995,
+            3.1590000000000296,
+            5.522633333333336,
+            2.9679999999999986
+          ],
+          "result": 8192
+        },
+        {
+          "name": "flat512-hash",
+          "samplesMs": [
+            5.621000000000019,
+            3.1272333333333413,
+            4.155133333333349,
+            3.0691999999999857,
+            5.363233333333331,
+            3.367399999999975,
+            3.1159666666666985,
+            5.787566666666673,
+            2.9580000000000077,
+            5.701933333333348,
+            3.1818333333333157,
+            3.288000000000011,
+            6.21756666666666,
+            5.209099999999997,
+            2.896166666666659
+          ],
+          "result": 20390208
+        },
+        {
+          "name": "nested128-count",
+          "samplesMs": [
+            1.5583333333333182,
+            1.5648666666666788,
+            1.380899999999997,
+            1.3489333333333207,
+            1.5250000000000152,
+            1.3928000000000036,
+            1.3256333333333334,
+            4.279133333333334,
+            1.4051333333333484,
+            1.3520333333333383,
+            1.4341333333333448,
+            1.4056999999999864,
+            1.464266666666693,
+            1.3170666666666573,
+            4.252899999999954
+          ],
+          "result": 2048
+        },
+        {
+          "name": "nested128-hash",
+          "samplesMs": [
+            1.5817666666666053,
+            1.5072999999999865,
+            1.455066666666653,
+            1.5365666666666584,
+            4.315366666666705,
+            1.4221999999999753,
+            1.4887666666666821,
+            1.4313333333333655,
+            1.4382666666667017,
+            1.4494666666666944,
+            1.7385000000000066,
+            2.7696000000000063,
+            1.5499666666666296,
+            1.407166666666626,
+            1.4507333333333463
+          ],
+          "result": -258641568
+        },
+        {
+          "name": "lists16-count",
+          "samplesMs": [
+            0.41103333333338316,
+            0.41746666666669324,
+            0.42203333333327464,
+            0.4001333333333908,
+            0.8021666666666837,
+            0.4878666666666807,
+            0.44239999999998264,
+            0.41279999999998535,
+            0.4215666666666493,
+            0.5296333333333223,
+            0.40270000000001954,
+            0.40443333333329673,
+            0.4215666666666493,
+            0.44410000000001065,
+            0.43573333333332204
+          ],
+          "result": 256
+        },
+        {
+          "name": "lists16-hash",
+          "samplesMs": [
+            0.45223333333334875,
+            0.4503666666666959,
+            0.9065666666666251,
+            0.39336666666660375,
+            0.3970333333333353,
+            0.391399999999976,
+            0.38600000000004303,
+            0.39150000000002666,
+            0.393100000000004,
+            0.39066666666667516,
+            0.3956999999999577,
+            0.3947333333333063,
+            0.3965333333333092,
+            0.956800000000006,
+            0.3872666666666949
+          ],
+          "result": 531986080
+        },
+        {
+          "name": "raw64-count",
+          "samplesMs": [
+            0.5580333333333177,
+            2.229333333333367,
+            0.544433333333321,
+            0.5344333333333301,
+            0.5797333333333275,
+            0.6503666666666655,
+            0.6496666666666139,
+            0.5942999999999756,
+            0.5423999999999675,
+            0.5487333333333027,
+            0.5567333333333409,
+            0.5344333333333301,
+            0.5399666666667144,
+            0.5369999999999587,
+            3.0289666666666712
+          ],
+          "result": 1024
+        },
+        {
+          "name": "raw64-hash",
+          "samplesMs": [
+            3.2127666666666905,
+            0.6215333333332941,
+            0.6325666666666621,
+            0.6592666666666295,
+            0.65009999999999,
+            0.5866999999999886,
+            0.5867666666667143,
+            0.6591999999999795,
+            0.6569333333333512,
+            0.5576000000000173,
+            0.5657666666666804,
+            0.5624000000000251,
+            0.5649333333333288,
+            3.0452333333333477,
+            0.5661333333333308
+          ],
+          "result": 753646080
+        }
+      ],
+      [
+        {
+          "name": "empty-count",
+          "samplesMs": [
+            0.31180000000000047,
+            0.059366666666666866,
+            0.028133333333334083,
+            0.017066666666669523,
+            0.02516666666666841,
+            0.01290000000000191,
+            0.023266666666666918,
+            0.01713333333332893,
+            0.012600000000001424,
+            0.011466666666663627,
+            0.013200000000002396,
+            0.014433333333334039,
+            0.01163333333333109,
+            0.011733333333334409,
+            0.010166666666663104
+          ],
+          "result": 0
+        },
+        {
+          "name": "empty-hash",
+          "samplesMs": [
+            0.01936666666666535,
+            0.012033333333334895,
+            0.00953333333333243,
+            0.008933333333336199,
+            0.01163333333333109,
+            0.015399999999999636,
+            0.019666666666665833,
+            0.007799999999998401,
+            0.006366666666669592,
+            0.01166666666666553,
+            0.007566666666666795,
+            0.007399999999999333,
+            0.007733333333334258,
+            0.32236666666666736,
+            0.009966666666665938
+          ],
+          "result": 0
+        },
+        {
+          "name": "flat64-count",
+          "samplesMs": [
+            0.6507000000000005,
+            0.8506999999999986,
+            0.6539333333333323,
+            0.700800000000001,
+            0.5992666666666698,
+            1.3611666666666669,
+            0.9293333333333322,
+            0.9513999999999972,
+            0.656566666666663,
+            0.9308999999999988,
+            0.4975333333333272,
+            0.4719666666666645,
+            0.4696333333333295,
+            0.5011666666666675,
+            1.0070666666666643
+          ],
+          "result": 1024
+        },
+        {
+          "name": "flat64-hash",
+          "samplesMs": [
+            0.4305666666666639,
+            0.5048666666666671,
+            0.6839666666666631,
+            1.5261666666666638,
+            0.4884666666666722,
+            0.4701000000000022,
+            0.5206999999999956,
+            0.4771666666666666,
+            0.49313333333333276,
+            0.6018333333333317,
+            0.6008666666666708,
+            0.6114999999999972,
+            0.5988666666666708,
+            0.5939666666666691,
+            1.45386666666667
+          ],
+          "result": 90802688
+        },
+        {
+          "name": "flat512-count",
+          "samplesMs": [
+            3.1965333333333206,
+            7.320433333333331,
+            2.869566666666666,
+            2.8527666666666582,
+            5.154333333333322,
+            2.8595666666666752,
+            6.302766666666666,
+            3.047366666666657,
+            2.8758000000000075,
+            5.555133333333326,
+            2.967899999999986,
+            5.766433333333339,
+            3.163100000000005,
+            3.145466666666683,
+            8.094766666666677
+          ],
+          "result": 8192
+        },
+        {
+          "name": "flat512-hash",
+          "samplesMs": [
+            3.1294333333333575,
+            6.095433333333328,
+            3.269366666666656,
+            6.09663333333333,
+            3.115033333333334,
+            4.747266666666671,
+            3.3227999999999915,
+            3.008199999999988,
+            5.592733333333324,
+            3.193766666666685,
+            4.180833333333339,
+            3.1778666666666595,
+            5.872200000000021,
+            3.1462666666666714,
+            3.1352333333333036
+          ],
+          "result": 20390208
+        },
+        {
+          "name": "nested128-count",
+          "samplesMs": [
+            1.4156333333333275,
+            1.3374000000000024,
+            1.293233333333319,
+            1.3432666666666744,
+            1.296133333333349,
+            3.9623666666666395,
+            1.3039333333333236,
+            1.2966666666666622,
+            1.314300000000003,
+            1.3050000000000257,
+            1.3001666666666551,
+            3.9874666666666676,
+            2.9489000000000183,
+            2.1550666666666607,
+            1.7877333333333354
+          ],
+          "result": 2048
+        },
+        {
+          "name": "nested128-hash",
+          "samplesMs": [
+            2.7152999999999943,
+            1.5465666666666493,
+            1.5464333333333495,
+            1.4843666666666497,
+            1.5349000000000312,
+            1.5049333333333834,
+            1.4374333333332743,
+            3.941433333333331,
+            1.5282666666666955,
+            1.5573000000000168,
+            1.5558333333333394,
+            1.5129999999999957,
+            1.505233333333308,
+            1.5325000000000273,
+            4.498366666666698
+          ],
+          "result": -258641568
+        },
+        {
+          "name": "lists16-count",
+          "samplesMs": [
+            0.4362999999999981,
+            0.4329999999999927,
+            0.40773333333330203,
+            0.42676666666670826,
+            0.43326666666666824,
+            0.46223333333333966,
+            0.46869999999997464,
+            0.5563666666666904,
+            0.44839999999999236,
+            0.48376666666664886,
+            1.0172999999999774,
+            0.4414333333333313,
+            0.394800000000032,
+            0.3869333333333695,
+            0.39400000000000546
+          ],
+          "result": 256
+        },
+        {
+          "name": "lists16-hash",
+          "samplesMs": [
+            0.49746666666669626,
+            0.45210000000004885,
+            0.4063333333333503,
+            0.41459999999998826,
+            0.40506666666669844,
+            0.4009666666666665,
+            0.4035000000000461,
+            0.9921000000000125,
+            0.46006666666668633,
+            0.44286666666660796,
+            0.4265666666666827,
+            0.42460000000005493,
+            0.4253000000000308,
+            0.4332999999999932,
+            0.432766666666718
+          ],
+          "result": 531986080
+        },
+        {
+          "name": "raw64-count",
+          "samplesMs": [
+            0.5844333333333603,
+            0.5625,
+            0.5782666666667259,
+            0.5707666666667137,
+            0.566500000000057,
+            0.6034333333332901,
+            0.6155666666666093,
+            2.5948666666666518,
+            0.5763999999999972,
+            0.5767666666667234,
+            0.5597666666666706,
+            0.5491000000000289,
+            0.5569333333333665,
+            0.6047666666666677,
+            0.63433333333334
+          ],
+          "result": 1024
+        },
+        {
+          "name": "raw64-hash",
+          "samplesMs": [
+            0.5716666666667152,
+            0.57183333333334,
+            0.6031999999999395,
+            0.5781666666666752,
+            0.560833333333297,
+            2.453166666666675,
+            0.6687666666666701,
+            0.6718333333333248,
+            0.6967666666666901,
+            0.6732666666666773,
+            0.7098666666666608,
+            0.7217666666666295,
+            0.6186333333332641,
+            0.6158666666666855,
+            0.6121333333333799
+          ],
+          "result": 753646080
+        }
+      ]
+    ],
+    "baseline": [
+      [
+        {
+          "name": "empty-count",
+          "samplesMs": [
+            0.17900000000000205,
+            0.046700000000001296,
+            0.034000000000001286,
+            0.01939999999999979,
+            0.03573333333333532,
+            0.018766666666664378,
+            0.7458666666666668,
+            0.018666666666665794,
+            0.013066666666664636,
+            0.015000000000000568,
+            0.01233333333333538,
+            0.014000000000000531,
+            0.014866666666667546,
+            0.014333333333330719,
+            0.018600000000001653
+          ],
+          "result": 0
+        },
+        {
+          "name": "empty-hash",
+          "samplesMs": [
+            0.0502333333333335,
+            0.029966666666666697,
+            0.02949999999999875,
+            0.032233333333332816,
+            0.03240000000000028,
+            0.020966666666666356,
+            0.02046666666666397,
+            0.019599999999996953,
+            0.020333333333335684,
+            0.020799999999998892,
+            0.0212000000000027,
+            0.019633333333331393,
+            0.019833333333333297,
+            0.13379999999999845,
+            0.019833333333333297
+          ],
+          "result": 0
+        },
+        {
+          "name": "flat64-count",
+          "samplesMs": [
+            2.454566666666665,
+            2.9515000000000007,
+            4.747266666666671,
+            1.6419000000000021,
+            2.8376999999999932,
+            1.5598666666666645,
+            3.043266666666663,
+            1.5921333333333412,
+            2.742200000000006,
+            3.057133333333335,
+            1.5891333333333175,
+            1.7662000000000073,
+            4.192466666666671,
+            3.7112999999999943,
+            1.6528000000000134
+          ],
+          "result": 1024
+        },
+        {
+          "name": "flat64-hash",
+          "samplesMs": [
+            1.7563666666666602,
+            5.60203333333332,
+            1.879699999999995,
+            5.841933333333334,
+            1.7957666666666796,
+            1.7631333333333334,
+            5.793400000000001,
+            1.7656333333333503,
+            1.835933333333325,
+            1.7936999999999823,
+            2.0472666666666632,
+            2.37336666666666,
+            2.5276999999999816,
+            3.3993666666666513,
+            5.451599999999985
+          ],
+          "result": 90802688
+        },
+        {
+          "name": "flat512-count",
+          "samplesMs": [
+            22.69016666666668,
+            22.869999999999965,
+            24.02309999999996,
+            23.55986666666672,
+            22.266900000000003,
+            23.51396666666672,
+            32.76903333333333,
+            33.44273333333331,
+            22.894133333333382,
+            22.569500000000062,
+            22.485933333333378,
+            23.281933333333352,
+            23.302500000000084,
+            22.614900000000034,
+            24.3433
+          ],
+          "result": 8192
+        },
+        {
+          "name": "flat512-hash",
+          "samplesMs": [
+            23.515366666666676,
+            24.084566666666586,
+            23.26283333333322,
+            25.227566666666615,
+            25.701633333333273,
+            29.125799999999952,
+            38.50113333333335,
+            27.340433333333447,
+            26.889300000000123,
+            30.030066666666546,
+            27.20406666666683,
+            25.686999999999898,
+            24.740900000000085,
+            24.770966666666634,
+            35.389199999999924
+          ],
+          "result": 20390208
+        },
+        {
+          "name": "nested128-count",
+          "samplesMs": [
+            6.1399666666666235,
+            12.553400000000087,
+            5.637966666666823,
+            8.902966666666847,
+            5.528266666666544,
+            5.63130000000001,
+            12.103666666666564,
+            5.408433333333353,
+            7.873633333333298,
+            5.388400000000122,
+            12.065266666666806,
+            5.420766666666471,
+            5.438833333333605,
+            22.2485333333334,
+            5.903899999999946
+          ],
+          "result": 2048
+        },
+        {
+          "name": "nested128-hash",
+          "samplesMs": [
+            5.543333333333369,
+            9.589233333333445,
+            5.4525000000000245,
+            5.384333333333416,
+            9.686933333333096,
+            6.101133333333261,
+            9.695433333333312,
+            5.363466666666682,
+            9.828866666666727,
+            5.581866666666731,
+            5.847633333333458,
+            10.330166666666628,
+            5.449133333333521,
+            9.507266666666814,
+            5.412433333333259
+          ],
+          "result": -258641568
+        },
+        {
+          "name": "lists16-count",
+          "samplesMs": [
+            3.9635000000001432,
+            3.513833333333423,
+            1.7329666666667738,
+            1.7933666666664674,
+            2.753600000000006,
+            1.8237666666664154,
+            1.7875000000000607,
+            2.7580333333332114,
+            1.7907999999997628,
+            1.8150666666667046,
+            3.048300000000078,
+            1.7479333333330942,
+            1.6890666666665008,
+            1.6916000000001077,
+            2.50573333333341
+          ],
+          "result": 256
+        },
+        {
+          "name": "lists16-hash",
+          "samplesMs": [
+            1.707999999999932,
+            1.708133333333232,
+            2.7442000000000917,
+            1.6925333333332067,
+            1.7243333333335613,
+            2.5646000000000035,
+            2.0429666666665676,
+            1.8827000000001135,
+            1.867966666666689,
+            3.0202666666667333,
+            1.8007333333334827,
+            2.716766666666748,
+            3.574999999999818,
+            2.022566666666838,
+            1.9831999999999728
+          ],
+          "result": 531986080
+        },
+        {
+          "name": "raw64-count",
+          "samplesMs": [
+            1.9033999999998439,
+            1.7776000000000447,
+            2.4804333333334703,
+            1.8126333333332998,
+            8.263866666666823,
+            1.6987666666667185,
+            1.746300000000095,
+            1.7040000000000266,
+            1.6606333333335594,
+            1.667466666666769,
+            1.7611000000000179,
+            8.305933333333087,
+            1.7643999999997202,
+            1.672133333333477,
+            1.6825666666666923
+          ],
+          "result": 1024
+        },
+        {
+          "name": "raw64-hash",
+          "samplesMs": [
+            1.8179000000000087,
+            3.2282000000001667,
+            1.7960666666667748,
+            1.7921666666664653,
+            7.8194000000000115,
+            1.8126999999997981,
+            1.817999999999908,
+            1.758133333333414,
+            1.7410666666667869,
+            1.745333333333292,
+            7.764900000000125,
+            1.775533333333442,
+            1.7408000000001873,
+            1.7217999999999545,
+            1.7039333333335283
+          ],
+          "result": 753646080
+        }
+      ],
+      [
+        {
+          "name": "empty-count",
+          "samplesMs": [
+            0.1853666666666669,
+            0.06316666666666511,
+            0.06339999999999672,
+            0.024266666666666954,
+            0.03566666666666644,
+            0.01783333333333322,
+            0.20826666666666918,
+            0.011033333333334857,
+            0.010266666666666424,
+            0.010299999999996126,
+            0.009833333333337654,
+            0.00966666666667019,
+            0.010200000000002282,
+            0.022466666666668782,
+            0.013700000000000045
+          ],
+          "result": 0
+        },
+        {
+          "name": "empty-hash",
+          "samplesMs": [
+            0.037666666666666515,
+            0.02493333333333207,
+            0.026566666666667516,
+            0.025466666666664157,
+            0.0549333333333332,
+            0.01953333333333281,
+            0.018733333333329938,
+            0.01893333333333184,
+            0.018633333333331354,
+            0.0200666666666649,
+            0.018499999999998334,
+            0.018700000000000234,
+            0.02679999999999912,
+            0.12963333333333557,
+            0.021000000000000796
+          ],
+          "result": 0
+        },
+        {
+          "name": "flat64-count",
+          "samplesMs": [
+            7.7269000000000005,
+            1.7551333333333332,
+            2.0046333333333357,
+            2.9104000000000005,
+            2.672833333333339,
+            1.4634999999999916,
+            1.957900000000014,
+            2.383800000000008,
+            2.0322333333333327,
+            1.4326666666666672,
+            2.0032666666666614,
+            1.4728333333333314,
+            1.9501000000000015,
+            1.4565000000000055,
+            3.8647000000000085
+          ],
+          "result": 1024
+        },
+        {
+          "name": "flat64-hash",
+          "samplesMs": [
+            1.6833333333333371,
+            1.6288666666666625,
+            2.7146999999999935,
+            6.4132999999999925,
+            1.7629666666666708,
+            1.6973000000000031,
+            3.220866666666666,
+            1.7929666666666624,
+            1.7605666666666668,
+            1.7986666666666717,
+            2.9705000000000155,
+            1.6668333333333483,
+            31.3396,
+            1.6889000000000276,
+            1.5448333333333342
+          ],
+          "result": 90802688
+        },
+        {
+          "name": "flat512-count",
+          "samplesMs": [
+            16.19096666666663,
+            14.916933333333267,
+            15.525366666666665,
+            15.179800000000037,
+            15.48109999999997,
+            16.267233333333404,
+            18.848966666666684,
+            16.645366666666632,
+            18.36433333333328,
+            16.709633333333386,
+            16.976133333333262,
+            16.80813333333337,
+            17.374266666666625,
+            134.7143000000001,
+            14.033066666666704
+          ],
+          "result": 8192
+        },
+        {
+          "name": "flat512-hash",
+          "samplesMs": [
+            17.79313333333342,
+            18.816666666666606,
+            18.772233333333435,
+            18.65013333333339,
+            19.48739999999998,
+            23.741466666666685,
+            28.41289999999996,
+            18.284166666666806,
+            19.22410000000006,
+            26.35616666666662,
+            21.597800000000007,
+            19.917099999999966,
+            20.503399999999903,
+            210.40206666666668,
+            15.589100000000144
+          ],
+          "result": 20390208
+        },
+        {
+          "name": "nested128-count",
+          "samplesMs": [
+            5.207533333333534,
+            9.338766666666743,
+            4.921633333333072,
+            5.146066666666836,
+            7.249766666666801,
+            5.4027333333333445,
+            6.980833333333369,
+            6.710399999999936,
+            5.588833333333241,
+            6.910166666666555,
+            4.740699999999985,
+            4.79989999999998,
+            6.7905000000000655,
+            4.860800000000078,
+            7.242366666666688
+          ],
+          "result": 2048
+        },
+        {
+          "name": "nested128-hash",
+          "samplesMs": [
+            5.71266666666664,
+            5.704099999999926,
+            9.991366666666485,
+            7.974799999999959,
+            8.176833333333585,
+            5.71419999999974,
+            5.838333333333442,
+            8.210533333333538,
+            5.40659999999995,
+            7.2280000000000655,
+            5.221999999999753,
+            5.758066666666612,
+            8.074300000000221,
+            7.782033333333554,
+            8.897733333333539
+          ],
+          "result": -258641568
+        },
+        {
+          "name": "lists16-count",
+          "samplesMs": [
+            1.8619333333332786,
+            1.7140666666664401,
+            2.3040666666665857,
+            1.9386333333335035,
+            2.4699000000000524,
+            2.3828000000000125,
+            2.5497333333335823,
+            2.0984666666666576,
+            1.792699999999968,
+            3.046966666666473,
+            1.8503666666665595,
+            2.266566666666828,
+            3.1792999999997846,
+            2.4505333333333206,
+            1.871533333333294
+          ],
+          "result": 256
+        },
+        {
+          "name": "lists16-hash",
+          "samplesMs": [
+            1.7586333333332125,
+            2.461033333333338,
+            1.9102333333333565,
+            1.8751666666667006,
+            2.4700333333333524,
+            2.0574666666664903,
+            1.8558000000002721,
+            2.0468000000000757,
+            2.5275000000001455,
+            2.0233666666666372,
+            1.998433333333196,
+            2.6899000000000037,
+            2.002733333333102,
+            1.8217666666666144,
+            2.445033333333413
+          ],
+          "result": 531986080
+        },
+        {
+          "name": "raw64-count",
+          "samplesMs": [
+            2.561299999999998,
+            2.1171999999999875,
+            2.140033333333425,
+            7.3501666666667616,
+            149.83770000000004,
+            2.0153333333334253,
+            2.3734000000000983,
+            1.991633333333387,
+            1.9457999999998112,
+            2.2295000000000678,
+            1.9899000000001859,
+            3.952166666666623,
+            2.243766666666488,
+            2.0662666666667064,
+            2.881399999999909
+          ],
+          "result": 1024
+        },
+        {
+          "name": "raw64-hash",
+          "samplesMs": [
+            6.9456666666665114,
+            2.059999999999794,
+            2.0380333333335634,
+            2.1264666666666017,
+            2.5700666666668135,
+            2.25726666666651,
+            6.6441333333332295,
+            2.0528999999999846,
+            2.098366666666758,
+            2.2116666666667393,
+            2.2705666666667335,
+            2.216699999999946,
+            2.38716666666672,
+            7.342233333333145,
+            2.1667999999999665
+          ],
+          "result": 753646080
+        }
+      ],
+      [
+        {
+          "name": "empty-count",
+          "samplesMs": [
+            0.16996666666666727,
+            0.04523333333333331,
+            0.03483333333333386,
+            0.021500000000003183,
+            0.03523333333333293,
+            0.020333333333330945,
+            0.20330000000000345,
+            0.015166666666663295,
+            0.01166666666666553,
+            0.012766666666668888,
+            0.011833333333332993,
+            0.01279999999999859,
+            0.009900000000001796,
+            0.016466666666668555,
+            0.015933333333331728
+          ],
+          "result": 0
+        },
+        {
+          "name": "empty-hash",
+          "samplesMs": [
+            0.09750000000000132,
+            0.024366666666665537,
+            0.02683333333333356,
+            0.02509999999999953,
+            0.032399999999995543,
+            0.04036666666666614,
+            0.020433333333334264,
+            0.019266666666666765,
+            0.018633333333336093,
+            0.019566666666662513,
+            0.018566666666662474,
+            0.018733333333334674,
+            0.01950000000000311,
+            0.12130000000000034,
+            0.01850000000000307
+          ],
+          "result": 0
+        },
+        {
+          "name": "flat64-count",
+          "samplesMs": [
+            2.5307333333333397,
+            3.5049000000000015,
+            3.8709666666666656,
+            1.7038999999999949,
+            2.956733333333337,
+            1.5914999999999964,
+            2.8961333333333337,
+            1.615133333333328,
+            2.890733333333325,
+            3.40876666666666,
+            1.6843333333333323,
+            1.973166666666657,
+            5.6714000000000055,
+            4.731666666666683,
+            1.65543333333333
+          ],
+          "result": 1024
+        },
+        {
+          "name": "flat64-hash",
+          "samplesMs": [
+            1.7895999999999883,
+            4.825366666666658,
+            1.907166666666664,
+            5.319866666666674,
+            1.7550666666666643,
+            1.7643333333333355,
+            5.134933333333322,
+            1.9114666666666835,
+            1.9850999999999885,
+            1.9595666666666602,
+            2.269133333333343,
+            2.4922000000000253,
+            2.6169333333333498,
+            3.170999999999973,
+            5.060099999999996
+          ],
+          "result": 90802688
+        },
+        {
+          "name": "flat512-count",
+          "samplesMs": [
+            23.59946666666671,
+            24.07296666666669,
+            25.12196666666667,
+            24.388499999999947,
+            24.989399999999932,
+            26.030166666666673,
+            36.38226666666666,
+            33.377100000000006,
+            23.903966666666747,
+            24.879533333333256,
+            24.36656666666674,
+            25.010633333333317,
+            23.260200000000015,
+            24.8142666666666,
+            26.17616666666663
+          ],
+          "result": 8192
+        },
+        {
+          "name": "flat512-hash",
+          "samplesMs": [
+            25.240733333333385,
+            26.083466666666634,
+            26.071366666666716,
+            24.821699999999964,
+            24.319666666666762,
+            23.76890000000003,
+            34.82996666666683,
+            30.75750000000001,
+            28.297733333333174,
+            26.998999999999796,
+            26.39396666666683,
+            23.660166666666555,
+            31.29813333333338,
+            22.620666666666693,
+            32.410566666666455
+          ],
+          "result": 20390208
+        },
+        {
+          "name": "nested128-count",
+          "samplesMs": [
+            5.421033333333374,
+            13.376500000000002,
+            6.217500000000048,
+            8.861499999999978,
+            5.512533333333522,
+            5.580399999999827,
+            14.277399999999943,
+            5.365133333333081,
+            8.539899999999761,
+            5.4326999999999925,
+            12.716600000000048,
+            5.558833333333193,
+            5.857500000000073,
+            23.80693333333329,
+            6.062533333333097
+          ],
+          "result": 2048
+        },
+        {
+          "name": "nested128-hash",
+          "samplesMs": [
+            5.770166666666834,
+            10.236199999999977,
+            5.659700000000157,
+            5.844966666666551,
+            9.738100000000182,
+            5.567000000000007,
+            11.10709999999987,
+            5.75,
+            11.235666666666779,
+            6.467166666666647,
+            6.521066666666532,
+            10.397533333333437,
+            5.770199999999932,
+            13.286566666666658,
+            7.582433333333332
+          ],
+          "result": -258641568
+        },
+        {
+          "name": "lists16-count",
+          "samplesMs": [
+            2.5641333333333023,
+            1.7250999999999597,
+            1.697666666666919,
+            1.7542333333334075,
+            3.234133333333375,
+            1.7210666666666536,
+            1.7806000000000495,
+            2.756666666666812,
+            2.0849666666666358,
+            2.127733333333405,
+            1.8944333333335333,
+            2.787399999999858,
+            1.700266666666721,
+            1.7148666666665424,
+            2.713900000000043
+          ],
+          "result": 256
+        },
+        {
+          "name": "lists16-hash",
+          "samplesMs": [
+            1.738299999999981,
+            1.8026333333333848,
+            2.7870666666667603,
+            1.8131999999999,
+            1.8859333333333173,
+            1.8939000000000306,
+            2.6935000000000096,
+            1.8704999999999927,
+            1.7410999999998846,
+            2.604333333333367,
+            1.8061333333331884,
+            1.7085333333331316,
+            2.7629333333334216,
+            1.7421333333331859,
+            1.7370666666665784
+          ],
+          "result": 531986080
+        },
+        {
+          "name": "raw64-count",
+          "samplesMs": [
+            1.9589333333333343,
+            1.8665999999999865,
+            2.5829999999999322,
+            2.2884666666668636,
+            1.9914666666666865,
+            8.65003333333334,
+            1.820866666666916,
+            1.8724666666666963,
+            1.6740666666667796,
+            1.6772333333334852,
+            1.7204666666666526,
+            9.478200000000166,
+            1.7712333333332329,
+            1.9946666666667927,
+            1.8261666666667224
+          ],
+          "result": 1024
+        },
+        {
+          "name": "raw64-hash",
+          "samplesMs": [
+            1.6929666666668102,
+            1.8884333333332204,
+            2.359799999999874,
+            1.9985999999998967,
+            1.8405666666664426,
+            8.420933333333172,
+            1.910433333333155,
+            2.01886666666663,
+            1.8051666666666886,
+            1.8595666666666755,
+            1.9592333333333347,
+            8.354800000000068,
+            2.4137333333331603,
+            2.0789333333335285,
+            2.7772666666666432
+          ],
+          "result": 753646080
+        }
+      ],
+      [
+        {
+          "name": "empty-count",
+          "samplesMs": [
+            0.24106666666666854,
+            0.08120000000000023,
+            0.052199999999999136,
+            0.020966666666666356,
+            0.03263333333333662,
+            0.017933333333331802,
+            0.21159999999999948,
+            0.010799999999998514,
+            0.010099999999998962,
+            0.010333333333335304,
+            0.010099999999998962,
+            0.010066666666664522,
+            0.010000000000000378,
+            0.03963333333333215,
+            0.01726666666666669
+          ],
+          "result": 0
+        },
+        {
+          "name": "empty-hash",
+          "samplesMs": [
+            0.059266666666663546,
+            0.023466666666668818,
+            0.023533333333332962,
+            0.02466666666666602,
+            0.02840000000000013,
+            0.023700000000000426,
+            0.03703333333333111,
+            0.02286666666666311,
+            0.025866666666667964,
+            0.01943333333333423,
+            0.019300000000001205,
+            0.018366666666670046,
+            0.025499999999998597,
+            0.09920000000000091,
+            0.018033333333335122
+          ],
+          "result": 0
+        },
+        {
+          "name": "flat64-count",
+          "samplesMs": [
+            2.5180999999999947,
+            2.4268333333333296,
+            5.255166666666668,
+            1.5438999999999983,
+            3.320366666666672,
+            1.7654666666666685,
+            2.9162000000000035,
+            3.0952999999999897,
+            3.1665999999999976,
+            3.288733333333331,
+            1.8040666666666805,
+            1.7314333333333327,
+            4.436200000000004,
+            5.0010000000000145,
+            1.7287666666666535
+          ],
+          "result": 1024
+        },
+        {
+          "name": "flat64-hash",
+          "samplesMs": [
+            1.7253000000000043,
+            4.639499999999998,
+            1.9215666666666682,
+            5.992133333333338,
+            1.7852333333333377,
+            1.8494333333333277,
+            5.391399999999995,
+            1.7899333333333516,
+            1.7652999999999868,
+            1.7811333333333248,
+            2.054333333333337,
+            3.15166666666668,
+            2.6254333333333,
+            3.125500000000026,
+            5.359066666666649
+          ],
+          "result": 90802688
+        },
+        {
+          "name": "flat512-count",
+          "samplesMs": [
+            22.506633333333337,
+            24.474733333333308,
+            26.967933333333274,
+            25.930733333333364,
+            23.124933333333274,
+            24.94016666666668,
+            34.09530000000003,
+            31.316166666666657,
+            24.20613333333343,
+            26.020233333333334,
+            24.05510000000004,
+            24.063900000000103,
+            24.851800000000065,
+            25.291366666666665,
+            24.91096666666681
+          ],
+          "result": 8192
+        },
+        {
+          "name": "flat512-hash",
+          "samplesMs": [
+            25.429866666666687,
+            24.28133333333335,
+            27.03513333333346,
+            27.54326666666672,
+            24.652333333333292,
+            25.940466666666754,
+            26.246299999999945,
+            35.98443333333338,
+            27.935399999999998,
+            27.917600000000068,
+            26.265000000000025,
+            25.867466666666587,
+            27.344999999999953,
+            25.504099999999806,
+            32.76653333333343
+          ],
+          "result": 20390208
+        },
+        {
+          "name": "nested128-count",
+          "samplesMs": [
+            6.64486666666653,
+            14.621066666666897,
+            6.13786666666662,
+            9.239166666666884,
+            5.734966666666878,
+            5.740000000000085,
+            12.20693333333323,
+            5.534233333333456,
+            8.790500000000065,
+            6.8336999999998325,
+            11.889766666666523,
+            5.566833333333307,
+            6.047366666666676,
+            24.75673333333331,
+            6.3329333333334334
+          ],
+          "result": 2048
+        },
+        {
+          "name": "nested128-hash",
+          "samplesMs": [
+            5.966399999999946,
+            11.220599999999953,
+            6.301999999999983,
+            5.6230666666666975,
+            12.352066666666664,
+            6.136000000000119,
+            11.14886666666674,
+            6.183533333333496,
+            11.804433333333387,
+            7.6003999999999605,
+            5.975633333333462,
+            12.751500000000002,
+            7.4491000000001195,
+            12.146500000000136,
+            6.1894333333333025
+          ],
+          "result": -258641568
+        },
+        {
+          "name": "lists16-count",
+          "samplesMs": [
+            2.8509666666665603,
+            2.076699999999922,
+            2.2741333333333387,
+            2.1637000000000626,
+            3.003066666666806,
+            2.1816333333335933,
+            1.8249333333333198,
+            2.6687333333332695,
+            1.8087333333332936,
+            1.8162666666667064,
+            2.480066666666668,
+            2.881800000000112,
+            1.8609999999998763,
+            1.9709333333333536,
+            2.78650000000016
+          ],
+          "result": 256
+        },
+        {
+          "name": "lists16-hash",
+          "samplesMs": [
+            2.1951666666664096,
+            1.9200333333334736,
+            2.9331666666666933,
+            2.1063000000000707,
+            2.076166666666419,
+            1.8711666666667952,
+            2.938299999999799,
+            2.992599999999887,
+            2.1099000000000765,
+            2.7719000000000356,
+            1.7698999999999312,
+            1.7563999999999094,
+            2.7437333333333904,
+            1.7203666666667534,
+            1.7546999999998054
+          ],
+          "result": 531986080
+        },
+        {
+          "name": "raw64-count",
+          "samplesMs": [
+            1.8377333333331383,
+            1.8312999999998283,
+            2.488333333333079,
+            1.8408666666667461,
+            1.9082333333332524,
+            8.610966666666476,
+            1.7238666666668603,
+            1.7190333333334518,
+            1.753466666666706,
+            1.7159333333332445,
+            1.7264333333332615,
+            7.676266666666682,
+            1.7988333333332776,
+            1.7730000000001382,
+            1.8682666666666894
+          ],
+          "result": 1024
+        },
+        {
+          "name": "raw64-hash",
+          "samplesMs": [
+            1.7721000000001368,
+            1.715166666666543,
+            1.7892000000001644,
+            1.715266666666442,
+            1.7399999999997817,
+            8.451800000000125,
+            1.7909666666667665,
+            1.7344999999998738,
+            1.834466666666837,
+            1.7264333333332615,
+            1.790933333333366,
+            7.731100000000272,
+            1.9492333333334197,
+            1.7609999999998156,
+            1.7421666666665867
+          ],
+          "result": 753646080
+        }
+      ],
+      [
+        {
+          "name": "empty-count",
+          "samplesMs": [
+            0.3960666666666697,
+            0.06189999999999903,
+            0.039333333333331666,
+            0.020600000000001728,
+            0.03703333333333111,
+            0.017733333333334638,
+            0.2301666666666667,
+            0.013066666666669372,
+            0.010833333333337691,
+            0.010833333333332954,
+            0.01103333333333012,
+            0.011066666666669297,
+            0.011099999999999,
+            0.020399999999999825,
+            0.01846666666666863
+          ],
+          "result": 0
+        },
+        {
+          "name": "empty-hash",
+          "samplesMs": [
+            0.06426666666666374,
+            0.023399999999999938,
+            0.024366666666665537,
+            0.025566666666667476,
+            0.03523333333333293,
+            0.018700000000000234,
+            0.018133333333333706,
+            0.018099999999999266,
+            0.01833333333333087,
+            0.01900000000000072,
+            0.017966666666666242,
+            0.01843333333333419,
+            0.02183333333333337,
+            0.11186666666666649,
+            0.018133333333333706
+          ],
+          "result": 0
+        },
+        {
+          "name": "flat64-count",
+          "samplesMs": [
+            2.5654666666666706,
+            2.3785333333333276,
+            4.842233333333335,
+            1.713833333333336,
+            3.0413666666666663,
+            1.6966666666666583,
+            2.937666666666663,
+            1.7356333333333396,
+            3.0410666666666657,
+            3.216700000000003,
+            1.7025333333333303,
+            1.8125999999999938,
+            4.112866666666662,
+            3.6938333333333353,
+            1.662933333333342
+          ],
+          "result": 1024
+        },
+        {
+          "name": "flat64-hash",
+          "samplesMs": [
+            1.7292333333333356,
+            4.747500000000002,
+            1.9137666666666746,
+            4.966833333333322,
+            1.786200000000008,
+            1.9711333333333414,
+            6.01273333333332,
+            1.9279999999999973,
+            1.7170333333333094,
+            1.7197000000000269,
+            2.0492333333333286,
+            2.3180999999999963,
+            2.3781000000000176,
+            3.064800000000029,
+            5.963133333333341
+          ],
+          "result": 90802688
+        },
+        {
+          "name": "flat512-count",
+          "samplesMs": [
+            22.481499999999944,
+            22.257166666666688,
+            22.70986666666666,
+            24.18816666666665,
+            23.72316666666673,
+            25.438566666666627,
+            36.24833333333337,
+            33.2809333333333,
+            24.91586666666664,
+            22.997799999999945,
+            23.948833333333216,
+            24.304099999999988,
+            25.72476666666671,
+            24.321866666666665,
+            25.803000000000036
+          ],
+          "result": 8192
+        },
+        {
+          "name": "flat512-hash",
+          "samplesMs": [
+            29.284033333333202,
+            26.153333333333347,
+            26.247833333333347,
+            25.558100000000042,
+            25.79376666666667,
+            26.779866666666596,
+            30.547066666666826,
+            24.75986666666692,
+            24.41193333333346,
+            24.11303333333338,
+            31.010466666666918,
+            25.48999999999978,
+            27.199166666666617,
+            26.348566666666557,
+            37.28753333333316
+          ],
+          "result": 20390208
+        },
+        {
+          "name": "nested128-count",
+          "samplesMs": [
+            5.53256666666645,
+            12.490099999999984,
+            5.416400000000067,
+            8.704966666666527,
+            5.856300000000071,
+            5.477233333333364,
+            12.842400000000149,
+            5.568133333333511,
+            8.197500000000218,
+            5.4415333333333065,
+            12.129133333333508,
+            5.375500000000102,
+            5.48613333333348,
+            24.85496666666677,
+            5.975999999999961
+          ],
+          "result": 2048
+        },
+        {
+          "name": "nested128-hash",
+          "samplesMs": [
+            5.53286666666645,
+            9.532766666666854,
+            5.715633333333244,
+            5.6048333333334694,
+            10.71369999999994,
+            5.6301000000000085,
+            10.029733333333448,
+            5.7355333333331755,
+            10.345666666666753,
+            5.72609999999986,
+            5.943333333333309,
+            10.127199999999903,
+            6.146900000000035,
+            9.76820000000013,
+            6.1298000000000075
+          ],
+          "result": -258641568
+        },
+        {
+          "name": "lists16-count",
+          "samplesMs": [
+            2.947533333333316,
+            1.9818000000001728,
+            2.1381666666666206,
+            2.0221333333332345,
+            3.314399999999902,
+            2.3807999999999083,
+            2.1535333333331437,
+            3.023266666666738,
+            2.119066666666489,
+            2.2272666666667646,
+            2.866266666666585,
+            2.108499999999973,
+            2.017899999999827,
+            1.9579666666668345,
+            3.1119666666666794
+          ],
+          "result": 256
+        },
+        {
+          "name": "lists16-hash",
+          "samplesMs": [
+            1.8907666666667258,
+            1.9656000000001466,
+            2.7340999999999744,
+            1.8733666666663946,
+            1.9275333333331826,
+            2.673166666666475,
+            2.0664000000000065,
+            1.962299999999838,
+            1.950133333333118,
+            2.921200000000075,
+            2.1247999999998988,
+            2.168866666666569,
+            4.465566666666746,
+            1.9714666666665532,
+            1.959100000000035
+          ],
+          "result": 531986080
+        },
+        {
+          "name": "raw64-count",
+          "samplesMs": [
+            1.9785333333332649,
+            1.8762666666668035,
+            2.557699999999992,
+            2.091266666666646,
+            8.891433333333225,
+            1.7765666666667432,
+            1.777666666666543,
+            1.7960666666664717,
+            1.9686666666666497,
+            1.9026999999999437,
+            8.043466666666669,
+            1.7762666666667428,
+            1.766933333333327,
+            1.813799999999901,
+            1.8524999999999636
+          ],
+          "result": 1024
+        },
+        {
+          "name": "raw64-hash",
+          "samplesMs": [
+            1.703833333333326,
+            1.7054333333332277,
+            1.6844666666668975,
+            1.7081666666666326,
+            7.567766666666709,
+            1.7510333333333012,
+            1.7542999999999058,
+            1.7556333333332077,
+            1.7850333333332553,
+            1.7934999999997672,
+            7.90756666666645,
+            1.681533333333391,
+            1.7557999999999083,
+            1.7340000000000753,
+            1.755500000000211
+          ],
+          "result": 753646080
+        }
+      ]
+    ],
+    "upstream": [
+      [
+        {
+          "java": "22.0.1",
+          "name": "empty-count",
+          "result": 0,
+          "samplesMs": [
+            0.0092,
+            0.0074,
+            0.0035,
+            0.0035,
+            0.003933333333333333,
+            0.0035,
+            0.003266666666666667,
+            0.0031,
+            0.0088,
+            0.0022,
+            0.0022,
+            0.002766666666666667,
+            0.017433333333333332,
+            0.0030666666666666668,
+            0.0023333333333333335
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "empty-hash",
+          "result": 0,
+          "samplesMs": [
+            0.0068,
+            0.0069,
+            0.006966666666666667,
+            0.0067666666666666665,
+            0.006866666666666667,
+            0.0079,
+            0.023833333333333335,
+            0.020966666666666668,
+            0.008733333333333333,
+            0.0066,
+            0.006633333333333333,
+            0.006966666666666667,
+            0.007366666666666666,
+            0.007,
+            0.006833333333333334
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "flat64-count",
+          "result": 1024,
+          "samplesMs": [
+            0.5721666666666667,
+            0.5912,
+            0.5962666666666666,
+            0.4665,
+            0.4626,
+            0.43756666666666666,
+            1.8340666666666667,
+            0.4634666666666667,
+            0.3837,
+            0.3485,
+            0.37346666666666667,
+            0.5113,
+            0.3411666666666667,
+            0.3530333333333333,
+            0.334
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "flat64-hash",
+          "result": 90802688,
+          "samplesMs": [
+            0.3598,
+            0.3577666666666667,
+            0.3379333333333333,
+            0.3485,
+            0.34846666666666665,
+            0.3482,
+            0.354,
+            0.33923333333333333,
+            0.34176666666666666,
+            0.3388,
+            0.41273333333333334,
+            0.33363333333333334,
+            0.38456666666666667,
+            0.3491,
+            0.3332333333333333
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "flat512-count",
+          "result": 8192,
+          "samplesMs": [
+            1.5160666666666667,
+            1.5438666666666667,
+            1.6424333333333334,
+            1.5797666666666668,
+            1.5820333333333334,
+            1.7136,
+            1.5538666666666667,
+            1.4675333333333334,
+            1.4605333333333332,
+            1.6507666666666667,
+            1.5991333333333333,
+            1.5340333333333334,
+            1.0328,
+            0.7869333333333334,
+            1.0981666666666667
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "flat512-hash",
+          "result": 20390208,
+          "samplesMs": [
+            0.8424333333333334,
+            0.8509,
+            0.8458333333333333,
+            0.8564333333333334,
+            0.8407333333333333,
+            0.849,
+            0.8531333333333333,
+            0.8306333333333333,
+            0.8350666666666666,
+            0.8581,
+            0.8604333333333334,
+            0.8560333333333333,
+            0.9508666666666666,
+            0.8901,
+            0.8753
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "nested128-count",
+          "result": 2048,
+          "samplesMs": [
+            1.2251333333333334,
+            1.1460333333333332,
+            1.1232666666666666,
+            1.1277333333333333,
+            1.5198333333333334,
+            1.0737333333333334,
+            1.0672666666666666,
+            1.0649,
+            1.1008666666666667,
+            1.0756666666666668,
+            1.7594333333333334,
+            1.1218333333333332,
+            1.0937666666666668,
+            1.0719,
+            1.0759666666666667
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "nested128-hash",
+          "result": -258641568,
+          "samplesMs": [
+            0.7812,
+            0.7825666666666666,
+            0.8135,
+            0.8233,
+            0.7533333333333333,
+            0.7496666666666667,
+            0.7823,
+            0.7513333333333333,
+            0.7524,
+            0.7460666666666667,
+            0.7949666666666667,
+            0.7963666666666667,
+            0.7692,
+            0.7478333333333333,
+            0.7532333333333333
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "lists16-count",
+          "result": 256,
+          "samplesMs": [
+            0.0885,
+            0.089,
+            0.08793333333333334,
+            0.09336666666666667,
+            0.08563333333333334,
+            0.0878,
+            0.0864,
+            0.11126666666666667,
+            0.0879,
+            0.09266666666666666,
+            0.08463333333333334,
+            0.08326666666666667,
+            0.08336666666666667,
+            0.0872,
+            0.08413333333333334
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "lists16-hash",
+          "result": 531986080,
+          "samplesMs": [
+            0.10936666666666667,
+            0.10956666666666667,
+            0.11616666666666667,
+            0.10906666666666667,
+            0.10823333333333333,
+            0.10903333333333333,
+            0.11046666666666667,
+            0.11016666666666666,
+            0.1113,
+            0.10863333333333333,
+            0.13553333333333334,
+            0.1264,
+            0.11076666666666667,
+            0.1099,
+            0.1095
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "raw64-count",
+          "result": 1024,
+          "samplesMs": [
+            0.2053,
+            0.20926666666666666,
+            0.20423333333333332,
+            0.214,
+            0.2524,
+            0.20163333333333333,
+            0.25903333333333334,
+            0.2294,
+            0.20373333333333332,
+            0.20813333333333334,
+            0.2026,
+            0.2024,
+            0.20326666666666668,
+            0.2063,
+            0.2524
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "raw64-hash",
+          "result": 753646080,
+          "samplesMs": [
+            0.2108,
+            0.21456666666666666,
+            0.2187,
+            0.21066666666666667,
+            0.22833333333333333,
+            0.20993333333333333,
+            0.21193333333333333,
+            0.21493333333333334,
+            0.2147,
+            0.21846666666666667,
+            0.212,
+            0.21286666666666668,
+            0.2119,
+            0.2147,
+            0.673
+          ]
+        }
+      ],
+      [
+        {
+          "java": "22.0.1",
+          "name": "empty-count",
+          "result": 0,
+          "samplesMs": [
+            0.0037,
+            0.007033333333333333,
+            0.0031333333333333335,
+            0.0035666666666666668,
+            0.0031666666666666666,
+            0.0034,
+            0.0029666666666666665,
+            0.0031333333333333335,
+            0.003266666666666667,
+            0.0031333333333333335,
+            0.0031666666666666666,
+            0.0035666666666666668,
+            0.0032,
+            0.059866666666666665,
+            0.0025
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "empty-hash",
+          "result": 0,
+          "samplesMs": [
+            0.0069,
+            0.0071333333333333335,
+            0.006933333333333333,
+            0.009633333333333334,
+            0.0064,
+            0.0064,
+            0.013666666666666667,
+            0.009966666666666667,
+            0.006366666666666666,
+            0.006266666666666667,
+            0.0066,
+            0.0064,
+            0.006733333333333333,
+            0.0065,
+            0.0074333333333333335
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "flat64-count",
+          "result": 1024,
+          "samplesMs": [
+            0.5370333333333334,
+            0.5165,
+            0.4645666666666667,
+            0.46703333333333336,
+            0.4634,
+            0.4713,
+            0.5465333333333333,
+            0.4683,
+            0.4110333333333333,
+            0.35846666666666666,
+            1.5943333333333334,
+            0.29183333333333333,
+            0.28513333333333335,
+            0.2755,
+            0.27823333333333333
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "flat64-hash",
+          "result": 90802688,
+          "samplesMs": [
+            0.31556666666666666,
+            0.31403333333333333,
+            0.37073333333333336,
+            0.32786666666666664,
+            0.28446666666666665,
+            0.2901,
+            0.28833333333333333,
+            0.2952,
+            0.2841666666666667,
+            0.2775,
+            0.3199,
+            0.33486666666666665,
+            0.28176666666666667,
+            0.2779,
+            0.2796
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "flat512-count",
+          "result": 8192,
+          "samplesMs": [
+            1.6995333333333333,
+            1.6061333333333334,
+            1.5198,
+            1.4896333333333334,
+            1.4889,
+            1.5342,
+            1.5419666666666667,
+            1.5539666666666667,
+            1.4865666666666666,
+            1.4654333333333334,
+            1.4659333333333333,
+            1.4987,
+            0.9483666666666667,
+            1.0383,
+            1.1015333333333333
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "flat512-hash",
+          "result": 20390208,
+          "samplesMs": [
+            0.8606333333333334,
+            0.8558,
+            0.8582,
+            0.9211333333333334,
+            0.8656333333333334,
+            0.8520666666666666,
+            0.8630666666666666,
+            0.8595333333333334,
+            1.1765666666666668,
+            0.9903666666666666,
+            0.8766,
+            0.8646666666666667,
+            0.9241333333333334,
+            0.9018666666666667,
+            1.0451666666666666
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "nested128-count",
+          "result": 2048,
+          "samplesMs": [
+            1.3688,
+            1.1309333333333333,
+            1.1067333333333333,
+            1.6505,
+            1.0745333333333333,
+            1.1118666666666666,
+            1.1225,
+            1.0853666666666666,
+            1.0853,
+            1.0956333333333332,
+            1.1955,
+            1.1139333333333334,
+            1.1555333333333333,
+            1.4878666666666667,
+            1.2073333333333334
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "nested128-hash",
+          "result": -258641568,
+          "samplesMs": [
+            0.7916,
+            0.7840333333333334,
+            0.7864,
+            0.7959333333333334,
+            0.7926333333333333,
+            1.7747,
+            0.7462666666666666,
+            0.7523,
+            0.8146666666666667,
+            0.7565,
+            0.7486666666666667,
+            0.7521666666666667,
+            0.7464333333333333,
+            0.7596,
+            0.7676
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "lists16-count",
+          "result": 256,
+          "samplesMs": [
+            0.10006666666666666,
+            0.08833333333333333,
+            0.08796666666666667,
+            0.08776666666666667,
+            0.09256666666666667,
+            0.0847,
+            0.08463333333333334,
+            0.11043333333333333,
+            0.0847,
+            0.0902,
+            0.08386666666666667,
+            0.08633333333333333,
+            0.08536666666666666,
+            0.09236666666666667,
+            0.08826666666666666
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "lists16-hash",
+          "result": 531986080,
+          "samplesMs": [
+            0.10736666666666667,
+            0.10693333333333334,
+            0.11213333333333333,
+            0.10916666666666666,
+            0.10866666666666666,
+            0.10756666666666667,
+            0.1086,
+            0.11056666666666666,
+            0.10986666666666667,
+            0.1075,
+            0.16286666666666666,
+            0.1109,
+            0.10796666666666667,
+            0.11103333333333333,
+            0.10793333333333334
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "raw64-count",
+          "result": 1024,
+          "samplesMs": [
+            0.20893333333333333,
+            0.22283333333333333,
+            0.20636666666666667,
+            0.24146666666666666,
+            0.20446666666666666,
+            0.20566666666666666,
+            0.20733333333333334,
+            0.20406666666666667,
+            0.2033,
+            0.2343,
+            0.26063333333333333,
+            0.21936666666666665,
+            0.21286666666666668,
+            0.2034,
+            0.2056
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "raw64-hash",
+          "result": 753646080,
+          "samplesMs": [
+            0.2114,
+            0.21083333333333334,
+            0.2157,
+            0.2211,
+            0.21856666666666666,
+            0.2165,
+            0.21726666666666666,
+            0.21203333333333332,
+            0.2142,
+            0.8422333333333333,
+            0.2178,
+            0.2124,
+            0.22633333333333333,
+            0.21133333333333335,
+            0.2222
+          ]
+        }
+      ],
+      [
+        {
+          "java": "22.0.1",
+          "name": "empty-count",
+          "result": 0,
+          "samplesMs": [
+            0.011933333333333334,
+            0.006466666666666667,
+            0.0031666666666666666,
+            0.0038666666666666667,
+            0.0032,
+            0.0034,
+            0.0034,
+            0.0032333333333333333,
+            0.003533333333333333,
+            0.0032,
+            0.003,
+            0.004,
+            0.0033,
+            0.023833333333333335,
+            0.003933333333333333
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "empty-hash",
+          "result": 0,
+          "samplesMs": [
+            0.007266666666666667,
+            0.007066666666666666,
+            0.011666666666666667,
+            0.006466666666666667,
+            0.006366666666666666,
+            0.0064333333333333334,
+            0.04323333333333333,
+            0.030733333333333335,
+            0.006966666666666667,
+            0.006566666666666667,
+            0.006666666666666667,
+            0.0066,
+            0.0064333333333333334,
+            0.009433333333333334,
+            0.008433333333333333
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "flat64-count",
+          "result": 1024,
+          "samplesMs": [
+            0.5842,
+            0.5830333333333333,
+            0.5014,
+            0.5319333333333334,
+            0.5058333333333334,
+            0.48846666666666666,
+            1.7757,
+            0.3514,
+            0.5639,
+            0.5022666666666666,
+            0.3505333333333333,
+            0.4120333333333333,
+            0.2929,
+            0.27423333333333333,
+            0.27363333333333334
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "flat64-hash",
+          "result": 90802688,
+          "samplesMs": [
+            0.4095,
+            0.2985,
+            0.2766,
+            0.3281,
+            0.31243333333333334,
+            0.28023333333333333,
+            0.2814333333333333,
+            0.2786666666666667,
+            0.2835666666666667,
+            0.27563333333333334,
+            0.2934,
+            0.2673333333333333,
+            0.2951,
+            0.27773333333333333,
+            0.2716
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "flat512-count",
+          "result": 8192,
+          "samplesMs": [
+            1.5659,
+            1.4993666666666667,
+            1.5639,
+            1.5172,
+            1.6136,
+            1.8678333333333332,
+            1.7875666666666667,
+            1.4568,
+            1.6697,
+            1.5198666666666667,
+            1.4418666666666666,
+            1.4469333333333334,
+            1.4474666666666667,
+            1.6013666666666666,
+            1.4967
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "flat512-hash",
+          "result": 20390208,
+          "samplesMs": [
+            0.9852666666666666,
+            0.8889666666666667,
+            0.8648666666666667,
+            0.8754666666666666,
+            0.8739666666666667,
+            0.8771333333333333,
+            0.8599666666666667,
+            0.9675,
+            0.8812,
+            0.8580333333333333,
+            0.8772666666666666,
+            1.0063333333333333,
+            0.9044666666666666,
+            0.9821,
+            0.8609333333333333
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "nested128-count",
+          "result": 2048,
+          "samplesMs": [
+            1.1243333333333334,
+            2.503433333333333,
+            1.0785,
+            1.1387,
+            1.0825666666666667,
+            1.2717666666666667,
+            1.0054666666666667,
+            1.0182666666666667,
+            1.0155333333333334,
+            1.0028333333333332,
+            1.0255666666666667,
+            1.0620666666666667,
+            1.0087333333333333,
+            1.0482,
+            1.0195
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "nested128-hash",
+          "result": -258641568,
+          "samplesMs": [
+            0.7902,
+            0.7823666666666667,
+            0.7485333333333334,
+            0.7509,
+            0.7634666666666666,
+            0.7503666666666666,
+            0.7456666666666667,
+            0.7464666666666666,
+            0.7456,
+            0.7482666666666666,
+            0.8565,
+            0.7533,
+            0.7466333333333334,
+            0.7491,
+            0.7654666666666666
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "lists16-count",
+          "result": 256,
+          "samplesMs": [
+            0.0966,
+            0.11423333333333334,
+            0.10343333333333334,
+            0.08653333333333334,
+            0.08646666666666666,
+            0.08683333333333333,
+            0.08546666666666666,
+            0.08596666666666666,
+            0.1304,
+            0.09113333333333333,
+            0.0879,
+            0.086,
+            0.0857,
+            0.08546666666666666,
+            0.0878
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "lists16-hash",
+          "result": 531986080,
+          "samplesMs": [
+            0.12776666666666667,
+            0.121,
+            0.10876666666666666,
+            0.11283333333333333,
+            0.10873333333333333,
+            0.11256666666666666,
+            0.1093,
+            0.1097,
+            0.1099,
+            0.12316666666666666,
+            0.1136,
+            0.11186666666666667,
+            0.10906666666666667,
+            0.11003333333333333,
+            0.1086
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "raw64-count",
+          "result": 1024,
+          "samplesMs": [
+            0.2061,
+            0.2058,
+            0.20763333333333334,
+            0.20413333333333333,
+            0.35273333333333334,
+            0.26263333333333333,
+            0.2047,
+            0.2033,
+            0.20516666666666666,
+            0.22326666666666667,
+            0.2148,
+            0.2057,
+            0.26293333333333335,
+            0.20656666666666668,
+            0.20326666666666668
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "raw64-hash",
+          "result": 753646080,
+          "samplesMs": [
+            0.2166,
+            0.233,
+            0.21343333333333334,
+            0.21696666666666667,
+            0.21316666666666667,
+            0.21293333333333334,
+            0.7632333333333333,
+            0.2124,
+            0.27846666666666664,
+            0.21183333333333335,
+            0.21306666666666665,
+            0.2148,
+            0.2107,
+            0.21103333333333332,
+            0.2276
+          ]
+        }
+      ],
+      [
+        {
+          "java": "22.0.1",
+          "name": "empty-count",
+          "result": 0,
+          "samplesMs": [
+            0.009233333333333333,
+            0.0074333333333333335,
+            0.003,
+            0.004333333333333333,
+            0.0028666666666666667,
+            0.0034666666666666665,
+            0.0028333333333333335,
+            0.0029333333333333334,
+            0.0034666666666666665,
+            0.0028333333333333335,
+            0.0028666666666666667,
+            0.005933333333333333,
+            0.0028666666666666667,
+            0.0258,
+            0.0033333333333333335
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "empty-hash",
+          "result": 0,
+          "samplesMs": [
+            0.007033333333333333,
+            0.006866666666666667,
+            0.011,
+            0.006266666666666667,
+            0.0062,
+            0.006366666666666666,
+            0.0245,
+            0.0289,
+            0.007166666666666667,
+            0.0066,
+            0.0067,
+            0.0069,
+            0.006866666666666667,
+            0.007,
+            0.006533333333333334
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "flat64-count",
+          "result": 1024,
+          "samplesMs": [
+            0.46736666666666665,
+            0.5214666666666666,
+            0.4610666666666667,
+            0.5279666666666667,
+            0.4151,
+            0.39266666666666666,
+            0.38353333333333334,
+            0.46066666666666667,
+            0.3873666666666667,
+            1.8783333333333334,
+            0.4095666666666667,
+            0.32943333333333336,
+            0.2927666666666667,
+            0.3025333333333333,
+            0.3087
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "flat64-hash",
+          "result": 90802688,
+          "samplesMs": [
+            0.3146333333333333,
+            0.31166666666666665,
+            0.30293333333333333,
+            0.2884,
+            0.2783,
+            0.28763333333333335,
+            0.30946666666666667,
+            0.27253333333333335,
+            0.3424333333333333,
+            0.2711,
+            0.31406666666666666,
+            0.28373333333333334,
+            0.2764666666666667,
+            0.267,
+            0.2687
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "flat512-count",
+          "result": 8192,
+          "samplesMs": [
+            1.5914,
+            1.6512,
+            1.5331,
+            1.5358,
+            1.5854,
+            1.4657,
+            1.4831666666666667,
+            1.4640333333333333,
+            1.5188666666666666,
+            1.4527333333333334,
+            1.5027666666666666,
+            1.452,
+            2.0477666666666665,
+            1.4618666666666666,
+            1.0950333333333333
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "flat512-hash",
+          "result": 20390208,
+          "samplesMs": [
+            0.8614,
+            0.857,
+            0.8574666666666667,
+            0.9373333333333334,
+            0.8786,
+            0.8666333333333334,
+            0.9902666666666666,
+            0.9307,
+            0.8494333333333334,
+            0.8459333333333333,
+            0.9083333333333333,
+            1.0849,
+            0.8988666666666667,
+            0.8644666666666667,
+            0.8688333333333333
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "nested128-count",
+          "result": 2048,
+          "samplesMs": [
+            1.1705333333333334,
+            1.7416333333333334,
+            1.1774,
+            1.1443333333333334,
+            1.1297666666666666,
+            1.1338666666666666,
+            1.2352,
+            1.0875666666666666,
+            1.2064,
+            1.1641,
+            1.3332666666666666,
+            1.0735,
+            1.0924,
+            1.0823333333333334,
+            1.0776333333333334
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "nested128-hash",
+          "result": -258641568,
+          "samplesMs": [
+            0.8135666666666667,
+            0.7902333333333333,
+            0.7946333333333333,
+            0.8094,
+            0.7909,
+            0.8115,
+            0.7741333333333333,
+            0.8482,
+            0.7530333333333333,
+            0.7792333333333333,
+            0.7534,
+            0.7514666666666666,
+            0.7466333333333334,
+            0.7451333333333333,
+            0.8613
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "lists16-count",
+          "result": 256,
+          "samplesMs": [
+            0.0834,
+            0.0822,
+            0.0823,
+            0.0851,
+            0.0866,
+            0.08666666666666667,
+            0.12216666666666667,
+            0.08596666666666666,
+            0.08516666666666667,
+            0.10626666666666666,
+            0.08803333333333334,
+            0.08623333333333333,
+            0.08693333333333333,
+            0.08573333333333333,
+            0.08543333333333333
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "lists16-hash",
+          "result": 531986080,
+          "samplesMs": [
+            0.10946666666666667,
+            0.1181,
+            0.1103,
+            0.11206666666666666,
+            0.18606666666666666,
+            0.11043333333333333,
+            0.10993333333333333,
+            0.1106,
+            0.11263333333333334,
+            0.16833333333333333,
+            0.1128,
+            0.10943333333333333,
+            0.1107,
+            0.10903333333333333,
+            0.11466666666666667
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "raw64-count",
+          "result": 1024,
+          "samplesMs": [
+            0.20793333333333333,
+            0.21026666666666666,
+            0.20343333333333333,
+            0.20143333333333333,
+            0.20216666666666666,
+            0.2201,
+            0.2073,
+            0.2249,
+            0.2079,
+            0.21103333333333332,
+            0.21096666666666666,
+            0.2078,
+            0.2089,
+            0.20176666666666668,
+            0.20143333333333333
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "raw64-hash",
+          "result": 753646080,
+          "samplesMs": [
+            0.08196666666666666,
+            0.08223333333333334,
+            0.6703666666666667,
+            0.12326666666666666,
+            0.1304,
+            0.12233333333333334,
+            0.1348,
+            0.13563333333333333,
+            0.1224,
+            0.13333333333333333,
+            0.12273333333333333,
+            0.12676666666666667,
+            0.1281,
+            0.1204,
+            0.13296666666666668
+          ]
+        }
+      ],
+      [
+        {
+          "java": "22.0.1",
+          "name": "empty-count",
+          "result": 0,
+          "samplesMs": [
+            0.0032,
+            0.0036666666666666666,
+            0.0029,
+            0.004066666666666666,
+            0.0039,
+            0.0089,
+            0.0025,
+            0.0021666666666666666,
+            0.0024333333333333334,
+            0.0021,
+            0.0023,
+            0.0027333333333333333,
+            0.0021333333333333334,
+            0.033133333333333334,
+            0.0026333333333333334
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "empty-hash",
+          "result": 0,
+          "samplesMs": [
+            0.006733333333333333,
+            0.006933333333333333,
+            0.006833333333333334,
+            0.011066666666666667,
+            0.006266666666666667,
+            0.0071,
+            0.028433333333333335,
+            0.016266666666666665,
+            0.0087,
+            0.006533333333333334,
+            0.0064,
+            0.006733333333333333,
+            0.007,
+            0.0064,
+            0.006266666666666667
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "flat64-count",
+          "result": 1024,
+          "samplesMs": [
+            0.43553333333333333,
+            0.4935333333333333,
+            0.5106666666666667,
+            0.48223333333333335,
+            0.4696666666666667,
+            0.4727,
+            2.0272,
+            0.36156666666666665,
+            0.36013333333333336,
+            0.3415666666666667,
+            0.3069,
+            0.5112333333333333,
+            0.2853333333333333,
+            0.36593333333333333,
+            0.2890666666666667
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "flat64-hash",
+          "result": 90802688,
+          "samplesMs": [
+            0.32283333333333336,
+            0.29136666666666666,
+            0.2818,
+            0.2821666666666667,
+            0.28413333333333335,
+            0.29046666666666665,
+            0.2934333333333333,
+            0.29013333333333335,
+            0.30333333333333334,
+            0.29606666666666664,
+            0.28253333333333336,
+            0.28536666666666666,
+            0.28683333333333333,
+            0.2859333333333333,
+            0.2764666666666667
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "flat512-count",
+          "result": 8192,
+          "samplesMs": [
+            1.6091333333333333,
+            1.5479333333333334,
+            1.6259333333333332,
+            1.4871333333333334,
+            1.5158666666666667,
+            1.4966333333333333,
+            1.981,
+            1.5223,
+            1.4922,
+            1.4844333333333333,
+            1.4861333333333333,
+            1.4808666666666668,
+            1.1234333333333333,
+            1.0493666666666666,
+            1.1012666666666666
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "flat512-hash",
+          "result": 20390208,
+          "samplesMs": [
+            0.8652,
+            0.8509666666666666,
+            0.8632,
+            0.8597333333333333,
+            0.8657,
+            0.8453666666666667,
+            0.8507333333333333,
+            0.8523333333333334,
+            0.8442,
+            0.8394333333333334,
+            1.0939,
+            1.8156666666666668,
+            1.0581666666666667,
+            0.9255666666666666,
+            0.8512666666666666
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "nested128-count",
+          "result": 2048,
+          "samplesMs": [
+            1.1595,
+            1.1180666666666668,
+            1.1167333333333334,
+            1.5944333333333334,
+            1.0946666666666667,
+            1.1218666666666666,
+            1.1039666666666668,
+            1.0959,
+            2.0188333333333333,
+            1.1174666666666666,
+            1.1082,
+            1.1240666666666668,
+            1.1013333333333333,
+            1.1219666666666666,
+            1.1847333333333334
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "nested128-hash",
+          "result": -258641568,
+          "samplesMs": [
+            0.7922333333333333,
+            0.7854333333333333,
+            0.7855333333333333,
+            0.9539666666666666,
+            0.8372333333333334,
+            0.7487333333333334,
+            0.7927666666666666,
+            0.7825,
+            0.7518333333333334,
+            0.7651333333333333,
+            0.7482333333333333,
+            0.7569333333333333,
+            0.8336,
+            0.7565666666666667,
+            0.7518666666666667
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "lists16-count",
+          "result": 256,
+          "samplesMs": [
+            0.0926,
+            0.0882,
+            0.0894,
+            0.09336666666666667,
+            0.08486666666666667,
+            0.08363333333333334,
+            0.08313333333333334,
+            0.08676666666666667,
+            0.08426666666666667,
+            0.0865,
+            0.0848,
+            0.08556666666666667,
+            0.08446666666666666,
+            0.08503333333333334,
+            0.08583333333333333
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "lists16-hash",
+          "result": 531986080,
+          "samplesMs": [
+            0.10743333333333334,
+            0.10853333333333333,
+            0.11103333333333333,
+            0.10746666666666667,
+            0.1076,
+            0.10786666666666667,
+            0.10743333333333334,
+            0.10863333333333333,
+            0.11093333333333333,
+            0.137,
+            0.1095,
+            0.10913333333333333,
+            0.1104,
+            0.1102,
+            0.10976666666666667
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "raw64-count",
+          "result": 1024,
+          "samplesMs": [
+            0.2007,
+            0.20036666666666667,
+            0.2007,
+            0.20703333333333335,
+            0.20003333333333334,
+            0.21306666666666665,
+            0.20623333333333332,
+            0.20076666666666668,
+            0.20513333333333333,
+            0.20326666666666668,
+            0.2014,
+            0.20026666666666668,
+            0.20116666666666666,
+            0.20476666666666668,
+            0.20223333333333332
+          ]
+        },
+        {
+          "java": "22.0.1",
+          "name": "raw64-hash",
+          "result": 753646080,
+          "samplesMs": [
+            0.08346666666666666,
+            0.08263333333333334,
+            0.08276666666666667,
+            0.08896666666666667,
+            0.08466666666666667,
+            0.08366666666666667,
+            0.08186666666666667,
+            0.0819,
+            0.5386,
+            0.09206666666666667,
+            0.09416666666666666,
+            0.08243333333333333,
+            0.08323333333333334,
+            0.08393333333333333,
+            0.0972
+          ]
+        }
+      ]
+    ]
+  }
+}

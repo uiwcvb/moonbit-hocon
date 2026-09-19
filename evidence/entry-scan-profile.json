@@ -1,0 +1,154 @@
+{
+  "baselineCommit": "926655aa15f60e5fb321d557cbe07d65f6489702",
+  "scope": "Diagnostic V8 CPU sampling of the fixed baseline typed entry benchmark worker; sampled frame time is not a performance comparison or allocation count. Final timings use separate uninstrumented processes.",
+  "command": "node --cpu-prof tools/benchmark-entries.mjs --worker <baseline>/tools/config-object.mjs typed",
+  "profileSha256": "82181335e9be5aab32e92a66bf7804c247bb39c7b2a71f208f2b83d1f3cdda87",
+  "profileFile": "entry-scan-baseline.cpuprofile",
+  "samples": 5188,
+  "topFrames": [
+    {
+      "function": "ConfigEntry",
+      "file": "config-object.mjs",
+      "line": 182,
+      "sampledMilliseconds": 2155.61
+    },
+    {
+      "function": "(garbage collector)",
+      "file": "",
+      "line": 0,
+      "sampledMilliseconds": 1839.674
+    },
+    {
+      "function": "ConfigValue",
+      "file": "config-object.mjs",
+      "line": 117,
+      "sampledMilliseconds": 1390.016
+    },
+    {
+      "function": "_M0FPC28internal7strconv20parse__int64_2einner",
+      "file": "engine.mjs",
+      "line": 9966,
+      "sampledMilliseconds": 383.129
+    },
+    {
+      "function": "_M0FP211localreview5hocon10join__path",
+      "file": "engine.mjs",
+      "line": 17309,
+      "sampledMilliseconds": 350.698
+    },
+    {
+      "function": "valueState",
+      "file": "config-object.mjs",
+      "line": 9,
+      "sampledMilliseconds": 168.032
+    },
+    {
+      "function": "addAll",
+      "file": "config-object.mjs",
+      "line": 199,
+      "sampledMilliseconds": 144.248
+    },
+    {
+      "function": "add",
+      "file": "config-object.mjs",
+      "line": 198,
+      "sampledMilliseconds": 140.013
+    },
+    {
+      "function": "_M0FP211localreview5hocon16collect__entries",
+      "file": "engine.mjs",
+      "line": 21622,
+      "sampledMilliseconds": 130.73
+    },
+    {
+      "function": "_M0MPB7JSArray4push",
+      "file": "engine.mjs",
+      "line": 104,
+      "sampledMilliseconds": 121.796
+    },
+    {
+      "function": "entryState",
+      "file": "config-object.mjs",
+      "line": 169,
+      "sampledMilliseconds": 114.312
+    },
+    {
+      "function": "",
+      "file": "config-object.mjs",
+      "line": 88,
+      "sampledMilliseconds": 101.526
+    },
+    {
+      "function": "_M0FP211localreview5hocon11hash__value",
+      "file": "engine.mjs",
+      "line": 16809,
+      "sampledMilliseconds": 96.449
+    },
+    {
+      "function": "_M0IPC16string6StringPB4Hash4hash",
+      "file": "engine.mjs",
+      "line": 6620,
+      "sampledMilliseconds": 91.222
+    },
+    {
+      "function": "hashCode",
+      "file": "config-object.mjs",
+      "line": 187,
+      "sampledMilliseconds": 87.398
+    },
+    {
+      "function": "_M0MPB3Map3setGsRP211localreview5hocon5ValueE",
+      "file": "engine.mjs",
+      "line": 4682,
+      "sampledMilliseconds": 82.346
+    },
+    {
+      "function": "",
+      "file": "engine.mjs",
+      "line": 3075,
+      "sampledMilliseconds": 63.783
+    },
+    {
+      "function": "wrapValue",
+      "file": "config-object.mjs",
+      "line": 12,
+      "sampledMilliseconds": 61.262
+    },
+    {
+      "function": "_M0FP211localreview5hocon10tree__step",
+      "file": "engine.mjs",
+      "line": 14006,
+      "sampledMilliseconds": 60.36
+    },
+    {
+      "function": "setFind",
+      "file": "config-object.mjs",
+      "line": 176,
+      "sampledMilliseconds": 55.003
+    },
+    {
+      "function": "_M0FP211localreview5hocon11clone__tree",
+      "file": "engine.mjs",
+      "line": 18404,
+      "sampledMilliseconds": 48.366
+    },
+    {
+      "function": "_M0MPC16string6String30offset__of__nth__char__forward",
+      "file": "engine.mjs",
+      "line": 2411,
+      "sampledMilliseconds": 46.754
+    },
+    {
+      "function": "_M0MPC16string6String9to__array",
+      "file": "engine.mjs",
+      "line": 3353,
+      "sampledMilliseconds": 46.722
+    },
+    {
+      "function": "",
+      "file": "engine.mjs",
+      "line": 17313,
+      "sampledMilliseconds": 44.827
+    }
+  ]
+}

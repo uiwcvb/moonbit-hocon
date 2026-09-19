@@ -1,14 +1,11 @@
 {
-  "utc": "2026-09-19T00:21:43.843Z",
-  "mode": "live official library",
-  "reference": {
-    "library": "unmodified Lightbend Config 1.4.9",
-    "jarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37"
-  },
-  "total": 1226,
-  "passed": 1226,
-  "failed": 0,
-  "scope": "Detached typed entry enumeration, unresolved leaves, escaped paths, null/empty object filtering, immutable values/entries, semantic set operations and iterator mutation. Snapshots sort entries; HashSet iteration order and exact exception messages are not compared",
+  "utc": "2026-09-19T00:16:48.891Z",
+  "mode": "live JDK recapture matches saved vectors",
+  "total": 2342,
+  "unique": 2342,
+  "groups": 19,
+  "java": "java version \"22.0.1\" 2024-04-16",
+  "scope": "Unmodified JDK Integer.valueOf, bounded ASCII spellings with <=11 UTF-16 units; invalid samples also include one supplementary non-digit.",
   "sourceHashes": {
     "accessor_reference_test.mbt": "ef0cea69ffc47506f3c8a54352b8bda45617aca06af288d99676092a662fa3e0",
     "accessors.mbt": "d257c562b827f465a74d8e49bce2df375738688950efb00b0f03280b22d65fed",
@@ -191,6 +188,5 @@
     "web/app.mjs": "12a0cf3565b6298e2e3760355ec5da3fed88870be604b7f6e1a2f57d7334578d",
     "web/config.mjs": "6cc7edbdb551db766b27f268521f323981c578a2e4878ce9f0bd391c1057ccd4",
     "web/engine.mjs": "bee3509fa7a1825d7d103532e1f6f71e74c68ea62b29906d28335cc9bccc4b33"
-  },
-  "failures": []
+  }
 }

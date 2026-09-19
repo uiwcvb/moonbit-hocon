@@ -1,14 +1,28 @@
 {
-  "utc": "2026-09-19T00:21:43.843Z",
-  "mode": "live official library",
-  "reference": {
-    "library": "unmodified Lightbend Config 1.4.9",
-    "jarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37"
+  "utc": "2026-09-19T00:15:59.766Z",
+  "passed": true,
+  "node": "v24.11.0",
+  "scope": "Six bounded explicit-GC rounds of 2400 released Config, set, entry and value wrappers each, plus a retained readable leaf. This does not establish peak, long-term or native memory parity.",
+  "observed": {
+    "createdPerKind": 2400,
+    "collected": {
+      "config": 2399,
+      "set": 2399,
+      "entry": 2399,
+      "value": 2399
+    },
+    "baselineHeapBytes": 7324704,
+    "afterGCRoundHeapBytes": [
+      7910760,
+      7970600,
+      7988336,
+      7986632,
+      7979296,
+      7978928
+    ],
+    "maxRetainedGrowthBytes": 663632,
+    "retainedLeafReadable": true
   },
-  "total": 1226,
-  "passed": 1226,
-  "failed": 0,
-  "scope": "Detached typed entry enumeration, unresolved leaves, escaped paths, null/empty object filtering, immutable values/entries, semantic set operations and iterator mutation. Snapshots sort entries; HashSet iteration order and exact exception messages are not compared",
   "sourceHashes": {
     "accessor_reference_test.mbt": "ef0cea69ffc47506f3c8a54352b8bda45617aca06af288d99676092a662fa3e0",
     "accessors.mbt": "d257c562b827f465a74d8e49bce2df375738688950efb00b0f03280b22d65fed",
@@ -191,6 +205,5 @@
     "web/app.mjs": "12a0cf3565b6298e2e3760355ec5da3fed88870be604b7f6e1a2f57d7334578d",
     "web/config.mjs": "6cc7edbdb551db766b27f268521f323981c578a2e4878ce9f0bd391c1057ccd4",
     "web/engine.mjs": "bee3509fa7a1825d7d103532e1f6f71e74c68ea62b29906d28335cc9bccc4b33"
-  },
-  "failures": []
+  }
 }

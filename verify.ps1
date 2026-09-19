@@ -17,6 +17,8 @@ try {
   if ($LASTEXITCODE -ne 0) {throw 'check failed'}
   node tools/generate-double-render-tests.mjs --check
   if ($LASTEXITCODE -ne 0) {throw 'native binary64 vector generation is stale'}
+  node tools/generate-small-integer-tests.mjs --check
+  if ($LASTEXITCODE -ne 0) {throw 'native small integer vectors are stale'}
   node tools/generate-double-parse-tests.mjs --check
   if ($LASTEXITCODE -ne 0) {throw 'native binary64 parsing vector generation is stale'}
   & $MoonPath test --target wasm-gc --deny-warn
@@ -100,6 +102,8 @@ try {
   if ($LASTEXITCODE -ne 0) {throw 'typed entry async replay failed'}
   node tools/test-entry-host.mjs
   if ($LASTEXITCODE -ne 0) {throw 'typed entry host checks failed'}
+  node tools/test-entry-memory.mjs
+  if ($LASTEXITCODE -ne 0) {throw 'entry wrapper collection check failed'}
   node tools/robustness.mjs
   if ($LASTEXITCODE -ne 0) {throw 'robustness failed'}
   node tools/benchmark.mjs

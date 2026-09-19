@@ -227,12 +227,29 @@ pub fn value_hash(value : Value) -> Int raise ParseError {
 
 ///|
 fn small_number(text : String) -> Int? {
-  if text.length() > 11 || !integer_spelling(text) {
+  if text.is_empty() || text.length() > 11 {
     return None
   }
-  Some(@string.parse_int(text)) catch {
-    _ => None
+  let negative = text[0] == 45
+  let mut index = if negative || text[0] == 43 { 1 } else { 0 }
+  if index == text.length() {
+    return None
   }
+  // Accumulate negatively so Int::min_value is representable throughout.
+  let last_digit = if negative { 8 } else { 7 }
+  let mut result = 0
+  while index < text.length() {
+    let digit = text[index].to_int() - 48
+    if digit < 0 ||
+      digit > 9 ||
+      result < -214748364 ||
+      (result == -214748364 && digit > last_digit) {
+      return None
+    }
+    result = result * 10 - digit
+    index += 1
+  }
+  Some(if negative { result } else { -result })
 }
 
 ///|
