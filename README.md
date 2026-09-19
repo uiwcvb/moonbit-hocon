@@ -1,6 +1,6 @@
 # HOCON 配置解析器
 
-MoonBit 本地 0.22.0：列表元素直接转换与普通小数单次扫描、有界长数字精确舍入、减少条目枚举分配与整数哈希开销、类型化 Config 条目集合、直接数值扫描和长系数区间转换、极小十进制数精确转换优化、浮点文本渲染优化、原始值的 JSON/HOCON 文本与缩进渲染、直接值遍历和不可变包装哈希缓存、不可变 ConfigValue / ConfigObject / ConfigList、持久化不可变 JavaScript Config、类型化配置、历史值自引用、`+=`、include 重定位、显式回退与环境替换、未解析文档/分阶段解析、数字/对象/通用值/枚举及类型化列表读取、日历周期和指定时间单位、配置树修改与校验、文件/HTTP(S) 加载、可取消异步入口和 CLI。
+MoonBit 本地 0.23.0：Double 直接读取与传输、列表元素直接转换与普通小数单次扫描、有界长数字精确舍入、减少条目枚举分配与整数哈希开销、类型化 Config 条目集合、直接数值扫描和长系数区间转换、极小十进制数精确转换优化、浮点文本渲染优化、原始值的 JSON/HOCON 文本与缩进渲染、直接值遍历和不可变包装哈希缓存、不可变 ConfigValue / ConfigObject / ConfigList、持久化不可变 JavaScript Config、类型化配置、历史值自引用、`+=`、include 重定位、显式回退与环境替换、未解析文档/分阶段解析、数字/对象/通用值/枚举及类型化列表读取、日历周期和指定时间单位、配置树修改与校验、文件/HTTP(S) 加载、可取消异步入口和 CLI。
 解析和求值均由 MoonBit 实现；Node 提供文件、HTTP(S)、properties 和命令行宿主。Java 只用于独立参考测试及路径字符数据生成。
 
 ## 命令行与文件
@@ -485,3 +485,36 @@ JS/Wasm-GC 各 16,700 项通过；独立 JDK 解析矩阵共 31,137 个字符串
 | render-json-midpoint-long | 1.040 | 79.994 |
 
 最大当前/0.21 耗时比为 1.085（value-equals-32）；最大进程中位数波动比 2.344，不稳定标记 true。此处只测已解析配置的热调用及既有两个完整解析请求；没有证明启动、峰值内存、长期运行、全部输入或跨平台性能。完整功能、兼容性及性能仍未追平。
+
+## 0.23 Double 直接读取与传输
+
+Double getter 直接转换数值，去掉先构造 Integer/Long/Double 子类型、再转回 Double 的往返。非零结果与原转换相同；来源数字的零按原版压缩为正零，字符串整数零先按 Long 处理为正零，浮点/带空白字符串的负零保留。Unicode 整数字符串保留 JDK BMP 数字块和 Int64 边界，提前识别非 ASCII 字符后直接走整数转换，避免正常读取触发浮点异常。getNumber 的子类型行为保持原实现。
+
+JavaScript 结果桥直接构造 Double 标量和数组，减少临时 Json 值；保留 NaN/Infinity 字符串、负零、错误处理、参数检查及新数组隔离，不缓存查询结果。
+
+新增独立公开 getter 矩阵：2,687 个不同的字符串/来源数字输入，分别对照 getDouble 与 getDoubleList，共 5,374 次原版结果。包含每个已固定的 JDK BMP 数字块、整数 2 的幂两侧、正负零/ASCII 空白、十六进制、极小数和拒绝输入；进入 21 个双后端分组，并通过真实 JS Config 接口逐位比较。其覆盖与既有原始 Double.parseDouble 矩阵不同。
+
+`generate-double-getter-tests.mjs --live --check --bridge` 同时重新捕获原版、检查生成文件和核验 JS 结果桥。普通 verify/CI 使用保存的原版向量；五进程 37 项计时仍以固定 0.22、当前版和原版运行相同公开 API。最终证据见 `double-direct-upgrade.json`，完整追平仍未完成。
+
+## 0.23 最终验证
+
+JS/Wasm-GC 各 16,721 项通过；新增 2,687 个公开 Double getter 输入、5,374 次标量/列表参考结果，进入 21 个双后端分组，并通过实际 JS 桥逐位核验。既有 31,137 个原始小数解析字符串/244 分组和 3 个列表契约测试保留。其他集合/数值/时间/直接读取实时原版运行共 14,096 次，15 个保存原版套件回放共 31,776 次，包含重叠，不作为全部新独立案例。228 文件再生一致，交付引擎与编译结果相同，既有宿主/异步/资源/回收检查通过。
+
+五进程 37 个负载与固定 0.22、原版对照，结果全部一致。下表是进程中位耗时之比，小于 1 表示当前实现更快。
+
+| 负载 | 当前/0.22 | 当前/原版 |
+| --- | ---: | ---: |
+| retained-double-ordinary-list | 0.857 | 9.887 |
+| retained-double-exact-16 | 0.525 | 1.339 |
+| retained-double-mixed-64 | 0.902 | 7.039 |
+| retained-double-mixed-512 | 0.769 | 5.243 |
+| retained-double-tiny-list | 0.891 | 2.794 |
+| retained-double-long-text-list | 1.080 | 1.482 |
+| render-json-midpoint-long | 0.935 | 75.880 |
+| retained-double-unicode-32 | 0.978 | 2.577 |
+| retained-double-mixed-digits-32 | 0.953 | 1.897 |
+| retained-double-ascii-text-32 | 0.407 | 0.694 |
+
+最大当前/0.22 耗时比为 1.111（render-json-floats）；最大进程中位数波动比 2.540，不稳定标记 true。此处只测已解析配置的热调用及既有两个完整解析请求；没有证明启动、峰值内存、长期运行、全部输入或跨平台性能。完整功能、兼容性及性能仍未追平。
+
+初次 verify 在生成文件校验处失败，原因是格式化器为多行元组/调用增加尾逗号。校验器已改为仅忽略语法允许的尾逗号，保留字符串字面量和其余有效 token；修正后重新运行完整 verify。初次记录保留为 double-direct-verify-initial.log，最终依据 double-direct-verify.log。 初版计时及源码指纹保留为 double-direct-performance-initial.json；单进程 Unicode 诊断保留为 double-direct-unicode-probe.json 和对应脚本。发现正常 Unicode 整数读取需承担异常回退开销后，改为提前识别非 ASCII 字符，并将三个字符串负载加入最终五进程计时。

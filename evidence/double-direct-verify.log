@@ -1,0 +1,54 @@
+Finished. moon: ran 17 tasks, now up to date
+Finished. moon: no work to do
+Finished. moon: ran 5 tasks, now up to date
+24254 distinct native binary64 vectors checked in 190 backend groups
+2342 distinct native Integer inputs checked in 19 groups
+31137 distinct native binary64 parse vectors checked in 244 backend groups
+Total tests: 16721, passed: 16721, failed: 0.
+Total tests: 16721, passed: 16721, failed: 0.
+Finished. moon: no work to do
+Object(
+  {
+    "service": Object({ "host": Text("localhost"), "port": Number("9090") }),
+    "endpoint": Text("localhost"),
+  },
+)
+2687 distinct public double inputs checked in 21 groups; 5374 scalar/list comparisons also passed in native JS bridge
+hocon: independent browser engine passed
+hocon: CLI input/file/stdin/error/exit-status checks passed
+host: real includes, fallback origins, environment, CLI getters, errors and limits passed
+714/714 configuration reference cases agree
+58/58 file reference cases agree
+1300/1300 typed collection/config cases agree
+72 collection host/CLI checks passed
+156/156 live-transport HTTP reference cases agree
+58 HTTP host/CLI/async checks passed
+4380/4380 tree/validation native cases agree
+39 tree/validation host/async/CLI checks passed
+2520/2520 document lifecycle native cases agree
+45 document file/HTTP/async/CLI checks passed
+3562/3562 extended accessor native cases agree
+55 extended accessor file/HTTP/async/CLI checks passed
+2171/2171 temporal native cases agree
+57 temporal file/HTTP/async/CLI checks passed
+842/842 persistent Config native programs agree
+842/842 async persistent native programs agree
+54 persistent file/HTTP/async/ownership checks passed
+Persistent Config bounded collection check passed: 2399/2400 collected
+1898/1898 path native cases agree
+7063/7063 direct-result native cases agree
+24 direct-result ownership/shape/error/path checks passed
+2810/2810 value/container native programs agree
+2810/2810 async value/container programs agree
+22 value/container host checks passed
+936/936 value traversal native programs agree
+8 value traversal host checks passed
+2140/2140 render native programs agree
+2140/2140 async render programs agree
+17 render file/HTTP/async/ownership checks passed
+1226/1226 entry-set native programs agree
+1226/1226 async entry-set programs agree
+20 entry file/HTTP/async/ownership checks passed
+Entry wrapper bounded collection passed: {"config":2399,"set":2399,"entry":2399,"value":2399}
+hocon: 307 bounded inputs, no uncaught runtime failure
+{"project":"hocon","utc":"2026-09-19T01:17:03.856Z","runtime":"v24.11.0","platform":"win32","cpu":"Intel(R) Core(TM) i7-14700HX","input_utf8_bytes":90,"samples":30,"warmup":5,"median_ms":0.2242999999999995,"p95_ms":0.6211999999999875,"max_ms":0.9504000000000019,"scope":"JS warm execution of documented example; no cross-project or upstream performance claim"}

@@ -1,0 +1,27 @@
+{
+  "scope": "Diagnostic only: one Node process, both modules loaded, three retained 32-item lists. Each variant warms 500 calls, then 10 alternating batches of 300 calls. Values checked equal; no native-library timer, process spread or production performance claim. This preliminary regression motivated the explicit non-ASCII String path; final five-process results include these workloads.",
+  "baselineCommit": "93bd088998856555100d387bddbe30b1e9b347fe",
+  "baselineEngineSha256": "30d94516801bef2e6e253c2a39f7ffe7c83801a383325f5ed0ad832d169646c8",
+  "candidateEngineSha256": "9ace416f23fbe9e5c727d9882525960f08a5c7469826b539431103328ded1781",
+  "scriptSHA256": "c1898985cf262f0482e6d95f0d5f6f5b46129a08723e6b17f11f7921331f95ac",
+  "rows": [
+    {
+      "name": "unicode",
+      "baseMs": 0.014965666666666664,
+      "currentMs": 0.016486333333333315,
+      "ratio": 1.1016103525848042
+    },
+    {
+      "name": "mixed",
+      "baseMs": 0.012653000000000058,
+      "currentMs": 0.014806000000000001,
+      "ratio": 1.170157274954551
+    },
+    {
+      "name": "ascii",
+      "baseMs": 0.01075866666666665,
+      "currentMs": 0.0034983333333334105,
+      "ratio": 0.3251642086999705
+    }
+  ]
+}

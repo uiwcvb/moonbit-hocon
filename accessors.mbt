@@ -128,10 +128,35 @@ pub fn get_double(config : Value, key : String) -> Double raise ParseError {
 
 ///|
 fn number_double(value : Value) -> Double raise ParseError {
-  match number_value(value) {
-    Integer(n) => n.to_double()
-    Long(n) => n.to_double()
-    Floating(n) => n
+  let text = number_text(value)
+  if value is Text(_) {
+    for i = 0; i < text.length(); i = i + 1 {
+      if text[i] >= 128 {
+        // String integers from BMP digit blocks should not pay for an
+        // expected floating-grammar exception on every successful read.
+        return match java_integer_value(text) {
+          Some(integer) => integer.to_double()
+          None => double_value(text)
+        }
+      }
+    }
+  }
+  let number = double_value(text) catch {
+    error =>
+      // Java's integer conversion also accepts BMP decimal digit blocks.
+      // Those spellings are outside the decimal/hex floating grammar.
+      match java_integer_value(text) {
+        Some(integer) => integer.to_double()
+        None => raise error
+      }
+  }
+  // Subtype compaction followed by doubleValue() leaves all nonzero values
+  // unchanged. A source Number's zero is compacted; a String's integer zero
+  // is first parsed as Long, while floating/trimmed spellings retain -0.0.
+  if number == 0.0 && (value is Number(_) || integer_spelling(text)) {
+    0.0
+  } else {
+    number
   }
 }
 

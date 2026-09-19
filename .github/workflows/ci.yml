@@ -26,6 +26,7 @@ jobs:
           engine=$(find _build/js/debug/build/cmd/web -type f -name '*.js' | head -n 1)
           test -n "$engine"
           cp "$engine" web/engine.mjs
+      - run: node tools/generate-double-getter-tests.mjs --check --bridge
       - run: node tools/test-demo.mjs
       - run: node tools/test-cli.mjs
       - run: node tools/test-host.mjs

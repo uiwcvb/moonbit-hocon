@@ -312,3 +312,26 @@ JS/Wasm-GC 各 16,700 项通过；独立 JDK 解析矩阵共 31,137 个字符串
 | render-json-midpoint-long | 1.040 | 79.994 |
 
 最大当前/0.21 耗时比为 1.085（value-equals-32）；最大进程中位数波动比 2.344，不稳定标记 true。此处只测已解析配置的热调用及既有两个完整解析请求；没有证明启动、峰值内存、长期运行、全部输入或跨平台性能。完整功能、兼容性及性能仍未追平。
+
+## 0.23 最终验证
+
+JS/Wasm-GC 各 16,721 项通过；新增 2,687 个公开 Double getter 输入、5,374 次标量/列表参考结果，进入 21 个双后端分组，并通过实际 JS 桥逐位核验。既有 31,137 个原始小数解析字符串/244 分组和 3 个列表契约测试保留。其他集合/数值/时间/直接读取实时原版运行共 14,096 次，15 个保存原版套件回放共 31,776 次，包含重叠，不作为全部新独立案例。228 文件再生一致，交付引擎与编译结果相同，既有宿主/异步/资源/回收检查通过。
+
+五进程 37 个负载与固定 0.22、原版对照，结果全部一致。下表是进程中位耗时之比，小于 1 表示当前实现更快。
+
+| 负载 | 当前/0.22 | 当前/原版 |
+| --- | ---: | ---: |
+| retained-double-ordinary-list | 0.857 | 9.887 |
+| retained-double-exact-16 | 0.525 | 1.339 |
+| retained-double-mixed-64 | 0.902 | 7.039 |
+| retained-double-mixed-512 | 0.769 | 5.243 |
+| retained-double-tiny-list | 0.891 | 2.794 |
+| retained-double-long-text-list | 1.080 | 1.482 |
+| render-json-midpoint-long | 0.935 | 75.880 |
+| retained-double-unicode-32 | 0.978 | 2.577 |
+| retained-double-mixed-digits-32 | 0.953 | 1.897 |
+| retained-double-ascii-text-32 | 0.407 | 0.694 |
+
+最大当前/0.22 耗时比为 1.111（render-json-floats）；最大进程中位数波动比 2.540，不稳定标记 true。此处只测已解析配置的热调用及既有两个完整解析请求；没有证明启动、峰值内存、长期运行、全部输入或跨平台性能。完整功能、兼容性及性能仍未追平。
+
+初次 verify 在生成文件校验处失败，原因是格式化器为多行元组/调用增加尾逗号。校验器已改为仅忽略语法允许的尾逗号，保留字符串字面量和其余有效 token；修正后重新运行完整 verify。初次记录保留为 double-direct-verify-initial.log，最终依据 double-direct-verify.log。 初版计时及源码指纹保留为 double-direct-performance-initial.json；单进程 Unicode 诊断保留为 double-direct-unicode-probe.json 和对应脚本。发现正常 Unicode 整数读取需承担异常回退开销后，改为提前识别非 ASCII 字符，并将三个字符串负载加入最终五进程计时。

@@ -88,6 +88,17 @@ fn json_native(value : Json, normalize_zero? : Bool = false) -> NativeValue {
 }
 
 ///|
+fn double_native(value : Double) -> NativeValue {
+  if value.is_nan() {
+    native_string("NaN")
+  } else if value.is_inf() {
+    native_string(if value > 0.0 { "Infinity" } else { "-Infinity" })
+  } else {
+    native_number(value)
+  }
+}
+
+///|
 pub fn config_read_native(
   handle : ConfigHandle,
   getter : String,
@@ -110,6 +121,16 @@ pub fn config_read_native(
     let config = handle_value(handle)
     if getter.is_empty() {
       return native_success(native_json(config.to_json_string()))
+    }
+    if getter == "double" {
+      return native_success(double_native(@lib.get_double(config, path)))
+    }
+    if getter == "double-list" {
+      let result = native_array()
+      for value in @lib.get_double_list(config, path) {
+        native_push(result, double_native(value))
+      }
+      return native_success(result)
     }
     let value = if getter == "has" {
       (@lib.has_path_or_null(config, path) && !@lib.get_is_null(config, path)).to_json()
