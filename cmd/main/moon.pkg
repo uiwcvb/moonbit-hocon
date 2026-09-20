@@ -1,5 +1,5 @@
 import {
-  "localreview/hocon" @lib,
+  "wang-chen89/hocon" @lib,
 }
 
 pkgtype(kind: "executable")

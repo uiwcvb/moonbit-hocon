@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "localreview/hocon"
+package "wang-chen89/hocon"
 
 import {
   "moonbitlang/core/debug",
