@@ -1,5 +1,13 @@
 # HOCON 配置解析器
 
+## 获取与验证入口
+
+公开源码：[github.com/uiwcvb/moonbit-hocon](https://github.com/uiwcvb/moonbit-hocon)；MoonBit 模块名为 `uiwcvb/hocon`。
+
+从源码运行：`git clone https://github.com/uiwcvb/moonbit-hocon.git` 后进入该目录，按下文和 [TESTING.md](TESTING.md) 安装所需工具。仓库公开不等于已在 Mooncakes 发布，不承诺 `moon add` 当前可用。
+
+查看 [GitHub Actions](https://github.com/uiwcvb/moonbit-hocon/actions) 时请核对 run 的 commit SHA；历史 evidence、旧 ZIP 与本地测试不能替代当前提交的 CI 结果。下文保留各版本的验证范围和兼容性限制。
+
 > 2026-09-21 本地构建修复：命令包 import 已同步到当前 moon.mod 模块名；moon info/check、JS 构建、MoonBit 示例和 Node 引擎示例通过。算法未改，本轮未重跑历史全部行为/性能套件。当前提交指纹见 evidence/module-import-fix.json。
 
 MoonBit 本地 0.23.0：Double 直接读取与传输、列表元素直接转换与普通小数单次扫描、有界长数字精确舍入、减少条目枚举分配与整数哈希开销、类型化 Config 条目集合、直接数值扫描和长系数区间转换、极小十进制数精确转换优化、浮点文本渲染优化、原始值的 JSON/HOCON 文本与缩进渲染、直接值遍历和不可变包装哈希缓存、不可变 ConfigValue / ConfigObject / ConfigList、持久化不可变 JavaScript Config、类型化配置、历史值自引用、`+=`、include 重定位、显式回退与环境替换、未解析文档/分阶段解析、数字/对象/通用值/枚举及类型化列表读取、日历周期和指定时间单位、配置树修改与校验、文件/HTTP(S) 加载、可取消异步入口和 CLI。
@@ -364,7 +372,7 @@ Node 宿主另限制单文件/响应 400,000 字节、读取累计 4,000,000 字
 原创代码 MIT；Java 适配器与测试用例自行编写，上游 JAR 不在本仓库分发。没有复制上游实现或测试集。
 0.5 历史增量验证：JS/Wasm-GC 各 1,323 项；1,300 新集合对照与既有 772 配置/文件对照、72 新宿主/CLI 检查。固定五进程计时中四项既有负载相对 0.4 的耗时比为 0.977–1.019；七项 JSON 请求到结果的负载相对官方库为 0.520–1.094，时长列表仍约慢 9.4%。这不代表全部性能已追平。
 
-全部留在本地，未上传或发布；旧 20 项目合集仍为历史快照，独立增量 ZIP/bundle 绑定各自的本地提交。
+> 历史开发记录（以下发布/归档状态不代表当前仓库；当前入口见文首）：全部留在本地，未上传或发布；旧 20 项目合集仍为历史快照，独立增量 ZIP/bundle 绑定各自的本地提交。
 
 
 ## 原始值与格式化渲染（0.15）
