@@ -1,4 +1,4 @@
-name = "wang-chen89/hocon"
+name = "uiwcvb/hocon"
 
 version = "0.23.0"
 
