@@ -1,5 +1,5 @@
 import {
-  "wang-chen89/hocon" @lib,
+  "uiwcvb/hocon" @lib,
 }
 
 pkgtype(kind: "executable")
