@@ -1,0 +1,17 @@
+{
+  "project": "hocon",
+  "title": "HOCON 配置迁移与启动校验",
+  "module": "uiwcvb/hocon",
+  "version": "0.23.0",
+  "repository": "https://github.com/uiwcvb/moonbit-hocon",
+  "status": "保留候选",
+  "remainingRisk": "尚无确认迁移用户，不能把全套 JVM 行为或性能作为已完成。",
+  "actualUsersClaimed": false,
+  "anonymousCloneVerified": true,
+  "publicHead": "4ff504db3894362ff5ae7046d4e66c816de1045a",
+  "defaultBranch": "origin/main",
+  "localChangesPublished": false,
+  "proposalLines": 25,
+  "useCase": "分层配置及启动类型读取",
+  "diff": "本轮未找到同范围 MoonBit HOCON 库；其他配置库当然存在。价值是兼容这个明确的配置格式，不是首次变量替换或配置读取。"
+}

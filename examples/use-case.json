@@ -1,0 +1,32 @@
+{
+  "title": "分层配置及启动类型读取",
+  "scope": "原创合成配置；不声明已有 JVM 迁移客户。",
+  "steps": [
+    {
+      "args": [
+        "tools/cli.mjs",
+        "--file",
+        "examples/use-case/application.conf",
+        "--fallback",
+        "examples/use-case/defaults.conf",
+        "--no-network",
+        "--resolved-json"
+      ]
+    },
+    {
+      "args": [
+        "tools/cli.mjs",
+        "--file",
+        "examples/use-case/application.conf",
+        "--fallback",
+        "examples/use-case/defaults.conf",
+        "--no-network",
+        "--get",
+        "service.timeout",
+        "--type",
+        "milliseconds"
+      ]
+    }
+  ],
+  "expected": "主配置覆盖端口为 9080，替换也为 9080，回退保留 timeout，毫秒读取为 2000。"
+}
