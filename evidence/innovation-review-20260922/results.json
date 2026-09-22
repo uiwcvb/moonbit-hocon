@@ -1,0 +1,55 @@
+{
+  "date": "2026-09-22",
+  "project": "hocon",
+  "package": "uiwcvb/hocon",
+  "version": "0.23.0",
+  "code_base_commit_before_materials": "43c59f2fe7661320e97199cbdac8e1f411f44116",
+  "core_checks": [
+    {
+      "command": [
+        "C:\\Users\\uiwcv\\Documents\\Codex\\2026-09-10\\ban\\work\\moon\\bin\\moon.exe",
+        "test",
+        "--target",
+        "js"
+      ],
+      "exit": 0,
+      "seconds": 43.5,
+      "log": "hocon-workflow-0.log"
+    },
+    {
+      "command": [
+        "C:\\Users\\uiwcv\\Documents\\Codex\\2026-09-10\\ban\\work\\moon\\bin\\moon.exe",
+        "test",
+        "--target",
+        "wasm-gc"
+      ],
+      "exit": 0,
+      "seconds": 41.1,
+      "log": "hocon-workflow-1.log"
+    },
+    {
+      "command": [
+        "moon",
+        "build",
+        "--target",
+        "js"
+      ],
+      "exit": 0,
+      "note": "module import corrected and rebuilt"
+    }
+  ],
+  "workflow_checks": [
+    {
+      "command": [
+        "node",
+        "tools/test-host.mjs"
+      ],
+      "exit": 0,
+      "seconds": 1.49,
+      "log": "hocon-workflow-2.log"
+    }
+  ],
+  "interpretation": "本轮修复改名后命令包仍引用旧模块而无法构建的问题，重新生成 API/JS 引擎；双后端和文件宿主检查通过。",
+  "limit": "Lightbend 全套行为和所有平台未完全等价；HTTP、环境变量须显式启用，README 列出具体差异。",
+  "remote_push_performed": false
+}
