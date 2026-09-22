@@ -12,7 +12,7 @@ MoonBit 与宿主分工：MoonBit 解析和求值，Node 提供文件/HTTP、环
 
 本轮证据：本轮修复改名后命令包仍引用旧模块而无法构建的问题，重新生成 API/JS 引擎；双后端和文件宿主检查通过。 具体输入、脚本、已执行与历史对照分开记录在 [PROPOSAL.md](PROPOSAL.md) 和 evidence/innovation-review-20260922/。
 
-边界：Lightbend 全套行为和所有平台未完全等价；HTTP、环境变量须显式启用，README 列出具体差异。
+边界：Lightbend 全套行为和所有平台未完全等价；环境变量须显式注入，HTTP(S) 默认可用，离线加载须指定 `--no-network` 或 `network: false`。
 
 检索覆盖 Mooncakes 官方关键词/别名、GitHub 仓库查询、GitLink 公开索引、直接来源文档；没有完整赛事报名表、私有仓库、未公开分支或 GitHub 全代码索引。GitLink 索引也不完整。未找到同范围项目不等于生态空白；已有相关项目不自动等于无独立贡献。完整查询和固定提交快照在总交付目录 innovation-review-20260922/。
 

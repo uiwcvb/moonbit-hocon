@@ -25,6 +25,6 @@ node tools/cli.mjs --file examples/use-case/application.conf --fallback examples
 
 ## 不能由样例推出的结论
 
-Lightbend 全套行为和所有平台未完全等价；HTTP、环境变量须显式启用，README 列出具体差异。
+Lightbend 全套行为和所有平台未完全等价；环境变量须显式注入，HTTP(S) 默认可用。本例程显式使用 `--no-network`（API 对应 `network: false`）保证离线加载。
 
 该样例是可修改的使用入口，不能证明存在真实用户、全部兼容或性能领先。继续投入的依据应是明确的输入或接入需求；若对接任务用既有成熟库即可完成，应优先复用而不是为保留参赛数量扩张本项目。

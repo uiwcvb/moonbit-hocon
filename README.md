@@ -53,7 +53,7 @@ node tools/test-host.mjs
 
 专项所需的参考环境和历史版本见原使用说明及 TESTING 文档；本轮回执只记录实际执行项，不声称上面所有参考服务在任意环境即装即跑。
 
-Lightbend 全套行为和所有平台未完全等价；HTTP、环境变量须显式启用，README 列出具体差异。
+Lightbend 全套行为和所有平台未完全等价；进程环境变量须通过 `--env` 或 `options.environment` 显式注入。HTTP(S) 默认可用；离线加载须指定 `--no-network` 或 `network: false`。
 
 ## 复审材料状态
 
