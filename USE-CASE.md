@@ -17,11 +17,15 @@ node tools/cli.mjs --file examples/use-case/application.conf --fallback examples
 
 每一步输出见实际目录下 `step-N.stdout.txt` / `step-N.stderr.txt`；本轮已保存回执见 `evidence/value-rework-20260922/use-case.json`。
 
+## 迁移差异检查
+
+有官方 Lightbend Config 1.4.9 JAR 时，按 [迁移闸门](MIGRATION-GATE.md) 运行 `tools/migration-gate.mjs`。同一份配置解析后 3 个路径一致，退出 0；用旧版 `application-before.conf` 作为参考时，端口与依赖端口的替换路径不同，退出 2。输出只列路径，不列配置值。该步骤是本地合成迁移检查，JAR 需使用者提供。
+
 ## 为什么保留这个实现
 
 需要保留 HOCON include/替换/回退的输入语义时选择；从零开始的简单配置不一定需要 HOCON。
 
-本轮未找到同范围 MoonBit HOCON 库；其他配置库当然存在。价值是兼容这个明确的配置格式，不是首次变量替换或配置读取。
+现有 Lightbend Config 已实现 HOCON 语义。新增价值仅限 MoonBit 读取同类配置及迁入前的可检查差异；没有真实迁移使用方，不以重新实现语义本身证明价值。
 
 ## 不能由样例推出的结论
 

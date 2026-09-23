@@ -1,17 +1,17 @@
 {
   "project": "hocon",
-  "title": "HOCON 配置迁移与启动校验",
+  "title": "HOCON 配置迁移差异闸门",
   "module": "uiwcvb/hocon",
-  "version": "0.23.0",
+  "version": "0.24.0",
   "repository": "https://github.com/uiwcvb/moonbit-hocon",
-  "status": "保留候选",
-  "remainingRisk": "尚无确认迁移用户，不能把全套 JVM 行为或性能作为已完成。",
+  "status": "按新驳回意见整改",
+  "remainingRisk": "尚无真实迁移用户；差异闸门只覆盖受信任本地配置和有限 JSON 值，不能据此证明全量 JVM 兼容。",
   "actualUsersClaimed": false,
   "anonymousCloneVerified": true,
   "publicHead": "4ff504db3894362ff5ae7046d4e66c816de1045a",
   "defaultBranch": "origin/main",
   "localChangesPublished": false,
-  "proposalLines": 25,
-  "useCase": "分层配置及启动类型读取",
-  "diff": "本轮未找到同范围 MoonBit HOCON 库；其他配置库当然存在。价值是兼容这个明确的配置格式，不是首次变量替换或配置读取。"
+  "proposalLines": 18,
+  "useCase": "Lightbend 对照的配置迁移差异闸门",
+  "diff": "Lightbend 已有成熟 HOCON 语义。新增 MoonBit 应用迁入前的可运行差异闸门，报告解析后漂移并以非零状态退出；不声称现有客户或全量等价。"
 }
