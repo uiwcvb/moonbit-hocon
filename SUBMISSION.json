@@ -5,13 +5,13 @@
   "version": "0.24.1",
   "repository": "https://github.com/uiwcvb/moonbit-hocon",
   "status": "原申报已驳回；本地修订待团队同步复审",
-  "remainingRisk": "尚无真实迁移用户；差异闸门只覆盖受信任本地配置和有限 JSON 值，不能据此证明全量 JVM 兼容。",
+  "remainingRisk": "只证明选定配置与已声明子集；不能据此称完整JVM兼容或已有迁移客户",
   "actualUsersClaimed": false,
   "defaultBranch": "origin/main",
   "localChangesPublished": false,
   "proposalLines": 18,
-  "useCase": "Lightbend 对照的配置迁移差异闸门",
-  "diff": "Lightbend 已有成熟 HOCON 语义。新增 MoonBit 应用迁入前的可运行差异闸门，报告解析后漂移并以非零状态退出；不声称现有客户或全量等价。",
+  "useCase": "读取真实项目配置片段与include来源，核对类型读取和迁移结果",
+  "diff": "承认Lightbend已有HOCON；本库提供MoonBit配置求值、差异与读取来源接口，不宣称语义创新",
   "historicalAnonymousClone": {
     "publicHead": "4ff504db3894362ff5ae7046d4e66c816de1045a",
     "anonymousCloneVerified": true,
@@ -24,5 +24,6 @@
   "currentValidation": "evidence/openwhisk-20260927/LOCAL-CHECKS.json",
   "currentEvidence": "evidence/openwhisk-20260927/LOCAL-CHECKS.json",
   "metadataReviewedOn": "2026-09-27",
-  "currentEvidenceScope": "Actual OpenWhisk controller fragment, two real includes and explicit fallback; 36 paths / 11 typed reads against Config 1.4.3 and 1.4.9; source read audit"
+  "currentEvidenceScope": "Actual OpenWhisk controller fragment, two real includes and explicit fallback; 36 paths / 11 typed reads against Config 1.4.3 and 1.4.9; source read audit",
+  "reviewDecision": "保留配置求值与迁移核验"
 }
