@@ -31,37 +31,43 @@ function leaves(value,path=[],out=new Map()){
 }
 
 function parse(args){
-  const options={fallbacks:[]};
+  const options={fallbacks:[],classpath:[]};
   for(let i=0;i<args.length;i++){
     const key=args[i];
-    if(!['--file','--reference-file','--fallback','--jar'].includes(key)||!args[i+1])throw Error('Usage: node tools/migration-gate.mjs --file application.conf --jar config-1.4.9.jar [--fallback defaults.conf] [--reference-file old.conf]');
+    if(!['--file','--reference-file','--fallback','--jar','--classpath'].includes(key)||!args[i+1])throw Error('Usage: node tools/migration-gate.mjs --file application.conf --jar config-1.4.9.jar [--fallback defaults.conf] [--reference-file old.conf] [--classpath DIRECTORY]');
     const value=args[++i];
     if(key==='--fallback')options.fallbacks.push(inputFile(value));
     else if(key==='--file')options.file=inputFile(value);
     else if(key==='--reference-file')options.referenceFile=inputFile(value);
+    else if(key==='--classpath')options.classpath.push(value);
     else options.jar=inputFile(value);
   }
   if(!options.file||!options.jar)throw Error('Both --file and --jar are required');
   return options;
 }
 
-export function compare({file,referenceFile=file,fallbacks=[],jar,java=process.env.JAVA??'java'}){
+export function compare({file,referenceFile=file,fallbacks=[],classpath=[],jar,java=process.env.JAVA??'java'}){
   const application=inputFile(file),reference=inputFile(referenceFile),defaults=fallbacks.map(inputFile),referenceJar=inputFile(jar);
-  const local=sorted(loadFile(application,{fallbackFiles:defaults,network:false,environment:{}}));
-  const request={file:reference,fallbackFiles:defaults,environment:{}};
+  if(!Array.isArray(classpath)||classpath.length>64)throw Error('classpath must be an array of at most 64 directories');
+  const roots=classpath.map(directory=>{const p=fs.realpathSync(directory);if(!fs.statSync(p).isDirectory())throw Error('classpath entry must be a directory');return p;});
+  const reads=new Map();
+  const onRead=event=>{const previous=reads.get(event.path);if(previous&&previous.sha256!==event.sha256)throw Error('Configuration changed during load: '+event.path);reads.set(event.path,event);};
+  const local=sorted(loadFile(application,{fallbackFiles:defaults,classpath:roots,network:false,environment:{},onRead}));
+  const request={file:reference,fallbackFiles:defaults,classpath:roots,environment:{}};
   const run=spawnSync(java,['-cp',referenceJar,oracle],{input:JSON.stringify(request)+'\n',encoding:'utf8',windowsHide:true,timeout:30000,maxBuffer:4*1024*1024});
   if(run.error||run.status!==0)throw Error('Lightbend reference could not run: '+(run.error?.message??run.stderr.trim().slice(0,300)));
   const lines=run.stdout.trim().split(/\r?\n/);
   if(lines.length!==1)throw Error('Lightbend reference returned an invalid response count');
   const result=JSON.parse(lines[0]);
   if(!result.accepted)throw Error('Lightbend reference rejected the configuration: '+(result.error??'unknown'));
-  const expected=leaves(result.value),actual=leaves(local),differences=[];
+  for(const event of reads.values())if(hash(fs.readFileSync(event.path))!==event.sha256)throw Error('Configuration changed during comparison: '+event.path);
+  const expected=leaves(sorted(result.value)),actual=leaves(local),differences=[];
   for(const key of new Set([...expected.keys(),...actual.keys()])){
     if(expected.get(key)===actual.get(key))continue;
     differences.push({path:JSON.parse(key),kind:!expected.has(key)?'only-in-moonbit':!actual.has(key)?'only-in-lightbend':'different-value-or-type'});
   }
   differences.sort((a,b)=>JSON.stringify(a.path).localeCompare(JSON.stringify(b.path)));
-  return {equivalent:!differences.length,pathsCompared:new Set([...expected.keys(),...actual.keys()]).size,differences,sourceSha256:hash(fs.readFileSync(application)),referenceSha256:hash(fs.readFileSync(reference)),fallbackSha256:defaults.map(name=>hash(fs.readFileSync(name))),referenceJarSha256:hash(fs.readFileSync(referenceJar)),scope:'trusted local files; explicit empty environment; MoonBit HTTP disabled; JSON-safe values; no production traffic'};
+  return {equivalent:!differences.length,pathsCompared:new Set([...expected.keys(),...actual.keys()]).size,differences,sourceSha256:hash(fs.readFileSync(application)),referenceSha256:hash(fs.readFileSync(reference)),fallbackSha256:defaults.map(name=>hash(fs.readFileSync(name))),referenceJarSha256:hash(fs.readFileSync(referenceJar)),classpath:roots,localReadSet:[...reads.values()].sort((a,b)=>a.path.localeCompare(b.path)),scope:'trusted local files; explicit directory classpath, not automatic JVM application/default loading; empty environment; MoonBit HTTP disabled; JSON-safe values; local read set rechecked after reference; not an atomic snapshot or reference-side read audit'};
 }
 
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){

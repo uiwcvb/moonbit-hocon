@@ -1,0 +1,18 @@
+{
+  "scope": "OpenWhisk controller configuration fragment; no application startup",
+  "startup": {
+    "port": 10001,
+    "bindHost": "0.0.0.0",
+    "requestTimeoutNanoseconds": "65000000000",
+    "idleTimeoutNanoseconds": "70000000000",
+    "maxContentBytes": "52428800",
+    "statistics": false,
+    "headHandling": false,
+    "version": "1.1.0",
+    "protocol": "http",
+    "logLevel": "DEBUG",
+    "enabledProtocols": [
+      "TLSv1.2"
+    ]
+  }
+}

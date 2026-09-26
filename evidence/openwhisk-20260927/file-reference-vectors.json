@@ -1,0 +1,838 @@
+{
+  "reference": "config-1.4.9.jar",
+  "cases": [
+    {
+      "files": {
+        "app/main.conf": "include \"base.conf\"\nx=2",
+        "app/base.conf": "x=1\ny=${x}"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"sub/a.conf\"\nx=3",
+        "app/sub/a.conf": "include \"b.conf\"",
+        "app/sub/b.conf": "y=${x}"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "nested {include \"base.conf\"}\nnested.x=4\nx=8",
+        "app/base.conf": "x=1\ny=${x}"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.conf": "x=conf\nc=1",
+        "app/base.json": "{\"x\":\"json\",\"j\":2}",
+        "app/base.properties": "x=properties\np=3"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.conf": "x=relative",
+        "base.conf": "x=cwd",
+        "cp/base.conf": "x=classpath"
+      },
+      "entry": "app/main.conf",
+      "classpath": [
+        "cp"
+      ]
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\""
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include required(\"base\")",
+        "app/base.conf": "x=relative",
+        "base.conf": "x=cwd",
+        "cp/base.conf": "x=classpath"
+      },
+      "entry": "app/main.conf",
+      "classpath": [
+        "cp"
+      ]
+    },
+    {
+      "files": {
+        "app/main.conf": "include required(\"base\")"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include file(\"base\")",
+        "app/base.conf": "x=relative",
+        "base.conf": "x=cwd",
+        "cp/base.conf": "x=classpath"
+      },
+      "entry": "app/main.conf",
+      "classpath": [
+        "cp"
+      ]
+    },
+    {
+      "files": {
+        "app/main.conf": "include file(\"base\")"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include required(file(\"base\"))",
+        "app/base.conf": "x=relative",
+        "base.conf": "x=cwd",
+        "cp/base.conf": "x=classpath"
+      },
+      "entry": "app/main.conf",
+      "classpath": [
+        "cp"
+      ]
+    },
+    {
+      "files": {
+        "app/main.conf": "include required(file(\"base\"))"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include classpath(\"base\")",
+        "app/base.conf": "x=relative",
+        "base.conf": "x=cwd",
+        "cp/base.conf": "x=classpath"
+      },
+      "entry": "app/main.conf",
+      "classpath": [
+        "cp"
+      ]
+    },
+    {
+      "files": {
+        "app/main.conf": "include classpath(\"base\")"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include required(classpath(\"base\"))",
+        "app/base.conf": "x=relative",
+        "base.conf": "x=cwd",
+        "cp/base.conf": "x=classpath"
+      },
+      "entry": "app/main.conf",
+      "classpath": [
+        "cp"
+      ]
+    },
+    {
+      "files": {
+        "app/main.conf": "include required(classpath(\"base\"))"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base.json\"",
+        "app/base.json": " {\"x\":1,\"a.b\":\"literal\",\"r\":\"${missing}\"} "
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base.conf\"",
+        "app/base.conf": "x=1"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base.properties\"",
+        "app/base.properties": "x=1\nr=${missing}"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base.weird\"",
+        "app/base.weird": "x=1"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base": "x=bare"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base.weird\"",
+        "app/base.weird.conf": "x=conf"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base.json\"",
+        "app/base.json": "x=1"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base.json\"",
+        "app/base.json": "[]"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base.conf\"",
+        "app/base.conf": "include \"main.conf\""
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base.conf\"",
+        "app/base.conf": "a=[1,,2]"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base.conf\"",
+        "cp/base.conf": "x=classpath"
+      },
+      "entry": "app/main.conf",
+      "classpath": [
+        "cp"
+      ]
+    },
+    {
+      "files": {
+        "app/main.conf": "include classpath(\"base\")",
+        "cp/base.conf": "x=first\na=1",
+        "cp2/base.conf": "x=second\nb=2"
+      },
+      "entry": "app/main.conf",
+      "classpath": [
+        "cp",
+        "cp2"
+      ]
+    },
+    {
+      "files": {
+        "app/main.conf": "include classpath(\"sub/base.conf\")",
+        "cp/sub/base.conf": "include \"other.conf\"",
+        "cp/sub/other.conf": "x=relative",
+        "cp/other.conf": "x=root"
+      },
+      "entry": "app/main.conf",
+      "classpath": [
+        "cp"
+      ]
+    },
+    {
+      "files": {
+        "app/main.conf": "include classpath(\"sub/base.conf\")",
+        "cp/sub/base.conf": "include \"/other.conf\"",
+        "cp/other.conf": "x=root"
+      },
+      "entry": "app/main.conf",
+      "classpath": [
+        "cp"
+      ]
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.properties": "a=1\na.b=2"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.properties": "a.b=2\na=1"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.properties": "a=one\na=two"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.properties": "a\\ b : hello  \nb=world"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.properties": "!comment\n #comment\na value#literal!"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.properties": "a=one\\\n   two\nb=3"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.properties": "a=one\\\r\n\t two"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.properties": "a=\\u4e2d\\u6587\nb=é😀"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.properties": "a=\\n\\t\\r\\f\\z\\\\"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.properties": "a=\\uBAD"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.properties": "a=\\uXXXX"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.properties": ".a.=value\n=x"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.properties": "a\\.b=1\n\"q\"=quoted"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.properties": "__proto__.x=1\nconstructor.y=2"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.properties": "a="
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.properties": "a=\nnext"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.properties": "a=one\\"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.properties": "a\\:b=escaped\na\\=b=equals"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.properties": "a=1\ra=2"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"base\"",
+        "app/base.properties": "a=hello\\\n#notcomment"
+      },
+      "entry": "app/main.conf"
+    },
+    {
+      "files": {
+        "root.json": "{\"x\":1,\"a.b\":2}"
+      },
+      "entry": "root.json"
+    },
+    {
+      "files": {
+        "root.properties": "x=1\na.b=2"
+      },
+      "entry": "root.properties"
+    },
+    {
+      "files": {
+        "app/main.conf": "x=${base}\ny=${ENV}",
+        "fallback/default.conf": "include \"part.conf\"",
+        "fallback/part.conf": "base=4"
+      },
+      "entry": "app/main.conf",
+      "fallbackFiles": [
+        "fallback/default.conf"
+      ],
+      "environment": {
+        "ENV": "yes"
+      }
+    },
+    {
+      "files": {
+        "app/main.conf": "a={hi=1}"
+      },
+      "entry": "app/main.conf",
+      "fallbacks": [
+        "a=0",
+        "a={low=2}"
+      ]
+    },
+    {
+      "files": {
+        "app/main.conf": "a=${a}z"
+      },
+      "entry": "app/main.conf",
+      "fallbacks": [
+        "a=${a}y",
+        "a=x"
+      ]
+    },
+    {
+      "files": {
+        "app/main.conf": "a={hi=1}"
+      },
+      "entry": "app/main.conf",
+      "fallbacks": [
+        "a=${x}\nx=0",
+        "a={low=2}"
+      ]
+    },
+    {
+      "files": {
+        "app/main.conf": "include \"@FILEURL@\"",
+        "app/base.conf": "x=1"
+      },
+      "entry": "app/main.conf",
+      "fileUrl": "app/base.conf"
+    },
+    {
+      "files": {
+        "app/main.conf": "include url(\"@FILEURL@\")",
+        "app/base.conf": "x=2"
+      },
+      "entry": "app/main.conf",
+      "fileUrl": "app/base.conf"
+    }
+  ],
+  "references": [
+    {
+      "accepted": true,
+      "value": {
+        "x": 2,
+        "y": 2
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 3,
+        "y": 3
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "nested": {
+          "x": 4,
+          "y": 4
+        },
+        "x": 8
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "c": 1,
+        "j": 2,
+        "p": "3",
+        "x": "conf"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": "relative"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {}
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": "relative"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "IO"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": "cwd"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {}
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": "cwd"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "IO"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": "classpath"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {}
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": "classpath"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "IO"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a.b": "literal",
+        "r": "${missing}",
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": false,
+      "error": "UnresolvedSubstitution"
+    },
+    {
+      "accepted": true,
+      "value": {}
+    },
+    {
+      "accepted": true,
+      "value": {}
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": "conf"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": false,
+      "error": "WrongType"
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": false,
+      "error": "Parse"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": "classpath"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": 1,
+        "b": 2,
+        "x": "first"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": "relative"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": "root"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "b": "2"
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "b": "2"
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "two"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a b": "hello  ",
+        "b": "world"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "value#literal!"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "onetwo",
+        "b": "3"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "onetwo"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "中文",
+        "b": "é😀"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "\n\t\r\fz\\"
+      }
+    },
+    {
+      "accepted": false,
+      "error": "IllegalArgumentException"
+    },
+    {
+      "accepted": false,
+      "error": "IllegalArgumentException"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "": {
+          "a": {
+            "": "value"
+          }
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "\"q\"": "quoted",
+        "a": {
+          "b": "1"
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "__proto__": {
+          "x": "1"
+        },
+        "constructor": {
+          "y": "2"
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": ""
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "",
+        "next": ""
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "one"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a:b": "escaped",
+        "a=b": "equals"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "2"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "hello#notcomment"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a.b": 2,
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "b": "2"
+        },
+        "x": "1"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "base": 4,
+        "x": 4,
+        "y": "yes"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "hi": 1
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": "xyz"
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "a": {
+          "hi": 1
+        },
+        "x": 0
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 1
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "x": 2
+      }
+    }
+  ]
+}

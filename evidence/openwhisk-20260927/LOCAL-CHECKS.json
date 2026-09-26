@@ -1,0 +1,65 @@
+{
+  "utc": "2026-09-26T20:05:59.467480+00:00",
+  "version": "0.24.1",
+  "checks": [
+    {
+      "name": "check",
+      "command": [
+        "moon",
+        "check",
+        "--target",
+        "all"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "build",
+      "command": [
+        "moon",
+        "build",
+        "--target",
+        "js"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "host",
+      "command": [
+        "node",
+        "tools/test-host.mjs"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "file-reference",
+      "command": [
+        "node",
+        "tools/test-file-reference.mjs"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "consumer",
+      "command": [
+        "node",
+        "examples/read-openwhisk.mjs"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "sourceSha256": {
+    "tools/config-host.mjs": "25f10ad9a68bfa13a334ff7dad21b30f9805cf29dc8e9048ab0425c2d72b0d74",
+    "tools/migration-gate.mjs": "cfb47b0060a71b6a5f4dd3a82fd37299729a34caf076be73f5e09eeba68669b9",
+    "tools/test-openwhisk.mjs": "cfbaa40767495aad26f8fb62e198933256787d40e704e8e7497f7a41d6ab8db8",
+    "examples/read-openwhisk.mjs": "9551617ee65bdea649a97cf13646e9ea7a16dc712cb1331b2f263943744ce6e3",
+    "tools/HoconOracle.java": "6007c7d48a66e0a1f3979adfd3224e906d92794f515e8001a969a5cc1a4c9915",
+    "moon.mod": "405e73d4e38dd662d3ef7051310e41d461fd9c5730b8ecc3773c5b0082b8d951"
+  },
+  "engineSha256": "1513d2184cdccf3cdb50fdb918b0608cbc58bb42db6c201ce54892c3bce4ed69",
+  "coreNote": "No MoonBit source changes; freshly built engine byte-matched both public live-reference receipts; no unnecessary full core rerun",
+  "limits": [
+    "No full OpenWhisk runtime or customer migration",
+    "Read audit local side only, not atomic",
+    "No remote CI or publishing"
+  ]
+}

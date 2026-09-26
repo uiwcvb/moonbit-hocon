@@ -1,0 +1,17 @@
+{
+  "openwhiskCommit": "a67aba60ce68e0583962cb51cf6726c2a5f3795e",
+  "sourceBase": "https://raw.githubusercontent.com/apache/openwhisk/a67aba60ce68e0583962cb51cf6726c2a5f3795e/",
+  "pekkoVersionResource": "org.apache.pekko:pekko-http-core_2.12:1.1.0!/pekko-http-version.conf",
+  "pekkoJarSha256": "08d01db40ed6465da17210f7d56e2248b2cc0309fe4665dff9c52d6c3ed7c7e2",
+  "files": {
+    "controller/application.conf": "05a63be9477b9984ac43e120ad17648b45c5dec0748fc9dbb85db858685cfa0e",
+    "resources/logging.conf": "377380d0e9da201837255009e4fa9fd58b2b1aaac060fcb80682c9ff1b8d424c",
+    "controller/reference.conf": "a55faf296fb9ac24dc37c42a71d8bc69134b6d1a106862e471ab4c0c07b34933",
+    "resources/pekko-http-version.conf": "600d2c1bcfe95beb896f826624d2f11aa5998015ebd80a5e58337e444959455b",
+    "OPENWHISK-LICENSE.txt": "94550730ab91e73166bbc194b989672906db0fcc1175f068dc43fc2cee79904a",
+    "OPENWHISK-NOTICE.txt": "51bc0092bbc668cb137e50eb05aa7e03fb6b14fb5ee044e51ff8d41aa89bc166",
+    "PEKKO-LICENSE.txt": "82450890ed1118bfc8d2f0e7399b384d2715fd35be46f45473bf5949b883b396",
+    "PEKKO-NOTICE.txt": "bf938a073426dd48e7d79a1af75b425e5fdd0cc603038a4ee8300b045c906042"
+  },
+  "scope": "unchanged controller application and its two includes, explicit controller fallback; not full runtimeClasspath or controller startup"
+}

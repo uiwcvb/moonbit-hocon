@@ -25,3 +25,5 @@ MoonBit 与宿主分工：MoonBit 解析和求值，Node 提供文件/HTTP、环
 ## 来源直达
 
 [Lightbend Config 1.4.9](https://github.com/lightbend/config/releases/tag/v1.4.9)、[HOCON 规范](https://github.com/lightbend/config/blob/main/HOCON.md)。这些是既有规范/实现的来源；具体固定版本、适配与运行范围见 [完整说明](README-BEFORE-VALUE-REWORK.md) 和仓库验证记录。链接存在不代表本轮重新运行了对方实现，也不构成赛事无重复证明。
+
+2026-09-27定向复查：moonbitstack/moonjson当前JSON系列、moonbitlang/moon_config模块配置、crh12354/moonconfigkit的INI/properties属于相邻能力，未据此发现同域HOCON求值包；此为有限检索结果，不是生态空白证明。Lightbend Config是成熟参考实现，本项目是移植/接入价值，不是新配置语言。公开真实输入补充见OPENWHISK.md，未确认真实用户。

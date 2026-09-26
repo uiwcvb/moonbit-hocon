@@ -335,3 +335,9 @@ JS/Wasm-GC 各 16,721 项通过；新增 2,687 个公开 Double getter 输入、
 最大当前/0.22 耗时比为 1.111（render-json-floats）；最大进程中位数波动比 2.540，不稳定标记 true。此处只测已解析配置的热调用及既有两个完整解析请求；没有证明启动、峰值内存、长期运行、全部输入或跨平台性能。完整功能、兼容性及性能仍未追平。
 
 初次 verify 在生成文件校验处失败，原因是格式化器为多行元组/调用增加尾逗号。校验器已改为仅忽略语法允许的尾逗号，保留字符串字面量和其余有效 token；修正后重新运行完整 verify。初次记录保留为 double-direct-verify-initial.log，最终依据 double-direct-verify.log。 初版计时及源码指纹保留为 double-direct-performance-initial.json；单进程 Unicode 诊断保留为 double-direct-unicode-probe.json 和对应脚本。发现正常 Unicode 整数读取需承担异常回退开销后，改为提前识别非 ASCII 字符，并将三个字符串负载加入最终五进程计时。
+
+## 0.24.1 公开配置与宿主读取记录（2026-09-27）
+
+本轮核心MoonBit源码未改。当前固定工具链 check all通过、重新构建engine与两份公开参考回执的engineSHA完全一致。受影响同步宿主测试通过，实际Lightbend1.4.9文件参考58/58一致。公开OpenWhisk配置分别对照1.4.3和1.4.9：36叶路径、11类型读取、4读取文件及失败边界。真实文件消费者通过，50m的实际类型化结果为52428800字节。保存于 evidence/openwhisk-20260927；旧参考回执保留，未将旧整套核心测试算成本轮重跑。
+
+工作流增加固定哈希Java参考与公开配置入口；未执行GitHub runner。源码是公开上游文件，不是生产配置快照；未启动OpenWhisk。参考Java只在验证时运行，正常MoonBit/Node消费者不需要Java。

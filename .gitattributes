@@ -2,3 +2,6 @@
 *.png -text
 *.jpg -text
 *.wasm -text
+
+/examples/openwhisk/** -text
+/examples/openwhisk/SOURCE.json text eol=lf

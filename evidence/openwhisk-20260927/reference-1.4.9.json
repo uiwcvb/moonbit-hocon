@@ -1,0 +1,46 @@
+{
+  "utc": "2026-09-26T20:04:03.192Z",
+  "referenceJarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37",
+  "configPaths": 36,
+  "typedGetters": 11,
+  "localReads": [
+    {
+      "path": "examples/openwhisk/controller/application.conf",
+      "bytes": 4634,
+      "sha256": "05a63be9477b9984ac43e120ad17648b45c5dec0748fc9dbb85db858685cfa0e"
+    },
+    {
+      "path": "examples/openwhisk/controller/reference.conf",
+      "bytes": 1405,
+      "sha256": "a55faf296fb9ac24dc37c42a71d8bc69134b6d1a106862e471ab4c0c07b34933"
+    },
+    {
+      "path": "examples/openwhisk/resources/logging.conf",
+      "bytes": 943,
+      "sha256": "377380d0e9da201837255009e4fa9fd58b2b1aaac060fcb80682c9ff1b8d424c"
+    },
+    {
+      "path": "examples/openwhisk/resources/pekko-http-version.conf",
+      "bytes": 29,
+      "sha256": "600d2c1bcfe95beb896f826624d2f11aa5998015ebd80a5e58337e444959455b"
+    }
+  ],
+  "equivalent": true,
+  "checks": [
+    "actual upstream controller fragment",
+    "two real include resources",
+    "controller fallback",
+    "11 typed reads against live Java",
+    "missing optional include fails required getter",
+    "changed include recorded with unchanged main hash",
+    "changed old baseline detected",
+    "reference missing required include rejects",
+    "invalid observer and classpath rejected"
+  ],
+  "limits": [
+    "not full OpenWhisk runtimeClasspath or application execution",
+    "empty environment",
+    "local read audit is not atomic or a reference-side include trace"
+  ],
+  "engineSha256": "1513d2184cdccf3cdb50fdb918b0608cbc58bb42db6c201ce54892c3bce4ed69"
+}

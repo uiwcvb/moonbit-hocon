@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import {createHash} from 'node:crypto';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {networkOptions,readHttp} from './http-client.mjs';
@@ -33,6 +34,7 @@ export function parseProperties(text) {
 }
 
 function createHost(options) {
+  if(options.onRead!==undefined&&typeof options.onRead!=='function')throw new TypeError('onRead must be a function');
   const cwd=path.resolve(options.cwd??process.cwd());
   const roots=(options.classpath??[]).map(p=>path.resolve(cwd,p));
   const metadata=new Map();let bytes=0, count=0;
@@ -44,7 +46,10 @@ function createHost(options) {
     if(!stat.isFile())throw new Error('Configuration is not a regular file: '+name);
     bytes+=stat.size;count++;
     if(stat.size>400000||bytes>4000000||count>512)throw new Error('Configuration file resource limit');
-    const content=new TextDecoder('utf-8',{fatal:true,ignoreBOM:true}).decode(fs.readFileSync(real));
+    const data=fs.readFileSync(real);
+    if(data.length!==stat.size)throw new Error('Configuration changed during read: '+name);
+    const content=new TextDecoder('utf-8',{fatal:true,ignoreBOM:true}).decode(data);
+    options.onRead?.(Object.freeze({path:real,bytes:data.length,sha256:createHash('sha256').update(data).digest('hex')}));
     if(content.length>100000)throw new Error('Configuration source exceeds 100000 UTF-16 units');
     if(resource!==undefined)metadata.set(real,resource);
     const extension=forceHocon?'.conf':path.extname(name);
