@@ -8,7 +8,7 @@
 
 ## 可运行交付
 MoonBit 实现 HOCON 解析、替换、类型读取和求值；Node 负责受信任文件、显式环境/网络与本地 CLI。新增 `tools/migration-gate.mjs` 以未改动的 Lightbend Config 1.4.9 为参考，比较两侧最终配置，支持显式classpath目录，报告差异路径和实际读取文件指纹，不输出配置值。可指定旧配置作基线，检测迁移后的语义漂移。
-先按 README 构建，运行 MIGRATION-GATE.md 的两条命令：相同配置 3 条路径一致退出 0；把旧端口 8080 改为 9080 后，报告 `service.port` 与替换得到的 `service.copy`，退出 2。这些输入是原创合成配置。另以公开Apache OpenWhisk实际controller配置、两个真实include和controller fallback核对36条叶路径、11项类型读取，见OPENWHISK.md；不称为客户迁移或全系统启动。
+先按 README 构建，运行 MIGRATION-GATE.md 的两条命令：相同配置 3 条路径一致退出 0；把旧端口 8080 改为 9080 后，报告 `service.port` 与替换得到的 `service.copy`，退出 2。这些输入是原创合成配置。另以公开Apache OpenWhisk实际controller配置、两个真实include和controller fallback核对36条叶路径、11项类型读取，见OPENWHISK.md；隔离 Linux 使用真实 Typesafe Config 1.4.9 再跑同一路径，结果一致；不称为客户迁移或全系统启动。
 
 ## 已有工具与增量
 Lightbend Config 已解决 JVM 侧 HOCON 语义；本项目没有发明 HOCON，也不以“MoonBit 首个”作为价值依据。增量是 MoonBit 应用接入及可运行的跨实现迁移检查。Java JAR 只在显式检查时作为参考程序，未捆绑进生产库；Node 文件/HTTP I/O 不冒称 MoonBit 原生能力。来源、接口与查重边界见 DUPLICATION.md。
@@ -17,4 +17,4 @@ Lightbend Config 已解决 JVM 侧 HOCON 语义；本项目没有发明 HOCON，
 旧版已有双后端及独立参考对照，本轮新增迁移入口的相同/差异/失败路径由本地检查记录；历史整套测试不计为本轮重跑。只比较可信本地文件与 JSON 可表达的安全整数范围，HTTP 在本入口禁用，环境变量为空；不是全量 JVM 兼容、生产性能或真实用户证明。
 没有确认使用方；团队需先同步对应代码与真实报名表。复审仍由组委会判断。
 
-**验收复现与交付状态（2026-09-28 本地）**：以 moonc 0.10.14+7d59c7ec9 通过 `--deny-warn` 检查、JS/Wasm-GC 测试和构建、最小样例和离线 `moon package`；公开 Git HEAD 当日可匿名读取，Mooncakes 在线版 `0.23.0` 落后于本地 `0.24.1`；新版推送、远端 CI 和发布待核对。命令与能力边界见 [README](README.md)，自动检查见 [CI](.github/workflows/ci.yml)；本地通过不代表赛事审核通过。
+**验收复现与交付状态（2026-09-28 本地）**：以 moonc 0.10.14+7d59c7ec9 通过 `--deny-warn` 检查、JS/Wasm-GC 测试和构建、最小样例和离线 `moon package`；同一代码在 Ubuntu-D 26.04 WSL2 全新解包后通过格式、接口生成、严格双后端检查及 Node 24.21.0 最小宿主入口；公开 Git HEAD 当日可匿名读取，Mooncakes 在线版 `0.23.0` 落后于本地 `0.24.1`；新版推送、远端 CI 和发布待核对。命令与能力边界见 [README](README.md)，自动检查见 [CI](.github/workflows/ci.yml)；本地通过不代表赛事审核通过。
