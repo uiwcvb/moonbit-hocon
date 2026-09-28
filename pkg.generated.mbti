@@ -171,10 +171,12 @@ pub suberror ParseError {
   Invalid(String)
   Located(String, SourcePosition)
 } derive(@debug.Debug)
+pub fn ParseError::to_repr(Self) -> @debug.Repr
 
 pub suberror ValidationError {
   ValidationFailed(Array[ValidationProblem])
 } derive(@debug.Debug)
+pub fn ValidationError::to_repr(Self) -> @debug.Repr
 
 // Types and methods
 pub(all) enum ConfigNumber {
@@ -182,6 +184,10 @@ pub(all) enum ConfigNumber {
   Long(Int64)
   Floating(Double)
 } derive(Eq, @debug.Debug)
+pub fn ConfigNumber::equal(Self, Self) -> Bool
+pub fn ConfigNumber::not_equal(Self, Self) -> Bool
+pub fn ConfigNumber::to_json(Self) -> Json
+pub fn ConfigNumber::to_repr(Self) -> @debug.Repr
 pub impl ToJson for ConfigNumber
 
 pub(all) struct ConfigPeriod {
@@ -189,6 +195,10 @@ pub(all) struct ConfigPeriod {
   months : Int
   days : Int
 } derive(Eq, ToJson, @debug.Debug)
+pub fn ConfigPeriod::equal(Self, Self) -> Bool
+pub fn ConfigPeriod::not_equal(Self, Self) -> Bool
+pub fn ConfigPeriod::to_json(Self) -> Json
+pub fn ConfigPeriod::to_repr(Self) -> @debug.Repr
 
 pub(all) enum DurationUnit {
   Nanoseconds
@@ -199,6 +209,9 @@ pub(all) enum DurationUnit {
   Hours
   Days
 } derive(Eq, @debug.Debug)
+pub fn DurationUnit::equal(Self, Self) -> Bool
+pub fn DurationUnit::not_equal(Self, Self) -> Bool
+pub fn DurationUnit::to_repr(Self) -> @debug.Repr
 
 pub(all) struct IncludeRequest {
   name : String
@@ -206,12 +219,19 @@ pub(all) struct IncludeRequest {
   from : String
   required : Bool
 } derive(Eq, ToJson, @debug.Debug)
+pub fn IncludeRequest::equal(Self, Self) -> Bool
+pub fn IncludeRequest::not_equal(Self, Self) -> Bool
+pub fn IncludeRequest::to_json(Self) -> Json
+pub fn IncludeRequest::to_repr(Self) -> @debug.Repr
 
 pub(all) struct IncludeSource {
   name : String
   content : String
   format : String
 } derive(Eq, @debug.Debug)
+pub fn IncludeSource::equal(Self, Self) -> Bool
+pub fn IncludeSource::not_equal(Self, Self) -> Bool
+pub fn IncludeSource::to_repr(Self) -> @debug.Repr
 
 pub(all) struct SourcePosition {
   source : String
@@ -219,11 +239,19 @@ pub(all) struct SourcePosition {
   line : Int
   column : Int
 } derive(Eq, ToJson, @debug.Debug)
+pub fn SourcePosition::equal(Self, Self) -> Bool
+pub fn SourcePosition::not_equal(Self, Self) -> Bool
+pub fn SourcePosition::to_json(Self) -> Json
+pub fn SourcePosition::to_repr(Self) -> @debug.Repr
 
 pub(all) enum TemporalAmount {
   Duration(Int64)
   Period(ConfigPeriod)
 } derive(Eq, @debug.Debug)
+pub fn TemporalAmount::equal(Self, Self) -> Bool
+pub fn TemporalAmount::not_equal(Self, Self) -> Bool
+pub fn TemporalAmount::to_json(Self) -> Json
+pub fn TemporalAmount::to_repr(Self) -> @debug.Repr
 pub impl ToJson for TemporalAmount
 
 pub(all) struct ValidationProblem {
@@ -232,6 +260,10 @@ pub(all) struct ValidationProblem {
   expected : String
   actual : String
 } derive(Eq, ToJson, @debug.Debug)
+pub fn ValidationProblem::equal(Self, Self) -> Bool
+pub fn ValidationProblem::not_equal(Self, Self) -> Bool
+pub fn ValidationProblem::to_json(Self) -> Json
+pub fn ValidationProblem::to_repr(Self) -> @debug.Repr
 
 pub(all) enum Value {
   Text(String)
@@ -249,7 +281,10 @@ pub(all) enum Value {
   Bound(Array[String], Int, Value)
   Substitution(Array[Array[String]], Bool, Bool, Int)
 } derive(Eq, @debug.Debug)
+pub fn Value::equal(Self, Self) -> Bool
+pub fn Value::not_equal(Self, Self) -> Bool
 pub fn Value::to_json_string(Self) -> String raise ParseError
+pub fn Value::to_repr(Self) -> @debug.Repr
 
 // Type aliases
 
