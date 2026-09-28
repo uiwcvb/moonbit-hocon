@@ -14,6 +14,8 @@ pub fn check_valid(Value, Value, paths? : Array[String]) -> Unit raise
 
 pub fn copy_value(Value) -> Value raise ParseError
 
+pub fn diff_resolved_configs(Value, Value) -> Array[ConfigChange] raise ParseError
+
 pub fn entry_set(Value) -> Map[String, Value] raise ParseError
 
 pub fn get(Value, String) -> Value?
@@ -179,6 +181,17 @@ pub suberror ValidationError {
 pub fn ValidationError::to_repr(Self) -> @debug.Repr
 
 // Types and methods
+pub(all) struct ConfigChange {
+  path : Array[String]
+  kind : String
+  before_type : String?
+  after_type : String?
+} derive(Eq, ToJson, @debug.Debug)
+pub fn ConfigChange::equal(Self, Self) -> Bool
+pub fn ConfigChange::not_equal(Self, Self) -> Bool
+pub fn ConfigChange::to_json(Self) -> Json
+pub fn ConfigChange::to_repr(Self) -> @debug.Repr
+
 pub(all) enum ConfigNumber {
   Integer(Int)
   Long(Int64)
