@@ -81,7 +81,7 @@ Lightbend 全套行为和所有平台未完全等价；进程环境变量须通�
 
 尚无确认迁移用户；新闸门只覆盖受信任本地配置、空环境、有限 JSON 值与指定参考 JAR，不能把全套 JVM 行为或性能作为已完成。
 
-2026-09-22 匿名新克隆成功；默认分支 `main`，核验公开提交 `4ff504db3894362ff5ae7046d4e66c816de1045a`。本轮源码修订仅在本地，尚未推送；此记录不证明当时报名表中的地址正确，也不证明新修订已上线。
+2026-09-22 匿名新克隆成功；默认分支 `main`，核验公开提交 `4ff504db3894362ff5ae7046d4e66c816de1045a`。这条历史记录只证明当日状态；2026-09-29 公开 HEAD 仍早于本次本地代码与文档提交，报名表地址须另核。
 
 [申报草稿](PROPOSAL.md) 已压缩为 30 行以内，并单独标明本项目仓库；[复核说明](REVIEW-RESPONSE.md) 区分材料错误、功能变化及尚未解决的问题。没有编造用户、设备接入、生产部署或评审认可。
 
@@ -105,4 +105,4 @@ moon package
 
 本地核验：JS/Wasm-GC 测试，以及配置、OpenWhisk、树、持久化、访问器、时间值和渲染检查通过。 `moon package` 已完成离线打包预检，它不等于已发布到 Mooncakes。
 
-公开交付（2026-09-28 核对）：当日 [https://github.com/uiwcvb/moonbit-hocon](https://github.com/uiwcvb/moonbit-hocon) 可匿名读取 Git HEAD，Mooncakes 在线版本为 `0.23.0`；此处源码版本 `0.24.1` 仍需由申报人同步到公开仓库，检查新提交的 GitHub Actions，再由对应账号发布 Mooncakes 新版。相关远端 CI 与赛事结果仍需以实际记录核对。项目许可见 [LICENSE](LICENSE)；如使用第三方材料，其来源和许可见仓内相应说明。
+公开交付（2026-09-29 只读核对）：[https://github.com/uiwcvb/moonbit-hocon](https://github.com/uiwcvb/moonbit-hocon) 的公开 Git HEAD 是本地提交的祖先；Mooncakes 最新版号 `0.23.0` 较本地 `0.24.1` 仍旧。版号不证明包内容与本次本地提交一致；当前 README、申报书、远端 CI 与报名表仍须对照公开提交核实。项目许可见 [LICENSE](LICENSE)；第三方来源和许可见仓内说明。
