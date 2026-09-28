@@ -9,7 +9,7 @@
   "actualUsersClaimed": false,
   "defaultBranch": "origin/main",
   "localChangesPublished": false,
-  "proposalLines": 20,
+  "proposalLines": 25,
   "useCase": "读取真实项目配置片段与include来源，核对类型读取和迁移结果",
   "diff": "承认Lightbend已有HOCON；本库提供MoonBit配置求值、差异与读取来源接口，不宣称语义创新",
   "historicalAnonymousClone": {
@@ -23,7 +23,7 @@
   "remoteCIRunByThisTask": false,
   "currentValidation": "evidence/openwhisk-20260927/LOCAL-CHECKS.json",
   "currentEvidence": "evidence/openwhisk-20260927/LOCAL-CHECKS.json",
-  "metadataReviewedOn": "2026-09-28",
+  "metadataReviewedOn": "2026-09-29",
   "currentEvidenceScope": "Actual OpenWhisk controller fragment, two real includes and explicit fallback; 36 paths / 11 typed reads against Config 1.4.3 and 1.4.9; source read audit",
   "reviewDecision": "保留配置求值与迁移核验"
 }
