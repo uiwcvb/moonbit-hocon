@@ -75,3 +75,19 @@ Lightbend 全套行为和所有平台未完全等价；进程环境变量须通�
 [申报草稿](PROPOSAL.md) 已压缩为 30 行以内，并单独标明本项目仓库；[复核说明](REVIEW-RESPONSE.md) 区分材料错误、功能变化及尚未解决的问题。没有编造用户、设备接入、生产部署或评审认可。
 
 CI固定的编译器与标准库版本见 [TOOLCHAIN.md](TOOLCHAIN.md)；升级时需同时核对生成产物。
+
+## 本地验收与公开交付（2026-09-28）
+
+核心实现使用 MoonBit；[固定编译器](.moonbit-version)为 `moonc 0.10.14+7d59c7ec9`。先按本文安装宿主依赖、运行 `moon update`，再从仓库根目录执行以下与 [CI](.github/workflows/ci.yml) 对齐的检查；可运行任务和适用边界见本文前面的示例与说明。
+
+```sh
+moon check
+moon test --target wasm-gc
+moon test --target js
+moon build --target js
+moon package
+```
+
+本地核验：JS/Wasm-GC 测试，以及配置、OpenWhisk、树、持久化、访问器、时间值和渲染检查通过。 `moon package` 已完成离线打包预检，它不等于已发布到 Mooncakes。
+
+公开交付（2026-09-28 核对）：当日 [https://github.com/uiwcvb/moonbit-hocon](https://github.com/uiwcvb/moonbit-hocon) 可匿名读取 Git HEAD，Mooncakes 在线版本为 `0.23.0`；此处源码版本 `0.24.1` 仍需由团队同步到公开仓库，检查新提交的 GitHub Actions，再由对应账号发布 Mooncakes 新版。相关远端 CI 与赛事结果仍需以实际记录核对。项目许可见 [LICENSE](LICENSE)；如使用第三方材料，其来源和许可见仓内相应说明。
