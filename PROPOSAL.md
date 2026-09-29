@@ -1,6 +1,6 @@
 # HOCON 配置迁移核对：MoonBit 差异 API 与跨实现闸门
 
-项目仓库：https://github.com/uiwcvb/moonbit-hocon；模块 `uiwcvb/hocon`，本地版本 0.24.1，MIT。以下内容仅对应本地源码，尚未推送、发布新版或重新提交报名表。
+项目仓库：https://github.com/uiwcvb/moonbit-hocon；模块 `uiwcvb/hocon`，本地版本 0.24.1，MIT。以下说明对应当前源码；Mooncakes 0.24.1 已包含该代码，GitHub 尚需同步新增差异 API，本次材料修订与报名表尚未同步。
 
 ## 要解决的实际问题
 
@@ -23,3 +23,5 @@ Lightbend Config 已成熟解决 JVM 的 HOCON 语义；本项目不主张协议
 当前没有确认的真实迁移使用方。闸门仅接收可信本地文件、显式 classpath、空环境与 JSON 安全整数范围；HTTP 在该入口禁用，不声明全量 JVM 兼容。配置差异 API 不作策略决定，也不保证部署安全。2026-09-29 新增代码已在 Windows 与 Ubuntu-D 严格双后端测试；旧 OpenWhisk 回执仍只证明独立参考场景，远端 CI 尚未验证。申报人需使公开仓库、GitHub Actions、Mooncakes 版本和表单正文对应同一提交；复审结论由组委会决定。
 
 复现入口：[README](README.md) · [迁移闸门](MIGRATION-GATE.md) · [公共 API](pkg.generated.mbti) · [CI](.github/workflows/ci.yml)。
+
+**公开状态（2026-09-29 核对）**：GitHub [公开仓库](https://github.com/uiwcvb/moonbit-hocon)、[Mooncakes 0.24.1](https://mooncakes.io/docs/uiwcvb/hocon@0.24.1) 已可访问；[CI 成功记录](https://github.com/uiwcvb/moonbit-hocon/actions/runs/36435988171) 对应 `acaabe07b2d3`。已下载的 Mooncakes 0.24.1 含配置差异 API，但下述 GitHub CI 提交不含该新增代码，不能为它背书。报名表一致性及赛事审核结果尚未核实。

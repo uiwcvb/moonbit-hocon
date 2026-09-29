@@ -4,7 +4,7 @@
 
 模块 `uiwcvb/hocon`，本地版本 **0.24.1**，MIT。当前评审状态：**按新驳回意见整改**。本文件是当前入口，旧轮次说明与详细用法保存在 [历史/完整使用说明](README-BEFORE-VALUE-REWORK.md)。
 
-0.24.1 已加入[公开 OpenWhisk 配置对照](OPENWHISK.md)：未经改写的控制器配置、两个真实 include 和明确 fallback，36条叶路径及11种类型读取与官方Java实现对照。新增 classpath 参数和实际读取文件指纹；不代表OpenWhisk迁移或采用本库。当前本地源码另增加 MoonBit 内的配置差异 API，尚未公开。
+0.24.1 已加入[公开 OpenWhisk 配置对照](OPENWHISK.md)：未经改写的控制器配置、两个真实 include 和明确 fallback，36条叶路径及11种类型读取与官方Java实现对照。新增 classpath 参数和实际读取文件指纹；不代表OpenWhisk迁移或采用本库。当前源码另有 MoonBit 配置差异 API；已下载的 Mooncakes 0.24.1 包含该实现，但已核对的 GitHub CI 提交尚未包含，需同步仓库源码。
 
 ## 解决什么任务
 
@@ -105,4 +105,5 @@ moon package
 
 本地核验：JS/Wasm-GC 测试，以及配置、OpenWhisk、树、持久化、访问器、时间值和渲染检查通过。 `moon package` 已完成离线打包预检，它不等于已发布到 Mooncakes。
 
-公开交付（2026-09-29 只读核对）：[https://github.com/uiwcvb/moonbit-hocon](https://github.com/uiwcvb/moonbit-hocon) 的公开 Git HEAD 是本地提交的祖先；Mooncakes 最新版号 `0.23.0` 较本地 `0.24.1` 仍旧。版号不证明包内容与本次本地提交一致；当前 README、申报书、远端 CI 与报名表仍须对照公开提交核实。项目许可见 [LICENSE](LICENSE)；第三方来源和许可见仓内说明。
+
+**公开状态（2026-09-29 核对）**：GitHub [公开仓库](https://github.com/uiwcvb/moonbit-hocon)、[Mooncakes 0.24.1](https://mooncakes.io/docs/uiwcvb/hocon@0.24.1) 已可访问；[CI 成功记录](https://github.com/uiwcvb/moonbit-hocon/actions/runs/36435988171) 对应 `acaabe07b2d3`。已下载的 Mooncakes 0.24.1 含配置差异 API，但下述 GitHub CI 提交不含该新增代码，不能为它背书。报名表一致性及赛事审核结果尚未核实。
