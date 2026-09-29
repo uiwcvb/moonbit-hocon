@@ -1,0 +1,53 @@
+{
+  "utc": "2026-09-29T12:15:19.663Z",
+  "openwhiskCommit": "a67aba60ce68e0583962cb51cf6726c2a5f3795e",
+  "referenceJarSha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37",
+  "checks": [
+    "unchanged public source accepted",
+    "port override agrees with Java; exact permission required",
+    "included file drift rejected with exit 2 despite allowed main-file edit",
+    "unchanged main-file hash cannot hide changed include",
+    "invalid policy is an error, never an accepted review",
+    "retained-tree bridge preserves exact large integers and rejects malformed or unresolved inputs"
+  ],
+  "baselineReadCount": 4,
+  "changes": [
+    {
+      "path": [
+        "pekko",
+        "http",
+        "server",
+        "default-http-port"
+      ],
+      "kind": "changed",
+      "before_type": "NUMBER",
+      "after_type": "NUMBER"
+    },
+    {
+      "path": [
+        "pekko",
+        "loglevel"
+      ],
+      "kind": "changed",
+      "before_type": "STRING",
+      "after_type": "STRING"
+    }
+  ],
+  "unexpected": [
+    {
+      "path": [
+        "pekko",
+        "loglevel"
+      ],
+      "kind": "changed",
+      "before_type": "STRING",
+      "after_type": "STRING"
+    }
+  ],
+  "engineSha256": "008a71edbab4cd1ffbff187f4b364865b8fcf58154a9652343ba2748c04277d1",
+  "limits": [
+    "no OpenWhisk runtime startup or adoption claim",
+    "permissions concern resolved changes, not correctness of values",
+    "trusted local files; no atomic filesystem snapshot; paths may disclose names"
+  ]
+}

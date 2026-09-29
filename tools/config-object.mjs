@@ -1,4 +1,4 @@
-import {config_create,config_error,config_read_native,config_entries_native,config_derive,config_child,config_children,config_validate,config_pack,config_unpack,value_kind,value_select,value_read_native,value_equal_native,value_lookup,value_search_native,value_render_native} from '../web/engine.mjs';
+import {config_create,config_error,config_read_native,config_entries_native,config_derive,config_child,config_children,config_validate,config_review_changes,config_pack,config_unpack,value_kind,value_select,value_read_native,value_equal_native,value_lookup,value_search_native,value_render_native} from '../web/engine.mjs';
 import {prepare} from './config-host.mjs';
 import {ConfigError} from './config-error.mjs';
 import {executeAsync} from './config-async.mjs';
@@ -73,6 +73,8 @@ export class Config {
  static parseURLAsync(url,options={}){return createAsync(url,options,'parseURL');}
  static loadURLAsync(url,options={}){return createAsync(url,options,'loadURL');}
  static fromObject(value){return Config.load(JSON.stringify(jsonValue(value)),{format:'json'});}
+ /** Compare retained MoonBit trees; policy uses exact literal path segments and change kinds. */
+ reviewChanges(next,rules=[]){if(!Array.isArray(rules))throw new TypeError('Change policy must be an array');return result(config_review_changes(state(this).handle,state(next).handle,JSON.stringify(rules)));}
  get(key,{type='any-ref',...options}={}){if(typeof type!=='string')throw new TypeError('Getter type must be a string');for(const name of Object.keys(options))if(!['unit','enumChoices'].includes(name))throw new TypeError('Unknown getter option: '+name);return query(this,type,path(key),options);}
  getConfig(key){const stored=state(this);return new Config(token,config_child(stored.handle,path(key)),stored.environment);}
  getConfigList(key){return config_children(state(this).handle,path(key)).map(handle=>new Config(token,handle,state(this).environment));}

@@ -43,6 +43,9 @@ jobs:
         env:
           HOCON_REFERENCE_JAR: /tmp/hocon-config-1.4.9.jar
       - run: node examples/read-openwhisk.mjs
+      - run: node tools/test-change-review.mjs
+        env:
+          HOCON_REFERENCE_JAR: /tmp/hocon-config-1.4.9.jar
       - run: node tools/test-config-reference.mjs --golden
       - run: node tools/test-file-reference.mjs --golden
       - run: node tools/test-collections.mjs --golden

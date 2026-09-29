@@ -1,6 +1,6 @@
 name = "uiwcvb/hocon"
 
-version = "0.24.1"
+version = "0.25.0"
 
 license = "MIT"
 

@@ -27,6 +27,7 @@ options(
         "config_child",
         "config_children",
         "config_validate",
+        "config_review_changes",
         "config_pack",
         "config_unpack",
         "value_kind",

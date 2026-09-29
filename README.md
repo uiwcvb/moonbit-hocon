@@ -1,109 +1,64 @@
-# HOCON 配置迁移差异闸门
+# HOCON 配置迁移与变更审查
 
-**本项目仓库：[https://github.com/uiwcvb/moonbit-hocon](https://github.com/uiwcvb/moonbit-hocon)**
+项目仓库：[https://github.com/uiwcvb/moonbit-hocon](https://github.com/uiwcvb/moonbit-hocon)。模块 `uiwcvb/hocon`，本地 **0.25.0**，MIT。
 
-模块 `uiwcvb/hocon`，本地版本 **0.24.1**，MIT。当前评审状态：**按新驳回意见整改**。本文件是当前入口，旧轮次说明与详细用法保存在 [历史/完整使用说明](README-BEFORE-VALUE-REWORK.md)。
+已有 HOCON 配置迁入 MoonBit 时，include、变量替换和 fallback 会共同决定最终配置。只审查文本差异可能漏掉间接改动。本项目让应用读取既有配置，并在启动或发布前回答两件事：与原 JVM 解析结果是否一致；相对于上一份配置，哪些最终路径发生了未经允许的变化。
 
-0.24.1 已加入[公开 OpenWhisk 配置对照](OPENWHISK.md)：未经改写的控制器配置、两个真实 include 和明确 fallback，36条叶路径及11种类型读取与官方Java实现对照。新增 classpath 参数和实际读取文件指纹；不代表OpenWhisk迁移或采用本库。当前源码另有 MoonBit 配置差异 API；已下载的 Mooncakes 0.24.1 包含该实现，但已核对的 GitHub CI 提交尚未包含，需同步仓库源码。
+## 可复用的核心
 
-## 解决什么任务
-
-保留既有 HOCON 的 include、替换、回退及类型读取语义，将配置迁入 MoonBit 应用。新增本地迁移差异闸门，在启动前对照 Lightbend 的最终配置，发现语义漂移时以非零状态退出。输入和边界见 [迁移闸门](MIGRATION-GATE.md)。
-
-已有 HOCON 配置、需要迁入 MoonBit 应用并保持解析后语义时使用；从零开始的简单配置不需要 HOCON。
-
-## 直接复现
-
-安装 MoonBit 和 Node.js 24，在本仓库根目录运行：
-
-```sh
-moon build --target js
-node -e "require('node:fs').copyFileSync('_build/js/debug/build/cmd/web/web.js','web/engine.mjs')"
-node examples/run-use-case.mjs
-```
-
-迁移差异闸门还需使用者自备未改动的 Lightbend Config 1.4.9 JAR：
-
-```sh
-node tools/migration-gate.mjs --file examples/use-case/application.conf --fallback examples/use-case/defaults.conf --jar /path/to/config-1.4.9.jar
-node tools/migration-gate.mjs --file examples/use-case/application.conf --reference-file examples/use-case/application-before.conf --fallback examples/use-case/defaults.conf --jar /path/to/config-1.4.9.jar
-```
-
-第一条应退出 0，第二条应报告两条差异路径并退出 2；详见 [迁移闸门](MIGRATION-GATE.md)。
-
-MoonBit 调用方也可直接比较两棵已解析、已求值的配置对象，不依赖 Java 或 Node 差异算法：
+MoonBit 实现解析、求值、类型读取、`diff_resolved_configs` 和新增 `review_config_changes`。变更规则精确指定字面路径与增删改类别；输出路径和类型，不输出配置值。允许修改端口不自动允许经替换变化的其他字段，也不允许删除整个父对象。JS 与 Wasm-GC 使用同一核心。
 
 ```moonbit
 let old = @hocon.parse("service.port=8080\nservice.copy=${service.port}")
 let next = @hocon.parse("service.port=9080\nservice.copy=${service.port}")
-let changes = @hocon.diff_resolved_configs(old, next)
-// 两条变化路径：service.copy 与 service.port；不包含配置值。
+let review = @hocon.review_config_changes(old, next, [
+  { path: ["service", "port"], kind: "changed" },
+])
+// review.accepted == false；service.copy 也变化，尚未被允许。
 ```
 
-返回的 `ConfigChange` 含逐段路径、`added/removed/changed` 和新旧类型；列表按整体比较，含点号的字面键不会误作嵌套路径。库只报告事实，是否允许某项变更由调用方决定；未求值配置、非对象根、过深结构和超大报告会拒绝。实现与用例见 [config_diff.mbt](config_diff.mbt) 和 [config_diff_test.mbt](config_diff_test.mbt)。
+此例位于可抛错函数内，消费包导入 `"uiwcvb/hocon"` 为 `@hocon`。完整接口见 [生成 API](pkg.generated.mbti)。JS 的不可变 Config 对象保留 MoonBit 树，新增 `reviewChanges` 不经过丢失大整数精度的 JS 数值转换。接口、预算和失败行为见 [配置变更审查](CHANGE-REVIEW.md)。
 
-流程：**分层配置及启动类型读取**。运行器创建新的系统临时目录，保留每一步的 stdout/stderr、产物及 `report.json`，打印实际目录；重复运行不会覆盖之前产物。它只执行仓库内的本地样例，不连接公网或发送消息。`report.json` 的 `expected` 是应观察的结果，实际结果在各步输出中；成功退出不替代内容核对。
+## 安装与运行
 
-此处 run-use-case 输入仍是原创合成配置；OPENWHISK.md 另提供公开实际项目配置。两者均不声明已有 JVM 迁移客户。
-
-应观察：主配置覆盖端口为 9080，替换也为 9080，回退保留 timeout，毫秒读取为 2000。
-
-具体命令和输入路径见 [使用任务](USE-CASE.md) 与 [机器可读流程](examples/use-case.json)。只把这个脚本当复现入口，不把通用运行器计作核心技术贡献。
-
-## 实现与已有项目的关系
-
-MoonBit 解析、求值、类型读取和配置树差异；Node 提供文件/HTTP、环境注入与不可变对象宿主；Java 只用于独立对照。
-
-Lightbend Config 已提供成熟的 HOCON 语义。此仓库的实际增量是 MoonBit 应用内可组合的解析、类型读取与差异 API，以及可失败退出的跨实现迁移检查；没有真实迁移用户，不能把同语义重写本身说成已证明的需求。
-
-同类项目和检索边界见 [DUPLICATION](DUPLICATION.md)。查重用于避免错误的首创表述；关键词零结果不能证明生态空白，Node 宿主能力也不计为 MoonBit 原生 I/O。
-
-库使用从 [公共 API](pkg.generated.mbti) 和根包源码开始；可在本 checkout 的消费包中导入 `"uiwcvb/hocon"`。源码中的网络/文件宿主入口及完整参数仍见 [完整使用说明](README-BEFORE-VALUE-REWORK.md)。是否已发布到 Mooncakes 需另核实，本文不把 `moon add` 的下载成功作为已完成事项。
-
-## 验证与边界
-
-此前的双后端和文件宿主验证保留原日期。0.24.0 新增迁移闸门，同一配置与旧版配置两条实际命令及退出码见 [迁移闸门](MIGRATION-GATE.md)。当前差异 API 的新增用例与完整 MoonBit 测试在 2026-09-29 本地双后端重跑；独立 Java 闸门与 OpenWhisk 专项仍沿用各自注明日期的证据。
-
-[上一轮工程验证](evidence/innovation-review-20260922/results.json) 与 [本轮最小任务回执](evidence/value-rework-20260922/use-case.json) 分开。历史参考版本、golden 重放、本机 peer、真实第三方服务端和本次样例是不同证据，不能合并成“全部生产验证”。
-
-常规核心检查可运行 `moon check --target js`、`moon test --target js`、`moon test --target wasm-gc`。专项命令：
+使用 [固定 MoonBit 工具链](TOOLCHAIN.md)（moonc 0.10.14）与 Node 24。从源码目录运行：
 
 ```sh
-node tools/cli.mjs --input port=8080 --resolved-json
-node tools/test-host.mjs
-```
-
-专项所需的参考环境和历史版本见原使用说明及 TESTING 文档；本轮回执只记录实际执行项，不声称上面所有参考服务在任意环境即装即跑。
-
-Lightbend 全套行为和所有平台未完全等价；进程环境变量须通过 `--env` 或 `options.environment` 显式注入。HTTP(S) 默认可用；离线加载须指定 `--no-network` 或 `network: false`。
-
-## 复审材料状态
-
-尚无确认迁移用户；新闸门只覆盖受信任本地配置、空环境、有限 JSON 值与指定参考 JAR，不能把全套 JVM 行为或性能作为已完成。
-
-2026-09-22 匿名新克隆成功；默认分支 `main`，核验公开提交 `4ff504db3894362ff5ae7046d4e66c816de1045a`。这条历史记录只证明当日状态；2026-09-29 公开 HEAD 仍早于本次本地代码与文档提交，报名表地址须另核。
-
-[申报草稿](PROPOSAL.md) 已压缩为 30 行以内，并单独标明本项目仓库；[复核说明](REVIEW-RESPONSE.md) 区分材料错误、功能变化及尚未解决的问题。没有编造用户、设备接入、生产部署或评审认可。
-
-CI固定的编译器与标准库版本见 [TOOLCHAIN.md](TOOLCHAIN.md)；升级时需同时核对生成产物。
-
-## 本地验收与公开交付（2026-09-28）
-
-核心实现使用 MoonBit；[固定编译器](.moonbit-version)为 `moonc 0.10.14+7d59c7ec9`。先按本文安装宿主依赖、运行 `moon update`，再从仓库根目录执行以下与 [CI](.github/workflows/ci.yml) 对齐的检查；可运行任务和适用边界见本文前面的示例与说明。
-
-```sh
-moon check --deny-warn
-moon test --target wasm-gc --deny-warn
-moon test --target js --deny-warn
+moon update
 moon build --target js --deny-warn
-moon package
+node -e "require('node:fs').copyFileSync('_build/js/debug/build/cmd/web/web.js','web/engine.mjs')"
+node examples/run-use-case.mjs
+node examples/read-openwhisk.mjs
 ```
 
-跨平台复核（2026-09-28，本地 Ubuntu-D 26.04 WSL2）：从当时的源码归档全新解包，固定 `moonc 0.10.14+7d59c7ec9` 下通过 `moon update`、`moon fmt --check`、`moon info`、严格检查、JS/Wasm-GC 测试及 JS release 构建；Node 24.21.0 跑通本仓一条宿主入口。2026-09-29 新增差异 API 后，Windows 与 Ubuntu-D 均重跑严格 JS 检查及 JS/Wasm-GC 测试，各后端 16723/16723 项通过；新增代码尚未在 GitHub Actions 上验证。
+自备前后两份可信配置及 JSON 规则文件即可运行变更审查，无需 Java：
 
-专项复核：OpenJDK 21 与经散列核验的 Typesafe Config 1.4.9 对照 OpenWhisk 配置，36 个路径和 11 项类型读取一致。
+```sh
+node tools/change-review.mjs --before old.conf --after new.conf --policy permissions.json
+```
 
-本地核验：JS/Wasm-GC 测试，以及配置、OpenWhisk、树、持久化、访问器、时间值和渲染检查通过。 `moon package` 已完成离线打包预检，它不等于已发布到 Mooncakes。
+退出 0 为全部变化获允许，2 为存在未允许变化，1 为输入错误。可分别指定两侧 fallback/classpath，报告保留实际读取文件指纹。独立的 [迁移闸门](MIGRATION-GATE.md) 使用官方 Lightbend Config 1.4.9 JAR 检查跨实现一致性；它与前后版本的变更审查互补。
 
+## 公开配置与验证
 
-**公开状态（2026-09-29 核对）**：GitHub [公开仓库](https://github.com/uiwcvb/moonbit-hocon)、[Mooncakes 0.24.1](https://mooncakes.io/docs/uiwcvb/hocon@0.24.1) 已可访问；[CI 成功记录](https://github.com/uiwcvb/moonbit-hocon/actions/runs/36435988171) 对应 `acaabe07b2d3`。已下载的 Mooncakes 0.24.1 含配置差异 API，但下述 GitHub CI 提交不含该新增代码，不能为它背书。报名表一致性及赛事审核结果尚未核实。
+[Apache OpenWhisk 样本](OPENWHISK.md) 保留原始 controller 配置、两个 include、fallback、固定提交、哈希及许可。既有对照覆盖 36 条叶路径和 11 项类型读取。新增 [变更用例](CHANGE-REVIEW.md) 在副本上改端口和 include 日志级别：即使主文件哈希未变，也检出 include 中的非预期变化；完整解析结果另经官方 Java 实现核对。没有声称运行整个 OpenWhisk 或获得其采用。
+
+```sh
+moon test --target js --deny-warn
+moon test --target wasm-gc --deny-warn
+# 设置 HOCON_REFERENCE_JAR 后：
+node tools/test-change-review.mjs
+node tools/test-persistent-host.mjs
+```
+
+2026-09-29 本地 JS/Wasm-GC 各 16727 项通过；新增公开配置审查的 6 组检查和既有 54 项对象/文件/异步所有权检查通过，见 [回执](evidence/openwhisk-change-review.json)。[CI](.github/workflows/ci.yml) 已纳入新增检查；本地验证不等于新提交的 GitHub Actions 成功。
+
+## 已有工作、用途与边界
+
+Lightbend Config 已成熟定义并实现 HOCON。项目不以语法移植或“生态空白”为创新依据；贡献在于 MoonBit 内可组合的配置树与变更合同，以及可复查的跨实现迁移流程。[查重与许可](DUPLICATION.md) 记录已有工作。AI 可以帮助生成配置，但最终生效路径、间接变化、输入预算和拒绝结果仍需确定性执行与独立参考核验。
+
+只适合确有 HOCON 兼容需求的应用；新建简单配置不必使用它。没有确认的迁移用户。策略是精确允许清单，不校验业务值、部署安全或完整 JVM 兼容；文件入口使用空环境、禁用 HTTP，文件重验不是原子快照。历史用法见 [完整说明](README-BEFORE-VALUE-REWORK.md)。
+
+## 交付状态
+
+2026-09-29 已核对 [Mooncakes 0.24.1](https://mooncakes.io/docs/uiwcvb/hocon@0.24.1) 与 [旧公开 CI](https://github.com/uiwcvb/moonbit-hocon/actions/runs/36435988171)。0.25.0 的策略 API、宿主入口和检查仅在本地，尚未推送或发布；旧 CI 不能为新增代码背书。报名表与审核结果仍须另核。申报正文见 [PROPOSAL](PROPOSAL.md)。
