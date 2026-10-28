@@ -87,6 +87,8 @@ node tools/test-persistent-host.mjs
 
 公开网页另有[真实 Chromium 消费者回归](tools/browser/README.md)：通过页面输入与运行/重置按钮核对明确的值和类型、大整数、替换覆盖、错误诊断及 Unicode 标量位置，并检查错误后的恢复。预期手工编写；工作流先构建引擎，再核对浏览器实际收到的引擎哈希，保存截图和失败追踪。此项覆盖限定于 Chromium 和已声明场景。
 
+[独立 MoonBit 应用消费验收](tools/transition-consumer/README.md) 另在新的双模块工作区导入公开包，核对类型化计划、报告序列化及接受/拒绝后的实际配置选择。JS 与 Wasm-GC 各从空的产品构建目录执行六个手工预期场景；依赖使用当前源码，不通过 Node 桥接，也不宣称验证了新版本的 Mooncakes 发布。
+
 ## 已有工作、用途与边界
 
 Lightbend Config 已成熟定义并实现 HOCON。项目不以语法移植或“生态空白”为创新依据；贡献在于 MoonBit 内可组合的配置树与变更合同，以及可复查的跨实现迁移流程。[查重与许可](DUPLICATION.md) 记录已有工作。AI 可以帮助生成配置，但最终生效路径、间接变化、输入预算和拒绝结果仍需确定性执行与独立参考核验。

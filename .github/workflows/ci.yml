@@ -34,6 +34,10 @@ jobs:
       - run: moon update
       - run: moon fmt && moon info && git diff --exit-code
       - run: moon check --deny-warn
+      - name: Check cold MoonBit transition consumer
+        run: node tools/test-transition-consumer.mjs
+        env:
+          HOCON_CONSUMER_CACHE: ${{ runner.temp }}/hocon-transition-consumer
       - run: node tools/generate-double-render-tests.mjs --check
       - run: node tools/generate-small-integer-tests.mjs --check
       - run: node tools/generate-double-parse-tests.mjs --check
@@ -129,3 +133,4 @@ jobs:
           path: |
             evidence/
             output/playwright/
+            output/transition-consumer/

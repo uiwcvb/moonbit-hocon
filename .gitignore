@@ -12,3 +12,4 @@ evidence/*-replay.json
 # Isolated real-browser regression dependencies and artifacts.
 tools/browser/node_modules/
 /output/playwright/
+/output/transition-consumer/
