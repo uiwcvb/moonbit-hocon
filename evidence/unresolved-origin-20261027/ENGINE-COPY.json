@@ -1,0 +1,9 @@
+{
+  "builtArtifact": "D:\\CodexLocal\\ban\\work\\portfolio-progress-20261027\\projects\\moonbit-hocon\\_build\\origin-host\\js\\debug\\build\\cmd\\web\\web.js",
+  "destination": "D:\\CodexLocal\\ban\\work\\portfolio-progress-20261027\\projects\\moonbit-hocon\\web\\engine.mjs",
+  "previousEngineSHA256": "008a71edbab4cd1ffbff187f4b364865b8fcf58154a9652343ba2748c04277d1",
+  "builtEngineSHA256": "23090b81b9e47bccc0228a31248d7a1d1944995c651ca1db1866ec830a7a7eff",
+  "readBackSHA256": "23090b81b9e47bccc0228a31248d7a1d1944995c651ca1db1866ec830a7a7eff",
+  "byteEqual": true,
+  "buildReceipt": "build-js/receipt.json"
+}

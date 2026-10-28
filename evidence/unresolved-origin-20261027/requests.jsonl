@@ -1,0 +1,13 @@
+{"id": "direct", "name": "direct.conf", "source": "ready=1\nvalue = ${missing}"}
+{"id": "unicode-crlf", "name": "中文.conf", "source": "# 注释😀\r\n  value = ${不存在}"}
+{"id": "concat", "name": "concat.conf", "source": "x = prefix ${missing} suffix"}
+{"id": "array", "name": "array.conf", "source": "items=[1,\n  ${missing}\n]"}
+{"id": "quoted-path", "name": "quoted.conf", "source": "x=${\"missing.key\"}"}
+{"id": "include", "name": "main.conf", "source": "include \"child.conf\"", "includes": {"child.conf": "# child\nvalue = ${missing}"}}
+{"id": "nested-include", "name": "nested-main.conf", "source": "service {\n include \"child.conf\"\n}", "includes": {"child.conf": "# child\nvalue = ${missing}"}}
+{"id": "include-chain", "name": "chain-main.conf", "source": "include \"middle.conf\"", "includes": {"middle.conf": "include \"leaf.conf\"", "leaf.conf": "# leaf\nvalue = ${missing}"}}
+{"id": "fallback", "name": "primary.conf", "source": "ready=1", "fallbacks": [{"name": "fallback.conf", "source": "# lower\nvalue = ${missing}"}]}
+{"id": "optional-success", "name": "optional.conf", "source": "x=${?missing}\nready=1"}
+{"id": "override-success", "name": "override.conf", "source": "x=${missing}\nx=2"}
+{"id": "include-success", "name": "main-ok.conf", "source": "include \"base.conf\"\ny=${x}", "includes": {"base.conf": "x=3"}}
+{"id": "fallback-overridden-success", "name": "primary-ok.conf", "source": "x=2", "fallbacks": [{"name": "lower.conf", "source": "x=${missing}"}]}

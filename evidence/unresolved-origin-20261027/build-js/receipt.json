@@ -1,0 +1,21 @@
+{
+  "command": [
+    "D:\\CodexLocal\\ban\\work\\acceptance-20260928\\moon\\bin\\moon.exe",
+    "build",
+    "--target",
+    "js",
+    "--deny-warn",
+    "--target-dir",
+    "_build/origin-host"
+  ],
+  "cwd": "D:\\CodexLocal\\ban\\work\\portfolio-progress-20261027\\projects\\moonbit-hocon",
+  "moonSHA256": "b08924405369790f8180accd1e0fbafaa328eac0146c5fe2c25f3a44d5b0bcff",
+  "startTimeNs": 1793058908568294600,
+  "endTimeNs": 1793058910486679700,
+  "exitCode": 0,
+  "sourceFiles": 76,
+  "sourcesStable": true,
+  "inputsSHA256": "308ca5e2cbbae339d25170ffd96ab87144487d3b490de3e2fdfff63f922b5f8c",
+  "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSHA256": "2987817259f1ba9f98be0bacda42c847ea21b7cab3f3d161a9b9b2bad4ccb787"
+}

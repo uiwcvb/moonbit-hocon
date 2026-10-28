@@ -31,6 +31,14 @@ fn reindex_document(
       )
     Substitution(paths, optional, list_env, _) =>
       Substitution(paths.map(p => p.copy()), optional, list_env, work.id())
+    LocatedSubstitution(paths, optional, list_env, _, position) =>
+      LocatedSubstitution(
+        paths.map(p => p.copy()),
+        optional,
+        list_env,
+        work.id(),
+        position,
+      )
     Reference(path) => Substitution([split_path(path)], false, false, work.id())
     PathReference(parts, optional) =>
       Substitution([parts.copy()], optional, false, work.id())

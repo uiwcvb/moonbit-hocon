@@ -65,6 +65,22 @@ fn pack_value(
         list_env.to_json(),
         id.to_json(),
       ])
+    @lib.LocatedSubstitution(paths, optional, list_env, id, position) => {
+      transfer_spend(work, position.source.length(), depth)
+      Json::array([
+        "located-substitution".to_json(),
+        paths.to_json(),
+        optional.to_json(),
+        list_env.to_json(),
+        id.to_json(),
+        Json::array([
+          position.source.to_json(),
+          position.offset.to_json(),
+          position.line.to_json(),
+          position.column.to_json(),
+        ]),
+      ])
+    }
     @lib.Bound(path, id, body) =>
       Json::array([
         "bound".to_json(),
@@ -182,6 +198,34 @@ fn unpack_value(
         transfer_bool(list_env),
         transfer_int(id),
       )
+    Array(
+      [
+        String("located-substitution"),
+        Array(paths),
+        optional,
+        list_env,
+        id,
+        Array([String(source), offset, line, column]),
+      ]
+    ) => {
+      transfer_spend(work, source.length(), depth)
+      let position : @lib.SourcePosition = {
+        source,
+        offset: transfer_int(offset),
+        line: transfer_int(line),
+        column: transfer_int(column),
+      }
+      if position.offset < 0 || position.line < 1 || position.column < 1 {
+        raise BadSource
+      }
+      @lib.LocatedSubstitution(
+        paths.map(path => transfer_strings(path, work, depth)),
+        transfer_bool(optional),
+        transfer_bool(list_env),
+        transfer_int(id),
+        position,
+      )
+    }
     Array([String("bound"), path, id, body]) =>
       @lib.Bound(
         transfer_strings(path, work, depth),

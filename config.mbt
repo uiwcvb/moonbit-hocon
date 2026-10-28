@@ -14,6 +14,7 @@ pub(all) enum Value {
   DelayedMerge(Value, Value)
   Bound(Array[String], Int, Value)
   Substitution(Array[Array[String]], Bool, Bool, Int)
+  LocatedSubstitution(Array[Array[String]], Bool, Bool, Int, SourcePosition)
 } derive(Debug, Eq)
 
 ///|
@@ -64,6 +65,7 @@ fn uncertain(v : Value) -> Bool {
     Reference(_)
     | PathReference(_, _)
     | Substitution(_, _, _, _)
+    | LocatedSubstitution(_, _, _, _, _)
     | Bound(_, _, _)
     | Concat(_)
     | DelayedMerge(_, _) => true
@@ -503,7 +505,8 @@ fn atom(
     }
     return List(items)
   }
-  if c.eat("$") {
+  if c.peek() == "$" {
+    let position = c.take().position
     if c.done() || !c.tokens[c.pos].gap.is_empty() {
       raise Located("substitution requires adjacent ${", c.location())
     }
@@ -528,7 +531,13 @@ fn atom(
     } else {
       [append_path(scope, keys), keys]
     }
-    return Substitution(paths, optional, list_env, context.work.id())
+    return LocatedSubstitution(
+      paths,
+      optional,
+      list_env,
+      context.work.id(),
+      position,
+    )
   }
   let token = c.take()
   if token.quoted {

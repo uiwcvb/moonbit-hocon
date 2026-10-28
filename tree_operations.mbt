@@ -35,6 +35,14 @@ fn clone_tree(
     PathReference(parts, optional) => PathReference(parts.copy(), optional)
     Substitution(paths, optional, self_ref, id) =>
       Substitution(paths.map(parts => parts.copy()), optional, self_ref, id)
+    LocatedSubstitution(paths, optional, self_ref, id, position) =>
+      LocatedSubstitution(
+        paths.map(parts => parts.copy()),
+        optional,
+        self_ref,
+        id,
+        position,
+      )
     Bound(parts, id, child) =>
       Bound(parts.copy(), id, clone_tree(child, depth + 1, work))
     Concat(parts) =>

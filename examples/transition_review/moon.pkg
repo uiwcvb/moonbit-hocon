@@ -1,0 +1,5 @@
+import {
+  "uiwcvb/hocon",
+}
+
+pkgtype(kind: "executable")

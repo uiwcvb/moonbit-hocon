@@ -81,7 +81,8 @@ fn semantic_tree(
     Reference(path) => Substitution([split_path(path)], false, false, 0)
     PathReference(path, optional) =>
       Substitution([path.copy()], optional, false, 0)
-    Substitution(paths, optional, expansion, _) =>
+    Substitution(paths, optional, expansion, _)
+    | LocatedSubstitution(paths, optional, expansion, _, _) =>
       Substitution([paths[0].copy()], optional, expansion, 0)
     Concat(parts) => {
       let out = []

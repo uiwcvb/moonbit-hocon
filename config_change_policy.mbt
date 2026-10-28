@@ -80,3 +80,20 @@ pub fn review_config_changes(
   })
   { accepted: unexpected.is_empty(), changes, unexpected, }
 }
+
+///|
+/// Return validated permission rules that match no resolved change.
+/// The original review API keeps allowing unused permissions for compatibility.
+/// Callers may reject this report when every approval must be exercised.
+pub fn unused_config_change_rules(
+  before : Value,
+  after : Value,
+  rules : Array[ConfigChangeRule],
+) -> Array[ConfigChangeRule] raise ParseError {
+  let review = review_config_changes(before, after, rules)
+  let used : Map[String, Bool] = Map([])
+  for change in review.changes {
+    used[change_rule_key(change.path, change.kind)] = true
+  }
+  rules.filter(rule => !used.contains(change_rule_key(rule.path, rule.kind)))
+}

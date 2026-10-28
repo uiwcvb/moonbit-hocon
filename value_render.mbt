@@ -184,7 +184,8 @@ fn write_value(
       writer.emit(render_reference(split_path(path), false, false))
     PathReference(parts, optional) =>
       writer.emit(render_reference(parts, optional, false))
-    Substitution(paths, optional, expansion, _) => {
+    Substitution(paths, optional, expansion, _)
+    | LocatedSubstitution(paths, optional, expansion, _, _) => {
       guard paths.get(0) is Some(parts) else {
         raise Invalid("empty substitution paths")
       }

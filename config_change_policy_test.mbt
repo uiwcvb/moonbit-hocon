@@ -63,3 +63,29 @@ test "change policy rejects invalid and ambiguous rules" {
     )
   }
 }
+
+///|
+test "unused change rules distinguish exact literal path and change kind" {
+  let before = @hocon.parse("\"a.b\"=1\na.b=1")
+  let after = @hocon.parse("\"a.b\"=2\na.b=2")
+  let rules : Array[@hocon.ConfigChangeRule] = [
+    { path: ["a.b"], kind: "changed", },
+    { path: ["a", "b"], kind: "added", },
+    { path: ["unused"], kind: "removed", },
+  ]
+  assert_eq(@hocon.unused_config_change_rules(before, after, rules), [
+    rules[1],
+    rules[2],
+  ])
+  assert_eq(@hocon.unused_config_change_rules(before, before, rules), rules)
+  assert_eq(@hocon.unused_config_change_rules(before, after, []), [])
+  try
+    @hocon.unused_config_change_rules(before, after, [
+      { path: [], kind: "changed", },
+    ])
+  catch {
+    _ => ()
+  } noraise {
+    _ => fail("invalid unused permissions must still be rejected")
+  }
+}

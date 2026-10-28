@@ -1,0 +1,680 @@
+{
+  "total": 30,
+  "passed": 30,
+  "failed": 0,
+  "independentReferenceCases": 13,
+  "upstreamCompared": [
+    "completion/missing-substitution category mapping",
+    "origin description/source",
+    "line",
+    "successful values"
+  ],
+  "textContractOnly": [
+    "offset",
+    "column"
+  ],
+  "unavailableUpstreamFields": [
+    "offset",
+    "column"
+  ],
+  "engineSHA256": "23090b81b9e47bccc0228a31248d7a1d1944995c651ca1db1866ec830a7a7eff",
+  "requestsSHA256": "41894927cf7c43d8aaa9629438a64519a0b47dffe27838e8c63fd787f4a82d4e",
+  "referenceSHA256": "7a8167970fcc872cc0948d4e1273dbe01f4fa0d0e774caa8e8fbfce40d35f264",
+  "comparatorSHA256": "2324fcd14765779a42256e55d87f1cf788c2812fc6e0d9ac7559c2b2fdeafd60",
+  "records": [
+    {
+      "id": "direct",
+      "mode": "sync",
+      "actual": {
+        "accepted": false,
+        "errorClass": "ConfigError",
+        "message": "unresolved missing",
+        "position": {
+          "source": "direct.conf",
+          "offset": 16,
+          "line": 2,
+          "column": 9
+        }
+      },
+      "reference": {
+        "accepted": false,
+        "errorClass": "com.typesafe.config.ConfigException$UnresolvedSubstitution",
+        "filename": null,
+        "id": "direct",
+        "line": 2,
+        "message": "direct.conf: 2: Could not resolve substitution to a value: ${missing}",
+        "originDescription": "direct.conf: 2"
+      },
+      "compared": true
+    },
+    {
+      "id": "direct",
+      "mode": "async",
+      "actual": {
+        "accepted": false,
+        "errorClass": "ConfigError",
+        "message": "unresolved missing",
+        "position": {
+          "source": "direct.conf",
+          "offset": 16,
+          "line": 2,
+          "column": 9
+        }
+      },
+      "reference": {
+        "accepted": false,
+        "errorClass": "com.typesafe.config.ConfigException$UnresolvedSubstitution",
+        "filename": null,
+        "id": "direct",
+        "line": 2,
+        "message": "direct.conf: 2: Could not resolve substitution to a value: ${missing}",
+        "originDescription": "direct.conf: 2"
+      },
+      "compared": true
+    },
+    {
+      "id": "unicode-crlf",
+      "mode": "sync",
+      "actual": {
+        "accepted": false,
+        "errorClass": "ConfigError",
+        "message": "unresolved 不存在",
+        "position": {
+          "source": "中文.conf",
+          "offset": 17,
+          "line": 2,
+          "column": 11
+        }
+      },
+      "reference": {
+        "accepted": false,
+        "errorClass": "com.typesafe.config.ConfigException$UnresolvedSubstitution",
+        "filename": null,
+        "id": "unicode-crlf",
+        "line": 2,
+        "message": "中文.conf: 2: Could not resolve substitution to a value: ${不存在}",
+        "originDescription": "中文.conf: 2"
+      },
+      "compared": true
+    },
+    {
+      "id": "unicode-crlf",
+      "mode": "async",
+      "actual": {
+        "accepted": false,
+        "errorClass": "ConfigError",
+        "message": "unresolved 不存在",
+        "position": {
+          "source": "中文.conf",
+          "offset": 17,
+          "line": 2,
+          "column": 11
+        }
+      },
+      "reference": {
+        "accepted": false,
+        "errorClass": "com.typesafe.config.ConfigException$UnresolvedSubstitution",
+        "filename": null,
+        "id": "unicode-crlf",
+        "line": 2,
+        "message": "中文.conf: 2: Could not resolve substitution to a value: ${不存在}",
+        "originDescription": "中文.conf: 2"
+      },
+      "compared": true
+    },
+    {
+      "id": "concat",
+      "mode": "sync",
+      "actual": {
+        "accepted": false,
+        "errorClass": "ConfigError",
+        "message": "unresolved missing",
+        "position": {
+          "source": "concat.conf",
+          "offset": 11,
+          "line": 1,
+          "column": 12
+        }
+      },
+      "reference": {
+        "accepted": false,
+        "errorClass": "com.typesafe.config.ConfigException$UnresolvedSubstitution",
+        "filename": null,
+        "id": "concat",
+        "line": 1,
+        "message": "concat.conf: 1: Could not resolve substitution to a value: ${missing}",
+        "originDescription": "concat.conf: 1"
+      },
+      "compared": true
+    },
+    {
+      "id": "concat",
+      "mode": "async",
+      "actual": {
+        "accepted": false,
+        "errorClass": "ConfigError",
+        "message": "unresolved missing",
+        "position": {
+          "source": "concat.conf",
+          "offset": 11,
+          "line": 1,
+          "column": 12
+        }
+      },
+      "reference": {
+        "accepted": false,
+        "errorClass": "com.typesafe.config.ConfigException$UnresolvedSubstitution",
+        "filename": null,
+        "id": "concat",
+        "line": 1,
+        "message": "concat.conf: 1: Could not resolve substitution to a value: ${missing}",
+        "originDescription": "concat.conf: 1"
+      },
+      "compared": true
+    },
+    {
+      "id": "array",
+      "mode": "sync",
+      "actual": {
+        "accepted": false,
+        "errorClass": "ConfigError",
+        "message": "unresolved missing",
+        "position": {
+          "source": "array.conf",
+          "offset": 12,
+          "line": 2,
+          "column": 3
+        }
+      },
+      "reference": {
+        "accepted": false,
+        "errorClass": "com.typesafe.config.ConfigException$UnresolvedSubstitution",
+        "filename": null,
+        "id": "array",
+        "line": 2,
+        "message": "array.conf: 2: Could not resolve substitution to a value: ${missing}",
+        "originDescription": "array.conf: 2"
+      },
+      "compared": true
+    },
+    {
+      "id": "array",
+      "mode": "async",
+      "actual": {
+        "accepted": false,
+        "errorClass": "ConfigError",
+        "message": "unresolved missing",
+        "position": {
+          "source": "array.conf",
+          "offset": 12,
+          "line": 2,
+          "column": 3
+        }
+      },
+      "reference": {
+        "accepted": false,
+        "errorClass": "com.typesafe.config.ConfigException$UnresolvedSubstitution",
+        "filename": null,
+        "id": "array",
+        "line": 2,
+        "message": "array.conf: 2: Could not resolve substitution to a value: ${missing}",
+        "originDescription": "array.conf: 2"
+      },
+      "compared": true
+    },
+    {
+      "id": "quoted-path",
+      "mode": "sync",
+      "actual": {
+        "accepted": false,
+        "errorClass": "ConfigError",
+        "message": "unresolved missing.key",
+        "position": {
+          "source": "quoted.conf",
+          "offset": 2,
+          "line": 1,
+          "column": 3
+        }
+      },
+      "reference": {
+        "accepted": false,
+        "errorClass": "com.typesafe.config.ConfigException$UnresolvedSubstitution",
+        "filename": null,
+        "id": "quoted-path",
+        "line": 1,
+        "message": "quoted.conf: 1: Could not resolve substitution to a value: ${\"missing.key\"}",
+        "originDescription": "quoted.conf: 1"
+      },
+      "compared": true
+    },
+    {
+      "id": "quoted-path",
+      "mode": "async",
+      "actual": {
+        "accepted": false,
+        "errorClass": "ConfigError",
+        "message": "unresolved missing.key",
+        "position": {
+          "source": "quoted.conf",
+          "offset": 2,
+          "line": 1,
+          "column": 3
+        }
+      },
+      "reference": {
+        "accepted": false,
+        "errorClass": "com.typesafe.config.ConfigException$UnresolvedSubstitution",
+        "filename": null,
+        "id": "quoted-path",
+        "line": 1,
+        "message": "quoted.conf: 1: Could not resolve substitution to a value: ${\"missing.key\"}",
+        "originDescription": "quoted.conf: 1"
+      },
+      "compared": true
+    },
+    {
+      "id": "include",
+      "mode": "sync",
+      "actual": {
+        "accepted": false,
+        "errorClass": "ConfigError",
+        "message": "unresolved missing",
+        "position": {
+          "source": "child.conf",
+          "offset": 16,
+          "line": 2,
+          "column": 9
+        }
+      },
+      "reference": {
+        "accepted": false,
+        "errorClass": "com.typesafe.config.ConfigException$UnresolvedSubstitution",
+        "filename": null,
+        "id": "include",
+        "line": 2,
+        "message": "child.conf: 2: Could not resolve substitution to a value: ${missing}",
+        "originDescription": "child.conf: 2"
+      },
+      "compared": true
+    },
+    {
+      "id": "include",
+      "mode": "async",
+      "actual": {
+        "accepted": false,
+        "errorClass": "ConfigError",
+        "message": "unresolved missing",
+        "position": {
+          "source": "child.conf",
+          "offset": 16,
+          "line": 2,
+          "column": 9
+        }
+      },
+      "reference": {
+        "accepted": false,
+        "errorClass": "com.typesafe.config.ConfigException$UnresolvedSubstitution",
+        "filename": null,
+        "id": "include",
+        "line": 2,
+        "message": "child.conf: 2: Could not resolve substitution to a value: ${missing}",
+        "originDescription": "child.conf: 2"
+      },
+      "compared": true
+    },
+    {
+      "id": "nested-include",
+      "mode": "sync",
+      "actual": {
+        "accepted": false,
+        "errorClass": "ConfigError",
+        "message": "unresolved missing",
+        "position": {
+          "source": "child.conf",
+          "offset": 16,
+          "line": 2,
+          "column": 9
+        }
+      },
+      "reference": {
+        "accepted": false,
+        "errorClass": "com.typesafe.config.ConfigException$UnresolvedSubstitution",
+        "filename": null,
+        "id": "nested-include",
+        "line": 2,
+        "message": "child.conf: 2: Could not resolve substitution to a value: ${service.missing}",
+        "originDescription": "child.conf: 2"
+      },
+      "compared": true
+    },
+    {
+      "id": "nested-include",
+      "mode": "async",
+      "actual": {
+        "accepted": false,
+        "errorClass": "ConfigError",
+        "message": "unresolved missing",
+        "position": {
+          "source": "child.conf",
+          "offset": 16,
+          "line": 2,
+          "column": 9
+        }
+      },
+      "reference": {
+        "accepted": false,
+        "errorClass": "com.typesafe.config.ConfigException$UnresolvedSubstitution",
+        "filename": null,
+        "id": "nested-include",
+        "line": 2,
+        "message": "child.conf: 2: Could not resolve substitution to a value: ${service.missing}",
+        "originDescription": "child.conf: 2"
+      },
+      "compared": true
+    },
+    {
+      "id": "include-chain",
+      "mode": "sync",
+      "actual": {
+        "accepted": false,
+        "errorClass": "ConfigError",
+        "message": "unresolved missing",
+        "position": {
+          "source": "leaf.conf",
+          "offset": 15,
+          "line": 2,
+          "column": 9
+        }
+      },
+      "reference": {
+        "accepted": false,
+        "errorClass": "com.typesafe.config.ConfigException$UnresolvedSubstitution",
+        "filename": null,
+        "id": "include-chain",
+        "line": 2,
+        "message": "leaf.conf: 2: Could not resolve substitution to a value: ${missing}",
+        "originDescription": "leaf.conf: 2"
+      },
+      "compared": true
+    },
+    {
+      "id": "include-chain",
+      "mode": "async",
+      "actual": {
+        "accepted": false,
+        "errorClass": "ConfigError",
+        "message": "unresolved missing",
+        "position": {
+          "source": "leaf.conf",
+          "offset": 15,
+          "line": 2,
+          "column": 9
+        }
+      },
+      "reference": {
+        "accepted": false,
+        "errorClass": "com.typesafe.config.ConfigException$UnresolvedSubstitution",
+        "filename": null,
+        "id": "include-chain",
+        "line": 2,
+        "message": "leaf.conf: 2: Could not resolve substitution to a value: ${missing}",
+        "originDescription": "leaf.conf: 2"
+      },
+      "compared": true
+    },
+    {
+      "id": "fallback",
+      "mode": "sync",
+      "actual": {
+        "accepted": false,
+        "errorClass": "ConfigError",
+        "message": "unresolved missing",
+        "position": {
+          "source": "fallback.conf",
+          "offset": 16,
+          "line": 2,
+          "column": 9
+        }
+      },
+      "reference": {
+        "accepted": false,
+        "errorClass": "com.typesafe.config.ConfigException$UnresolvedSubstitution",
+        "filename": null,
+        "id": "fallback",
+        "line": 2,
+        "message": "fallback.conf: 2: Could not resolve substitution to a value: ${missing}",
+        "originDescription": "fallback.conf: 2"
+      },
+      "compared": true
+    },
+    {
+      "id": "fallback",
+      "mode": "async",
+      "actual": {
+        "accepted": false,
+        "errorClass": "ConfigError",
+        "message": "unresolved missing",
+        "position": {
+          "source": "fallback.conf",
+          "offset": 16,
+          "line": 2,
+          "column": 9
+        }
+      },
+      "reference": {
+        "accepted": false,
+        "errorClass": "com.typesafe.config.ConfigException$UnresolvedSubstitution",
+        "filename": null,
+        "id": "fallback",
+        "line": 2,
+        "message": "fallback.conf: 2: Could not resolve substitution to a value: ${missing}",
+        "originDescription": "fallback.conf: 2"
+      },
+      "compared": true
+    },
+    {
+      "id": "optional-success",
+      "mode": "sync",
+      "actual": {
+        "accepted": true,
+        "value": {
+          "ready": 1
+        }
+      },
+      "reference": {
+        "accepted": true,
+        "id": "optional-success",
+        "value": {
+          "ready": 1
+        }
+      },
+      "compared": true
+    },
+    {
+      "id": "optional-success",
+      "mode": "async",
+      "actual": {
+        "accepted": true,
+        "value": {
+          "ready": 1
+        }
+      },
+      "reference": {
+        "accepted": true,
+        "id": "optional-success",
+        "value": {
+          "ready": 1
+        }
+      },
+      "compared": true
+    },
+    {
+      "id": "override-success",
+      "mode": "sync",
+      "actual": {
+        "accepted": true,
+        "value": {
+          "x": 2
+        }
+      },
+      "reference": {
+        "accepted": true,
+        "id": "override-success",
+        "value": {
+          "x": 2
+        }
+      },
+      "compared": true
+    },
+    {
+      "id": "override-success",
+      "mode": "async",
+      "actual": {
+        "accepted": true,
+        "value": {
+          "x": 2
+        }
+      },
+      "reference": {
+        "accepted": true,
+        "id": "override-success",
+        "value": {
+          "x": 2
+        }
+      },
+      "compared": true
+    },
+    {
+      "id": "include-success",
+      "mode": "sync",
+      "actual": {
+        "accepted": true,
+        "value": {
+          "x": 3,
+          "y": 3
+        }
+      },
+      "reference": {
+        "accepted": true,
+        "id": "include-success",
+        "value": {
+          "x": 3,
+          "y": 3
+        }
+      },
+      "compared": true
+    },
+    {
+      "id": "include-success",
+      "mode": "async",
+      "actual": {
+        "accepted": true,
+        "value": {
+          "x": 3,
+          "y": 3
+        }
+      },
+      "reference": {
+        "accepted": true,
+        "id": "include-success",
+        "value": {
+          "x": 3,
+          "y": 3
+        }
+      },
+      "compared": true
+    },
+    {
+      "id": "fallback-overridden-success",
+      "mode": "sync",
+      "actual": {
+        "accepted": true,
+        "value": {
+          "x": 2
+        }
+      },
+      "reference": {
+        "accepted": true,
+        "id": "fallback-overridden-success",
+        "value": {
+          "x": 2
+        }
+      },
+      "compared": true
+    },
+    {
+      "id": "fallback-overridden-success",
+      "mode": "async",
+      "actual": {
+        "accepted": true,
+        "value": {
+          "x": 2
+        }
+      },
+      "reference": {
+        "accepted": true,
+        "id": "fallback-overridden-success",
+        "value": {
+          "x": 2
+        }
+      },
+      "compared": true
+    },
+    {
+      "id": "direct",
+      "mode": "retained-parse",
+      "actual": {
+        "message": "unresolved missing",
+        "position": {
+          "source": "direct.conf",
+          "offset": 16,
+          "line": 2,
+          "column": 9
+        }
+      },
+      "compared": true
+    },
+    {
+      "id": "direct",
+      "mode": "retained-parseAsync",
+      "actual": {
+        "message": "unresolved missing",
+        "position": {
+          "source": "direct.conf",
+          "offset": 16,
+          "line": 2,
+          "column": 9
+        }
+      },
+      "compared": true
+    },
+    {
+      "id": "include",
+      "mode": "retained-parse",
+      "actual": {
+        "message": "unresolved missing",
+        "position": {
+          "source": "child.conf",
+          "offset": 16,
+          "line": 2,
+          "column": 9
+        }
+      },
+      "compared": true
+    },
+    {
+      "id": "include",
+      "mode": "retained-parseAsync",
+      "actual": {
+        "message": "unresolved missing",
+        "position": {
+          "source": "child.conf",
+          "offset": 16,
+          "line": 2,
+          "column": 9
+        }
+      },
+      "compared": true
+    }
+  ]
+}

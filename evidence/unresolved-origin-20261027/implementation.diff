@@ -1,0 +1,670 @@
+--- before/FEATURES.md
++++ after/FEATURES.md
+@@ -53,7 +53,7 @@
+ - HTTP 代理与 305 代理重定向、认证协商、更多运行平台/协议栈；本轮已覆盖普通 HTTP(S) 及 file: URL。
+ - JAR/自定义 JVM classloader、默认 application/reference 配置与 Java system properties；目录 classpath、显式 fallback/environment 已实现。
+ - 全部容器共享身份、渲染的默认来源/用户注释与环境来源遮罩、完整 ConfigValueFactory/JVM 类型集成；已实现 ConfigValue/Object/List、常用不可变容器操作、分阶段解析和持久化 Config。Config.entrySet 已返回类型化集合；完整 Java 集合接口、共享身份、HashSet 树桶及容量历史尚未复现。
+-- 全部错误的精确位置、错误种类与多错误诊断；词法/语法有位置，部分语义错误只有消息。
++- 全部错误的精确位置、错误种类与多错误诊断；词法/语法有位置。2026-10-27 增量为未找到必需替换保留实际 SourcePosition（含 include/fallback、复制和延迟求值）；旧手工无来源值、循环及其它语义错误仍可能只有 Invalid 消息。原版 1.4.9 已核对本批来源/行号，列号/偏移量仅按输入文本验证，未称已追平全部异常体系。
+ - 数字索引对象的高碰撞树桶、删除后容量历史、其他 JDK Unicode 版本、所有拼接转换角落、格式/值的完整上游边界与多版本覆盖。固定 JDK 的 BMP 数字键已有逐块独立对照。
+ - 独立大配置性能、内存/吞吐、多平台及持续负载。0.18 历史五进程计时中，普通浮点列表读取、长极小数渲染相对 0.17 耗时减少 21.3%、96.2%，当前/原版耗时比为 20.350、18.625；长中点渲染与长引号数字读取当前/原版仍为 501.845、7.978。旧 parse-64 相对 0.17 为 1.026。最大进程中位数波动比 2.466，不稳定标记 true。完整性能仍未追平。 受控 GC 不代表生产内存验证。
+ 
+
+--- before/README.md
++++ after/README.md
+@@ -18,6 +18,8 @@
+ ```
+ 
+ 此例位于可抛错函数内，消费包导入 `"uiwcvb/hocon"` 为 `@hocon`。完整接口见 [生成 API](pkg.generated.mbti)。JS 的不可变 Config 对象保留 MoonBit 树，新增 `reviewChanges` 不经过丢失大整数精度的 JS 数值转换。接口、预算和失败行为见 [配置变更审查](CHANGE-REVIEW.md)。
++
++未找到必需替换时，解析得到的树现在抛出 `ParseError.Located(message, SourcePosition)`，位置指向实际 `${...}` 的 `$`，包括 include 子来源和 fallback；复制、部分解析及 JS 异步持久化传输后仍保留。`offset` 是从零开始的 Unicode 标量索引，`line/column` 从一开始。未解析树新增 `Value.LocatedSubstitution`，旧四参数 `Substitution` 构造器及无来源手工值的 `Invalid` 行为保留；外部穷举匹配须处理新变体，原始结构相等会比较来源，语义比较请用 `value_equals/value_hash`。成功求值、语义比较和渲染保持原合同。[本次独立参考与双后端证据](evidence/unresolved-origin-20261027/RESULTS.md) 明列可比字段和 API 代价；其余求值异常仍有位置缺口。
+ 
+ ## 安装与运行
+ 
+
+--- before/cmd/web/config_transfer.mbt
++++ after/cmd/web/config_transfer.mbt
+@@ -65,6 +65,22 @@
+         list_env.to_json(),
+         id.to_json(),
+       ])
++    @lib.LocatedSubstitution(paths, optional, list_env, id, position) => {
++      transfer_spend(work, position.source.length(), depth)
++      Json::array([
++        "located-substitution".to_json(),
++        paths.to_json(),
++        optional.to_json(),
++        list_env.to_json(),
++        id.to_json(),
++        Json::array([
++          position.source.to_json(),
++          position.offset.to_json(),
++          position.line.to_json(),
++          position.column.to_json(),
++        ]),
++      ])
++    }
+     @lib.Bound(path, id, body) =>
+       Json::array([
+         "bound".to_json(),
+@@ -182,6 +198,34 @@
+         transfer_bool(list_env),
+         transfer_int(id),
+       )
++    Array(
++      [
++        String("located-substitution"),
++        Array(paths),
++        optional,
++        list_env,
++        id,
++        Array([String(source), offset, line, column]),
++      ]
++    ) => {
++      transfer_spend(work, source.length(), depth)
++      let position : @lib.SourcePosition = {
++        source,
++        offset: transfer_int(offset),
++        line: transfer_int(line),
++        column: transfer_int(column),
++      }
++      if position.offset < 0 || position.line < 1 || position.column < 1 {
++        raise BadSource
++      }
++      @lib.LocatedSubstitution(
++        paths.map(path => transfer_strings(path, work, depth)),
++        transfer_bool(optional),
++        transfer_bool(list_env),
++        transfer_int(id),
++        position,
++      )
++    }
+     Array([String("bound"), path, id, body]) =>
+       @lib.Bound(
+         transfer_strings(path, work, depth),
+
+--- before/config.mbt
++++ after/config.mbt
+@@ -14,6 +14,7 @@
+   DelayedMerge(Value, Value)
+   Bound(Array[String], Int, Value)
+   Substitution(Array[Array[String]], Bool, Bool, Int)
++  LocatedSubstitution(Array[Array[String]], Bool, Bool, Int, SourcePosition)
+ } derive(Debug, Eq)
+ 
+ ///|
+@@ -64,6 +65,7 @@
+     Reference(_)
+     | PathReference(_, _)
+     | Substitution(_, _, _, _)
++    | LocatedSubstitution(_, _, _, _, _)
+     | Bound(_, _, _)
+     | Concat(_)
+     | DelayedMerge(_, _) => true
+@@ -503,7 +505,8 @@
+     }
+     return List(items)
+   }
+-  if c.eat("$") {
++  if c.peek() == "$" {
++    let position = c.take().position
+     if c.done() || !c.tokens[c.pos].gap.is_empty() {
+       raise Located("substitution requires adjacent ${", c.location())
+     }
+@@ -528,7 +531,13 @@
+     } else {
+       [append_path(scope, keys), keys]
+     }
+-    return Substitution(paths, optional, list_env, context.work.id())
++    return LocatedSubstitution(
++      paths,
++      optional,
++      list_env,
++      context.work.id(),
++      position,
++    )
+   }
+   let token = c.take()
+   if token.quoted {
+
+--- before/document.mbt
++++ after/document.mbt
+@@ -31,6 +31,14 @@
+       )
+     Substitution(paths, optional, list_env, _) =>
+       Substitution(paths.map(p => p.copy()), optional, list_env, work.id())
++    LocatedSubstitution(paths, optional, list_env, _, position) =>
++      LocatedSubstitution(
++        paths.map(p => p.copy()),
++        optional,
++        list_env,
++        work.id(),
++        position,
++      )
+     Reference(path) => Substitution([split_path(path)], false, false, work.id())
+     PathReference(parts, optional) =>
+       Substitution([parts.copy()], optional, false, work.id())
+
+--- before/pkg.generated.mbti
++++ after/pkg.generated.mbti
+@@ -314,6 +314,7 @@
+   DelayedMerge(Value, Value)
+   Bound(Array[String], Int, Value)
+   Substitution(Array[Array[String]], Bool, Bool, Int)
++  LocatedSubstitution(Array[Array[String]], Bool, Bool, Int, SourcePosition)
+ } derive(Eq, @debug.Debug)
+ pub fn Value::equal(Self, Self) -> Bool
+ pub fn Value::not_equal(Self, Self) -> Bool
+
+--- before/resolver.mbt
++++ after/resolver.mbt
+@@ -111,6 +111,7 @@
+   depth : Int,
+   deep : Bool,
+   source_node : Bool,
++  position? : SourcePosition? = None,
+ ) -> Value? raise ParseError {
+   let cache = if deep { r.values } else { r.heads }
+   if cache.get(id) is Some(result) {
+@@ -181,9 +182,19 @@
+       raise Invalid("substitution cycle through hidden binding")
+     }
+     if r.allow_unresolved {
+-      return Some(Substitution(paths, optional, list_env, id))
+-    }
+-    raise Invalid("unresolved " + paths[paths.length() - 1].join("."))
++      return Some(
++        match position {
++          Some(position) =>
++            LocatedSubstitution(paths, optional, list_env, id, position)
++          None => Substitution(paths, optional, list_env, id)
++        },
++      )
++    }
++    let message = "unresolved " + paths[paths.length() - 1].join(".")
++    match position {
++      Some(position) => raise Located(message, position)
++      None => raise Invalid(message)
++    }
+   }
+   cache[id] = result
+   result
+@@ -299,6 +310,20 @@
+     Substitution(paths, optional, list_env, id) =>
+       resolve_reference(
+         r, paths, optional, list_env, id, root, owner, depth, deep, source_node,
++      )
++    LocatedSubstitution(paths, optional, list_env, id, position) =>
++      resolve_reference(
++        r,
++        paths,
++        optional,
++        list_env,
++        id,
++        root,
++        owner,
++        depth,
++        deep,
++        source_node,
++        position=Some(position),
+       )
+     Reference(s) =>
+       resolve_reference(
+
+--- before/tree_operations.mbt
++++ after/tree_operations.mbt
+@@ -35,6 +35,14 @@
+     PathReference(parts, optional) => PathReference(parts.copy(), optional)
+     Substitution(paths, optional, self_ref, id) =>
+       Substitution(paths.map(parts => parts.copy()), optional, self_ref, id)
++    LocatedSubstitution(paths, optional, self_ref, id, position) =>
++      LocatedSubstitution(
++        paths.map(parts => parts.copy()),
++        optional,
++        self_ref,
++        id,
++        position,
++      )
+     Bound(parts, id, child) =>
+       Bound(parts.copy(), id, clone_tree(child, depth + 1, work))
+     Concat(parts) =>
+
+--- before/value_render.mbt
++++ after/value_render.mbt
+@@ -184,7 +184,8 @@
+       writer.emit(render_reference(split_path(path), false, false))
+     PathReference(parts, optional) =>
+       writer.emit(render_reference(parts, optional, false))
+-    Substitution(paths, optional, expansion, _) => {
++    Substitution(paths, optional, expansion, _)
++    | LocatedSubstitution(paths, optional, expansion, _, _) => {
+       guard paths.get(0) is Some(parts) else {
+         raise Invalid("empty substitution paths")
+       }
+
+--- before/value_semantics.mbt
++++ after/value_semantics.mbt
+@@ -81,7 +81,8 @@
+     Reference(path) => Substitution([split_path(path)], false, false, 0)
+     PathReference(path, optional) =>
+       Substitution([path.copy()], optional, false, 0)
+-    Substitution(paths, optional, expansion, _) =>
++    Substitution(paths, optional, expansion, _)
++    | LocatedSubstitution(paths, optional, expansion, _, _) =>
+       Substitution([paths[0].copy()], optional, expansion, 0)
+     Concat(parts) => {
+       let out = []
+
+--- /dev/null
++++ after/unresolved_origin_test.mbt
+@@ -0,0 +1,101 @@
++///|
++fn observed_origin(value : @hocon.Value) -> @hocon.SourcePosition? {
++  try {
++    ignore(@hocon.resolve(value))
++    None
++  } catch {
++    @hocon.Located(_, position) => Some(position)
++    _ => None
++  }
++}
++
++///|
++test "unresolved origin survives copy partial resolution include and reindex" {
++  let source = @hocon.parse_unresolved(
++    "service {include \"child.conf\"}",
++    source_name="main.conf",
++    includes={ "child.conf": "# child\nvalue = ${missing}" },
++  )
++  let expected = Some(@hocon.SourcePosition::{
++    source: "child.conf",
++    offset: 16,
++    line: 2,
++    column: 9,
++  })
++  for
++    value in [
++      source,
++      @hocon.copy_value(source),
++      @hocon.resolve(source, allow_unresolved=true),
++      @hocon.at_key(@hocon.copy_value(source), "wrapped"),
++      @hocon.value_with_fallback(source, @hocon.parse("unrelated=1")),
++    ] {
++    assert_eq(observed_origin(value), expected)
++  }
++  let external = try {
++    ignore(@hocon.resolve_with(source, @hocon.parse("other=1")))
++    None
++  } catch {
++    @hocon.Located(_, position) => Some(position)
++    _ => None
++  }
++  assert_eq(external, expected)
++}
++
++///|
++test "unresolved origin leaves old constructors and Invalid compatible" {
++  for
++    reference in [
++      @hocon.Reference("missing"),
++      @hocon.PathReference(["missing"], false),
++      @hocon.Substitution([["missing"]], false, false, 4),
++    ] {
++    let actual = try {
++      ignore(@hocon.resolve(@hocon.Object({ "x": reference })))
++      "accepted"
++    } catch {
++      @hocon.Invalid(message) => message
++      _ => "unexpected error variant"
++    }
++    assert_eq(actual, "unresolved missing")
++  }
++}
++
++///|
++test "unresolved origin does not change semantic equality hash or rendering" {
++  let a = @hocon.parse_unresolved("x=${missing}", source_name="a.conf")
++  let b = @hocon.parse_unresolved("\n  x=${missing}", source_name="b.conf")
++  let legacy = @hocon.Object({
++    "x": @hocon.Substitution([["missing"]], false, false, 99),
++  })
++  for value in [b, legacy, @hocon.copy_value(a)] {
++    assert_true(@hocon.value_equals(a, value))
++    assert_eq(@hocon.value_hash(a), @hocon.value_hash(value))
++    assert_eq(@hocon.render_value(a), @hocon.render_value(value))
++    assert_eq(
++      @hocon.render_value(a, json=false),
++      @hocon.render_value(value, json=false),
++    )
++  }
++}
++
++///|
++test "unresolved origin successful evaluation and config change contract" {
++  let raw = @hocon.parse_unresolved(
++    "service.port=${PORT}\nservice.copy=${service.port}\noptional=${?missing}",
++  )
++  let first = @hocon.resolve(raw, environment={ "PORT": "8080" })
++  let second = @hocon.resolve(raw, environment={ "PORT": "9080" })
++  assert_eq(
++    first.to_json_string(),
++    "{\"service\":{\"copy\":\"8080\",\"port\":\"8080\"}}",
++  )
++  assert_eq(@hocon.diff_resolved_configs(first, second).map(c => c.path), [
++    ["service", "copy"],
++    ["service", "port"],
++  ])
++  assert_eq(
++    @hocon.resolve(@hocon.parse_unresolved("x=${missing}\nx=2")).to_json_string(),
++    "{\"x\":2}",
++  )
++}
+
+--- /dev/null
++++ after/unresolved_origin_reference_test.mbt
+@@ -0,0 +1,305 @@
++// Source/line/category cases come from actual unmodified Lightbend 1.4.9 output.
++// Column/offset are independently checked against the supplied text, not upstream fields.
++
++///|
++test "unresolved origin reference direct" {
++  let position = try {
++    ignore(
++      @hocon.parse_sources({
++        name: "direct.conf",
++        content: "ready=1\nvalue = ${missing}",
++        format: "hocon",
++      }),
++    )
++    None
++  } catch {
++    @hocon.Located(_, position) => Some(position)
++    _ => None
++  }
++  assert_eq(
++    position,
++    Some(@hocon.SourcePosition::{
++      source: "direct.conf",
++      offset: 16,
++      line: 2,
++      column: 9,
++    }),
++  )
++}
++
++///|
++test "unresolved origin reference unicode-crlf" {
++  let position = try {
++    ignore(
++      @hocon.parse_sources({
++        name: "中文.conf",
++        content: "# 注释😀\r\n  value = ${不存在}",
++        format: "hocon",
++      }),
++    )
++    None
++  } catch {
++    @hocon.Located(_, position) => Some(position)
++    _ => None
++  }
++  assert_eq(
++    position,
++    Some(@hocon.SourcePosition::{
++      source: "中文.conf",
++      offset: 17,
++      line: 2,
++      column: 11,
++    }),
++  )
++}
++
++///|
++test "unresolved origin reference concat" {
++  let position = try {
++    ignore(
++      @hocon.parse_sources({
++        name: "concat.conf",
++        content: "x = prefix ${missing} suffix",
++        format: "hocon",
++      }),
++    )
++    None
++  } catch {
++    @hocon.Located(_, position) => Some(position)
++    _ => None
++  }
++  assert_eq(
++    position,
++    Some(@hocon.SourcePosition::{
++      source: "concat.conf",
++      offset: 11,
++      line: 1,
++      column: 12,
++    }),
++  )
++}
++
++///|
++test "unresolved origin reference array" {
++  let position = try {
++    ignore(
++      @hocon.parse_sources({
++        name: "array.conf",
++        content: "items=[1,\n  ${missing}\n]",
++        format: "hocon",
++      }),
++    )
++    None
++  } catch {
++    @hocon.Located(_, position) => Some(position)
++    _ => None
++  }
++  assert_eq(
++    position,
++    Some(@hocon.SourcePosition::{
++      source: "array.conf",
++      offset: 12,
++      line: 2,
++      column: 3,
++    }),
++  )
++}
++
++///|
++test "unresolved origin reference quoted-path" {
++  let position = try {
++    ignore(
++      @hocon.parse_sources({
++        name: "quoted.conf",
++        content: "x=${\"missing.key\"}",
++        format: "hocon",
++      }),
++    )
++    None
++  } catch {
++    @hocon.Located(_, position) => Some(position)
++    _ => None
++  }
++  assert_eq(
++    position,
++    Some(@hocon.SourcePosition::{
++      source: "quoted.conf",
++      offset: 2,
++      line: 1,
++      column: 3,
++    }),
++  )
++}
++
++///|
++test "unresolved origin reference include" {
++  let position = try {
++    ignore(
++      @hocon.parse_sources(
++        {
++          name: "main.conf",
++          content: "include \"child.conf\"",
++          format: "hocon",
++        },
++        includes=Map([("child.conf", "# child\nvalue = ${missing}")]),
++      ),
++    )
++    None
++  } catch {
++    @hocon.Located(_, position) => Some(position)
++    _ => None
++  }
++  assert_eq(
++    position,
++    Some(@hocon.SourcePosition::{
++      source: "child.conf",
++      offset: 16,
++      line: 2,
++      column: 9,
++    }),
++  )
++}
++
++///|
++test "unresolved origin reference nested-include" {
++  let position = try {
++    ignore(
++      @hocon.parse_sources(
++        {
++          name: "nested-main.conf",
++          content: "service {\n include \"child.conf\"\n}",
++          format: "hocon",
++        },
++        includes=Map([("child.conf", "# child\nvalue = ${missing}")]),
++      ),
++    )
++    None
++  } catch {
++    @hocon.Located(_, position) => Some(position)
++    _ => None
++  }
++  assert_eq(
++    position,
++    Some(@hocon.SourcePosition::{
++      source: "child.conf",
++      offset: 16,
++      line: 2,
++      column: 9,
++    }),
++  )
++}
++
++///|
++test "unresolved origin reference include-chain" {
++  let position = try {
++    ignore(
++      @hocon.parse_sources(
++        {
++          name: "chain-main.conf",
++          content: "include \"middle.conf\"",
++          format: "hocon",
++        },
++        includes=Map([
++          ("middle.conf", "include \"leaf.conf\""),
++          ("leaf.conf", "# leaf\nvalue = ${missing}"),
++        ]),
++      ),
++    )
++    None
++  } catch {
++    @hocon.Located(_, position) => Some(position)
++    _ => None
++  }
++  assert_eq(
++    position,
++    Some(@hocon.SourcePosition::{
++      source: "leaf.conf",
++      offset: 15,
++      line: 2,
++      column: 9,
++    }),
++  )
++}
++
++///|
++test "unresolved origin reference fallback" {
++  let position = try {
++    ignore(
++      @hocon.parse_sources(
++        { name: "primary.conf", content: "ready=1", format: "hocon", },
++        fallbacks=[
++          {
++            name: "fallback.conf",
++            content: "# lower\nvalue = ${missing}",
++            format: "hocon",
++          },
++        ],
++      ),
++    )
++    None
++  } catch {
++    @hocon.Located(_, position) => Some(position)
++    _ => None
++  }
++  assert_eq(
++    position,
++    Some(@hocon.SourcePosition::{
++      source: "fallback.conf",
++      offset: 16,
++      line: 2,
++      column: 9,
++    }),
++  )
++}
++
++///|
++test "unresolved origin reference optional-success" {
++  assert_eq(
++    @hocon.parse_sources({
++      name: "optional.conf",
++      content: "x=${?missing}\nready=1",
++      format: "hocon",
++    }).to_json_string(),
++    "{\"ready\":1}",
++  )
++}
++
++///|
++test "unresolved origin reference override-success" {
++  assert_eq(
++    @hocon.parse_sources({
++      name: "override.conf",
++      content: "x=${missing}\nx=2",
++      format: "hocon",
++    }).to_json_string(),
++    "{\"x\":2}",
++  )
++}
++
++///|
++test "unresolved origin reference include-success" {
++  assert_eq(
++    @hocon.parse_sources(
++      {
++        name: "main-ok.conf",
++        content: "include \"base.conf\"\ny=${x}",
++        format: "hocon",
++      },
++      includes=Map([("base.conf", "x=3")]),
++    ).to_json_string(),
++    "{\"x\":3,\"y\":3}",
++  )
++}
++
++///|
++test "unresolved origin reference fallback-overridden-success" {
++  assert_eq(
++    @hocon.parse_sources(
++      { name: "primary-ok.conf", content: "x=2", format: "hocon", },
++      fallbacks=[
++        { name: "lower.conf", content: "x=${missing}", format: "hocon", },
++      ],
++    ).to_json_string(),
++    "{\"x\":2}",
++  )
++}

@@ -13,7 +13,7 @@ let review = @hocon.review_config_changes(before, after, [
 // accepted 为 false；unexpected 包含 service.copy。
 ```
 
-调用位于可抛错函数内。`ConfigChangeRule` 的路径由字面键组成，`["a.b"]` 与 `["a","b"]` 不同；类别只有 `added`、`removed`、`changed`。规则精确匹配，不自动允许父级删除或任意后代变化。空清单只允许语义相等；未使用的规则允许存在，不能作为“必须修改某字段”的断言。列表整体比较，新增或删除对象在最近对象键报告。
+调用位于可抛错函数内。`ConfigChangeRule` 的路径由字面键组成，`["a.b"]` 与 `["a","b"]` 不同；类别只有 `added`、`removed`、`changed`。规则精确匹配，不自动允许父级删除或任意后代变化。空清单只允许语义相等；原接口保持允许未使用规则。新增 `unused_config_change_rules(before, after, rules)` 返回未匹配变化的有效规则，Node 对应 `Config.unusedChangeRules(next, rules)`；路径和 kind 均须精确相等。列表整体比较，新增或删除对象在最近对象键报告。
 
 JS 宿主的 `Config.loadFile(...).reviewChanges(next, rules)` 直接比较 MoonBit 保留的树。它不会先把值转成 JS Number，所以大于 2^53 的相邻整数仍可区分。返回值只有路径、类别和前后类型，不返回配置值；路径本身仍可能包含敏感名称。
 
@@ -27,9 +27,13 @@ JS 宿主的 `Config.loadFile(...).reviewChanges(next, rules)` 直接比较 Moon
 
 ```sh
 node tools/change-review.mjs --before old.conf --after new.conf --policy permissions.json
+# 严格审批：任何未使用规则也退出 2
+node tools/change-review.mjs --before old.conf --after new.conf --policy permissions.json --require-all-rules-used
 ```
 
-需要时重复传 `--before-fallback FILE`、`--after-fallback FILE`、`--before-classpath DIR`、`--after-classpath DIR`。Node 负责读取可信本地文件、输入指纹和退出码；策略匹配与配置差异在 MoonBit 核心完成。HTTP 禁用，环境显式设为空。退出 0 表示所有变化获允许；2 表示存在未允许变化；1 表示输入或策略无效。成功报告含两侧实际读取文件的 SHA-256，输出前重新核验读取内容；这不是原子文件快照。
+需要时重复传 `--before-fallback FILE`、`--after-fallback FILE`、`--before-classpath DIR`、`--after-classpath DIR`。Node 负责读取可信本地文件、输入指纹和退出码；策略匹配与配置差异在 MoonBit 核心完成。HTTP 禁用，环境显式设为空。报告增加 `unusedRules`；`reviewFiles` 可选 `requireAllRulesUsed: true`。退出 0 表示政策接受；2 表示存在未允许变化或严格模式存在闲置规则；1 表示输入或策略无效。成功报告含两侧实际读取文件的 SHA-256，输出前重新核验读取内容；这不是原子文件快照。
+
+`examples/reviewed-service.mjs` 是实际消费配置的本地 HTTP 应用入口：先审查、复核读取指纹、读取带类型的端口/响应配置，只有接受后才开启监听。`tools/check-review-consumer.mjs NEW_EVIDENCE_DIRECTORY` 验证获允许的 include 变化确实改变 HTTP 响应，未允许的变化或闲置批准在创建监听前抛 `PolicyRejected`，报告不含配置值。这是本项目编写的消费者，未冒称外部采用、OpenWhisk 实际部署或完整部署安全。
 
 策略上限 1024 条、路径深度 32 段、合计 65536 个 UTF-16 单元；配置差异继承树预算与 4096 条报告上限。重复规则、未知类别、未求值树、非对象根均拒绝。不得把允许变化解释为新值正确、服务可启动或部署安全；调用方仍须进行类型与业务验证。
 

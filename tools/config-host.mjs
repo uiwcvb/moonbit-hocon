@@ -17,8 +17,16 @@ export function parseProperties(text) {
     while((line.match(/\\+$/)?.[0].length??0)%2===1) {
       line=line.slice(0,-1);
       if(++i>=physical.length)break;
-      line+=physical[i].replace(/^[ \t\f]+/,'');
+      const next=physical[i].replace(/^[ \t\f]+/,'');
+      if(!line&&(!next||next[0]==='#'||next[0]==='!')) {
+        // An empty continuation restarts Java's comment/blank-line detection.
+        // A terminal LF/CR can return an empty property; CRLF consumes its LF first.
+        if(i!==physical.length-1||physical[i]!==''||text.endsWith('\r\n'))line=null;
+        break;
+      }
+      line+=next;
     }
+    if(line===null)continue;
     let end=0;
     for(;end<line.length;end++){if(line[end]==='\\'){end++;continue}if(/[=: \t\f]/.test(line[end]))break;}
     let start=end;
@@ -39,7 +47,7 @@ function createHost(options) {
   const roots=(options.classpath??[]).map(p=>path.resolve(cwd,p));
   const metadata=new Map();let bytes=0, count=0;
   const network=networkOptions(options.network),started=Date.now();
-  function read(name,optional=false,resource,forceHocon=false) {
+  function read(name,optional=false,resource,syntax) {
     let real;
     try{real=fs.realpathSync(name);}catch(e){if(optional&&['ENOENT','ENOTDIR'].includes(e.code))return null;throw e;}
     const stat=fs.statSync(real);
@@ -52,11 +60,13 @@ function createHost(options) {
     options.onRead?.(Object.freeze({path:real,bytes:data.length,sha256:createHash('sha256').update(data).digest('hex')}));
     if(content.length>100000)throw new Error('Configuration source exceeds 100000 UTF-16 units');
     if(resource!==undefined)metadata.set(real,resource);
-    const extension=forceHocon?'.conf':path.extname(name);
-    return {name:real,content:extension==='.properties'?JSON.stringify(parseProperties(content)):content,format:extension==='.properties'||extension==='.json'?'json':'hocon'};
+    const extension=path.extname(name);
+    const format=syntax??(extension==='.properties'?'properties':extension==='.json'?'json':'hocon');
+    if(!['hocon','json','properties'].includes(format))throw new Error('Unknown configuration file syntax: '+format);
+    return {name:real,content:format==='properties'?JSON.stringify(parseProperties(content)):content,format:format==='properties'?'json':format};
   }
   function candidates(name){return /\.(conf|json|properties)$/.test(name)?[name]:[name+'.properties',name+'.json',name+'.conf'];}
-  function files(name,heuristic=false){return candidates(name).flatMap(p=>{const source=read(p,true,undefined,heuristic&&/\.(conf|json|properties)$/.test(name));return source?[source]:[];});}
+  function files(name,heuristic=false){return candidates(name).flatMap(p=>{const source=read(p,true,undefined,heuristic&&/\.(conf|json|properties)$/.test(name)?'hocon':undefined);return source?[source]:[];});}
   function resources(name){
     const relative=name.replace(/^\/+/,''), out=[];
     // First classpath root has highest priority, as with ClassLoader resources.
@@ -68,7 +78,7 @@ function createHost(options) {
   function url(name,optional=true,syntax){
     const parsed=new URL(name);
     if(parsed.protocol==='file:'){
-      const source=read(fileURLToPath(parsed),optional);return source?[source]:[];
+      const source=read(fileURLToPath(parsed),optional,undefined,syntax);return source?[source]:[];
     }
     if(!['http:','https:'].includes(parsed.protocol))throw new Error('Unsupported include URL protocol: '+parsed.protocol);
     if(network===false)throw new Error('HTTP(S) configuration loading is disabled');
@@ -119,7 +129,7 @@ function createHost(options) {
 
 export function prepare(source,options,kind){
   const host=createHost(options);
-  const primary=kind==='url'?host.url(source,false,options.format)[0]:kind==='file'?host.read(path.resolve(options.cwd??process.cwd(),source)):{name:options.sourceName??'<string>',content:source,format:options.format??'hocon'};
+  const primary=kind==='url'?host.url(source,false,options.format)[0]:kind==='file'?host.read(path.resolve(options.cwd??process.cwd(),source),false,undefined,options.format):{name:options.sourceName??'<string>',content:source,format:options.format??'hocon'};
   const fallbackSources=(options.fallbacks??[]).map((content,i)=>typeof content==='string'?{name:`<fallback ${i}>`,content,format:'hocon'}:content);
   for(const name of options.fallbackFiles??[])fallbackSources.push(host.read(path.resolve(options.cwd??process.cwd(),name)));
   for(const name of options.fallbackURLs??[])fallbackSources.push(host.url(name,false)[0]);

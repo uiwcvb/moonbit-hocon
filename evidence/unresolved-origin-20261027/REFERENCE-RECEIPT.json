@@ -1,0 +1,23 @@
+{
+  "command": [
+    "C:\\Program Files\\Java\\jdk-22\\bin\\java.exe",
+    "-Dfile.encoding=UTF-8",
+    "-cp",
+    "D:\\CodexLocal\\ban\\work\\acceptance-20260928\\hocon-config-1.4.9.jar",
+    "D:\\CodexLocal\\ban\\work\\portfolio-progress-20261027\\projects\\moonbit-hocon\\evidence\\unresolved-origin-20261027\\OriginReference.java"
+  ],
+  "exitCode": 0,
+  "requests": 13,
+  "results": 13,
+  "jarSHA256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37",
+  "javaSHA256": "77f5af7467414fbc2d5edbdc5ac318715d188c1fc94f9afcd5af0be225d0188a",
+  "adapterSHA256": "520f77b2a0a87c82e6c3be1ffb0921c4d65972048aed30dd2db4b1ce943fff3e",
+  "requestsSHA256": "41894927cf7c43d8aaa9629438a64519a0b47dffe27838e8c63fd787f4a82d4e",
+  "stdoutSHA256": "7a8167970fcc872cc0948d4e1273dbe01f4fa0d0e774caa8e8fbfce40d35f264",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "unavailableReferenceFields": [
+    "offset",
+    "column"
+  ],
+  "scope": "Actual unmodified Lightbend Config 1.4.9 class, origin description, line and success values. Memory include adapter supplies exact named source bytes; no fabricated expected fields."
+}

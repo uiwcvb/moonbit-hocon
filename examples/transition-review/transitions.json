@@ -1,0 +1,4 @@
+[
+  {"path":["service","message"],"beforeSource":"\"approved-before\"","afterSource":"\"approved-after\""},
+  {"path":["service","copy"],"beforeSource":"\"approved-before\"","afterSource":"\"approved-after\""}
+]

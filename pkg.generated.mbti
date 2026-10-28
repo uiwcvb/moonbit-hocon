@@ -140,7 +140,11 @@ pub fn resolve_with(Value, Value, environment? : Map[String, String], allow_unre
 
 pub fn review_config_changes(Value, Value, Array[ConfigChangeRule]) -> ConfigChangeReview raise ParseError
 
+pub fn review_config_transition(Value, Value, Array[ConfigTransitionRule]) -> ConfigTransitionReview raise ParseError
+
 pub fn split_path(String) -> Array[String] raise ParseError
+
+pub fn unused_config_change_rules(Value, Value, Array[ConfigChangeRule]) -> Array[ConfigChangeRule] raise ParseError
 
 pub fn validation_problems(Value, Value, paths? : Array[String]) -> Array[ValidationProblem] raise ParseError
 
@@ -234,6 +238,35 @@ pub fn ConfigPeriod::not_equal(Self, Self) -> Bool
 pub fn ConfigPeriod::to_json(Self) -> Json
 pub fn ConfigPeriod::to_repr(Self) -> @debug.Repr
 
+pub(all) struct ConfigTransitionMismatch {
+  path : Array[String]
+  kind : String
+  side : String
+} derive(Eq, ToJson, @debug.Debug)
+pub fn ConfigTransitionMismatch::equal(Self, Self) -> Bool
+pub fn ConfigTransitionMismatch::not_equal(Self, Self) -> Bool
+pub fn ConfigTransitionMismatch::to_json(Self) -> Json
+pub fn ConfigTransitionMismatch::to_repr(Self) -> @debug.Repr
+
+pub(all) struct ConfigTransitionReview {
+  accepted : Bool
+  changes : Array[ConfigChange]
+  unexpected : Array[ConfigChange]
+  mismatches : Array[ConfigTransitionMismatch]
+  unused_rules : Array[ConfigChangeRule]
+} derive(Eq, ToJson, @debug.Debug)
+pub fn ConfigTransitionReview::equal(Self, Self) -> Bool
+pub fn ConfigTransitionReview::not_equal(Self, Self) -> Bool
+pub fn ConfigTransitionReview::to_json(Self) -> Json
+pub fn ConfigTransitionReview::to_repr(Self) -> @debug.Repr
+
+pub(all) struct ConfigTransitionRule {
+  path : Array[String]
+  before : Value?
+  after : Value?
+} derive(@debug.Debug)
+pub fn ConfigTransitionRule::to_repr(Self) -> @debug.Repr
+
 pub(all) enum DurationUnit {
   Nanoseconds
   Microseconds
@@ -314,6 +347,7 @@ pub(all) enum Value {
   DelayedMerge(Value, Value)
   Bound(Array[String], Int, Value)
   Substitution(Array[Array[String]], Bool, Bool, Int)
+  LocatedSubstitution(Array[Array[String]], Bool, Bool, Int, SourcePosition)
 } derive(Eq, @debug.Debug)
 pub fn Value::equal(Self, Self) -> Bool
 pub fn Value::not_equal(Self, Self) -> Bool

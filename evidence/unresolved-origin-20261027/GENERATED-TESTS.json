@@ -1,0 +1,17 @@
+{
+  "referenceSHA256": "7a8167970fcc872cc0948d4e1273dbe01f4fa0d0e774caa8e8fbfce40d35f264",
+  "requestsSHA256": "41894927cf7c43d8aaa9629438a64519a0b47dffe27838e8c63fd787f4a82d4e",
+  "testSHA256": "1b170512cfdb6dbc6dcd736b3bec61f177356006d42b306c3038ce264adfd0e6",
+  "cases": 13,
+  "errorCases": 9,
+  "upstreamComparableFields": [
+    "errorClass (mapped to missing-reference Located branch)",
+    "originDescription",
+    "line"
+  ],
+  "inputContractOnlyFields": [
+    "offset (Unicode scalar index)",
+    "column (one-based Unicode scalar column)"
+  ],
+  "noUpstreamColumnOrOffsetClaim": true
+}

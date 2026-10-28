@@ -28,6 +28,8 @@ options(
         "config_children",
         "config_validate",
         "config_review_changes",
+        "config_review_transition",
+        "config_unused_change_rules",
         "config_pack",
         "config_unpack",
         "value_kind",

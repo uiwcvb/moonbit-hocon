@@ -111,6 +111,7 @@ fn resolve_reference(
   depth : Int,
   deep : Bool,
   source_node : Bool,
+  position? : SourcePosition? = None,
 ) -> Value? raise ParseError {
   let cache = if deep { r.values } else { r.heads }
   if cache.get(id) is Some(result) {
@@ -121,7 +122,10 @@ fn resolve_reference(
       r.cycles.push(id)
       return None
     } else {
-      raise Invalid("substitution cycle")
+      match position {
+        Some(position) => raise Located("substitution cycle", position)
+        None => raise Invalid("substitution cycle")
+      }
     }
   }
   r.active.push(id)
@@ -140,7 +144,14 @@ fn resolve_reference(
           found = true
           break
         } else {
-          raise Invalid("reference to enclosing object creates a cycle")
+          match position {
+            Some(position) =>
+              raise Located(
+                "reference to enclosing object creates a cycle", position,
+              )
+            None =>
+              raise Invalid("reference to enclosing object creates a cycle")
+          }
         }
       }
       if lookup_resolved(r, root, keys, depth + 1) is Some(target) {
@@ -178,12 +189,26 @@ fn resolve_reference(
       .any(keys => {
         r.blocked_paths.iter().any(p => p == keys || ancestor(p, keys))
       }) {
-      raise Invalid("substitution cycle through hidden binding")
+      match position {
+        Some(position) =>
+          raise Located("substitution cycle through hidden binding", position)
+        None => raise Invalid("substitution cycle through hidden binding")
+      }
     }
     if r.allow_unresolved {
-      return Some(Substitution(paths, optional, list_env, id))
+      return Some(
+        match position {
+          Some(position) =>
+            LocatedSubstitution(paths, optional, list_env, id, position)
+          None => Substitution(paths, optional, list_env, id)
+        },
+      )
     }
-    raise Invalid("unresolved " + paths[paths.length() - 1].join("."))
+    let message = "unresolved " + paths[paths.length() - 1].join(".")
+    match position {
+      Some(position) => raise Located(message, position)
+      None => raise Invalid(message)
+    }
   }
   cache[id] = result
   result
@@ -300,6 +325,20 @@ fn evaluate(
       resolve_reference(
         r, paths, optional, list_env, id, root, owner, depth, deep, source_node,
       )
+    LocatedSubstitution(paths, optional, list_env, id, position) =>
+      resolve_reference(
+        r,
+        paths,
+        optional,
+        list_env,
+        id,
+        root,
+        owner,
+        depth,
+        deep,
+        source_node,
+        position=Some(position),
+      )
     Reference(s) =>
       resolve_reference(
         r,
@@ -392,7 +431,14 @@ fn evaluate(
       match high {
         Some(SealedObject(_)) => high
         Some(Object(fields)) => {
-          let view = replacement(root, location, 0, Some(old))
+          // Ordinary lower objects still resolve against the complete source.
+          // Removing the upper root would also remove the known-object shape
+          // and the unknown middle layer that can hide their lookup targets.
+          let view = if location.is_empty() && r.delayed_object_root {
+            root
+          } else {
+            replacement(root, location, 0, Some(old))
+          }
           match
             evaluate(
               r,
@@ -423,7 +469,34 @@ fn evaluate(
               Some(old)
             }
             match retained {
-              Some(old) => Some(append_delayed(old, value))
+              Some(old) => {
+                // Even an unresolved root merge must visit a surviving lower
+                // object. Its substitutions look through the original root,
+                // whose unresolved layers may still hide fallback keys.
+                // Merely retaining the object would skip both valid known
+                // lookups and required unresolved-lookup errors.
+                let previous = if deep &&
+                  location.is_empty() &&
+                  r.delayed_object_root &&
+                  known_object(old) {
+                  evaluate(
+                    r,
+                    old,
+                    root,
+                    owner_of(old, location),
+                    depth + 1,
+                    true,
+                    None,
+                    source_node,
+                  )
+                } else {
+                  Some(old)
+                }
+                match previous {
+                  Some(old) => Some(append_delayed(old, value))
+                  None => high
+                }
+              }
               None => high
             }
           } else {

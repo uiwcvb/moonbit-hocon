@@ -1,0 +1,13 @@
+{"accepted":false,"errorClass":"com.typesafe.config.ConfigException$UnresolvedSubstitution","filename":null,"id":"direct","line":2,"message":"direct.conf: 2: Could not resolve substitution to a value: ${missing}","originDescription":"direct.conf: 2"}
+{"accepted":false,"errorClass":"com.typesafe.config.ConfigException$UnresolvedSubstitution","filename":null,"id":"unicode-crlf","line":2,"message":"中文.conf: 2: Could not resolve substitution to a value: ${不存在}","originDescription":"中文.conf: 2"}
+{"accepted":false,"errorClass":"com.typesafe.config.ConfigException$UnresolvedSubstitution","filename":null,"id":"concat","line":1,"message":"concat.conf: 1: Could not resolve substitution to a value: ${missing}","originDescription":"concat.conf: 1"}
+{"accepted":false,"errorClass":"com.typesafe.config.ConfigException$UnresolvedSubstitution","filename":null,"id":"array","line":2,"message":"array.conf: 2: Could not resolve substitution to a value: ${missing}","originDescription":"array.conf: 2"}
+{"accepted":false,"errorClass":"com.typesafe.config.ConfigException$UnresolvedSubstitution","filename":null,"id":"quoted-path","line":1,"message":"quoted.conf: 1: Could not resolve substitution to a value: ${\"missing.key\"}","originDescription":"quoted.conf: 1"}
+{"accepted":false,"errorClass":"com.typesafe.config.ConfigException$UnresolvedSubstitution","filename":null,"id":"include","line":2,"message":"child.conf: 2: Could not resolve substitution to a value: ${missing}","originDescription":"child.conf: 2"}
+{"accepted":false,"errorClass":"com.typesafe.config.ConfigException$UnresolvedSubstitution","filename":null,"id":"nested-include","line":2,"message":"child.conf: 2: Could not resolve substitution to a value: ${service.missing}","originDescription":"child.conf: 2"}
+{"accepted":false,"errorClass":"com.typesafe.config.ConfigException$UnresolvedSubstitution","filename":null,"id":"include-chain","line":2,"message":"leaf.conf: 2: Could not resolve substitution to a value: ${missing}","originDescription":"leaf.conf: 2"}
+{"accepted":false,"errorClass":"com.typesafe.config.ConfigException$UnresolvedSubstitution","filename":null,"id":"fallback","line":2,"message":"fallback.conf: 2: Could not resolve substitution to a value: ${missing}","originDescription":"fallback.conf: 2"}
+{"accepted":true,"id":"optional-success","value":{"ready":1}}
+{"accepted":true,"id":"override-success","value":{"x":2}}
+{"accepted":true,"id":"include-success","value":{"x":3,"y":3}}
+{"accepted":true,"id":"fallback-overridden-success","value":{"x":2}}

@@ -16,4 +16,4 @@ CI先执行 `moon update` 初始化注册表及解析依赖，再进行fmt/info/
 
 升级时先修改版本文件，在独立目录执行fmt/info/check和受影响测试，更新生成API与编译引擎，再一起提交。不要通过删除确定性检查掩盖版本引起的差异。Node/Python、操作系统和外部服务仍有各自环境范围；固定MoonBit不意味着所有依赖完全冻结。
 
-本轮只改本地，远端CI状态和Mooncakes发布状态仍需团队同步后确认。
+GitHub Actions 使用 Ubuntu 24.04、Node 24.11.0 和固定提交的官方 Action；安装器先校验 SHA-256，再按 `.moonbit-version` 安装到 runner 临时目录。Java 21 的实际版本、MoonBit/Node 版本、提交 SHA 和本次构建的浏览器引擎哈希会写入 `quality-evidence`。所有消费者检查使用本次编译的 `web/engine.mjs`。当前 CI 结论以相同提交的运行记录为准；本次不发布 Mooncakes。

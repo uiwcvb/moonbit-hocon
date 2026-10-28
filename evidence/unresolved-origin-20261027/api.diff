@@ -1,0 +1,10 @@
+--- before/pkg.generated.mbti
++++ after/pkg.generated.mbti
+@@ -314,6 +314,7 @@
+   DelayedMerge(Value, Value)
+   Bound(Array[String], Int, Value)
+   Substitution(Array[Array[String]], Bool, Bool, Int)
++  LocatedSubstitution(Array[Array[String]], Bool, Bool, Int, SourcePosition)
+ } derive(Eq, @debug.Debug)
+ pub fn Value::equal(Self, Self) -> Bool
+ pub fn Value::not_equal(Self, Self) -> Bool
