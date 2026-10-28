@@ -13,3 +13,4 @@ evidence/*-replay.json
 tools/browser/node_modules/
 /output/playwright/
 /output/transition-consumer/
+/output/package-consumer/

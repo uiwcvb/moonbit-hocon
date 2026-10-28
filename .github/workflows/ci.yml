@@ -125,6 +125,10 @@ jobs:
       - run: node tools/test-entry-memory.mjs
       - run: node tools/robustness.mjs
       - run: node tools/benchmark.mjs
+      - name: Check actual local package and archived consumers
+        run: node tools/test-package-consumer.mjs
+        env:
+          HOCON_PACKAGE_CACHE: ${{ runner.temp }}/hocon-package-consumer
       - name: Upload quality evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -134,3 +138,4 @@ jobs:
             evidence/
             output/playwright/
             output/transition-consumer/
+            output/package-consumer/

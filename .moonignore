@@ -10,6 +10,12 @@ evidence/current-validation.json
 evidence/validation-console.txt
 evidence/*-replay.json
 
+# Verification-only dependencies and generated reports are not distribution inputs.
+/tools/browser/node_modules/
+/output/playwright/
+/output/transition-consumer/
+/output/package-consumer/
+
 # Toolchain instructions in TOOLCHAIN.md must remain runnable from the archive.
 !/.moonbit-version
 !/.moonignore

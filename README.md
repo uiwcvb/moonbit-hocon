@@ -89,6 +89,8 @@ node tools/test-persistent-host.mjs
 
 [独立 MoonBit 应用消费验收](tools/transition-consumer/README.md) 另在新的双模块工作区导入公开包，核对类型化计划、报告序列化及接受/拒绝后的实际配置选择。JS 与 Wasm-GC 各从空的产品构建目录执行六个手工预期场景；依赖使用当前源码，不通过 Node 桥接，也不宣称验证了新版本的 Mooncakes 发布。
 
+[真实本地分发包验收](tools/package-consumer/README.md) 使用 `moon package` 的实际归档，逐项读回源码与许可身份、排除验证缓存和生成报告，拒绝缺 NOTICE、改字节及不安全成员等损坏样本，再从解压出的包运行独立应用。`.moonignore` 已补齐浏览器开发依赖和新生成目录的排除；原源码、样本、宿主工具与许可仍保留。这项证明针对本地产物，不代表发布或下载验证了新版 Mooncakes。
+
 ## 已有工作、用途与边界
 
 Lightbend Config 已成熟定义并实现 HOCON。项目不以语法移植或“生态空白”为创新依据；贡献在于 MoonBit 内可组合的配置树与变更合同，以及可复查的跨实现迁移流程。[查重与许可](DUPLICATION.md) 记录已有工作。AI 可以帮助生成配置，但最终生效路径、间接变化、输入预算和拒绝结果仍需确定性执行与独立参考核验。
