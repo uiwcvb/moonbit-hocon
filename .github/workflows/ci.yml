@@ -48,6 +48,18 @@ jobs:
           sha256sum web/engine.mjs | tee evidence/ci-engine.sha256
       - run: node tools/generate-double-getter-tests.mjs --check --bridge
       - run: node tools/test-demo.mjs
+      - name: Install isolated browser regression dependencies
+        run: npm ci --prefix tools/browser --ignore-scripts --no-audit --no-fund
+        env:
+          npm_config_cache: ${{ runner.temp }}/hocon-npm-cache
+      - name: Install Chromium
+        run: node tools/browser/node_modules/playwright/cli.js install --with-deps chromium
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/hocon-playwright
+      - name: Check public demo in Chromium
+        run: npm test --prefix tools/browser
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/hocon-playwright
       - run: node tools/test-cli.mjs
       - run: node tools/test-host.mjs
       - run: node tools/test-properties-host.mjs
@@ -114,4 +126,6 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: quality-evidence
-          path: evidence/
+          path: |
+            evidence/
+            output/playwright/
