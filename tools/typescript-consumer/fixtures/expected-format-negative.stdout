@@ -1,0 +1,10 @@
+format-negative.mts(3,71): error TS2322: Type '{ name: string; content: string; }' is not assignable to type 'string | FallbackSource'.
+  Property 'format' is missing in type '{ name: string; content: string; }' but required in type 'FallbackSource'.
+format-negative.mts(4,61): error TS2322: Type '"properties"' is not assignable to type '"hocon" | "json" | undefined'.
+format-negative.mts(5,59): error TS2322: Type '"properties"' is not assignable to type '"hocon" | "json" | undefined'.
+format-negative.mts(6,71): error TS2322: Type '"properties"' is not assignable to type '"hocon" | "json" | undefined'.
+format-negative.mts(7,69): error TS2322: Type '"properties"' is not assignable to type '"hocon" | "json" | undefined'.
+format-negative.mts(8,45): error TS2322: Type '"properties"' is not assignable to type '"hocon" | "json" | undefined'.
+format-negative.mts(9,55): error TS2322: Type '"properties"' is not assignable to type '"hocon" | "json" | undefined'.
+format-negative.mts(10,68): error TS2322: Type '"properties"' is not assignable to type '"hocon"'.
+format-negative.mts(11,62): error TS2322: Type '"json"' is not assignable to type '"hocon"'.

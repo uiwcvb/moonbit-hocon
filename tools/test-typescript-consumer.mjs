@@ -61,12 +61,26 @@ try {
   const diagnostics = run('compile-negative', [tsc, '--project', 'tsconfig-negative.json', ...compile], 1);
   assert.equal(lf(diagnostics), lf(fs.readFileSync(path.join(work, 'expected-negative.stdout'), 'utf8')));
   assert(!fs.existsSync(path.join(work, 'negative.mjs')), 'misuses must not emit JavaScript');
+  const formats = JSON.parse(fs.readFileSync(path.join(work, 'tsconfig.json'), 'utf8'));
+  formats.files = ['format-consumer.mts']; writeJSON('tsconfig-formats.json', formats);
+  assert.equal(run('compile-formats', [tsc, '--project', 'tsconfig-formats.json', ...compile], 0), '');
+  assert(fs.existsSync(path.join(work, 'format-consumer.mjs')), 'format consumer must be emitted by the real compiler');
+  const formatResult = run('formats-runtime', [path.join(work, 'format-consumer.mjs'), path.join(work, 'properties.input')], 0);
+  assert.equal(formatResult, fs.readFileSync(path.join(work, 'expected-format.stdout'), 'utf8'));
+  formats.files = ['format-negative.mts']; writeJSON('tsconfig-formats-negative.json', formats);
+  const formatDiagnostics = run('compile-formats-negative', [tsc, '--project', 'tsconfig-formats-negative.json', ...compile], 1);
+  assert.equal(lf(formatDiagnostics), lf(fs.readFileSync(path.join(work, 'expected-format-negative.stdout'), 'utf8')));
+  assert(!fs.existsSync(path.join(work, 'format-negative.mjs')), 'invalid formats/fallbacks must not emit JavaScript');
+  manifest.formatRuntimeResults = 31;
+  manifest.formatRejectedMisuses = 9;
   for (const name of ['consumer.mts', 'consumer.mjs', 'negative.mts', 'tsconfig.json', 'tsconfig-negative.json', 'settings.conf', 'broken.conf',
-    'expected-success.stdout', 'expected-error.stdout', 'expected-negative.stdout']) {
+    'expected-success.stdout', 'expected-error.stdout', 'expected-negative.stdout',
+    'format-consumer.mts', 'format-consumer.mjs', 'format-negative.mts', 'tsconfig-formats.json', 'tsconfig-formats-negative.json',
+    'properties.input', 'expected-format.stdout', 'expected-format-negative.stdout']) {
     const bytes = fs.readFileSync(path.join(work, name)); manifest.outputs.push({path: name, bytes: bytes.length, sha256: hash(bytes)});
   }
   manifest.passed = true;
-  console.log('Strict TypeScript consumer: emitted ESM, 4 full runtime outputs and 4 rejected misuses passed');
+  console.log('Strict TypeScript consumer: 4 original outputs/4 rejections, 31 format results/9 rejections passed');
 } finally {
   writeJSON('RESULT.json', manifest);
   fs.writeFileSync(path.join(output, 'latest.json'), JSON.stringify({work, passed: manifest.passed}, null, 2) + '\n');

@@ -20,7 +20,7 @@ export interface NetworkOptions {
   maxRedirects?: number;
   ca?: SecureContextOptions['ca'];
 }
-export interface FallbackSource {name: string; content: string; format?: 'hocon' | 'json'}
+export interface FallbackSource {name: string; content: string; format: 'hocon' | 'json'}
 export interface FactoryOptions {
   cwd?: string;
   sourceName?: string;
@@ -34,8 +34,13 @@ export interface FactoryOptions {
   network?: false | NetworkOptions;
   onRead?: (receipt: ReadReceipt) => void;
 }
+/** Config string factories accept core syntax; properties conversion belongs to file/URL hosts. */
+export interface StringFactoryOptions extends Omit<FactoryOptions, 'format'> {format?: 'hocon' | 'json'}
+/** Value fragments are prefixed with v=, so their grammar is HOCON even for JSON-like values. */
+export interface ValueParseOptions extends Omit<FactoryOptions, 'format'> {format?: 'hocon'; resolved?: boolean}
 /** Worker options must be cloneable. onRead callbacks belong to synchronous loads. */
 export type AsyncFactoryOptions = Omit<FactoryOptions, 'onRead'> & {onRead?: undefined; signal?: AbortSignal};
+export type AsyncStringFactoryOptions = Omit<StringFactoryOptions, 'onRead'> & {onRead?: undefined; signal?: AbortSignal};
 export interface ResolveOptions {environment?: Readonly<Record<string, string>>; allowUnresolved?: boolean}
 export interface RenderOptions {
   json?: boolean;
@@ -62,14 +67,14 @@ export class ConfigError extends Error {
 export class Config {
   private constructor();
   private readonly configState;
-  static parse(source: string, options?: FactoryOptions): Config;
-  static load(source: string, options?: FactoryOptions): Config;
+  static parse(source: string, options?: StringFactoryOptions): Config;
+  static load(source: string, options?: StringFactoryOptions): Config;
   static parseFile(filename: string, options?: FactoryOptions): Config;
   static loadFile(filename: string, options?: FactoryOptions): Config;
   static parseURL(url: string, options?: FactoryOptions): Config;
   static loadURL(url: string, options?: FactoryOptions): Config;
-  static parseAsync(source: string, options?: AsyncFactoryOptions): Promise<Config>;
-  static loadAsync(source: string, options?: AsyncFactoryOptions): Promise<Config>;
+  static parseAsync(source: string, options?: AsyncStringFactoryOptions): Promise<Config>;
+  static loadAsync(source: string, options?: AsyncStringFactoryOptions): Promise<Config>;
   static parseFileAsync(filename: string, options?: AsyncFactoryOptions): Promise<Config>;
   static loadFileAsync(filename: string, options?: AsyncFactoryOptions): Promise<Config>;
   static parseURLAsync(url: string, options?: AsyncFactoryOptions): Promise<Config>;
@@ -146,7 +151,7 @@ export class Config {
 export class ConfigValue {
   protected constructor();
   private readonly valueState;
-  static parse(source: string, options?: FactoryOptions & {resolved?: boolean}): ConfigValue;
+  static parse(source: string, options?: ValueParseOptions): ConfigValue;
   static fromAnyRef(value: JsonInput): ConfigValue;
   valueType(): ValueType;
   unwrapped(): JsonValue;
@@ -232,11 +237,13 @@ export interface LoadOptions extends FactoryOptions {
   steps?: JsonInput;
   probes?: JsonInput;
 }
+export interface StringLoadOptions extends Omit<LoadOptions, 'format'> {format?: 'hocon' | 'json'}
 export type AsyncLoadOptions = Omit<LoadOptions, 'onRead'> & {onRead?: undefined; signal?: AbortSignal};
-export function load(source: string, options?: LoadOptions): unknown;
+export type AsyncStringLoadOptions = Omit<StringLoadOptions, 'onRead'> & {onRead?: undefined; signal?: AbortSignal};
+export function load(source: string, options?: StringLoadOptions): unknown;
 export function loadFile(filename: string, options?: LoadOptions): unknown;
 export function loadURL(url: string, options?: LoadOptions): unknown;
-export function loadAsync(source: string, options?: AsyncLoadOptions): Promise<unknown>;
+export function loadAsync(source: string, options?: AsyncStringLoadOptions): Promise<unknown>;
 export function loadFileAsync(filename: string, options?: AsyncLoadOptions): Promise<unknown>;
 export function loadURLAsync(url: string, options?: AsyncLoadOptions): Promise<unknown>;
 export interface PropertiesObject {[key: string]: string | PropertiesObject}

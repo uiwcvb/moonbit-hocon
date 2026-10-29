@@ -6,7 +6,7 @@
 
 | 必要接入门 | 实际执行与证据 |
 | --- | --- |
-| Strict TypeScript ESM consumer | 隔离固定 TypeScript/@types/node，严格 NodeNext 编译实际调用方，执行生成的 ESM，比较四份完整运行输出及四项拒绝诊断；保留实际退出、原流与源码/生成字节。 |
+| Strict TypeScript ESM consumer | 隔离固定 TypeScript/@types/node，严格 NodeNext 编译实际调用方，执行生成的 ESM，比较原四份完整运行输出/四项拒绝诊断，以及格式/fallback 的31项完整结果和九项完整拒绝诊断；保留实际退出、原流与源码/生成字节。 |
 | Cold MoonBit transition consumer | 独立模块和公开包，保留原边界。 |
 | Typed file export and HTTP receiver | 原文件到类型化产物，再到独立文件接收方；原 gate 不拆分计数。 |
 | Classpath priority and startup receiver | 固定原版参考、公开文件/Worker/CLI 路径、实际 HTTP 启动和拒绝。 |
