@@ -73,6 +73,8 @@ node tools/change-review.mjs --before old.conf --after new.conf --policy permiss
 
 退出 0 为全部变化获允许，2 为存在未允许变化，1 为输入错误。可分别指定两侧 fallback/classpath，报告保留实际读取文件指纹。独立的 [迁移闸门](MIGRATION-GATE.md) 使用官方 Lightbend Config 1.4.9 JAR 检查跨实现一致性；它与前后版本的变更审查互补。
 
+严格 TypeScript NodeNext 项目可以直接导入 `tools/config.mjs`，相邻的声明文件覆盖现有公共 Config/Value/容器、同步与异步工厂、选项、审查报告和 ConfigError。Long、容量与固定时长保持字符串类型；动态 getter 和旧文档入口返回 `unknown`，不推断配置 schema。固定 TypeScript 5.9.3 消费者编译后执行真实文件的成功/错误与 Worker 路径，并拒绝错误的 Long 类型、路径参数、不可变容器修改及工厂选项。[接入方法与完整边界](tools/typescript-consumer/README.md)。
+
 ## 公开配置与验证
 
 [Apache OpenWhisk 样本](OPENWHISK.md) 保留原始 controller 配置、两个 include、fallback、固定提交、哈希及许可。既有对照覆盖 36 条叶路径和 11 项类型读取。新增 [变更用例](CHANGE-REVIEW.md) 在副本上改端口和 include 日志级别：即使主文件哈希未变，也检出 include 中的非预期变化；完整解析结果另经官方 Java 实现核对。没有声称运行整个 OpenWhisk 或获得其采用。

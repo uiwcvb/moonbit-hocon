@@ -1,0 +1,1 @@
+{"name":"typed-client","retries":3,"enabled":true,"build":"9007199254740995","timeoutNs":"2500000","paths":["one","two"],"appKeys":["build","enabled","name","retries"],"buildKind":"long","entry":{"path":"app.build","type":"NUMBER"},"nextAccepted":true}

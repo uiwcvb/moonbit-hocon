@@ -18,3 +18,5 @@ tools/browser/node_modules/
 /output/classpath-priority/
 /output/document-steps-input/
 /output/document-step-origins/
+/tools/typescript-consumer/node_modules/
+/output/typescript-consumer/

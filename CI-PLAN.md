@@ -6,6 +6,7 @@
 
 | 必要接入门 | 实际执行与证据 |
 | --- | --- |
+| Strict TypeScript ESM consumer | 隔离固定 TypeScript/@types/node，严格 NodeNext 编译实际调用方，执行生成的 ESM，比较四份完整运行输出及四项拒绝诊断；保留实际退出、原流与源码/生成字节。 |
 | Cold MoonBit transition consumer | 独立模块和公开包，保留原边界。 |
 | Typed file export and HTTP receiver | 原文件到类型化产物，再到独立文件接收方；原 gate 不拆分计数。 |
 | Classpath priority and startup receiver | 固定原版参考、公开文件/Worker/CLI 路径、实际 HTTP 启动和拒绝。 |
@@ -15,8 +16,10 @@
 
 已有 Check document-step input diagnostics 继续运行 node tools/test-document-steps-input.mjs，保持 R06 的 JSON 语法摘录与 0/1/2、UTF-8/预算控制。已有 Check document-step fragment origins，运行 node tools/test-document-step-origins.mjs：四种 HOCON 片段来源、生成前缀/Unicode 坐标、延后 resolve、原 primary/child 来源及文件/URL/classpath 相对 include，包含真实 CLI 原流/完整状态/恢复。两门处理不同原因；不重生成旧科学或生命周期参考。
 
-quality-evidence 继续在 always 条件上传。output/document-steps-input、output/document-step-origins 与已有接入证据目录都显式上传，且由 Git/package 忽略规则排除生成内容。测试不回写固定输入或旧参考，失败原流须保留。
+quality-evidence 继续在 always 条件上传。output/typescript-consumer、output/document-steps-input、output/document-step-origins 与已有接入证据目录都显式上传，且由 Git/package 忽略规则排除生成内容。测试不回写固定输入或旧参考，失败原流须保留。
 
 本地只做一次与实际变化相关的干净验证：固定工具链源副本编译、实际 CLI 文件与日志/状态接收，以及身份核对。通过后正常提交推送，等最终 head 的全部必要实际 CI 成功，再冻结 README/PROPOSAL、逐成员读回的最终源码 ZIP、Git/原工作/实际测试副本/编译/输出字节身份和 RESULT。有效轮次只由主控独立 ACCEPT 增加。
+
+TypeScript 声明变更在干净源码副本使用固定开发依赖编译消费者，实际执行新生成的 ESM；MoonBit 引擎未变化时复用已有精确字节，并单独记录其身份，不宣称进行了本地核心重编译。新增消费者不运行旧用例来重复计数。
 
 公开项目介绍更新采用与改动相称的验证：两份申报正文按同一完整现状内容维护，核对实际模块/仓库/许可和本地链接，并从干净源码副本执行正文内的完整 Node 示例，保留原始 stdin/stdout/stderr、退出与消费引擎身份。不为文案增加镜像测试或产品 gate；实际推送仍须通过相同提交的全部既有必要产品门。未修改的预编译引擎不在本地重复构建，报告明确区分复用字节与实际新编译。

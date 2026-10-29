@@ -19,6 +19,7 @@
 | 未求值树与不可变编辑 | 可以先解析并保留引用，再依次增删、筛选、包裹、追加 fallback 和 resolve。Config/Value/Object/List 提供派生对象，配置条目集合可独立修改，不改变原配置树。 |
 | 类型与精确数字 | 提供标量、列表、子配置、固定时长、日历时间和容量读取。数字比较保留精度，区分超过 2^53 的相邻整数；Long 在 Node 类型化接口中使用十进制字符串，固定时长与年/月分开处理。 |
 | 验证、渲染与诊断 | 参考配置验证可汇总缺失/类型问题并限制路径。值可输出 HOCON/JSON；解析错误及带来源的缺失/循环替换提供位置，步骤片段保留引入步骤的逻辑来源，实际子文件保留自己的来源。 |
+| TypeScript 源码接入 | Node ESM 公共入口带相邻声明，覆盖现有对象、工厂、选项、审查报告和错误。精确整数/时长保留字符串，动态结果使用 unknown；固定严格 NodeNext 消费者编译后实际执行同步/Worker 文件成功与错误路径。 |
 | 生效差异与变更许可 | diff_resolved_configs 和 review_config_changes 比较最终树，规则按字面路径和增删改类别匹配；列表整体比较，缺失与 null 不同，报告不输出实际配置值。 |
 | 具体值绑定的迁移计划 | review_config_transition 同时核对旧值、目标值和完整变化集，拒绝过期基线、错误目标、遗漏变化及未发生的计划。引用产生的间接变化也须获准。 |
 | 预览与应用接入 | 文件审查可生成绑定规则、实际读取文件和有序输入的预览指纹。示例支持不监听地检查字段，再使用调用方确认的哈希启动本地服务。 |
@@ -30,7 +31,7 @@
 
 词法、解析、替换求值、不可变树、类型读取、精确比较和迁移审查由 MoonBit 实现，JS 与 Wasm-GC 共用核心。Node 负责文件/网络、CLI、异步宿主、指纹和应用示例。Java 用于固定参考实现的独立对照，Node 应用运行不要求 JVM。
 
-MoonBit 消费包导入模块 uiwcvb/hocon；公共签名见 [生成接口](pkg.generated.mbti)。Node 从仓库源码导入 tools/config.mjs。固定构建环境和命令见 [TOOLCHAIN](TOOLCHAIN.md) 与 [README](README.md)；包仓库的可安装版本以其公开发布页为准。
+MoonBit 消费包导入模块 uiwcvb/hocon；公共签名见 [生成接口](pkg.generated.mbti)。Node 从仓库源码导入 tools/config.mjs；TypeScript 使用同一路径及相邻声明，接入与固定编译验收见 [TypeScript 消费者](tools/typescript-consumer/README.md)。固定构建环境和命令见 [TOOLCHAIN](TOOLCHAIN.md) 与 [README](README.md)；包仓库的可安装版本以其公开发布页为准。
 
 在源码根目录使用 Node 24，以下 PowerShell 示例读取必需字段，并保留大整数和时长的精确字符串：
 

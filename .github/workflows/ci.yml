@@ -64,6 +64,12 @@ jobs:
         run: npm test --prefix tools/browser
         env:
           PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/hocon-playwright
+      - name: Check strict TypeScript ESM consumer
+        run: |
+          npm ci --prefix tools/typescript-consumer --ignore-scripts --no-audit --no-fund
+          node tools/test-typescript-consumer.mjs
+        env:
+          npm_config_cache: ${{ runner.temp }}/hocon-typescript-npm
       - run: node tools/test-cli.mjs
       - name: Check document-step input diagnostics
         run: node tools/test-document-steps-input.mjs
@@ -151,3 +157,4 @@ jobs:
             output/classpath-priority/
             output/document-steps-input/
             output/document-step-origins/
+            output/typescript-consumer/
