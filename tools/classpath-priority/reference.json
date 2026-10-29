@@ -1,0 +1,93 @@
+{
+  "library": "unmodified Lightbend Config 1.4.9",
+  "jarSHA256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37",
+  "oracleSourceSHA256": "6007c7d48a66e0a1f3979adfd3224e906d92794f515e8001a969a5cc1a4c9915",
+  "capturedWith": "Java 22.0.1, original public file/ClassLoader API",
+  "caseIds": [
+    "properties-first-conf-last",
+    "json-first-conf-last",
+    "properties-first-json-last",
+    "same-format-first-root-wins",
+    "explicit-properties-resource",
+    "winning-conf-unresolved-must-fail",
+    "explicit-application-override-still-wins"
+  ],
+  "references": [
+    {
+      "accepted": true,
+      "value": {
+        "app": "ready",
+        "confOnly": "C",
+        "propertiesOnly": "P",
+        "service": {
+          "label": "hocon",
+          "port": 8080
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "app": "ready",
+        "confOnly": "C",
+        "jsonOnly": "J",
+        "service": {
+          "label": "hocon",
+          "port": 8080
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "app": "ready",
+        "jsonOnly": "J",
+        "propertiesOnly": "P",
+        "service": {
+          "label": "json",
+          "port": 8080
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "app": "ready",
+        "firstOnly": "A",
+        "lastOnly": "B",
+        "service": {
+          "label": "first",
+          "port": 8080
+        }
+      }
+    },
+    {
+      "accepted": true,
+      "value": {
+        "app": "ready",
+        "propertiesOnly": "P",
+        "service": {
+          "label": "properties",
+          "port": "9090"
+        }
+      }
+    },
+    {
+      "accepted": false,
+      "error": "UnresolvedSubstitution"
+    },
+    {
+      "accepted": true,
+      "value": {
+        "app": "ready",
+        "confOnly": "C",
+        "propertiesOnly": "P",
+        "service": {
+          "label": "application",
+          "port": 0
+        }
+      }
+    }
+  ],
+  "boundary": "Acceptance and complete values for successful cases; exception-message, Java origin and exact error-class parity are not asserted."
+}

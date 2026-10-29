@@ -15,3 +15,4 @@ tools/browser/node_modules/
 /output/transition-consumer/
 /output/package-consumer/
 /output/typed-config-export/
+/output/classpath-priority/

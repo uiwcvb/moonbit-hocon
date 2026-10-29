@@ -132,3 +132,13 @@ node tools/typed-config-export.mjs --file mounted-settings --format properties -
 ```
 
 声明或配置读取失败不替换旧产物，并保护源/查询/fallback/include 路径别名。独立的 `examples/config-file-receiver.mjs` 只从产物文件读取设置并提供回环 HTTP；必要 CI 用真实进程、文件与 HTTP 验证完整交接。普通文件写入故障可能留下部分文件，不提供并发锁或崩溃事务。旧 CLI 和 MoonBit 核心不变；自编接收方不代表第三方采用。
+
+## 目录资源的跨格式优先级
+
+[目录 classpath 修复](CLASSPATH-PRIORITY.md) 保证所有 `.conf` 高于 `.json` 高于 `.properties`，同一完整资源名内仍以前目录为优先。此前跨目录混合格式可选错端口/标签，或让低格式值掩盖必需替换错误。固定原版 Config 1.4.9 核对的 7 个完整输入及实际公共文件启动/HTTP 接收覆盖该合同；主文件显式覆盖和原语义边界保留。
+
+```sh
+node examples/classpath-service.mjs --file app/main.conf --classpath cp-first --classpath cp-last
+```
+
+该自编应用证明现有 API 的正确文件接入，不代表外部采用；没有新增默认 application/reference 或 JVM classloader 功能。

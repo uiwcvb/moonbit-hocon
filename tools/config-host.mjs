@@ -69,8 +69,8 @@ function createHost(options) {
   function files(name,heuristic=false){return candidates(name).flatMap(p=>{const source=read(p,true,undefined,heuristic&&/\.(conf|json|properties)$/.test(name)?'hocon':undefined);return source?[source]:[];});}
   function resources(name){
     const relative=name.replace(/^\/+/,''), out=[];
-    // First classpath root has highest priority, as with ClassLoader resources.
-    for(const root of roots.toReversed())for(const candidate of candidates(relative)){
+    // Syntax layers span all roots; within one exact resource name the first root wins.
+    for(const candidate of candidates(relative))for(const root of roots.toReversed()){
       const source=read(path.resolve(root,candidate),true,candidate);if(source)out.push(source);
     }
     return out;

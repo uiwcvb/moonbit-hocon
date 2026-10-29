@@ -1,0 +1,221 @@
+{
+  "schemaVersion": 1,
+  "baseCommitSHA": "f4bfc64f7b3ce23be5219ccb3a90efb7ae21e7ae",
+  "candidate": "mixed-format-directory-classpath-startup",
+  "authority": "ConfigFactory.parseResourcesAnySyntax: all .conf resources override all .json, then all .properties; within the same exact resource name the earlier classpath root wins.",
+  "sourceURL": "https://lightbend.github.io/config/latest/api/com/typesafe/config/ConfigFactory.html",
+  "sourceLines": [
+    540,
+    541,
+    543,
+    570,
+    592,
+    593,
+    594
+  ],
+  "authoredBeforeAnyNewProductProbe": true,
+  "cases": [
+    {
+      "id": "properties-first-conf-last",
+      "entry": "app/main.conf",
+      "classpath": [
+        "cp-first",
+        "cp-last"
+      ],
+      "files": {
+        "app/main.conf": "include classpath(\"service\")\napp=ready\n",
+        "cp-first/service.properties": "service.port=9090\nservice.label=properties\npropertiesOnly=P\n",
+        "cp-last/service.conf": "service { port=8080, label=hocon }\nconfOnly=C\n"
+      },
+      "expected": {
+        "accepted": true,
+        "value": {
+          "app": "ready",
+          "propertiesOnly": "P",
+          "confOnly": "C",
+          "service": {
+            "port": 8080,
+            "label": "hocon"
+          }
+        }
+      }
+    },
+    {
+      "id": "json-first-conf-last",
+      "entry": "app/main.conf",
+      "classpath": [
+        "cp-first",
+        "cp-last"
+      ],
+      "files": {
+        "app/main.conf": "include classpath(\"service\")\napp=ready\n",
+        "cp-first/service.json": "{\"service\":{\"port\":9090,\"label\":\"json\"},\"jsonOnly\":\"J\"}\n",
+        "cp-last/service.conf": "service { port=8080, label=hocon }\nconfOnly=C\n"
+      },
+      "expected": {
+        "accepted": true,
+        "value": {
+          "app": "ready",
+          "jsonOnly": "J",
+          "confOnly": "C",
+          "service": {
+            "port": 8080,
+            "label": "hocon"
+          }
+        }
+      }
+    },
+    {
+      "id": "properties-first-json-last",
+      "entry": "app/main.conf",
+      "classpath": [
+        "cp-first",
+        "cp-last"
+      ],
+      "files": {
+        "app/main.conf": "include classpath(\"service\")\napp=ready\n",
+        "cp-first/service.properties": "service.port=9090\nservice.label=properties\npropertiesOnly=P\n",
+        "cp-last/service.json": "{\"service\":{\"port\":8080,\"label\":\"json\"},\"jsonOnly\":\"J\"}\n"
+      },
+      "expected": {
+        "accepted": true,
+        "value": {
+          "app": "ready",
+          "propertiesOnly": "P",
+          "jsonOnly": "J",
+          "service": {
+            "port": 8080,
+            "label": "json"
+          }
+        }
+      }
+    },
+    {
+      "id": "same-format-first-root-wins",
+      "entry": "app/main.conf",
+      "classpath": [
+        "cp-first",
+        "cp-last"
+      ],
+      "files": {
+        "app/main.conf": "include classpath(\"service\")\napp=ready\n",
+        "cp-first/service.conf": "service { port=8080, label=first }\nfirstOnly=A\n",
+        "cp-last/service.conf": "service { port=9090, label=last }\nlastOnly=B\n"
+      },
+      "expected": {
+        "accepted": true,
+        "value": {
+          "app": "ready",
+          "firstOnly": "A",
+          "lastOnly": "B",
+          "service": {
+            "port": 8080,
+            "label": "first"
+          }
+        }
+      }
+    },
+    {
+      "id": "explicit-properties-resource",
+      "entry": "app/main.conf",
+      "classpath": [
+        "cp-first",
+        "cp-last"
+      ],
+      "files": {
+        "app/main.conf": "include classpath(\"service.properties\")\napp=ready\n",
+        "cp-first/service.properties": "service.port=9090\nservice.label=properties\npropertiesOnly=P\n",
+        "cp-last/service.conf": "service { port=8080, label=hocon }\nconfOnly=C\n"
+      },
+      "expected": {
+        "accepted": true,
+        "value": {
+          "app": "ready",
+          "propertiesOnly": "P",
+          "service": {
+            "port": "9090",
+            "label": "properties"
+          }
+        }
+      }
+    },
+    {
+      "id": "winning-conf-unresolved-must-fail",
+      "entry": "app/main.conf",
+      "classpath": [
+        "cp-first",
+        "cp-last"
+      ],
+      "files": {
+        "app/main.conf": "include classpath(\"service\")\napp=ready\n",
+        "cp-first/service.properties": "service.port=9090\nservice.label=properties\npropertiesOnly=P\n",
+        "cp-last/service.conf": "service { port=8080, label=${missing} }\nconfOnly=C\n"
+      },
+      "expected": {
+        "accepted": false
+      },
+      "expectedPosition": {
+        "file": "cp-last/service.conf",
+        "offset": 27,
+        "line": 1,
+        "column": 28
+      }
+    },
+    {
+      "id": "explicit-application-override-still-wins",
+      "entry": "app/main.conf",
+      "classpath": [
+        "cp-first",
+        "cp-last"
+      ],
+      "files": {
+        "app/main.conf": "include classpath(\"service\")\nservice { port=0, label=application }\napp=ready\n",
+        "cp-first/service.properties": "service.port=9090\nservice.label=properties\npropertiesOnly=P\n",
+        "cp-last/service.conf": "service { port=8080, label=${missing} }\nconfOnly=C\n"
+      },
+      "expected": {
+        "accepted": true,
+        "value": {
+          "app": "ready",
+          "confOnly": "C",
+          "propertiesOnly": "P",
+          "service": {
+            "port": 0,
+            "label": "application"
+          }
+        }
+      }
+    }
+  ],
+  "receiver": {
+    "entry": "app/main.conf",
+    "classpath": [
+      "cp-first",
+      "cp-last"
+    ],
+    "files": {
+      "app/main.conf": "include classpath(\"service\")\nservice.port=0\n",
+      "cp-first/service.properties": "service.port=9090\nservice.label=properties\npropertiesOnly=P\n",
+      "cp-last/service.conf": "service { port=8080, label=hocon }\nconfOnly=C\n"
+    },
+    "expectedHTTP": {
+      "configuredPort": 0,
+      "label": "hocon",
+      "propertiesOnly": "P",
+      "confOnly": "C"
+    }
+  },
+  "acceptance": [
+    "Pinned unmodified Config 1.4.9 and complete manually fixed outputs agree for the new cases.",
+    "Reproduce a before-fix discrepancy through the current public file API; keep accepted controls.",
+    "Fix only cross-format resource-layer precedence, retaining same-format directory ordering and all source types/origins/budgets.",
+    "Actual independent public-file consumer starts loopback HTTP from these original source files and returns the complete fixed response.",
+    "New relevant gate plus old 58 file-reference cases pass in an isolated clean source copy without overwriting old evidence.",
+    "Normal push, final exact-head required real CI including this receiver gate; freeze all requested source/compiled/output identities."
+  ],
+  "nonGoals": [
+    "No default application/reference loader or system-property feature",
+    "No change to R04 typed artifact workflow or Long saturation",
+    "No new formats, path grammar, global toolchain or whole-classloader/JVM compatibility claim"
+  ]
+}
