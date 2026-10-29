@@ -20,3 +20,4 @@ tools/browser/node_modules/
 /output/document-step-origins/
 /tools/typescript-consumer/node_modules/
 /output/typescript-consumer/
+/output/path-utilities/

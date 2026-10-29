@@ -1,5 +1,10 @@
 import type {SecureContextOptions} from 'node:tls';
 
+/** Literal keys to a canonical HOCON path; invalid grammar/budgets throw ConfigError. */
+export function joinPath(parts: readonly string[]): string;
+/** HOCON path expression to detached literal keys; invalid syntax throws ConfigError. */
+export function splitPath(path: string): string[];
+
 /** Detached JSON data. Numeric JSON output follows JavaScript double precision. */
 export type JsonValue = null | boolean | number | string | JsonValue[] | JsonObject;
 export interface JsonObject { [key: string]: JsonValue }

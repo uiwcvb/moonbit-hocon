@@ -1,10 +1,26 @@
-import {load_json} from '../web/engine.mjs';
+import {load_json,join_path_json,split_path_json} from '../web/engine.mjs';
 import {executeAsync as dispatchAsync} from './config-async.mjs';
 import {prepare} from './config-host.mjs';
 import {ConfigError} from './config-error.mjs';
 export {ConfigError} from './config-error.mjs';
 export {parseProperties} from './config-host.mjs';
 export {Config,ConfigValue,ConfigObject,ConfigList,ConfigEntry,ConfigEntrySet} from './config-object.mjs';
+function pathResult(text) {
+  const result=JSON.parse(text);
+  if(!result.accepted)throw new ConfigError(result);
+  return result.value;
+}
+/** Convert literal keys into a canonical HOCON path expression. */
+export function joinPath(parts) {
+  if(!Array.isArray(parts))throw new TypeError('Path elements must be an array of strings');
+  for(const part of parts)if(typeof part!=='string')throw new TypeError('Path elements must be an array of strings');
+  return pathResult(join_path_json(JSON.stringify(parts)));
+}
+/** Decode a HOCON path expression into detached literal keys. */
+export function splitPath(path) {
+  if(typeof path!=='string')throw new TypeError('Configuration path must be a string');
+  return pathResult(split_path_json(path));
+}
 function execute(source,options,kind) {
   if(options.document!==undefined&&typeof options.document!=='boolean')throw new TypeError('document must be boolean');
   if(!options.document&&(options.steps!==undefined||options.probes!==undefined))throw new TypeError('steps/probes require document: true');

@@ -6,6 +6,7 @@
 
 | 必要接入门 | 实际执行与证据 |
 | --- | --- |
+| Public HOCON path utilities | Fresh engine 加公共字面键/路径桥接；严格编译的真实配置审查/getter 消费者，完整 canonical/error/recovery 输出与 JS 参数和 TS 拒绝原流。 |
 | Strict TypeScript ESM consumer | 隔离固定 TypeScript/@types/node，严格 NodeNext 编译实际调用方，执行生成的 ESM，比较原四份完整运行输出/四项拒绝诊断，以及格式/fallback 的31项完整结果和九项完整拒绝诊断；保留实际退出、原流与源码/生成字节。 |
 | Cold MoonBit transition consumer | 独立模块和公开包，保留原边界。 |
 | Typed file export and HTTP receiver | 原文件到类型化产物，再到独立文件接收方；原 gate 不拆分计数。 |
@@ -16,7 +17,7 @@
 
 已有 Check document-step input diagnostics 继续运行 node tools/test-document-steps-input.mjs，保持 R06 的 JSON 语法摘录与 0/1/2、UTF-8/预算控制。已有 Check document-step fragment origins，运行 node tools/test-document-step-origins.mjs：四种 HOCON 片段来源、生成前缀/Unicode 坐标、延后 resolve、原 primary/child 来源及文件/URL/classpath 相对 include，包含真实 CLI 原流/完整状态/恢复。两门处理不同原因；不重生成旧科学或生命周期参考。
 
-quality-evidence 继续在 always 条件上传。output/typescript-consumer、output/document-steps-input、output/document-step-origins 与已有接入证据目录都显式上传，且由 Git/package 忽略规则排除生成内容。测试不回写固定输入或旧参考，失败原流须保留。
+quality-evidence 继续在 always 条件上传。output/path-utilities、output/typescript-consumer、output/document-steps-input、output/document-step-origins 与已有接入证据目录都显式上传，且由 Git/package 忽略规则排除生成内容。测试不回写固定输入或旧参考，失败原流须保留。
 
 本地只做一次与实际变化相关的干净验证：固定工具链源副本编译、实际 CLI 文件与日志/状态接收，以及身份核对。通过后正常提交推送，等最终 head 的全部必要实际 CI 成功，再冻结 README/PROPOSAL、逐成员读回的最终源码 ZIP、Git/原工作/实际测试副本/编译/输出字节身份和 RESULT。有效轮次只由主控独立 ACCEPT 增加。
 

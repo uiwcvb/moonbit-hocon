@@ -21,6 +21,7 @@ evidence/*-replay.json
 /output/document-step-origins/
 /tools/typescript-consumer/node_modules/
 /output/typescript-consumer/
+/output/path-utilities/
 
 # Toolchain instructions in TOOLCHAIN.md must remain runnable from the archive.
 !/.moonbit-version

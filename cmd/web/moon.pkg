@@ -21,6 +21,7 @@ options(
         "config_read_native",
         "config_entries_native",
         "split_path_json",
+        "join_path_json",
         "config_status",
         "config_query",
         "config_derive",

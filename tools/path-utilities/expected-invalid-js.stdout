@@ -1,0 +1,1 @@
+[{"name":"join-not-array","error":"TypeError","message":"Path elements must be an array of strings"},{"name":"join-not-string","error":"TypeError","message":"Path elements must be an array of strings"},{"name":"split-not-string","error":"TypeError","message":"Configuration path must be a string"}]

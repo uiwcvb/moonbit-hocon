@@ -8,6 +8,20 @@ pub fn split_path_json(path : String) -> String {
 }
 
 ///|
+pub fn join_path_json(input : String) -> String {
+  handle_query(() => {
+    let parsed = @json.parse(input)
+    guard parsed is Array(values) else { raise BadSource }
+    let parts : Array[String] = []
+    for value in values {
+      guard value is String(part) else { raise BadSource }
+      parts.push(part)
+    }
+    @lib.join_path(parts).to_json()
+  })
+}
+
+///|
 extern "js" fn native_null() -> NativeValue =
   #| () => null
 

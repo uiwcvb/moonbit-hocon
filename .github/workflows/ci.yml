@@ -70,6 +70,8 @@ jobs:
           node tools/test-typescript-consumer.mjs
         env:
           npm_config_cache: ${{ runner.temp }}/hocon-typescript-npm
+      - name: Check public HOCON path utilities
+        run: node tools/test-path-utilities.mjs
       - run: node tools/test-cli.mjs
       - name: Check document-step input diagnostics
         run: node tools/test-document-steps-input.mjs
@@ -158,3 +160,4 @@ jobs:
             output/document-steps-input/
             output/document-step-origins/
             output/typescript-consumer/
+            output/path-utilities/
