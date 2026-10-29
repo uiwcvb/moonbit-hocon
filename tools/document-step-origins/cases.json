@@ -1,0 +1,589 @@
+{
+  "schemaVersion": 1,
+  "scope": "Document-step HOCON fragment provenance; full original inputs and independent expected states/positions frozen before original-code execution.",
+  "cases": [
+    {
+      "id": "fallback-syntax",
+      "files": {
+        "app/main.conf": "include \"defaults.conf\"\nkeep=7\n",
+        "app/defaults.conf": "base=3\n",
+        "app/extra.conf": "extra=4\n",
+        "extra.conf": "extra=99\n",
+        "app/broken.conf": "original=${MISSING_INCLUDE}\n",
+        "steps.json": "[{\"op\":\"with-fallback\",\"source\":\"bad=\\\"unterminated\"}]\n"
+      },
+      "entry": "app/main.conf",
+      "cwd": ".",
+      "options": {
+        "document": true,
+        "probes": []
+      },
+      "generatedHoconUnit": "bad=\"unterminated",
+      "sourceIdentity": "<document-step[0].source>",
+      "expected": {
+        "accepted": false,
+        "errorKind": "ConfigError with SourcePosition",
+        "position": {
+          "source": "<document-step[0].source>",
+          "offset": 4,
+          "line": 1,
+          "column": 5
+        },
+        "cliExitCode": 2,
+        "cliStderr": "",
+        "cliStdoutKind": "Existing ERROR output, wrapped in existing ok/output when --json is requested",
+        "partialStatesReturned": false,
+        "exactErrorMessageAsserted": false
+      }
+    },
+    {
+      "id": "external-syntax",
+      "files": {
+        "app/main.conf": "include \"defaults.conf\"\nkeep=7\n",
+        "app/defaults.conf": "base=3\n",
+        "app/extra.conf": "extra=4\n",
+        "extra.conf": "extra=99\n",
+        "app/broken.conf": "original=${MISSING_INCLUDE}\n",
+        "steps.json": "[{\"op\":\"resolve-with\",\"source\":\"bad=\\\"unterminated\"}]\n"
+      },
+      "entry": "app/main.conf",
+      "cwd": ".",
+      "options": {
+        "document": true,
+        "probes": []
+      },
+      "generatedHoconUnit": "bad=\"unterminated",
+      "sourceIdentity": "<document-step[0].source>",
+      "expected": {
+        "accepted": false,
+        "errorKind": "ConfigError with SourcePosition",
+        "position": {
+          "source": "<document-step[0].source>",
+          "offset": 4,
+          "line": 1,
+          "column": 5
+        },
+        "cliExitCode": 2,
+        "cliStderr": "",
+        "cliStdoutKind": "Existing ERROR output, wrapped in existing ok/output when --json is requested",
+        "partialStatesReturned": false,
+        "exactErrorMessageAsserted": false
+      }
+    },
+    {
+      "id": "value-syntax",
+      "files": {
+        "app/main.conf": "include \"defaults.conf\"\nkeep=7\n",
+        "app/defaults.conf": "base=3\n",
+        "app/extra.conf": "extra=4\n",
+        "extra.conf": "extra=99\n",
+        "app/broken.conf": "original=${MISSING_INCLUDE}\n",
+        "steps.json": "[{\"op\":\"with-value\",\"path\":\"result\",\"valueSource\":\"\\\"unterminated\"}]\n"
+      },
+      "entry": "app/main.conf",
+      "cwd": ".",
+      "options": {
+        "document": true,
+        "probes": []
+      },
+      "generatedHoconUnit": "value=\"unterminated",
+      "sourceIdentity": "<document-step[0].valueSource>",
+      "expected": {
+        "accepted": false,
+        "errorKind": "ConfigError with SourcePosition",
+        "position": {
+          "source": "<document-step[0].valueSource>",
+          "offset": 6,
+          "line": 1,
+          "column": 7
+        },
+        "cliExitCode": 2,
+        "cliStderr": "",
+        "cliStdoutKind": "Existing ERROR output, wrapped in existing ok/output when --json is requested",
+        "partialStatesReturned": false,
+        "exactErrorMessageAsserted": false
+      }
+    },
+    {
+      "id": "key-value-syntax",
+      "files": {
+        "app/main.conf": "include \"defaults.conf\"\nkeep=7\n",
+        "app/defaults.conf": "base=3\n",
+        "app/extra.conf": "extra=4\n",
+        "extra.conf": "extra=99\n",
+        "app/broken.conf": "original=${MISSING_INCLUDE}\n",
+        "steps.json": "[{\"op\":\"with-key-value\",\"path\":\"literal.key\",\"valueSource\":\"\\\"unterminated\"}]\n"
+      },
+      "entry": "app/main.conf",
+      "cwd": ".",
+      "options": {
+        "document": true,
+        "probes": []
+      },
+      "generatedHoconUnit": "value=\"unterminated",
+      "sourceIdentity": "<document-step[0].valueSource>",
+      "expected": {
+        "accepted": false,
+        "errorKind": "ConfigError with SourcePosition",
+        "position": {
+          "source": "<document-step[0].valueSource>",
+          "offset": 6,
+          "line": 1,
+          "column": 7
+        },
+        "cliExitCode": 2,
+        "cliStderr": "",
+        "cliStdoutKind": "Existing ERROR output, wrapped in existing ok/output when --json is requested",
+        "partialStatesReturned": false,
+        "exactErrorMessageAsserted": false
+      }
+    },
+    {
+      "id": "deferred-value-origin",
+      "files": {
+        "app/main.conf": "include \"defaults.conf\"\nkeep=7\n",
+        "app/defaults.conf": "base=3\n",
+        "app/extra.conf": "extra=4\n",
+        "extra.conf": "extra=99\n",
+        "app/broken.conf": "original=${MISSING_INCLUDE}\n",
+        "steps.json": "[{\"op\":\"with-value\",\"path\":\"result\",\"valueSource\":\"${MISSING_STEP}\"},{\"op\":\"resolve\"}]\n"
+      },
+      "entry": "app/main.conf",
+      "cwd": ".",
+      "options": {
+        "document": true,
+        "probes": []
+      },
+      "generatedHoconUnit": "value=${MISSING_STEP}",
+      "sourceIdentity": "<document-step[0].valueSource>",
+      "expected": {
+        "accepted": false,
+        "errorKind": "ConfigError with SourcePosition",
+        "position": {
+          "source": "<document-step[0].valueSource>",
+          "offset": 6,
+          "line": 1,
+          "column": 7
+        },
+        "cliExitCode": 2,
+        "cliStderr": "",
+        "cliStdoutKind": "Existing ERROR output, wrapped in existing ok/output when --json is requested",
+        "partialStatesReturned": false,
+        "exactErrorMessageAsserted": false,
+        "introducingStepIndex": 0,
+        "failingResolutionStepIndex": 1
+      }
+    },
+    {
+      "id": "included-origin-control",
+      "files": {
+        "app/main.conf": "include \"defaults.conf\"\nkeep=7\n",
+        "app/defaults.conf": "base=3\n",
+        "app/extra.conf": "extra=4\n",
+        "extra.conf": "extra=99\n",
+        "app/broken.conf": "original=${MISSING_INCLUDE}\n",
+        "steps.json": "[{\"op\":\"with-fallback\",\"source\":\"include \\\"broken.conf\\\"\"},{\"op\":\"resolve\"}]\n"
+      },
+      "entry": "app/main.conf",
+      "cwd": ".",
+      "options": {
+        "document": true,
+        "probes": []
+      },
+      "expected": {
+        "accepted": false,
+        "errorKind": "ConfigError with SourcePosition",
+        "position": {
+          "source": "@CANONICAL_CASE_ROOT@/app/broken.conf",
+          "offset": 9,
+          "line": 1,
+          "column": 10
+        },
+        "cliExitCode": 2,
+        "cliStderr": "",
+        "cliStdoutKind": "Existing ERROR output, wrapped in existing ok/output when --json is requested",
+        "partialStatesReturned": false,
+        "exactErrorMessageAsserted": false
+      }
+    },
+    {
+      "id": "primary-origin-control",
+      "files": {
+        "app/main.conf": "original=${MISSING_MAIN}\n",
+        "app/defaults.conf": "base=3\n",
+        "app/extra.conf": "extra=4\n",
+        "extra.conf": "extra=99\n",
+        "app/broken.conf": "original=${MISSING_INCLUDE}\n",
+        "steps.json": "[{\"op\":\"resolve\"}]\n"
+      },
+      "entry": "app/main.conf",
+      "cwd": ".",
+      "options": {
+        "document": true,
+        "probes": []
+      },
+      "expected": {
+        "accepted": false,
+        "errorKind": "ConfigError with SourcePosition",
+        "position": {
+          "source": "@CANONICAL_CASE_ROOT@/app/main.conf",
+          "offset": 9,
+          "line": 1,
+          "column": 10
+        },
+        "cliExitCode": 2,
+        "cliStderr": "",
+        "cliStdoutKind": "Existing ERROR output, wrapped in existing ok/output when --json is requested",
+        "partialStatesReturned": false,
+        "exactErrorMessageAsserted": false
+      }
+    },
+    {
+      "id": "file-handoff-and-recovery",
+      "files": {
+        "app/main.conf": "include \"defaults.conf\"\nkeep=7\n",
+        "app/defaults.conf": "base=3\n",
+        "app/extra.conf": "extra=4\n",
+        "extra.conf": "extra=99\n",
+        "app/broken.conf": "original=${MISSING_INCLUDE}\n",
+        "steps.json": "[{\"op\":\"with-fallback\",\"source\":\"include \\\"extra.conf\\\"\\nadded=8\\n\"},{\"op\":\"with-value\",\"path\":\"result\",\"valueSource\":\"${added}\"},{\"op\":\"resolve\"}]\n"
+      },
+      "entry": "app/main.conf",
+      "cwd": ".",
+      "options": {
+        "document": true,
+        "probes": [
+          "keep",
+          "result",
+          "extra"
+        ]
+      },
+      "expected": {
+        "accepted": true,
+        "states": [
+          {
+            "resolved": true,
+            "value": {
+              "base": 3,
+              "keep": 7
+            },
+            "probes": {
+              "keep": {
+                "accepted": true,
+                "value": 7
+              },
+              "result": {
+                "accepted": false
+              },
+              "extra": {
+                "accepted": false
+              }
+            }
+          },
+          {
+            "resolved": true,
+            "value": {
+              "added": 8,
+              "base": 3,
+              "extra": 4,
+              "keep": 7
+            },
+            "probes": {
+              "keep": {
+                "accepted": true,
+                "value": 7
+              },
+              "result": {
+                "accepted": false
+              },
+              "extra": {
+                "accepted": true,
+                "value": 4
+              }
+            }
+          },
+          {
+            "resolved": false,
+            "probes": {
+              "keep": {
+                "accepted": true,
+                "value": 7
+              },
+              "result": {
+                "accepted": false
+              },
+              "extra": {
+                "accepted": true,
+                "value": 4
+              }
+            }
+          },
+          {
+            "resolved": true,
+            "value": {
+              "added": 8,
+              "base": 3,
+              "extra": 4,
+              "keep": 7,
+              "result": 8
+            },
+            "probes": {
+              "keep": {
+                "accepted": true,
+                "value": 7
+              },
+              "result": {
+                "accepted": true,
+                "value": 8
+              },
+              "extra": {
+                "accepted": true,
+                "value": 4
+              }
+            }
+          }
+        ],
+        "cliExitCode": 0,
+        "cliStderr": "",
+        "sourceInputsRemainByteIdentical": true
+      },
+      "recovery": {
+        "firstStepsJSON": "[{\"op\":\"with-fallback\",\"source\":\"bad=\\\"unterminated\"}]\n",
+        "firstExpected": {
+          "accepted": false,
+          "errorKind": "ConfigError with SourcePosition",
+          "position": {
+            "source": "<document-step[0].source>",
+            "offset": 4,
+            "line": 1,
+            "column": 5
+          },
+          "cliExitCode": 2,
+          "cliStderr": "",
+          "cliStdoutKind": "Existing ERROR output, wrapped in existing ok/output when --json is requested",
+          "partialStatesReturned": false,
+          "exactErrorMessageAsserted": false
+        },
+        "correctedSameFilename": "steps.json",
+        "correctedStepsJSON": "[{\"op\":\"with-fallback\",\"source\":\"include \\\"extra.conf\\\"\\nadded=8\\n\"},{\"op\":\"with-value\",\"path\":\"result\",\"valueSource\":\"${added}\"},{\"op\":\"resolve\"}]\n",
+        "preserveOriginalBadStepsBytesAndAllStreams": true
+      }
+    },
+    {
+      "id": "url-relative-include-control",
+      "httpFixtures": {
+        "/app/main.conf": {
+          "body": "include \"defaults.conf\"\nkeep=7\n"
+        },
+        "/app/defaults.conf": {
+          "body": "base=3\n"
+        },
+        "/app/extra.conf": {
+          "body": "extra=4\n"
+        },
+        "/extra.conf": {
+          "body": "extra=99\n"
+        }
+      },
+      "entryURL": "http://127.0.0.1:@ACTUAL_OWNED_SERVER_PORT@/app/main.conf",
+      "stepsJSON": "[{\"op\":\"with-fallback\",\"source\":\"include \\\"extra.conf\\\"\\nadded=8\\n\"},{\"op\":\"with-value\",\"path\":\"result\",\"valueSource\":\"${added}\"},{\"op\":\"resolve\"}]\n",
+      "options": {
+        "document": true,
+        "probes": [
+          "keep",
+          "result",
+          "extra"
+        ]
+      },
+      "expected": {
+        "accepted": true,
+        "states": [
+          {
+            "resolved": true,
+            "value": {
+              "base": 3,
+              "keep": 7
+            },
+            "probes": {
+              "keep": {
+                "accepted": true,
+                "value": 7
+              },
+              "result": {
+                "accepted": false
+              },
+              "extra": {
+                "accepted": false
+              }
+            }
+          },
+          {
+            "resolved": true,
+            "value": {
+              "added": 8,
+              "base": 3,
+              "extra": 4,
+              "keep": 7
+            },
+            "probes": {
+              "keep": {
+                "accepted": true,
+                "value": 7
+              },
+              "result": {
+                "accepted": false
+              },
+              "extra": {
+                "accepted": true,
+                "value": 4
+              }
+            }
+          },
+          {
+            "resolved": false,
+            "probes": {
+              "keep": {
+                "accepted": true,
+                "value": 7
+              },
+              "result": {
+                "accepted": false
+              },
+              "extra": {
+                "accepted": true,
+                "value": 4
+              }
+            }
+          },
+          {
+            "resolved": true,
+            "value": {
+              "added": 8,
+              "base": 3,
+              "extra": 4,
+              "keep": 7,
+              "result": 8
+            },
+            "probes": {
+              "keep": {
+                "accepted": true,
+                "value": 7
+              },
+              "result": {
+                "accepted": true,
+                "value": 8
+              },
+              "extra": {
+                "accepted": true,
+                "value": 4
+              }
+            }
+          }
+        ],
+        "cliExitCode": 0,
+        "cliStderr": "",
+        "relativeRequestPaths": [
+          "/app/defaults.conf",
+          "/app/extra.conf"
+        ],
+        "mustNotUseDecoy": "/extra.conf"
+      },
+      "boundary": "Self-created loopback fixture, not third-party adoption; proposed only, not started in this study."
+    },
+    {
+      "id": "unicode-deferred-origin",
+      "files": {
+        "app/main.conf": "include \"defaults.conf\"\nkeep=7\n",
+        "app/defaults.conf": "base=3\n",
+        "app/extra.conf": "extra=4\n",
+        "extra.conf": "extra=99\n",
+        "app/broken.conf": "original=${MISSING_INCLUDE}\n",
+        "steps.json": "[{\"op\":\"with-value\",\"path\":\"payload\",\"valueSource\":\"{note=\\\"😀\\\"\\ncopy=${MISSING_UNICODE}}\"},{\"op\":\"resolve\"}]\n"
+      },
+      "entry": "app/main.conf",
+      "cwd": ".",
+      "options": {
+        "document": true,
+        "probes": []
+      },
+      "generatedHoconUnit": "value={note=\"😀\"\ncopy=${MISSING_UNICODE}}",
+      "sourceIdentity": "<document-step[0].valueSource>",
+      "expected": {
+        "accepted": false,
+        "errorKind": "ConfigError with SourcePosition",
+        "position": {
+          "source": "<document-step[0].valueSource>",
+          "offset": 21,
+          "line": 2,
+          "column": 6
+        },
+        "cliExitCode": 2,
+        "cliStderr": "",
+        "cliStdoutKind": "Existing ERROR output, wrapped in existing ok/output when --json is requested",
+        "partialStatesReturned": false,
+        "exactErrorMessageAsserted": false,
+        "introducingStepIndex": 0,
+        "failingResolutionStepIndex": 1
+      }
+    },
+    {
+      "id": "classpath-relative-nested-control",
+      "files": {
+        "app/main.conf": "include \"defaults.conf\"\nkeep=7\n",
+        "app/defaults.conf": "base=3\n",
+        "app/extra.conf": "extra=4\n",
+        "extra.conf": "extra=99\n",
+        "app/broken.conf": "original=${MISSING_INCLUDE}\n",
+        "steps.json": "[{\"op\":\"with-fallback\",\"source\":\"include classpath(\\\"pkg/base.conf\\\")\"},{\"op\":\"resolve\"}]\n",
+        "cp/pkg/base.conf": "include \"child.conf\"\ncpBase=1\n",
+        "cp/pkg/child.conf": "cpValue=5\n",
+        "cp/child.conf": "cpValue=99\n"
+      },
+      "entry": "app/main.conf",
+      "cwd": ".",
+      "options": {
+        "document": true,
+        "probes": [],
+        "classpath": [
+          "cp"
+        ]
+      },
+      "expected": {
+        "accepted": true,
+        "states": [
+          {
+            "resolved": true,
+            "value": {
+              "base": 3,
+              "keep": 7
+            },
+            "probes": {}
+          },
+          {
+            "resolved": true,
+            "value": {
+              "base": 3,
+              "keep": 7,
+              "cpBase": 1,
+              "cpValue": 5
+            },
+            "probes": {}
+          },
+          {
+            "resolved": true,
+            "value": {
+              "base": 3,
+              "keep": 7,
+              "cpBase": 1,
+              "cpValue": 5
+            },
+            "probes": {}
+          }
+        ],
+        "cliExitCode": 0,
+        "cliStderr": "",
+        "sourceInputsRemainByteIdentical": true
+      }
+    }
+  ]
+}

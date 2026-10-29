@@ -27,11 +27,28 @@ fn document_parse(
   source : String,
   request : Json,
   callback : ((String) -> String)?,
+  step_index : Int,
+  source_field : String,
 ) -> @lib.Value raise {
+  let include_base = match request {
+    { "primary": { "name": String(name), .. }, .. } => name
+    _ => "<string>"
+  }
+  let name = "<document-step[\{step_index}].\{source_field}>"
   let loader = callback.map(host => {
     fn(req : @lib.IncludeRequest) -> Result[Array[@lib.IncludeSource], String] {
+      let include_request : @lib.IncludeRequest = if req.from == name {
+        {
+          name: req.name,
+          kind: req.kind,
+          from: include_base,
+          required: req.required,
+        }
+      } else {
+        req
+      }
       try {
-        match @json.parse(host(req.to_json().stringify())) {
+        match @json.parse(host(include_request.to_json().stringify())) {
           { "error": String(message), .. } => Err(message)
           Array(sources) => Ok(sources.map(source_json))
           _ => Err("invalid include host response")
@@ -41,10 +58,6 @@ fn document_parse(
       }
     }
   })
-  let name = match request {
-    { "primary": { "name": String(name), .. }, .. } => name
-    _ => "<string>"
-  }
   @lib.parse_sources_unresolved(
     { name, content: source, format: "hocon", },
     includes=string_map(request, "includes"),
@@ -84,7 +97,7 @@ fn document_pipeline(
   if bytes > 1000000 {
     raise BadOperation
   }
-  for step in steps {
+  for step_index, step in steps {
     let allow = match step {
       { "allowUnresolved": True, .. } => true
       { "allowUnresolved": False, .. } => false
@@ -104,12 +117,15 @@ fn document_pipeline(
       { "op": String("resolve-with"), "source": String(source), .. } =>
         @lib.resolve_with(
           config,
-          document_parse(source, request, callback),
+          document_parse(source, request, callback, step_index, "source"),
           environment~,
           allow_unresolved=allow,
         )
       { "op": String("with-fallback"), "source": String(source), .. } =>
-        @lib.with_fallback(config, document_parse(source, request, callback))
+        @lib.with_fallback(
+          config,
+          document_parse(source, request, callback, step_index, "source"),
+        )
       {
         "op": String("with-value" | "with-key-value") as op,
         "path": String(path),
@@ -117,7 +133,13 @@ fn document_pipeline(
         ..
       } => {
         let value = @lib.get_path(
-          document_parse("value=" + source, request, callback),
+          document_parse(
+            "value=" + source,
+            request,
+            callback,
+            step_index,
+            "valueSource",
+          ),
           ["value"],
         )
         match value {

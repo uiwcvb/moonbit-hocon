@@ -67,6 +67,8 @@ jobs:
       - run: node tools/test-cli.mjs
       - name: Check document-step input diagnostics
         run: node tools/test-document-steps-input.mjs
+      - name: Check document-step fragment origins
+        run: node tools/test-document-step-origins.mjs
       - name: Check typed file export and HTTP receiver
         run: node tools/test-typed-config-export.mjs
       - run: node tools/test-host.mjs
@@ -148,3 +150,4 @@ jobs:
             output/typed-config-export/
             output/classpath-priority/
             output/document-steps-input/
+            output/document-step-origins/

@@ -1880,11 +1880,11 @@ function _M0MPB13StringBuilder13write__objectGdE(self, obj) {
 function _M0MPB13StringBuilder13write__objectGiE(self, obj) {
   _M0IP016_24default__implPB4Show6outputGiE(obj, { self: self, method_table: _M0FP092moonbitlang_2fcore_2fbuiltin_2fStringBuilder_24as_24_40moonbitlang_2fcore_2fbuiltin_2eLogger });
 }
-function _M0MPB13StringBuilder13write__objectGRPC16string10StringViewE(self, obj) {
-  _M0IPC16string10StringViewPB4Show6output(obj, { self: self, method_table: _M0FP092moonbitlang_2fcore_2fbuiltin_2fStringBuilder_24as_24_40moonbitlang_2fcore_2fbuiltin_2eLogger });
-}
 function _M0MPB13StringBuilder13write__objectGsE(self, obj) {
   _M0IP016_24default__implPB4Show6outputGsE(obj, { self: self, method_table: _M0FP092moonbitlang_2fcore_2fbuiltin_2fStringBuilder_24as_24_40moonbitlang_2fcore_2fbuiltin_2eLogger });
+}
+function _M0MPB13StringBuilder13write__objectGRPC16string10StringViewE(self, obj) {
+  _M0IPC16string10StringViewPB4Show6output(obj, { self: self, method_table: _M0FP092moonbitlang_2fcore_2fbuiltin_2fStringBuilder_24as_24_40moonbitlang_2fcore_2fbuiltin_2eLogger });
 }
 function _M0MPC13int3Int16unsafe__to__char(self) {
   return self;
@@ -27078,15 +27078,15 @@ function _M0FP26uiwcvb5hocon10get__bytes(config, key) {
   }
   return new _M0DTPC16result6ResultGlRP26uiwcvb5hocon10ParseErrorE2Ok(_M0MPC16bigint6BigInt9to__int64(value));
 }
-function _M0IP46uiwcvb5hocon3cmd3web10EntryErrorPC15debug5Debug8to__reprGRP46uiwcvb5hocon3cmd3web10EntryErrorE(_x_470) {
-  let _arg_471;
+function _M0IP46uiwcvb5hocon3cmd3web10EntryErrorPC15debug5Debug8to__reprGRP46uiwcvb5hocon3cmd3web10EntryErrorE(_x_475) {
+  let _arg_476;
   _L: {
-    const _Invalid = _x_470;
-    const _$42$arg_471 = _Invalid._0;
-    _arg_471 = _$42$arg_471;
+    const _Invalid = _x_475;
+    const _$42$arg_476 = _Invalid._0;
+    _arg_476 = _$42$arg_476;
     break _L;
   }
-  return _M0MPC15debug4Repr4ctor("Invalid", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_471) }]);
+  return _M0MPC15debug4Repr4ctor("Invalid", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_476) }]);
 }
 function _M0FP46uiwcvb5hocon3cmd3web11value__kind(handle) {
   let value;
@@ -29525,8 +29525,50 @@ function _M0FP46uiwcvb5hocon3cmd3web14config__getter(config, request) {
   }
   return _M0FPC14json13parse_2einner(new _M0TPC16string10StringView(_bind$2, 0, _bind$2.length), 1024);
 }
-function _M0FP46uiwcvb5hocon3cmd3web15document__parse(source, request, callback) {
+function _M0FP46uiwcvb5hocon3cmd3web15document__parse(source, request, callback, step_index, source_field) {
+  let include_base;
+  if (request.$tag === 6) {
+    const _Object = request;
+    const _x = _Object._0;
+    const _x$2 = _M0MPB3Map3getGsRPB4JsonE(_x, "primary");
+    if (_x$2 === undefined) {
+      include_base = "<string>";
+    } else {
+      const _Some = _x$2;
+      const _x$3 = _Some;
+      if (_x$3.$tag === 6) {
+        const _Object$2 = _x$3;
+        const _x$4 = _Object$2._0;
+        const _x$5 = _M0MPB3Map3getGsRPB4JsonE(_x$4, "name");
+        if (_x$5 === undefined) {
+          include_base = "<string>";
+        } else {
+          const _Some$2 = _x$5;
+          const _x$6 = _Some$2;
+          if (_x$6.$tag === 4) {
+            const _String = _x$6;
+            const _name = _String._0;
+            include_base = _name;
+          } else {
+            include_base = "<string>";
+          }
+        }
+      } else {
+        include_base = "<string>";
+      }
+    }
+  } else {
+    include_base = "<string>";
+  }
+  const _string_builder = _M0MPB13StringBuilder21StringBuilder_2einner(18);
+  _M0IPB13StringBuilderPB6Logger13write__string(_string_builder, "<document-step[");
+  _M0MPB13StringBuilder13write__objectGiE(_string_builder, step_index);
+  _M0IPB13StringBuilderPB6Logger13write__string(_string_builder, "].");
+  _M0MPB13StringBuilder13write__objectGsE(_string_builder, source_field);
+  _M0IPB13StringBuilderPB6Logger13write__string(_string_builder, ">");
+  const name = _M0MPB13StringBuilder10to__string(_string_builder);
   const loader = _M0MPC16option6Option3mapGWsEsWRP26uiwcvb5hocon14IncludeRequestERPC16result6ResultGRPB5ArrayGRP26uiwcvb5hocon13IncludeSourceEsEE(callback, (host) => (req) => {
+    const include_request = req.from === name ? new _M0TP26uiwcvb5hocon14IncludeRequest(req.name, req.kind, include_base, req.required) : req;
     let _try_err;
     _L: {
       _L$2: {
@@ -29534,7 +29576,7 @@ function _M0FP46uiwcvb5hocon3cmd3web15document__parse(source, request, callback)
         _L$3: {
           let message;
           _L$4: {
-            const _bind = host(_M0MPC14json4Json17stringify_2einner(_M0IP26uiwcvb5hocon14IncludeRequestPB6ToJson8to__json(req), false, 0, undefined));
+            const _bind = host(_M0MPC14json4Json17stringify_2einner(_M0IP26uiwcvb5hocon14IncludeRequestPB6ToJson8to__json(include_request), false, 0, undefined));
             const _bind$2 = _M0FPC14json13parse_2einner(new _M0TPC16string10StringView(_bind, 0, _bind.length), 1024);
             let _bind$3;
             if (_bind$2.$tag === 1) {
@@ -29595,40 +29637,6 @@ function _M0FP46uiwcvb5hocon3cmd3web15document__parse(source, request, callback)
     const e = _try_err;
     return new _M0DTPC16result6ResultGRPB5ArrayGRP26uiwcvb5hocon13IncludeSourceEsE3Err(_M0IP016_24default__implPB4Show10to__stringGRPC15debug4ReprE(_M0MPC15debug4Repr4ReprGRPC15error5ErrorE(e)));
   });
-  let name;
-  if (request.$tag === 6) {
-    const _Object = request;
-    const _x = _Object._0;
-    const _x$2 = _M0MPB3Map3getGsRPB4JsonE(_x, "primary");
-    if (_x$2 === undefined) {
-      name = "<string>";
-    } else {
-      const _Some = _x$2;
-      const _x$3 = _Some;
-      if (_x$3.$tag === 6) {
-        const _Object$2 = _x$3;
-        const _x$4 = _Object$2._0;
-        const _x$5 = _M0MPB3Map3getGsRPB4JsonE(_x$4, "name");
-        if (_x$5 === undefined) {
-          name = "<string>";
-        } else {
-          const _Some$2 = _x$5;
-          const _x$6 = _Some$2;
-          if (_x$6.$tag === 4) {
-            const _String = _x$6;
-            const _name = _String._0;
-            name = _name;
-          } else {
-            name = "<string>";
-          }
-        }
-      } else {
-        name = "<string>";
-      }
-    }
-  } else {
-    name = "<string>";
-  }
   return _M0FP26uiwcvb5hocon26parse__sources__unresolved(new _M0TP26uiwcvb5hocon13IncludeSource(name, source, "hocon"), _M0FP46uiwcvb5hocon3cmd3web11string__map(request, "includes"), new _M0DTPC16option6OptionGOWRP26uiwcvb5hocon14IncludeRequestERPC16result6ResultGRPB5ArrayGRP26uiwcvb5hocon13IncludeSourceEsEE4Some(loader), _M0DTPC16option6OptionGRPB5ArrayGRP26uiwcvb5hocon13IncludeSourceEE4None__, true);
 }
 function _M0FP46uiwcvb5hocon3cmd3web15document__state(config, probes) {
@@ -30006,9 +30014,9 @@ function _M0FP46uiwcvb5hocon3cmd3web18document__pipeline(initial, request, envir
   const _bind$3 = steps.length;
   let _tmp = 0;
   while (true) {
-    const _ = _tmp;
-    if (_ < _bind$3) {
-      const step = steps[_];
+    const step_index = _tmp;
+    if (step_index < _bind$3) {
+      const step = steps[step_index];
       let allow;
       let fields$2;
       _L$2: {
@@ -30208,7 +30216,7 @@ function _M0FP46uiwcvb5hocon3cmd3web18document__pipeline(initial, request, envir
                       break _L$9;
                     }
                     const _tmp$3 = config.val;
-                    const _bind$4 = _M0FP46uiwcvb5hocon3cmd3web15document__parse(source$3, request, callback);
+                    const _bind$4 = _M0FP46uiwcvb5hocon3cmd3web15document__parse(source$3, request, callback, step_index, "source");
                     let _tmp$4;
                     if (_bind$4.$tag === 1) {
                       const _ok = _bind$4;
@@ -30227,7 +30235,7 @@ function _M0FP46uiwcvb5hocon3cmd3web18document__pipeline(initial, request, envir
                   break _L$7;
                 }
                 const _tmp$3 = config.val;
-                const _bind$4 = _M0FP46uiwcvb5hocon3cmd3web15document__parse(source$2, request, callback);
+                const _bind$4 = _M0FP46uiwcvb5hocon3cmd3web15document__parse(source$2, request, callback, step_index, "source");
                 let _tmp$4;
                 if (_bind$4.$tag === 1) {
                   const _ok = _bind$4;
@@ -30245,7 +30253,7 @@ function _M0FP46uiwcvb5hocon3cmd3web18document__pipeline(initial, request, envir
               }
               break _L$5;
             }
-            const _bind$4 = _M0FP46uiwcvb5hocon3cmd3web15document__parse(`value=${source}`, request, callback);
+            const _bind$4 = _M0FP46uiwcvb5hocon3cmd3web15document__parse(`value=${source}`, request, callback, step_index, "valueSource");
             let _tmp$3;
             if (_bind$4.$tag === 1) {
               const _ok = _bind$4;
@@ -30307,7 +30315,7 @@ function _M0FP46uiwcvb5hocon3cmd3web18document__pipeline(initial, request, envir
         return new _M0DTPC16result6ResultGRPB5ArrayGRPB4JsonERP46uiwcvb5hocon3cmd3web11BridgeErrorE3Err(_M0DTPC15error5Error55uiwcvb_2fhocon_2fcmd_2fweb_2eBridgeError_2eBadOperation__);
       }
       _M0MPC15array5Array4pushGRPC14json10WriteFrameE(states, state);
-      _tmp = _ + 1 | 0;
+      _tmp = step_index + 1 | 0;
       continue;
     } else {
       break;
