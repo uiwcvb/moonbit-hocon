@@ -54,7 +54,9 @@ try {
  if(options.document){
   if(resolved||query!==undefined||validateFile!==undefined||options.operations)throw new Error('--document-steps conflicts with resolved output/getters/edits/validation');
   const fd=fs.openSync(stepsFile,'r');let bytes;try{const buffer=Buffer.alloc(400001);let count=0;while(count<buffer.length){const n=fs.readSync(fd,buffer,count,buffer.length-count,null);if(n===0)break;count+=n;}if(count>400000)throw new Error('Document steps file exceeds limit');bytes=buffer.subarray(0,count);}finally{fs.closeSync(fd);}
-  options.steps=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes));if(!Array.isArray(options.steps))throw new Error('Document steps must be an array');
+  const stepText=new TextDecoder('utf-8',{fatal:true}).decode(bytes);
+  try{options.steps=JSON.parse(stepText);}catch{throw new Error('Document steps must contain valid JSON');}
+  if(!Array.isArray(options.steps))throw new Error('Document steps must be an array');
  }
  if(input===undefined&&file===undefined&&url===undefined){let size=0;const chunks=[];for await(const chunk of process.stdin){size+=chunk.length;if(size>400000)throw new Error('Input exceeds file limit');chunks.push(chunk);}input=new TextDecoder('utf-8',{fatal:true,ignoreBOM:true}).decode(Buffer.concat(chunks));}
  if(query!==undefined){options.path=query;options.getter=type??'value';}else if(!resolved&&!options.document)options.getter='debug';

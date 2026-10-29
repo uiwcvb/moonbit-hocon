@@ -142,3 +142,9 @@ node examples/classpath-service.mjs --file app/main.conf --classpath cp-first --
 ```
 
 该自编应用证明现有 API 的正确文件接入，不代表外部采用；没有新增默认 application/reference 或 JVM classloader 功能。
+
+## 文档步骤 JSON 的错误通道
+
+[步骤文件诊断](DOCUMENT-STEPS-INPUT.md) 修正既有 `--document-steps` 语法错误把 Node 输入摘录带入 stderr/调用方日志的问题。该错误现固定为 `Document steps must contain valid JSON`，退出 1、stdout 空；合法文档状态和原 `--json` 信封、0/1/2 分类、数组/UTF-8/大小/IO 检查保留。
+
+实际 CLI 进程验收保留原始字节日志与完整有效三阶段输出，并覆盖纠正文件后重试。它只处理这处 JSON 语法诊断，不对任意配置消息、路径或外部日志提供通用脱敏；有效输出仍按请求包含实际值。必要门与产物边界见 [CI 计划](CI-PLAN.md)。

@@ -37,3 +37,9 @@ Lightbend Config是成熟HOCON参考；本项目的独立贡献是MoonBit内可�
 修正已有文件宿主在跨目录混合格式时的优先级：格式层 `.conf`、`.json`、`.properties` 必须先于同格式目录顺序。未修改的 Config 1.4.9 与先行冻结的完整预期确认了修复前四处差异，包括错误端口/标签和被遮蔽的必需替换失败。
 
 [有限验收](CLASSPATH-PRIORITY.md) 经公开同步/异步/CLI 读取原文件，并由独立应用实际启动回环 HTTP 核对完整响应与拒绝路径；复用已有解析/合并/类型 API，不将包装原语、增加格式或自编示例称为新算法、生态唯一或外部采用。默认 application/reference、JAR/JVM 和 system properties 的既有未支持范围不变。
+
+## 步骤文件到日志的实际错误边界
+
+已有文档 parse/edit/resolve CLI 在畸形步骤 JSON 下，可能将原始输入摘录作为宿主错误消息输出；真实探针在四个语法失败中确认两处测试值进入 stderr，合法三阶段输出已一致。本轮仅把这一处 JSON 语法失败改为固定无摘录诊断，不新增解析格式、getter、操作或通用脱敏框架。
+
+[文件及日志接收验收](DOCUMENT-STEPS-INPUT.md) 由真实公开 CLI 读取原配置/include 和步骤文件，保存完整进程状态、stdout/stderr 原流、实际日志和修正输入后恢复的完整状态。原有效值输出、退出类别与资源检查保留；自编调用方不代表外部采用。必要同提交 CI 和逐字节交付界限见 [CI-PLAN](CI-PLAN.md)。

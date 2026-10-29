@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "baseCommitSHA": "b543d0e65d781d5c8b47d414dfd3ea46fb71b9e5",
+  "scope": "Existing CLI --document-steps JSON syntax diagnostic boundary only",
+  "authoredBeforeExecution": true,
+  "scenario": "A caller runs an original configuration with an external document-step file and captures stderr as a machine-readable diagnostic log. A malformed step file must not cause Node's native JSON SyntaxError excerpt to copy its contents into that log.",
+  "sourceFiles": {
+    "main.conf": "include \"base.conf\"\n",
+    "base.conf": "service { port=8080, label=old }\n"
+  },
+  "validSteps": "[{\"op\":\"with-value\",\"path\":\"service.label\",\"valueSource\":\"\\\"R06_VALID_VALUE\\\"\"},{\"op\":\"resolve\"}]\n",
+  "expectedStates": [
+    {
+      "resolved": true,
+      "value": {
+        "service": {
+          "port": 8080,
+          "label": "old"
+        }
+      },
+      "probes": {}
+    },
+    {
+      "resolved": true,
+      "value": {
+        "service": {
+          "port": 8080,
+          "label": "R06_VALID_VALUE"
+        }
+      },
+      "probes": {}
+    },
+    {
+      "resolved": true,
+      "value": {
+        "service": {
+          "port": 8080,
+          "label": "R06_VALID_VALUE"
+        }
+      },
+      "probes": {}
+    }
+  ],
+  "malformed": [
+    {
+      "id": "raw-value",
+      "text": "A1b2C3",
+      "canary": "A1b2C3"
+    },
+    {
+      "id": "invalid-array-token",
+      "text": "[\"A1b2C3\", ?]",
+      "canary": "A1b2C3"
+    },
+    {
+      "id": "invalid-step-tail",
+      "text": "[{\"op\":\"with-value\",\"path\":\"service.label\",\"valueSource\":\"\\\"A1b2C3\\\"\"}, ?]",
+      "canary": "A1b2C3"
+    },
+    {
+      "id": "invalid-object-value",
+      "text": "{\"valueSource\":\"A1b2C3\",\"broken\":?}",
+      "canary": "A1b2C3"
+    }
+  ],
+  "expectedSyntaxFailure": {
+    "exitCode": 1,
+    "signal": null,
+    "stdout": "",
+    "stderr": "{\"ok\":false,\"error\":\"Document steps must contain valid JSON\"}\n",
+    "noInputExcerpt": true
+  },
+  "controls": {
+    "nonArray": {
+      "text": "{\"op\":\"resolve\"}",
+      "exitCode": 1,
+      "error": "Document steps must be an array"
+    },
+    "semantic": {
+      "text": "[{\"op\":\"unknown\"}]",
+      "exitCode": 2
+    },
+    "invalidUTF8": {
+      "bytes": [
+        255
+      ],
+      "exitCode": 1
+    },
+    "oversize": {
+      "bytes": 400001,
+      "exitCode": 1,
+      "error": "Document steps file exceeds limit"
+    },
+    "exactLimit": {
+      "bytes": 400000,
+      "exitCode": 0
+    },
+    "missingFile": {
+      "exitCode": 1
+    }
+  },
+  "compatibility": [
+    "Valid JSON step values and the complete document state/output schema remain unchanged.",
+    "Keep old 0/1/2 exits, UTF-8 and 400000-byte input handling; HOCON parse/resolve/getters and numeric/origin/budget semantics stay unchanged.",
+    "Do not sanitize or remove values from explicitly requested valid output; this is not general redaction of config errors, semantic messages, file paths, user-printed inputs or arbitrary logs."
+  ],
+  "acceptance": [
+    "Record before-fix actual CLI streams plus numeric exit/status/signal receipts without modifying source.",
+    "Malformed JSON syntax must use the fixed value-free diagnostic in both ordinary and --json CLI modes.",
+    "Run actual input-file/include -> valid step processing -> full state output and recovery in the same caller; preserve all controls.",
+    "Capture the actual stderr byte log received by the caller, not an inferred manifest assertion.",
+    "One clean relevant verification, exact final-head real required CI plus this gate, full source/raw/test-copy/compiled/output byte freeze."
+  ]
+}

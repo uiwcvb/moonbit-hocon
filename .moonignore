@@ -17,6 +17,7 @@ evidence/*-replay.json
 /output/package-consumer/
 /output/typed-config-export/
 /output/classpath-priority/
+/output/document-steps-input/
 
 # Toolchain instructions in TOOLCHAIN.md must remain runnable from the archive.
 !/.moonbit-version

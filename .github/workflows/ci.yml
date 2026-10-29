@@ -65,6 +65,8 @@ jobs:
         env:
           PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/hocon-playwright
       - run: node tools/test-cli.mjs
+      - name: Check document-step input diagnostics
+        run: node tools/test-document-steps-input.mjs
       - name: Check typed file export and HTTP receiver
         run: node tools/test-typed-config-export.mjs
       - run: node tools/test-host.mjs
@@ -145,3 +147,4 @@ jobs:
             output/package-consumer/
             output/typed-config-export/
             output/classpath-priority/
+            output/document-steps-input/
