@@ -1,0 +1,259 @@
+{
+  "schemaVersion": 1,
+  "authorship": "Independent caller inputs and receiver expectations frozen before implementation; no product output used as oracle.",
+  "query": {
+    "version": 1,
+    "fields": [
+      {
+        "name": "listenPort",
+        "path": "service.port",
+        "type": "int"
+      },
+      {
+        "name": "enabled",
+        "path": "service.enabled",
+        "type": "boolean"
+      },
+      {
+        "name": "banner",
+        "path": "service.label",
+        "type": "string"
+      },
+      {
+        "name": "deploymentId",
+        "path": "service.id",
+        "type": "long"
+      }
+    ]
+  },
+  "positives": [
+    {
+      "id": "extensionless-properties",
+      "file": "mounted-settings",
+      "format": "properties",
+      "files": {
+        "mounted-settings": "service.port=08080\nservice.enabled=true\nservice.label=你好\nservice.id=9007199254740993\nservice.secret=not-selected\n"
+      },
+      "expected": {
+        "listenPort": 8080,
+        "enabled": true,
+        "banner": "你好",
+        "deploymentId": "9007199254740993"
+      },
+      "exitCode": 0
+    },
+    {
+      "id": "hocon-with-include",
+      "file": "settings.json",
+      "format": "hocon",
+      "files": {
+        "settings.json": "include \"shared.conf\"\nservice { port=8080, enabled=true, id=9007199254740993 }\nextra=17\n",
+        "shared.conf": "service.label=\"你好\"\n"
+      },
+      "expected": {
+        "listenPort": 8080,
+        "enabled": true,
+        "banner": "你好",
+        "deploymentId": "9007199254740993"
+      },
+      "exitCode": 0
+    },
+    {
+      "id": "strict-json",
+      "file": "settings.conf",
+      "format": "json",
+      "files": {
+        "settings.conf": "{\"service\":{\"port\":8080,\"enabled\":true,\"label\":\"你好\",\"id\":\"9007199254740993\"},\"extra\":17}\n"
+      },
+      "expected": {
+        "listenPort": 8080,
+        "enabled": true,
+        "banner": "你好",
+        "deploymentId": "9007199254740993"
+      },
+      "exitCode": 0
+    },
+    {
+      "id": "fallback-own-syntax",
+      "file": "settings.conf",
+      "format": "json",
+      "fallbackFiles": [
+        "defaults.properties"
+      ],
+      "files": {
+        "settings.conf": "{\"service\":{\"enabled\":true,\"label\":\"你好\",\"id\":\"9007199254740993\"}}\n",
+        "defaults.properties": "service.port=08080\nservice.label=ignored\n"
+      },
+      "expected": {
+        "listenPort": 8080,
+        "enabled": true,
+        "banner": "你好",
+        "deploymentId": "9007199254740993"
+      },
+      "exitCode": 0
+    },
+    {
+      "id": "extension-inference",
+      "file": "settings.properties",
+      "files": {
+        "settings.properties": "service.port=08080\nservice.enabled=true\nservice.label=你好\nservice.id=9007199254740993\n"
+      },
+      "expected": {
+        "listenPort": 8080,
+        "enabled": true,
+        "banner": "你好",
+        "deploymentId": "9007199254740993"
+      },
+      "exitCode": 0
+    }
+  ],
+  "receiver": {
+    "file": "mounted-settings",
+    "format": "properties",
+    "files": {
+      "mounted-settings": "service.port=0\nservice.enabled=true\nservice.label=你好\nservice.id=9007199254740993\nservice.secret=not-selected\n"
+    },
+    "expectedArtifact": {
+      "listenPort": 0,
+      "enabled": true,
+      "banner": "你好",
+      "deploymentId": "9007199254740993"
+    },
+    "expectedHTTP": {
+      "configuredPort": 0,
+      "enabled": true,
+      "banner": "你好",
+      "deploymentId": "9007199254740993"
+    },
+    "exitCode": 0
+  },
+  "errors": [
+    {
+      "id": "missing-field",
+      "source": "service.port=8080\nservice.enabled=true\nservice.label=你好\n",
+      "format": "properties",
+      "exitCode": 2
+    },
+    {
+      "id": "wrong-int",
+      "source": "service.port=not-an-int\nservice.enabled=true\nservice.label=你好\nservice.id=9007199254740993\n",
+      "format": "properties",
+      "exitCode": 2
+    },
+    {
+      "id": "strict-json-rejection",
+      "source": "service.port=8080\n",
+      "format": "json",
+      "exitCode": 2
+    },
+    {
+      "id": "hocon-parse-error",
+      "source": "service { port = ]\n",
+      "format": "hocon",
+      "exitCode": 2
+    },
+    {
+      "id": "unresolved-substitution",
+      "source": "service.port=${missing}\n",
+      "format": "hocon",
+      "exitCode": 2
+    },
+    {
+      "id": "malformed-properties-unicode",
+      "source": "service.label=\\u0A\n",
+      "format": "properties",
+      "exitCode": 2
+    },
+    {
+      "id": "long-out-of-range",
+      "source": "service.port=8080\nservice.enabled=true\nservice.label=你好\nservice.id=9223372036854775808\n",
+      "format": "properties",
+      "exitCode": 2
+    }
+  ],
+  "literalNames": {
+    "query": {
+      "version": 1,
+      "fields": [
+        {
+          "name": "a.b",
+          "path": "service.label",
+          "type": "string"
+        },
+        {
+          "name": "名",
+          "path": "service.label",
+          "type": "string"
+        },
+        {
+          "name": "__proto__",
+          "path": "service.label",
+          "type": "string"
+        },
+        {
+          "name": " ",
+          "path": "service.label",
+          "type": "string"
+        }
+      ]
+    },
+    "expected": {
+      "a.b": "你好",
+      "名": "你好",
+      "__proto__": "你好",
+      " ": "你好"
+    }
+  },
+  "limits": {
+    "maxFields": 64,
+    "maxQueryBytes": 400000,
+    "field64ExpectedValue": "你好",
+    "field65ExitCode": 1,
+    "oversizeQueryExitCode": 1
+  },
+  "declarations": {
+    "duplicateName": 1,
+    "unsupportedType": 1,
+    "emptyFields": 1,
+    "emptyName": 1,
+    "nonStringPath": 1,
+    "unknownVersion": 1,
+    "malformedJSON": 1,
+    "invalidUTF8": 1,
+    "missingQueryFile": 1,
+    "nonRegularQueryFile": 1
+  },
+  "arguments": {
+    "invalidFormat": 1,
+    "missingArgument": 1,
+    "duplicateArgument": 1,
+    "unknownArgument": 1,
+    "textOrURLInput": 1,
+    "missingSourceFile": 1
+  },
+  "protection": {
+    "sourceAlias": 1,
+    "queryAlias": 1,
+    "explicitFallbackAlias": 1,
+    "relativeAlias": 1,
+    "hardlinkAlias": 1,
+    "symlinkParentAlias": 1,
+    "loadedIncludeAlias": 1
+  },
+  "delivery": {
+    "semanticFailures": "Test both absent destination remains absent and existing destination remains byte-identical.",
+    "sentinelUTF8": "previous settings must survive\n",
+    "failureNeverStartsReceiver": true
+  },
+  "transport": {
+    "string": "JSON string",
+    "boolean": "JSON boolean",
+    "int": "existing Int JSON number",
+    "long": "exact canonical decimal JSON string"
+  },
+  "noClaim": [
+    "Third-party adoption",
+    "Fresh independent Java oracle",
+    "Crash/locking/transaction durability"
+  ]
+}

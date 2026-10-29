@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "caseId": "long-out-of-range",
+  "originalExpectedExitCode": 2,
+  "correctedExpectedExitCode": 0,
+  "independentAuthority": {
+    "file": "evidence/collection-reference-vectors.json",
+    "index": 144,
+    "library": "unmodified Lightbend Config 1.4.9",
+    "jarSHA256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37",
+    "request": {
+      "source": "a=[\"9223372036854775808\",\"-9223372036854775809\"]",
+      "getter": "long-list",
+      "path": "a"
+    },
+    "expected": {
+      "accepted": true,
+      "value": [
+        "9223372036854775807",
+        "-9223372036854775808"
+      ]
+    }
+  },
+  "expectedArtifact": {
+    "listenPort": 8080,
+    "enabled": true,
+    "banner": "你好",
+    "deploymentId": "9223372036854775807"
+  },
+  "explanation": "The initial new handwritten negative oracle contradicted preserved existing typed semantics. Keep the initial frozen cases and development failure intact; exercise the identical raw input as an explicit accepted saturation control using the pre-existing independent Java expectation, in both absent/existing destination modes. No getter, legal input, reference corpus or old expectation is changed.",
+  "additionalIndependentError": {
+    "sourceBytes": [
+      255
+    ],
+    "format": "properties",
+    "expectedExitCode": 2,
+    "reason": "Invalid UTF-8 configuration source is a source decoding failure."
+  }
+}

@@ -65,6 +65,8 @@ jobs:
         env:
           PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/hocon-playwright
       - run: node tools/test-cli.mjs
+      - name: Check typed file export and HTTP receiver
+        run: node tools/test-typed-config-export.mjs
       - run: node tools/test-host.mjs
       - run: node tools/test-properties-host.mjs
       - run: node tools/test-file-syntax-host.mjs
@@ -139,3 +141,4 @@ jobs:
             output/playwright/
             output/transition-consumer/
             output/package-consumer/
+            output/typed-config-export/

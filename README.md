@@ -122,3 +122,13 @@ Lightbend Config 已成熟定义并实现 HOCON。项目不以语法移植或“
 ## 策略输入的错误诊断
 
 CLI 和值绑定服务示例的策略 JSON 语法错误现使用不带输入片段的诊断，避免 Node 原始 SyntaxError 自动把期望值写入错误日志；合法输入、0/1/2退出码与原限额保持。21项针对性消费者检查及真实 HTTP 示例通过，见[策略输入说明](VALUE-BOUND-TRANSITIONS.md)。这项宿主修复未改变 MoonBit 核心、API或生成引擎。
+
+## 类型化配置文件交接
+
+当应用只接受一个 JSON 设置文件时，新的 [文件交接工作流](TYPED-CONFIG-EXPORT.md) 接受原始本地配置和调用方字段清单，复用现有公开文件加载/类型读取，生成仅含所选字面名称的完整产物。支持既有 hocon/json/properties 格式；int/boolean/string 沿用原读取语义，long 保持精确十进制字符串。
+
+```sh
+node tools/typed-config-export.mjs --file mounted-settings --format properties --queries app-fields.json --output app-settings.json
+```
+
+声明或配置读取失败不替换旧产物，并保护源/查询/fallback/include 路径别名。独立的 `examples/config-file-receiver.mjs` 只从产物文件读取设置并提供回环 HTTP；必要 CI 用真实进程、文件与 HTTP 验证完整交接。普通文件写入故障可能留下部分文件，不提供并发锁或崩溃事务。旧 CLI 和 MoonBit 核心不变；自编接收方不代表第三方采用。
