@@ -1,0 +1,5 @@
+{"stage":"sync-file","diagnostic":{"name":"ConfigError","message":"unterminated string","position":{"source":"<INPUT>","offset":5,"line":1,"column":6}}}
+{"stage":"async-file","diagnostic":{"name":"ConfigError","message":"unterminated string","position":{"source":"<INPUT>","offset":5,"line":1,"column":6}}}
+{"stage":"validation","diagnostic":{"name":"ConfigError","message":"configuration validation failed","problems":[{"path":"required","kind":"missing","expected":"number","actual":"missing"}]}}
+{"stage":"manual","diagnostic":{"name":"ConfigError","message":"manual Ω😀"}}
+{"stage":"empty-problems","diagnostic":{"name":"ConfigError","message":"empty problems","problems":[]}}

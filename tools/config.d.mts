@@ -14,6 +14,7 @@ export type DurationUnit = 'nanoseconds' | 'microseconds' | 'milliseconds' | 'se
 export type ValueType = 'OBJECT' | 'LIST' | 'STRING' | 'NUMBER' | 'BOOLEAN' | 'NULL';
 export interface SourcePosition {source: string; offset: number; line: number; column: number}
 export interface ValidationProblem {path: string; kind: string; expected: string; actual: string}
+export interface ConfigDiagnostic {name: string; message: string; position?: SourcePosition; problems?: ValidationProblem[]}
 export interface ConfigPeriod {years: number; months: number; days: number}
 export type TemporalAmount = {kind: 'duration'; nanoseconds: string} | ({kind: 'period'} & ConfigPeriod);
 export type ConfigNumber = {kind: 'int' | 'long'; value: string} | {kind: 'double'; value: DoubleValue | '-0.0'; bits: string};
@@ -66,6 +67,7 @@ export class ConfigError extends Error {
   constructor(result: {error: string; position?: SourcePosition | undefined; problems?: ValidationProblem[] | undefined});
   position: SourcePosition | undefined;
   problems: ValidationProblem[] | undefined;
+  toDiagnostic(): ConfigDiagnostic;
 }
 
 /** Immutable configuration retaining the MoonBit tree. Use the factory methods. */

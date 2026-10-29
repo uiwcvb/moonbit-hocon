@@ -77,6 +77,8 @@ node tools/change-review.mjs --before old.conf --after new.conf --policy permiss
 
 Node 公共入口还提供 `joinPath` / `splitPath`，将审查计划/报告的字面路径数组与 getter 所需表达式相互转换，保留含点、空键、引号和 Unicode 的实际键含义。[路径工具与真实配置消费者](PATH-UTILITIES.md) 明列核心预算、错误位置和接入边界；复用原 MoonBit 路径语法，不另写 JS 解析器。
 
+需要向 JSON 日志或界面交接错误时，可显式使用 `ConfigError.toDiagnostic()`，取得包含消息、现有来源位置及验证问题的独立快照。修改快照不会回写原异常；原自动序列化和 CLI 格式保留。[诊断快照与实际日志消费者](ERROR-DIAGNOSTICS.md) 说明字段、空元数据和接入边界。
+
 ## 公开配置与验证
 
 [Apache OpenWhisk 样本](OPENWHISK.md) 保留原始 controller 配置、两个 include、fallback、固定提交、哈希及许可。既有对照覆盖 36 条叶路径和 11 项类型读取。新增 [变更用例](CHANGE-REVIEW.md) 在副本上改端口和 include 日志级别：即使主文件哈希未变，也检出 include 中的非预期变化；完整解析结果另经官方 Java 实现核对。没有声称运行整个 OpenWhisk 或获得其采用。

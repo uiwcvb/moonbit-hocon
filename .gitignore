@@ -21,3 +21,4 @@ tools/browser/node_modules/
 /tools/typescript-consumer/node_modules/
 /output/typescript-consumer/
 /output/path-utilities/
+/output/error-diagnostics/
