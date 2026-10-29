@@ -1,8 +1,10 @@
 # HOCON 配置迁移与变更审查
 
-项目仓库：[https://github.com/uiwcvb/moonbit-hocon](https://github.com/uiwcvb/moonbit-hocon)。模块 `uiwcvb/hocon`，本地 **0.25.0**，MIT。
+项目仓库：[https://github.com/uiwcvb/moonbit-hocon](https://github.com/uiwcvb/moonbit-hocon)。模块 `uiwcvb/hocon`，源码版本 **0.25.0**，MIT。
 
 预生成引擎所用标准库及公开配置样本的许可、出处见[第三方许可说明](THIRD_PARTY_NOTICES.md)。
+
+[完整项目介绍](PROPOSAL.md) 与 [申报正文](uiwcvb-hocon-申报书.md) 使用相同现状说明；申报账号 uiwcvb、实际模块 uiwcvb/hocon 与本仓库对应。
 
 已有 HOCON 配置迁入 MoonBit 时，include、变量替换和 fallback 会共同决定最终配置。只审查文本差异可能漏掉间接改动。本项目让应用读取既有配置，并在启动或发布前回答两件事：与原 JVM 解析结果是否一致；相对于上一份配置，哪些最终路径发生了未经允许的变化。
 
